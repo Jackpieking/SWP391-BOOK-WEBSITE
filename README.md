@@ -8,3 +8,12 @@ SWP391 assignment, a book website
 * Trịnh Hoàng Minh
 * Trương Tuấn Thành
 * Lê Trung Nghĩa
+
+## Project's Description
+
+* Mô tả đề tài
+* Mô tả chức năng chính
+
+# References
+
+
