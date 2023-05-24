@@ -10,9 +10,13 @@
 
 ## Project's Description
 
-* Mô tả đề tài
-    
-* Mô tả chức năng chính
+* Trang web đọc truyện miễn phí và tính phí cho mọi người.
+
+## Project's functionality
+
+* Đọc truyện miễn phí và tính phí.
+* Đăng ký hội viên để đọc truyện tính phí.
+* 
 
 # References
 
