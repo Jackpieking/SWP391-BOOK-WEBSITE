@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\ModelConfiguations\" />
     <Folder Include="Data\ModelDataSeedings\" />
     <Folder Include="Controllers\" />
     <Folder Include="Repositories\" />
