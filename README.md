@@ -1,5 +1,4 @@
 ﻿# Manganesux 
-SWP391 assignment, a mange reading website
 
 ## Members
 
@@ -12,6 +11,7 @@ SWP391 assignment, a mange reading website
 ## Project's Description
 
 * Mô tả đề tài
+    
 * Mô tả chức năng chính
 
 # References
