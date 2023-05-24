@@ -1,5 +1,5 @@
-﻿# SWP391-BOOK-WEBSITE
-SWP391 assignment, a book website
+﻿# Manganesux 
+SWP391 assignment, a mange reading website
 
 ## Members
 
