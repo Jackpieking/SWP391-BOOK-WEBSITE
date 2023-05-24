@@ -12,6 +12,7 @@ internal class LoginAccountDataSeeding : IEntityTypeConfiguration<LoginAccount>
 	{
 		LoginAccount loginAccount = new()
 		{
+			ID = 1,
 			UserName = "jackpieking",
 			Password = "Jackpie2003",
 			Role = Role.READER,

@@ -57,5 +57,13 @@ internal class UserAccessConfiguration : IEntityTypeConfiguration<UserAccess>
 		builder
 			.HasIndex(indexExpression: userAccess => userAccess.UserIdentifier)
 			.IsUnique();
+
+		builder
+			.HasOne(navigationExpression: userAccess => userAccess.LoginAccount)
+			.WithOne(navigationExpression: loginAccount => loginAccount.UserAccess)
+			.HasPrincipalKey<UserAccess>(keyExpression: userAccess => userAccess.UserIdentifier)
+			.HasForeignKey<LoginAccount>(foreignKeyExpression: loginAccount => loginAccount.UserIdentifier)
+			.OnDelete(deleteBehavior: DeleteBehavior.Cascade)
+			.IsRequired();
 	}
 }

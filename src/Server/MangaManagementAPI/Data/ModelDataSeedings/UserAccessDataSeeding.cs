@@ -12,7 +12,7 @@ internal class UserAccessDataSeeding : IEntityTypeConfiguration<UserAccess>
 	{
 		UserAccess userAccess = new()
 		{
-			ID = 0,
+			ID = 1,
 			FullName = "Le Dinh Dang Khoa",
 			Age = 20,
 			Gender = Gender.MALE,

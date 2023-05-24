@@ -9,7 +9,7 @@ internal class UserAccess
 
 	public string FullName { get; set; } = string.Empty;
 
-	public byte Age { get; set; }
+	public byte? Age { get; set; }
 
 	public Gender? Gender { get; set; }
 
