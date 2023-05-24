@@ -16,7 +16,6 @@
 
 * Đọc truyện miễn phí và tính phí.
 * Đăng ký hội viên để đọc truyện tính phí.
-* 
 
 # References
 
