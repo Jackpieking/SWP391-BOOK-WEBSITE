@@ -3,7 +3,7 @@ using System;
 
 namespace MangaManagementAPI.Data.Models;
 
-internal class UserAccess
+public class UserAccess
 {
 	public int ID { get; set; }
 

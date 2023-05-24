@@ -1,6 +1,6 @@
 ﻿namespace MangaManagementAPI.Helpers;
 
-internal enum Gender
+public enum Gender
 {
 	MALE,
 	FEMALE,

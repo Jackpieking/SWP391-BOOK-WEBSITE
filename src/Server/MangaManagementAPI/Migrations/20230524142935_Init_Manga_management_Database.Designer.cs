@@ -3,15 +3,18 @@ using System;
 using MangaManagementAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MangaManagementAPI.MaigaManagementAPI;
 
 [DbContext(typeof(MangaContext))]
-partial class MangaContextModelSnapshot : ModelSnapshot
+[Migration("20230524142935_Init_Manga_management_Database")]
+partial class Init_Manga_management_Database
 {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
         modelBuilder

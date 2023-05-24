@@ -1,6 +1,6 @@
 ﻿namespace MangaManagementAPI.Helpers;
 
-internal enum Role
+public enum Role
 {
 	GUEST,
 	ADMIN,

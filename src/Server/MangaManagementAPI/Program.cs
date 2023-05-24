@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args: args);
 var services = builder.Services;
 
 services
-	.AddEndpointsApiExplorer()
 	.ConfigureOptions<DatabaseOptionUpdates>()
 	.AddDistributedMemoryCache()
 	.AddSession(config =>
