@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MangaManagementAPI
 {
-    public class MangaSavingConfiguration : IEntityTypeConfiguration<MangaSaving>
+    public class ComicSavingConfiguration : IEntityTypeConfiguration<ComicSaving>
     {
-        public void Configure(EntityTypeBuilder<MangaSaving> builder)
+        public void Configure(EntityTypeBuilder<ComicSaving> builder)
         {
             const string TableName = "Manga-Saving";
 

@@ -2,7 +2,7 @@ using System;
 
 namespace MangaManagementAPI
 {
-    public class MangaSaving
+    public class ComicSaving
     {
         public int ID { get; set; }
 
