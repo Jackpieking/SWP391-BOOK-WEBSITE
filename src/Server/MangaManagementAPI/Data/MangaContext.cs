@@ -11,7 +11,11 @@ public class MangaContext : DbContext
 
 	public DbSet<UserAccess> UserAccess { get; set; }
 
+	public DbSet<TransactionsHistory> TransactionsHistories {get; set;}
+
 	public MangaContext(DbContextOptions options) : base(options) { }
+
+
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

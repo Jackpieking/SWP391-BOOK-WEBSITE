@@ -17,7 +17,7 @@ internal class LoginAccountConfiguration : IEntityTypeConfiguration<LoginAccount
 
 		builder
 			.Property(propertyExpression: loginAccount => loginAccount.ID)
-			.ValueGeneratedOnAdd()
+			.UseIdentityAlwaysColumn()
 			.IsRequired();
 
 		builder
