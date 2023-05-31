@@ -2,8 +2,8 @@
 
 public enum Role
 {
-	GUEST = 0,
-	ADMIN = 1,
+	ADMIN = 0,
+	GUEST = 1,
 	READER = 2,
 	PUBLISHER = 3
 }

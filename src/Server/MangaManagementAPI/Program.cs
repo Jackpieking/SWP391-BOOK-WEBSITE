@@ -14,12 +14,6 @@ var services = builder.Services;
 
 services
 	.ConfigureOptions<DatabaseOptionUpdates>()
-	.AddDistributedMemoryCache()
-	.AddSession(config =>
-	{
-		config.Cookie.Name = "UserSessionID";
-		config.IdleTimeout = new((24 * 3), 0, 0);
-	})
 	.AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
 	{
 		policy
@@ -64,8 +58,7 @@ else
 app
 	.UseHttpsRedirection()
 	.UseCors()
-	.UseRouting()
-	.UseSession();
+	.UseRouting();
 
 app.MapControllers();
 

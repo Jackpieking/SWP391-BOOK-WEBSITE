@@ -1,16 +1,15 @@
-﻿using MangaManagementAPI.Data.Models;
-using MangaManagementAPI.Helpers;
+﻿using MangaManagementAPI.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
 namespace MangaManagementAPI.Data.ModelDataSeedings;
 
-internal class UserAccessDataSeeding : IEntityTypeConfiguration<UserAccess>
+internal class UserAccessDataSeeding : IEntityTypeConfiguration<UserInfo>
 {
-	void IEntityTypeConfiguration<UserAccess>.Configure(EntityTypeBuilder<UserAccess> builder)
+	void IEntityTypeConfiguration<UserInfo>.Configure(EntityTypeBuilder<UserInfo> builder)
 	{
-		UserAccess userAccess = new()
+		UserInfo userAccess = new()
 		{
 			ID = 1,
 			FullName = "Le Dinh Dang Khoa",
