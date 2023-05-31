@@ -1,5 +1,4 @@
-﻿using MangaManagementAPI.Data.Models;
-using MangaManagementAPI.Helpers;
+﻿using MangaManagementAPI.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,9 +13,8 @@ internal class UserAccessDataSeeding : IEntityTypeConfiguration<UserInfo>
 		{
 			ID = 1,
 			FullName = "Le Dinh Dang Khoa",
-			Age = 20,
 			Gender = Gender.MALE,
-			BirthDay = new(2003, 12, 03),
+			BirthDay = new(year: 2003, month: 12, day: 03),
 			Email = "ledinhdangkhoa10a9@gmail.com",
 			AccountBalance = 10_000_000,
 			UserIdentifier = Guid.Parse(input: "585a96f6-3d1b-4fa3-83f1-e2da38ecd92b")
