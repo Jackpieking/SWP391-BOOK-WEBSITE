@@ -51,16 +51,16 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
     });
 
     /*------------------
-		Hero Slider
-	--------------------*/
+        Hero Slider
+    --------------------*/
     var hero_s = $(".hero__slider");
     hero_s.owlCarousel({
         loop: true,
@@ -93,9 +93,37 @@
     /*------------------
         Scroll To Top
     --------------------*/
-    $("#scrollToTopButton").click(function() {
+    $("#scrollToTopButton").click(function () {
         $("html, body").animate({ scrollTop: 0 }, "slow");
         return false;
-     });
+    });
 
 })(jQuery);
+
+const loginFrom = document.querySelector("#loginForm");
+
+loginFrom.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const payload = new FormData(loginFrom);
+
+    const rawResponse = await fetch('https://localhost:7174/login', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+            {
+                UserName: payload.get("Username"),
+                Password: payload.get('Password')
+            })
+    });
+
+    if (rawResponse.status == 200) {
+        location.replace("http://127.0.0.1:56462/index.html");
+    }
+    else {
+        alert("Password or Username is not correct")
+    }
+});

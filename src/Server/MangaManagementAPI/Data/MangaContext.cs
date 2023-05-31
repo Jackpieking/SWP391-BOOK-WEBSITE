@@ -7,9 +7,7 @@ namespace MangaManagementAPI.Data;
 
 public class MangaContext : DbContext
 {
-	public DbSet<LoginAccount> LoginAccount { get; set; }
-
-	public DbSet<UserAccess> UserAccess { get; set; }
+	public DbSet<UserInfo> UserAccess { get; set; }
 
 	public MangaContext(DbContextOptions options) : base(options) { }
 
@@ -17,12 +15,10 @@ public class MangaContext : DbContext
 	{
 		//table configuration
 		modelBuilder
-			.ApplyConfiguration(new LoginAccountConfiguration())
 			.ApplyConfiguration(new UserAccessConfiguration());
 
 		//Data seeding
 		modelBuilder
-			.ApplyConfiguration(new LoginAccountDataSeeding())
 			.ApplyConfiguration(new UserAccessDataSeeding());
 	}
 }

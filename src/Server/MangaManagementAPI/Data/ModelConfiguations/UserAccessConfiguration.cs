@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MangaManagementAPI.Data.ModelConfiguations;
 
-internal class UserAccessConfiguration : IEntityTypeConfiguration<UserAccess>
+internal class UserAccessConfiguration : IEntityTypeConfiguration<UserInfo>
 {
-	public void Configure(EntityTypeBuilder<UserAccess> builder)
+	public void Configure(EntityTypeBuilder<UserInfo> builder)
 	{
 		const string TableName ="User-Access";
 		const string VARCHAR_30 = "VARCHAR(30)";
+		const string VARCHAR_50 = "VARCHAR(50)";
 
 		builder.ToTable(name: TableName);
 
@@ -17,12 +18,25 @@ internal class UserAccessConfiguration : IEntityTypeConfiguration<UserAccess>
 
 		builder
 			.Property(propertyExpression: userAccess => userAccess.ID)
-			.ValueGeneratedOnAdd()
+			.UseIdentityByDefaultColumn();
+
+		builder
+			.Property(propertyExpression: loginAccount => loginAccount.UserName)
+			.HasColumnType(typeName: VARCHAR_50)
+			.IsRequired();
+
+		builder
+			.Property(propertyExpression: loginAccount => loginAccount.Password)
+			.HasColumnType(typeName: VARCHAR_50)
+			.IsRequired();
+
+		builder
+			.Property(propertyExpression: loginAccount => loginAccount.Role)
 			.IsRequired();
 
 		builder
 			.Property(propertyExpression: userAccess => userAccess.FullName)
-			.HasColumnType(VARCHAR_30)
+			.HasColumnType(typeName: VARCHAR_30)
 			.IsRequired(required: false);
 
 		builder
@@ -39,7 +53,7 @@ internal class UserAccessConfiguration : IEntityTypeConfiguration<UserAccess>
 
 		builder
 			.Property(propertyExpression: userAccess => userAccess.Email)
-			.HasColumnType(VARCHAR_30)
+			.HasColumnType(typeName: VARCHAR_30)
 			.IsRequired();
 
 		builder
@@ -57,13 +71,5 @@ internal class UserAccessConfiguration : IEntityTypeConfiguration<UserAccess>
 		builder
 			.HasIndex(indexExpression: userAccess => userAccess.UserIdentifier)
 			.IsUnique();
-
-		builder
-			.HasOne(navigationExpression: userAccess => userAccess.LoginAccount)
-			.WithOne(navigationExpression: loginAccount => loginAccount.UserAccess)
-			.HasPrincipalKey<UserAccess>(keyExpression: userAccess => userAccess.UserIdentifier)
-			.HasForeignKey<LoginAccount>(foreignKeyExpression: loginAccount => loginAccount.UserIdentifier)
-			.OnDelete(deleteBehavior: DeleteBehavior.Cascade)
-			.IsRequired();
 	}
 }
