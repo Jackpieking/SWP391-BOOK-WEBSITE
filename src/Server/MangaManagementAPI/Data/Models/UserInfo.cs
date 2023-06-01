@@ -1,7 +1,7 @@
 ﻿using MangaManagementAPI.Helpers;
 using System;
 
-namespace MangaManagementAPI.Data.Models;
+namespace MangaManagementAPI;
 
 public class UserInfo
 {
@@ -15,17 +15,15 @@ public class UserInfo
 
 	public string FullName { get; set; } = string.Empty;
 
-	public byte? Age { get; set; }
-
 	public Gender? Gender { get; set; }
 
-	public DateOnly? BirthDay { get; set; }
+	public DateOnly BirthDay { get; set; }
 
 	public string Email { get; set; } = string.Empty;
 
 	public int AccountBalance { get; set; }
 
-	public string Avatar { get; set; } = string.Empty;
+	public string Avatar { get; set; } //defaul avatar
 
 	public Guid UserIdentifier { get; set; }
 }

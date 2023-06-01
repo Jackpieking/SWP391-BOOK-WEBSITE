@@ -1,5 +1,4 @@
-﻿using MangaManagementAPI.Data.Models;
-using MangaManagementAPI.Helpers;
+﻿using MangaManagementAPI.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -17,7 +16,6 @@ internal class UserAccessDataSeeding : IEntityTypeConfiguration<UserInfo>
 			Password = "Jackpie2003",
 			Role = Role.ADMIN,
 			FullName = "Le Dinh Dang Khoa",
-			Age = 20,
 			Gender = Gender.MALE,
 			BirthDay = new(year: 2003, month: 12, day: 03),
 			Email = "ledinhdangkhoa10a9@gmail.com",
