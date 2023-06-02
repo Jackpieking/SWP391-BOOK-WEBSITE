@@ -13,7 +13,7 @@ public class ComicCategoryConfiguration : IEntityTypeConfiguration<ComicCategory
 		builder.ToTable(name: TableName);
 
 		//Primary - foreign key: [CategoriesIdentifier - ComicIdentifier]
-		builder.HasKey(comicCategory => new
+		builder.HasKey(keyExpression: comicCategory => new
 		{
 			comicCategory.CategoryIdentifier,
 			comicCategory.ComicIdentifier

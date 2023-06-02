@@ -7,7 +7,7 @@ public class Category
 {
 	public Guid CategoryIdentifier { get; set; }
 
-	public string Name { get; set; } = string.Empty;
+	public string Name { get; set; }
 
 	public string Description { get; set; }
 

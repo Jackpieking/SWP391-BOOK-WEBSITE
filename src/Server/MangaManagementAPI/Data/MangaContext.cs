@@ -1,4 +1,5 @@
 ﻿using MangaManagementAPI.Data.ModelConfigurations;
+using MangaManagementAPI.Data.ModelDataSeedings;
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,16 +34,21 @@ public class MangaContext : DbContext
 		//table configuration
 		modelBuilder
 			.ApplyConfiguration(configuration: new UserInfoConfiguration())
-			.ApplyConfiguration(configuration: new ComicConfiguration())
-			.ApplyConfiguration(configuration: new ChapterConfiguration())
-			.ApplyConfiguration(configuration: new ChapterImageConfiguration())
-			.ApplyConfiguration(configuration: new ComicSavingConfiguration())
-			.ApplyConfiguration(configuration: new ReadingHistoryConfiguration())
-			.ApplyConfiguration(configuration: new ReviewComicConfiguration())
 			.ApplyConfiguration(configuration: new TransactionsHistoryConfiguration())
+			.ApplyConfiguration(configuration: new ReviewComicConfiguration())
+			.ApplyConfiguration(configuration: new ReviewChapterConfiguration())
 			.ApplyConfiguration(configuration: new ReadingHistoryConfiguration())
-			.ApplyConfiguration(configuration: new UserInfoConfiguration());
+			.ApplyConfiguration(configuration: new ComicSavingConfiguration())
+			.ApplyConfiguration(configuration: new ComicCategoryConfiguration())
+			.ApplyConfiguration(configuration: new ComicConfiguration())
+			.ApplyConfiguration(configuration: new ChapterImageConfiguration())
+			.ApplyConfiguration(configuration: new ChapterConfiguration())
+			.ApplyConfiguration(configuration: new CategoryConfiguration());
 
 		//Data seeding
+		modelBuilder
+			.ApplyConfiguration(configuration: new UserInfoDataSeeding())
+			.ApplyConfiguration(configuration: new TransactionHistoryDataSeeding())
+			.ApplyConfiguration(configuration: new ReviewComicDataSeeding());
 	}
 }

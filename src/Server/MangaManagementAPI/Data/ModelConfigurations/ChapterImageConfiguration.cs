@@ -1,7 +1,6 @@
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
 namespace MangaManagementAPI.Data.ModelConfigurations;
@@ -12,6 +11,7 @@ public class ChapterImageConfiguration : IEntityTypeConfiguration<ChapterImage>
 	{
 		const string TableName = "chapter_image";
 		const string VARCHAR_30 = "VARCHAR(30)";
+		const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
 		builder.ToTable(name: TableName);
 
@@ -20,12 +20,12 @@ public class ChapterImageConfiguration : IEntityTypeConfiguration<ChapterImage>
 
 		builder
 			.Property(propertyExpression: chapterImage => chapterImage.ImageIdentifier)
-			.HasValueGenerator<GuidValueGenerator>();
+			.HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
 		//field: ImageNumber
 		builder
 			.Property(propertyExpression: chapterImage => chapterImage.ImageNumber)
-			.HasDefaultValue(value: default)
+			.HasDefaultValue(value: default(short))
 			.IsRequired();
 
 		//field: ImageURL

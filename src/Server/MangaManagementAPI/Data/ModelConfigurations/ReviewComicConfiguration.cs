@@ -1,7 +1,6 @@
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace MangaManagementAPI.Data.ModelConfigurations;
 
@@ -11,6 +10,7 @@ public class ReviewComicConfiguration : IEntityTypeConfiguration<ReviewComic>
 	{
 		const string TableName = "review_comic";
 		const string VARCHAR_200 = "VARCHAR(200)";
+		const string NOW = "now()";
 
 		builder.ToTable(name: TableName);
 
@@ -24,7 +24,7 @@ public class ReviewComicConfiguration : IEntityTypeConfiguration<ReviewComic>
 		//field: RatingStar
 		builder
 			.Property(propertyExpression: reviewComic => reviewComic.RatingStar)
-			.HasDefaultValue(value: default)
+			.HasDefaultValue(value: default(short))
 			.IsRequired();
 
 		//field: Comment
@@ -37,7 +37,7 @@ public class ReviewComicConfiguration : IEntityTypeConfiguration<ReviewComic>
 		//field: ReviewTime
 		builder
 			.Property(propertyExpression: reviewComic => reviewComic.ReviewTime)
-			.HasDefaultValue(value: DateTime.UtcNow)
+			.HasDefaultValueSql(sql: NOW)
 			.IsRequired();
 	}
 }

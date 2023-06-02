@@ -1,7 +1,6 @@
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
 namespace MangaManagementAPI.Data.ModelConfigurations;
@@ -11,6 +10,7 @@ public class ChapterConfiguration : IEntityTypeConfiguration<Chapter>
 	public void Configure(EntityTypeBuilder<Chapter> builder)
 	{
 		const string TableName = "chapter";
+		const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
 		builder.ToTable(name: TableName);
 
@@ -19,18 +19,18 @@ public class ChapterConfiguration : IEntityTypeConfiguration<Chapter>
 
 		builder
 			.Property(propertyExpression: chapter => chapter.ChapterIdentifier)
-			.HasValueGenerator<GuidValueGenerator>();
+			.HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
 		//field: ChapterNumber
 		builder
 			.Property(propertyExpression: chapter => chapter.ChapterNumber)
-			.HasDefaultValue(value: default)
+			.HasDefaultValue(value: default(double))
 			.IsRequired();
 
 		//field: UnlockPrice
 		builder
 			.Property(propertyExpression: chapter => chapter.UnlockPrice)
-			.HasDefaultValue(value: default)
+			.HasDefaultValue(value: default(int))
 			.IsRequired();
 
 		//Foreign Key: ComicIdentifier

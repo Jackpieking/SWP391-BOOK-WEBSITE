@@ -4,7 +4,7 @@ namespace MangaManagementAPI.Data.Models;
 
 public class TransactionsHistory
 {
-	public Guid TransactionIdentifer { get; set; }
+	public Guid TransactionIdentifier { get; set; }
 
 	public double Amount { get; set; }
 
@@ -14,5 +14,5 @@ public class TransactionsHistory
 
 	public Guid UserIdentifier { get; set; }
 
-	public UserInfo UserInfo { get; set; }
+	public UserInfo UserInfo { get; set; } = new();
 }

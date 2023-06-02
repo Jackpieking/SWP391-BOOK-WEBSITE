@@ -14,7 +14,7 @@ public class ReviewChapter
 
 	public DateTime ReviewTime { get; set; }
 
-	public UserInfo UserInfo { get; set; }
+	public UserInfo UserInfo { get; set; } = new();
 
-	public Chapter Chapter { get; set; }
+	public Chapter Chapter { get; set; } = new();
 }

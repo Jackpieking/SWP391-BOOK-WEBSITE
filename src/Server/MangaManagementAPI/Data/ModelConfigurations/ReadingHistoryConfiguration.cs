@@ -1,7 +1,6 @@
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace MangaManagementAPI.Data.ModelConfigurations;
 
@@ -10,6 +9,7 @@ public class ReadingHistoryConfiguration : IEntityTypeConfiguration<ReadingHisto
 	public void Configure(EntityTypeBuilder<ReadingHistory> builder)
 	{
 		const string TableName = "reading_history";
+		const string NOW = "now()";
 
 		builder.ToTable(name: TableName);
 
@@ -23,7 +23,7 @@ public class ReadingHistoryConfiguration : IEntityTypeConfiguration<ReadingHisto
 		//field: LastReadingTime
 		builder
 			.Property(propertyExpression: readingHistory => readingHistory.LastReadingTime)
-			.HasDefaultValue(value: DateTime.UtcNow)
+			.HasDefaultValueSql(sql: NOW)
 			.IsRequired();
 	}
 }

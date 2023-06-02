@@ -7,13 +7,13 @@ public class Comic
 {
 	public Guid ComicIdentifier { get; set; }
 
-	public string Name { get; set; } = string.Empty;
+	public string Name { get; set; }
 
-	public string Description { get; set; } = string.Empty;
+	public string Description { get; set; }
 
-	public string Avatar { get; set; } = string.Empty;
+	public string Avatar { get; set; }
 
-	public DateOnly PublishDate { get; set; } = DateOnly.Parse(s: DateTime.Now.ToShortDateString());
+	public DateOnly PublishDate { get; set; }
 
 	public double LatestChapter { get; set; }
 

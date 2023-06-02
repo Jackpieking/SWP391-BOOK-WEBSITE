@@ -1,7 +1,6 @@
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace MangaManagementAPI.Data.ModelConfigurations;
 
@@ -10,6 +9,7 @@ public class ComicSavingConfiguration : IEntityTypeConfiguration<ComicSaving>
 	public void Configure(EntityTypeBuilder<ComicSaving> builder)
 	{
 		const string TableName = "comic_saving";
+		const string NOW = "now()";
 
 		builder.ToTable(name: TableName);
 
@@ -23,7 +23,7 @@ public class ComicSavingConfiguration : IEntityTypeConfiguration<ComicSaving>
 		//field: SavingTime
 		builder
 			.Property(propertyExpression: comicSaving => comicSaving.SavingTime)
-			.HasDefaultValue(value: DateTime.UtcNow)
+			.HasDefaultValueSql(sql: NOW)
 			.IsRequired();
 	}
 }

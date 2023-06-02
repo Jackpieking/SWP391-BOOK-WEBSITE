@@ -2,8 +2,6 @@
 using MangaManagementAPI.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using System;
 
 namespace MangaManagementAPI.Data.ModelConfigurations;
 
@@ -16,6 +14,8 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
 		const string VARCHAR_30 = "VARCHAR(30)";
 		const string VARCHAR_50 = "VARCHAR(50)";
 		const string VARCHAR_13 = "VARCHAR(13)";
+		const string GEN_RANDOM_UUID = "gen_random_uuid()";
+		const string CURRENT_DATE = "CURRENT_DATE";
 
 		builder.ToTable(name: TableName);
 
@@ -24,7 +24,7 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
 
 		builder
 			.Property(propertyExpression: userInfo => userInfo.UserIdentifier)
-			.HasValueGenerator<GuidValueGenerator>();
+			.HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
 		//field: UserName
 		builder
@@ -56,7 +56,7 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
 		//field: BirthDay
 		builder
 			.Property(propertyExpression: userAccess => userAccess.BirthDay)
-			.HasDefaultValue(value: DateOnly.FromDateTime(dateTime: DateTime.UtcNow))
+			.HasDefaultValueSql(sql: CURRENT_DATE)
 			.IsRequired();
 
 		//field: PhoneNumber
@@ -76,7 +76,7 @@ public class UserInfoConfiguration : IEntityTypeConfiguration<UserInfo>
 		//field: Account Balance
 		builder
 			.Property(propertyExpression: userInfo => userInfo.AccountBalance)
-			.HasDefaultValue(value: default)
+			.HasDefaultValue(value: default(int))
 			.IsRequired();
 
 		//field: Avatar

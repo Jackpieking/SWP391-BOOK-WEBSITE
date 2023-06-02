@@ -9,7 +9,6 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args: args);
 
 //add services to application
-
 var services = builder.Services;
 
 services
@@ -44,7 +43,6 @@ services
 var app = builder.Build();
 
 //config http/https pipleline
-
 if (app.Environment.IsDevelopment())
 {
 	app.UseDeveloperExceptionPage();

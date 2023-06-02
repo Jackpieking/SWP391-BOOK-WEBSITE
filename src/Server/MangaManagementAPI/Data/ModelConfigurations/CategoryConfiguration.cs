@@ -1,7 +1,6 @@
 using MangaManagementAPI.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace MangaManagementAPI
 {
@@ -12,6 +11,7 @@ namespace MangaManagementAPI
 			const string TableName = "category";
 			const string VARCHAR_50 = "VARCHAR(50)";
 			const string VARCHAR_200 = "VARCHAR(200)";
+			const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
 			builder.ToTable(name: TableName);
 
@@ -20,7 +20,7 @@ namespace MangaManagementAPI
 
 			builder
 				.Property(propertyExpression: category => category.CategoryIdentifier)
-				.HasValueGenerator<GuidValueGenerator>();
+				.HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
 			//field: Name
 			builder
