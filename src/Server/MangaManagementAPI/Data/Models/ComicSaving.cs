@@ -1,15 +1,16 @@
 using System;
 
-namespace MangaManagementAPI
+namespace MangaManagementAPI.Data.Models;
+
+public class ComicSaving
 {
-    public class ComicSaving
-    {
-        public int ID { get; set; }
+	public Guid UserIdentifier { get; set; }
 
-        public Guid UserIdentifier { get; set; }
+	public Guid ComicIdentifier { get; set; }
 
-        public Guid ComicIdentifier { get; set; }
+	public DateTime SavingTime { get; set; }
 
-        public Guid ChapterIdentifier { get; set; }
-    }
+	public UserInfo UserInfo { get; set; }
+
+	public Comic Comic { get; set; }
 }

@@ -1,15 +1,15 @@
 using System;
+using System.Collections.Generic;
 
-namespace MangaManagementAPI
+namespace MangaManagementAPI.Data.Models;
+
+public class Category
 {
-    public class Category
-    {
-        public int ID {get; set;}
+	public Guid CategoryIdentifier { get; set; }
 
-        public string Name {get; set;}
+	public string Name { get; set; } = string.Empty;
 
-        public string Description {get; set;}
+	public string Description { get; set; }
 
-        public Guid CategoryIdentifier {get; set;}
-    }
+	public ICollection<ComicCategory> ComicCategories { get; set; } = new List<ComicCategory>();
 }

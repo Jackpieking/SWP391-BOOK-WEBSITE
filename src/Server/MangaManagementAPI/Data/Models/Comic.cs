@@ -1,23 +1,27 @@
 using System;
+using System.Collections.Generic;
 
-namespace MangaManagementAPI
+namespace MangaManagementAPI.Data.Models;
+
+public class Comic
 {
-    public class Comic
-    {
-        public int ID { get; set; }
+	public Guid ComicIdentifier { get; set; }
 
-        public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
-        public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
-        public int LatestChapter { get; set; } // Consider change to double cuz some comics have chaper 14.5
+	public string Avatar { get; set; } = string.Empty;
 
-        public string Avatar { get; set; }
+	public DateOnly PublishDate { get; set; } = DateOnly.Parse(s: DateTime.Now.ToShortDateString());
 
-        public DateOnly PublishDate { get; set; }
+	public double LatestChapter { get; set; }
 
-        public Guid ComicIdentifier { get; set; }
+	public ICollection<ReviewComic> ReviewComics { get; set; } = new List<ReviewComic>();
 
-        public Guid PubliserIdentifier { get; set; }
-    }
+	public ICollection<ComicSaving> ComicSavings { get; set; } = new List<ComicSaving>();
+
+	public ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
+
+	public ICollection<ComicCategory> ComicCategories { get; set; } = new List<ComicCategory>();
 }

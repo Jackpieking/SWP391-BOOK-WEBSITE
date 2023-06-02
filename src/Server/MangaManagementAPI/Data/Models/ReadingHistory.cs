@@ -1,17 +1,16 @@
 using System;
 
-namespace MangaManagementAPI
+namespace MangaManagementAPI.Data.Models;
+
+public class ReadingHistory
 {
-    public class ReadingHistory
-    {
-        public int ID {get; set;}
-        
-        public DateTime ReadOn {get; set;}
+	public Guid UserIdentifier { get; set; }
 
-        public Guid UserIdentifier {get; set;}
+	public Guid ChapterIdentifier { get; set; }
 
-        public Guid ComicIdentifier {get; set;}
+	public DateTime LastReadingTime { get; set; }
 
-        public Guid ChapterIdentifier {get; set;}
-    }
+	public UserInfo UserInfo { get; set; }
+
+	public Chapter Chapter { get; set; }
 }

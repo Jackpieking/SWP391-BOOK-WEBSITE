@@ -1,17 +1,23 @@
 using System;
+using System.Collections.Generic;
 
-namespace MangaManagementAPI
+namespace MangaManagementAPI.Data.Models;
+
+public class Chapter
 {
-    public class Chapter
-    {
-        public int ID { get; set; }
+	public Guid ChapterIdentifier { get; set; }
 
-        public int ChapterNumber { get; set; }
+	public double ChapterNumber { get; set; }
 
-        public int UnlockPrice { get; set; }
+	public int UnlockPrice { get; set; }
 
-        public Guid ComicIdentifier { get; set; }
+	public Guid ComicIdentifier { get; set; }
 
-        public Guid ChapterIdentifier { get; set; }
-    }
+	public Comic Comic { get; set; }
+
+	public ICollection<ReviewChapter> ReviewChapters { get; set; }	= new List<ReviewChapter>();
+
+	public ICollection<ReadingHistory> ReadingHistories { get; set; } = new List<ReadingHistory>();
+
+	public ICollection<ChapterImage> ChapterImages { get; set; } = new List<ChapterImage>();
 }

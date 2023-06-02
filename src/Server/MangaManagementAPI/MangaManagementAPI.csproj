@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Data\ModelDataSeedings\" />
     <Folder Include="DTO\Outgoing\" />
     <Folder Include="Repositories\" />
   </ItemGroup>

@@ -1,19 +1,20 @@
 using System;
 
-namespace MangaManagementAPI
+namespace MangaManagementAPI.Data.Models;
+
+public class ReviewChapter
 {
-    public class ReviewChapter
-    {
-        public int ID { get; set; }
+	public Guid UserIdentifier { get; set; }
 
-        public int RatingStart { get; set; }
+	public Guid ChapterIdentifier { get; set; }
 
-        public string Comment { get; set; }
+	public short RatingStar { get; set; }
 
-        public DateTime Time { get; set; }
+	public string Comment { get; set; }
 
-        public Guid UserIdentifier { get; set; }
+	public DateTime ReviewTime { get; set; }
 
-        public Guid ChapterIdentifier { get; set; }
-    }
+	public UserInfo UserInfo { get; set; }
+
+	public Chapter Chapter { get; set; }
 }
