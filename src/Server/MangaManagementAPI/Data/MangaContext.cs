@@ -49,6 +49,14 @@ public class MangaContext : DbContext
 		modelBuilder
 			.ApplyConfiguration(configuration: new UserInfoDataSeeding())
 			.ApplyConfiguration(configuration: new TransactionHistoryDataSeeding())
-			.ApplyConfiguration(configuration: new ReviewComicDataSeeding());
+			.ApplyConfiguration(configuration: new ReviewComicDataSeeding())
+			.ApplyConfiguration(configuration: new ReviewChapterDataSeeding())
+			.ApplyConfiguration(configuration: new ReadingHistoryDataSeeding())
+			.ApplyConfiguration(configuration: new ComicSavingDataSeeding())
+			.ApplyConfiguration(configuration: new ComicDataSeeding())
+			.ApplyConfiguration(configuration: new ComicCategoryDataSeeding())
+			.ApplyConfiguration(configuration: new ChapterImageDataSeeding())
+			.ApplyConfiguration(configuration: new ChapterDataSeeding())
+			.ApplyConfiguration(configuration: new CategoryDataSeeding());
 	}
 }

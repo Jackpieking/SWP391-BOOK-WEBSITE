@@ -15,7 +15,7 @@ public class UserInfoDataSeeding : IEntityTypeConfiguration<UserInfo>
 		{
 			new()
 			{
-				UserIdentifier = Guid.Parse(input: "2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
+				UserIdentifier = new(g: "2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
 				UserName = "John Doe",
 				Password = "12345678",
 				FullName = "John Doe",
@@ -27,7 +27,7 @@ public class UserInfoDataSeeding : IEntityTypeConfiguration<UserInfo>
 			},
 			new()
 			{
-				UserIdentifier = Guid.Parse(input : "1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
+				UserIdentifier = new(g: "1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
 				UserName = "Jane Smith",
 				Password = "12345678",
 				FullName = "Jane Smith",
@@ -40,7 +40,7 @@ public class UserInfoDataSeeding : IEntityTypeConfiguration<UserInfo>
 			new()
 			{
 
-				UserIdentifier = Guid.Parse(input: "c6d20823-3d00-48a0-8074-36587bee2693"),
+				UserIdentifier = new(g: "c6d20823-3d00-48a0-8074-36587bee2693"),
 				UserName = "Alice Thompson",
 				Password = "12345678",
 				FullName = "Alice Thompson",
