@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MangaManagementAPI.Data.ModelDataSeedings;
 
@@ -23,7 +24,8 @@ public class UserInfoDataSeeding : IEntityTypeConfiguration<UserInfo>
 				BirthDay = DateOnly.FromDateTime(dateTime: DateTime.UtcNow),
 				PhoneNumber = "1234567890",
 				Email = "johndoe@example.com",
-				AccountBalance = 1000
+				AccountBalance = 1000,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			},
 			new()
 			{
@@ -35,7 +37,8 @@ public class UserInfoDataSeeding : IEntityTypeConfiguration<UserInfo>
 				BirthDay = DateOnly.FromDateTime(dateTime: DateTime.UtcNow),
 				PhoneNumber = "5550123456",
 				Email = "janesmith@example.com",
-				AccountBalance = 1500
+				AccountBalance = 1500,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			},
 			new()
 			{
@@ -48,7 +51,8 @@ public class UserInfoDataSeeding : IEntityTypeConfiguration<UserInfo>
 				BirthDay = DateOnly.FromDateTime(dateTime: DateTime.UtcNow),
 				PhoneNumber = "7778889999",
 				Email = "alicethompson@example.com",
-				AccountBalance = 2000
+				AccountBalance = 2000,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			}
 		};
 

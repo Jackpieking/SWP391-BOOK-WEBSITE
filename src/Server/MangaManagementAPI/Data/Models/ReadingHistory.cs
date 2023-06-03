@@ -10,7 +10,7 @@ public class ReadingHistory
 
 	public DateTime LastReadingTime { get; set; }
 
-	public UserInfo UserInfo { get; set; } = new();
+	public UserInfo UserInfo { get; set; }
 
-	public Chapter Chapter { get; set; } = new();
+	public Chapter Chapter { get; set; }
 }

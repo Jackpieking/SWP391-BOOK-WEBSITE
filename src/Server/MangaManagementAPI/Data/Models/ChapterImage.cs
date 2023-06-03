@@ -12,5 +12,5 @@ public class ChapterImage
 
 	public Guid ChapterIdentifier { get; set; }
 
-	public Chapter Chapter { get; set; } = new();
+	public Chapter Chapter { get; set; }
 }

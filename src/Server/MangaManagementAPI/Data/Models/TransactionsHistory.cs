@@ -14,5 +14,5 @@ public class TransactionsHistory
 
 	public Guid UserIdentifier { get; set; }
 
-	public UserInfo UserInfo { get; set; } = new();
+	public UserInfo UserInfo { get; set; }
 }

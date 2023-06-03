@@ -14,7 +14,7 @@ public class ReviewComic
 
 	public DateTime ReviewTime { get; set; }
 
-	public UserInfo UserInfo { get; set; } = new();
+	public UserInfo UserInfo { get; set; }
 
-	public Comic Comic { get; set; } = new();
+	public Comic Comic { get; set; }
 }

@@ -8,7 +8,7 @@ public class ComicCategory
 
 	public Guid ComicIdentifier { get; set; }
 
-	public Category Category { get; set; } = new();
+	public Category Category { get; set; }
 
-	public Comic Comic { get; set; } = new();
+	public Comic Comic { get; set; }
 }

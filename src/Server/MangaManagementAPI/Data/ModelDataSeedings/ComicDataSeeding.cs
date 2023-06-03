@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MangaManagementAPI.Data.ModelDataSeedings;
 
@@ -17,7 +18,8 @@ public class ComicDataSeeding : IEntityTypeConfiguration<Comic>
 				Name = "atadakishta",
 				Description = "This comic follows the adventures of a group of superheroes in a universe of superpowers and evil villains.",
 				PublishDate = new(year: 2014, month: 1, day: 1),
-				LatestChapter = 40
+				LatestChapter = 40,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			},
 			new()
 			{
@@ -25,7 +27,8 @@ public class ComicDataSeeding : IEntityTypeConfiguration<Comic>
 				Name = "bouken-sha no tabi",
 				Description = "This comic follows the adventures of a group of fantasy heroes in a universe of magic and mysticism.",
 				PublishDate = new(year: 2015, month: 2, day: 1),
-				LatestChapter = 8
+				LatestChapter = 8,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			},
 			new()
 			{
@@ -33,7 +36,8 @@ public class ComicDataSeeding : IEntityTypeConfiguration<Comic>
 				Name = "eiyu no chi",
 				Description = "This comic follows the adventures of a group of sci-fi heroes in a universe of advanced technology and alien civilizations.",
 				PublishDate = new(year: 2016, month: 3, day: 1),
-				LatestChapter = 13
+				LatestChapter = 13,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			},
 			new()
 			{
@@ -41,7 +45,8 @@ public class ComicDataSeeding : IEntityTypeConfiguration<Comic>
 				Name = "eikan no tatakai",
 				Description = "This comic follows the adventures of a group of historical heroes in a universe of real-world events and historical figures.",
 				PublishDate = new(year: 2017, month: 4, day: 1),
-				LatestChapter = 19
+				LatestChapter = 19,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			},
 			new()
 			{
@@ -49,7 +54,8 @@ public class ComicDataSeeding : IEntityTypeConfiguration<Comic>
 				Name = "shichiryu no himitsu",
 				Description = "This comic follows the adventures of a group of romantic heroes in a universe of love and relationships.",
 				PublishDate = new(year: 2018, month: 4, day: 22),
-				LatestChapter = 33
+				LatestChapter = 33,
+				Avatar = Path.Combine("C:", "Users", "USER", "Downloads", "pic1.jpg")
 			}
 		};
 

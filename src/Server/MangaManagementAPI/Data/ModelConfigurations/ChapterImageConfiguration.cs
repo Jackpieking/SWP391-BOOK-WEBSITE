@@ -10,7 +10,7 @@ public class ChapterImageConfiguration : IEntityTypeConfiguration<ChapterImage>
 	public void Configure(EntityTypeBuilder<ChapterImage> builder)
 	{
 		const string TableName = "chapter_image";
-		const string VARCHAR_30 = "VARCHAR(30)";
+		const string VARCHAR_50 = "VARCHAR(50)";
 		const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
 		builder.ToTable(name: TableName);
@@ -31,7 +31,7 @@ public class ChapterImageConfiguration : IEntityTypeConfiguration<ChapterImage>
 		//field: ImageURL
 		builder
 			.Property(propertyExpression: chapterImage => chapterImage.ImageURL)
-			.HasColumnType(typeName: VARCHAR_30)
+			.HasColumnType(typeName: VARCHAR_50)
 			.HasDefaultValue(value: string.Empty)
 			.IsRequired();
 

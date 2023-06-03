@@ -13,7 +13,7 @@ public class Chapter
 
 	public Guid ComicIdentifier { get; set; }
 
-	public Comic Comic { get; set; } = new();
+	public Comic Comic { get; set; }
 
 	public ICollection<ReviewChapter> ReviewChapters { get; set; }	= new List<ReviewChapter>();
 

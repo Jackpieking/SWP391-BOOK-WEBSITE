@@ -10,7 +10,7 @@ public class ComicConfiguration : IEntityTypeConfiguration<Comic>
 	{
 		const string TableName = "comic";
 		const string VARCHAR_200 = "VARCHAR(200)";
-		const string VARCHAR_30 = "VARCHAR(30)";
+		const string VARCHAR_50 = "VARCHAR(50)";
 		const string GEN_RANDOM_UUID = "gen_random_uuid()";
 		const string CURRENT_DATE = "CURRENT_DATE";
 
@@ -26,7 +26,7 @@ public class ComicConfiguration : IEntityTypeConfiguration<Comic>
 		//field: Name
 		builder
 			.Property(propertyExpression: comic => comic.Name)
-			.HasColumnType(typeName: VARCHAR_30)
+			.HasColumnType(typeName: VARCHAR_50)
 			.HasDefaultValue(value: string.Empty)
 			.IsRequired();
 
@@ -46,7 +46,7 @@ public class ComicConfiguration : IEntityTypeConfiguration<Comic>
 		//field: Avatar
 		builder
 			.Property(propertyExpression: comic => comic.Avatar)
-			.HasColumnType(typeName: VARCHAR_30)
+			.HasColumnType(typeName: VARCHAR_50)
 			.HasDefaultValue(value: string.Empty)
 			.IsRequired();
 

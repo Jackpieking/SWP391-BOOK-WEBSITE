@@ -18,7 +18,7 @@ public class ReviewChapterDataSeeding : IEntityTypeConfiguration<ReviewChapter>
 				RatingStar = 5,
 				Comment = "It's the best thing I've read in years!",
 				UserIdentifier = new(g: "2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
-				ReviewTime = DateTime.Now
+				ReviewTime = DateTime.UtcNow
 			},
 			new()
 			{
@@ -26,7 +26,7 @@ public class ReviewChapterDataSeeding : IEntityTypeConfiguration<ReviewChapter>
 				RatingStar = 3,
 				Comment = "It's ok, but not great.",
 				UserIdentifier = new(g: "1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
-				ReviewTime = DateTime.Now
+				ReviewTime = DateTime.UtcNow
 			},
 			new()
 			{
@@ -34,7 +34,7 @@ public class ReviewChapterDataSeeding : IEntityTypeConfiguration<ReviewChapter>
 				RatingStar = 2,
 				Comment = "I didn't like it at all.",
 				UserIdentifier = new(g: "2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
-				ReviewTime = DateTime.Now
+				ReviewTime = DateTime.UtcNow
 			},
 			new()
 			{
@@ -42,7 +42,7 @@ public class ReviewChapterDataSeeding : IEntityTypeConfiguration<ReviewChapter>
 				RatingStar = 1,
 				Comment = "It's the worst.",
 				UserIdentifier = new(g: "c6d20823-3d00-48a0-8074-36587bee2693"),
-				ReviewTime = DateTime.Now
+				ReviewTime = DateTime.UtcNow
 			},
 			new()
 			{
@@ -50,7 +50,7 @@ public class ReviewChapterDataSeeding : IEntityTypeConfiguration<ReviewChapter>
 				RatingStar = 4,
 				Comment = "It's pretty good!",
 				UserIdentifier = new(g: "c6d20823-3d00-48a0-8074-36587bee2693"),
-				ReviewTime = DateTime.Now
+				ReviewTime = DateTime.UtcNow
 			}
 		};
 

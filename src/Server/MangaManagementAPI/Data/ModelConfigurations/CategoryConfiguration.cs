@@ -10,7 +10,7 @@ namespace MangaManagementAPI
 		{
 			const string TableName = "category";
 			const string VARCHAR_50 = "VARCHAR(50)";
-			const string VARCHAR_200 = "VARCHAR(200)";
+			const string VARCHAR_500 = "VARCHAR(500)";
 			const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
 			builder.ToTable(name: TableName);
@@ -32,7 +32,7 @@ namespace MangaManagementAPI
 			//field: Description
 			builder
 				.Property(propertyExpression: category => category.Description)
-				.HasColumnType(typeName: VARCHAR_200)
+				.HasColumnType(typeName: VARCHAR_500)
 				.HasDefaultValue(value: string.Empty)
 				.IsRequired();
 
