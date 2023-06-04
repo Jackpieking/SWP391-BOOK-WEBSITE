@@ -1,5 +1,13 @@
-﻿namespace DataAccessLayer.Repositories.Implementation;
+﻿using DataAccessLayer.Repositories.Contracts;
+using DataAccessLayer.Repositories.Implementation.Base;
+using MangaManagementAPI.Data.Entites;
+using Microsoft.EntityFrameworkCore;
 
-public class ReadingHIstoryRepository
+namespace DataAccessLayer.Repositories.Implementation;
+
+public class ReadingHistoryRepository : GenericRepository<ReadingHistory>, IReadingHistoryRepository
 {
+	protected ReadingHistoryRepository(DbSet<ReadingHistory> dbSet) : base(dbSet)
+	{
+	}
 }

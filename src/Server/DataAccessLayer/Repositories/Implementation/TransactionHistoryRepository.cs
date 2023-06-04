@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
-public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
+public class TransactionHistoryRepository : GenericRepository<TransactionsHistory>, ITransactionRepository
 {
-	public CategoryRepository(DbSet<Category> dbSet) : base(dbSet)
+	protected TransactionHistoryRepository(DbSet<TransactionsHistory> dbSet) : base(dbSet)
 	{
 	}
 }

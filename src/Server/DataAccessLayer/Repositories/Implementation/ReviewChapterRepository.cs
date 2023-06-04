@@ -1,5 +1,13 @@
-﻿namespace DataAccessLayer.Repositories.Implementation;
+﻿using DataAccessLayer.Repositories.Contracts;
+using DataAccessLayer.Repositories.Implementation.Base;
+using MangaManagementAPI.Data.Entites;
+using Microsoft.EntityFrameworkCore;
 
-public class ReviewChapterRepository
+namespace DataAccessLayer.Repositories.Implementation;
+
+public class ReviewChapterRepository : GenericRepository<ReviewChapter>, IReviewChapterRepository
 {
+	protected ReviewChapterRepository(DbSet<ReviewChapter> dbSet) : base(dbSet)
+	{
+	}
 }

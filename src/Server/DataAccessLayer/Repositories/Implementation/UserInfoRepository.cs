@@ -1,5 +1,13 @@
-﻿namespace DataAccessLayer.Repositories.Implementation;
+﻿using DataAccessLayer.Repositories.Contracts;
+using DataAccessLayer.Repositories.Implementation.Base;
+using MangaManagementAPI.Data.Entites;
+using Microsoft.EntityFrameworkCore;
 
-public class UserInfoRepository
+namespace DataAccessLayer.Repositories.Implementation;
+
+public class UserInfoRepository : GenericRepository<UserInfo>, IUserInfoRepository
 {
+	protected UserInfoRepository(DbSet<UserInfo> dbSet) : base(dbSet)
+	{
+	}
 }
