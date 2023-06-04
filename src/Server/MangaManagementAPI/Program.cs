@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
@@ -28,6 +29,7 @@ services
 			.UseNpgsql(connectionString: databaseOptions.DefaultConnectionString, npgsqlOptionsAction: config =>
 			{
 				config
+					.MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().FullName)
 					.EnableRetryOnFailure(maxRetryCount: databaseOptions.MaxRetryCount)
 					.CommandTimeout(commandTimeout: databaseOptions.CommandTimeOut);
 			})
