@@ -20,5 +20,3 @@
 # References
 
 Tham khảo các nguồn ngoài
-
-
