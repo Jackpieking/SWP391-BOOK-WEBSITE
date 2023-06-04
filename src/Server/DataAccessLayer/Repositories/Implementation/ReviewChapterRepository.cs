@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ReviewChapterRepository : GenericRepository<ReviewChapter>, IReviewChapterRepository
 {
-	protected ReviewChapterRepository(DbSet<ReviewChapter> dbSet) : base(dbSet)
+	public ReviewChapterRepository(DbSet<ReviewChapter> dbSet) : base(dbSet)
 	{
 	}
 }

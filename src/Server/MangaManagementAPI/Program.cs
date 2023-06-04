@@ -1,4 +1,6 @@
-﻿using MangaManagementAPI.Data;
+﻿using DataAccessLayer.UnitOfWorks.Contracts;
+using DataAccessLayer.UnitOfWorks.Implementation;
+using MangaManagementAPI.Data;
 using MangaManagementAPI.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args: args);
 var services = builder.Services;
 
 services
+	.AddSingleton<IUnitOfWork, UnitOfWork>()
 	.ConfigureOptions<DatabaseOptionUpdates>()
 	.AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
 	{

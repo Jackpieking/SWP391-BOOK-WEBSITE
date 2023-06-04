@@ -3,6 +3,6 @@ using MangaManagementAPI.Data.Entites;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
-internal interface IChapterImageRepository : IGenericRepository<ChapterImage>
+public interface IChapterImageRepository : IGenericRepository<ChapterImage>
 {
 }

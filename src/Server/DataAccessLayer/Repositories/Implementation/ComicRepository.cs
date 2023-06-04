@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ComicRepository : GenericRepository<Comic>, IComicRepository
 {
-	protected ComicRepository(DbSet<Comic> dbSet) : base(dbSet)
+	public ComicRepository(DbSet<Comic> dbSet) : base(dbSet)
 	{
 	}
 }

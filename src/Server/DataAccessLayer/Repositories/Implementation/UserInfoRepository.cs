@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class UserInfoRepository : GenericRepository<UserInfo>, IUserInfoRepository
 {
-	protected UserInfoRepository(DbSet<UserInfo> dbSet) : base(dbSet)
+	public UserInfoRepository(DbSet<UserInfo> dbSet) : base(dbSet)
 	{
 	}
 }

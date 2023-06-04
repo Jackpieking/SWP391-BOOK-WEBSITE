@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class TransactionHistoryRepository : GenericRepository<TransactionsHistory>, ITransactionRepository
 {
-	protected TransactionHistoryRepository(DbSet<TransactionsHistory> dbSet) : base(dbSet)
+	public TransactionHistoryRepository(DbSet<TransactionsHistory> dbSet) : base(dbSet)
 	{
 	}
 }

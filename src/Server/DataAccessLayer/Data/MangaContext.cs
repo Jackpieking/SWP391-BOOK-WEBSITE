@@ -12,7 +12,7 @@ public class MangaContext : DbContext
 	/// Representation of each table in the Manga database
 	/// </summary>
 	#region DbSet
-	public DbSet<UserInfo> UserInfo { get; set; }
+	public DbSet<UserInfo> UserInfos { get; set; }
 
 	public DbSet<TransactionsHistory> TransactionsHistories { get; set; }
 
@@ -31,6 +31,8 @@ public class MangaContext : DbContext
 	public DbSet<ReviewComic> ReviewComics { get; set; }
 
 	public DbSet<ReadingHistory> ReadingHistories { get; set; }
+
+	public DbSet<ComicCategory> ComicCategories { get; set; }
 	#endregion
 
 	public MangaContext(DbContextOptions options) : base(options) { }

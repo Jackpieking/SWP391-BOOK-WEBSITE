@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ReadingHistoryRepository : GenericRepository<ReadingHistory>, IReadingHistoryRepository
 {
-	protected ReadingHistoryRepository(DbSet<ReadingHistory> dbSet) : base(dbSet)
+	public ReadingHistoryRepository(DbSet<ReadingHistory> dbSet) : base(dbSet)
 	{
 	}
 }

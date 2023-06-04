@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ChapterRepository : GenericRepository<Chapter>, IChapterRepository
 {
-	protected ChapterRepository(DbSet<Chapter> dbSet) : base(dbSet)
+	public ChapterRepository(DbSet<Chapter> dbSet) : base(dbSet)
 	{
 	}
 }

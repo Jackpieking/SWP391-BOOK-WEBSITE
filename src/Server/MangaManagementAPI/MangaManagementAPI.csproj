@@ -35,7 +35,6 @@
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
       <TreatAsUsed>true</TreatAsUsed>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\Helper\Helper.csproj" />
   </ItemGroup>
 

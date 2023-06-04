@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ReviewComicRepository : GenericRepository<ReviewComic>, IReviewComicRepository
 {
-	protected ReviewComicRepository(DbSet<ReviewComic> dbSet) : base(dbSet)
+	public ReviewComicRepository(DbSet<ReviewComic> dbSet) : base(dbSet)
 	{
 	}
 }
