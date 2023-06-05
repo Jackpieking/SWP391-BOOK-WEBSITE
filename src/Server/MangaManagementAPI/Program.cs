@@ -1,18 +1,21 @@
-﻿using MangaManagementAPI.Data;
+﻿using DataAccessLayer.UnitOfWorks.Contracts;
+using DataAccessLayer.UnitOfWorks.Implementation;
+using MangaManagementAPI.Data;
 using MangaManagementAPI.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
 //add services to application
-
 var services = builder.Services;
 
 services
+	.AddScoped<IUnitOfWork, UnitOfWork>()
 	.ConfigureOptions<DatabaseOptionUpdates>()
 	.AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
 	{
@@ -29,6 +32,7 @@ services
 			.UseNpgsql(connectionString: databaseOptions.DefaultConnectionString, npgsqlOptionsAction: config =>
 			{
 				config
+					.MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().FullName)
 					.EnableRetryOnFailure(maxRetryCount: databaseOptions.MaxRetryCount)
 					.CommandTimeout(commandTimeout: databaseOptions.CommandTimeOut);
 			})
@@ -44,7 +48,6 @@ services
 var app = builder.Build();
 
 //config http/https pipleline
-
 if (app.Environment.IsDevelopment())
 {
 	app.UseDeveloperExceptionPage();
