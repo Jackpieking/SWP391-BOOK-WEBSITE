@@ -24,6 +24,7 @@ public class UnitOfWork : IUnitOfWork
 
 	public UnitOfWork(MangaContext context) => _context = context;
 
+	#region RepositoryArea
 	public ICategoryRepository CategoryRepository
 	{
 		get
@@ -133,6 +134,7 @@ public class UnitOfWork : IUnitOfWork
 			return _userInfoRepository;
 		}
 	}
+	#endregion
 
 	public async Task SaveAsync(CancellationToken cancellationToken)
 		=> await _context.SaveChangesAsync(cancellationToken: cancellationToken);

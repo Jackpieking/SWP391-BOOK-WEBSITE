@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args: args);
 var services = builder.Services;
 
 services
-	.AddSingleton<IUnitOfWork, UnitOfWork>()
+	.AddScoped<IUnitOfWork, UnitOfWork>()
 	.ConfigureOptions<DatabaseOptionUpdates>()
 	.AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
 	{
