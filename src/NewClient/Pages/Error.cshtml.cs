@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace NewClient.Pages
@@ -8,9 +9,9 @@ namespace NewClient.Pages
 	[IgnoreAntiforgeryToken]
 	public class ErrorModel : PageModel
 	{
-		public string? RequestId { get; set; }
+		public string RequestId { get; set; }
 
-		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+		public bool ShowRequestId => string.IsNullOrEmpty(RequestId);
 
 		private readonly ILogger<ErrorModel> _logger;
 

@@ -8,11 +8,11 @@
     }
   },
   "profiles": {
-    "NewClient": {
+    "MangaWebsite": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7177;http://localhost:5122",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:7177",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
