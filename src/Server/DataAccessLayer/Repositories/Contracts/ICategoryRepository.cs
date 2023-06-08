@@ -1,8 +1,8 @@
 ﻿using DataAccessLayer.Repositories.Contracts.Base;
-using MangaManagementAPI.Data.Entites;
+using DataAccessLayer.Data.Entites;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
-public interface ICategoryRepository : IGenericRepository<Category>
+public interface ICategoryRepository : IGenericRepository<CategoryEntity>
 {
 }

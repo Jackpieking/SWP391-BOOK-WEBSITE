@@ -1,6 +1,6 @@
 using System;
 
-namespace MangaManagementAPI.Models;
+namespace DataAccessLayer.Models;
 
 public class ReviewComicModel
 {

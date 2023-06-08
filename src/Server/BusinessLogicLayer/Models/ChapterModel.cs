@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MangaManagementAPI.Models;
+namespace DataAccessLayer.Models;
 
 public class ChapterModel
 {

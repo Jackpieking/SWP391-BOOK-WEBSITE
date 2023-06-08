@@ -1,4 +1,4 @@
-﻿namespace MangaManagementAPI.Options;
+﻿namespace DataAccessLayer.Options;
 
 public class DatabaseOptions
 {

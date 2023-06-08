@@ -1,13 +1,13 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation.Base;
-using MangaManagementAPI.Data.Entites;
+using DataAccessLayer.Data.Entites;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
-public class ChapterImageRepository : GenericRepository<ChapterImage>, IChapterImageRepository
+public class ChapterImageRepository : GenericRepository<ChapterImageEntity>, IChapterImageRepository
 {
-	public ChapterImageRepository(DbSet<ChapterImage> dbSet) : base(dbSet)
+	public ChapterImageRepository(DbSet<ChapterImageEntity> dbSet) : base(dbSet)
 	{
 	}
 }

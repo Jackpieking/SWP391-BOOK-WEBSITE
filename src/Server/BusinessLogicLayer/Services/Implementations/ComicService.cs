@@ -1,6 +1,6 @@
 ﻿using BusinessLogicLayer.Services.Contracts;
 using DataAccessLayer.UnitOfWorks.Contracts;
-using MangaManagementAPI.Models;
+using DataAccessLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

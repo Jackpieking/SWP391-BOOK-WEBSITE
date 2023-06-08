@@ -1,12 +1,10 @@
-﻿using DataAccessLayer.Data.EntityConfigurations;
+﻿using DataAccessLayer.Data.Entites;
+using DataAccessLayer.Data.EntityConfigurations;
 using DataAccessLayer.Data.EntityDataSeedings;
-using MangaManagementAPI.Data.Entites;
-using MangaManagementAPI.Data.EntityConfigurations;
-using MangaManagementAPI.Data.EntityDataSeedings;
-using MangaManagementAPI.Data.ModelDataSeedings;
+using DataAccessLayer.Data.ModelDataSeedings;
 using Microsoft.EntityFrameworkCore;
 
-namespace MangaManagementAPI.Data;
+namespace DataAccessLayer.Data;
 
 public class MangaContext : DbContext
 {
@@ -14,27 +12,27 @@ public class MangaContext : DbContext
     /// Representation of each table in the Manga database
     /// </summary>
     #region DbSet
-    public DbSet<UserInfo> UserInfos { get; set; }
+    public DbSet<UserInfoEntity> UserInfos { get; set; }
 
-    public DbSet<TransactionsHistory> TransactionsHistories { get; set; }
+    public DbSet<TransactionsHistoryEntity> TransactionsHistories { get; set; }
 
-    public DbSet<Category> Categories { get; set; }
+    public DbSet<CategoryEntity> Categories { get; set; }
 
-    public DbSet<Chapter> Chapters { get; set; }
+    public DbSet<ChapterEntity> Chapters { get; set; }
 
-    public DbSet<ChapterImage> ChapterImages { get; set; }
+    public DbSet<ChapterImageEntity> ChapterImages { get; set; }
 
-    public DbSet<Comic> Comics { get; set; }
+    public DbSet<ComicEntity> Comics { get; set; }
 
-    public DbSet<ComicSaving> ComicSavings { get; set; }
+    public DbSet<ComicSavingEntity> ComicSavings { get; set; }
 
-    public DbSet<ReviewChapter> ReviewChapters { get; set; }
+    public DbSet<ReviewChapterEntity> ReviewChapters { get; set; }
 
-    public DbSet<ReviewComic> ReviewComics { get; set; }
+    public DbSet<ReviewComicEntity> ReviewComics { get; set; }
 
-    public DbSet<ReadingHistory> ReadingHistories { get; set; }
+    public DbSet<ReadingHistoryEntity> ReadingHistories { get; set; }
 
-    public DbSet<ComicCategory> ComicCategories { get; set; }
+    public DbSet<ComicCategoryEntity> ComicCategories { get; set; }
     #endregion
 
     public MangaContext(DbContextOptions options) : base(options) { }
@@ -46,19 +44,19 @@ public class MangaContext : DbContext
 		 */
         #region EntityConfiguration
         modelBuilder
-            .ApplyConfiguration(configuration: new UserInfoConfiguration())
-            .ApplyConfiguration(configuration: new TransactionsHistoryConfiguration())
-            .ApplyConfiguration(configuration: new ReviewComicConfiguration())
-            .ApplyConfiguration(configuration: new ReviewChapterConfiguration())
-            .ApplyConfiguration(configuration: new ReadingHistoryConfiguration())
-            .ApplyConfiguration(configuration: new ComicSavingConfiguration())
-            .ApplyConfiguration(configuration: new ComicCategoryConfiguration())
-            .ApplyConfiguration(configuration: new ComicConfiguration())
-            .ApplyConfiguration(configuration: new ChapterImageConfiguration())
-            .ApplyConfiguration(configuration: new ChapterConfiguration())
-            .ApplyConfiguration(configuration: new CategoryConfiguration())
-            .ApplyConfiguration(configuration: new PublisherConfiguration())
-            .ApplyConfiguration(configuration: new BuyingHistoryConfiguration());
+            .ApplyConfiguration(configuration: new UserInfoEntityConfiguration())
+            .ApplyConfiguration(configuration: new TransactionsHistoryEntityConfiguration())
+            .ApplyConfiguration(configuration: new ReviewComicEntityConfiguration())
+            .ApplyConfiguration(configuration: new ReviewChapterEntityConfiguration())
+            .ApplyConfiguration(configuration: new ReadingHistoryEntityConfiguration())
+            .ApplyConfiguration(configuration: new ComicSavingEntityConfiguration())
+            .ApplyConfiguration(configuration: new ComicCategoryEntityConfiguration())
+            .ApplyConfiguration(configuration: new ComicEntityConfiguration())
+            .ApplyConfiguration(configuration: new ChapterImageEntityConfiguration())
+            .ApplyConfiguration(configuration: new ChapterEntityConfiguration())
+            .ApplyConfiguration(configuration: new CategoryEntityConfiguration())
+            .ApplyConfiguration(configuration: new PublisherEntityConfiguration())
+            .ApplyConfiguration(configuration: new BuyingHistoryEntityConfiguration());
         #endregion
 
         /**
@@ -66,18 +64,18 @@ public class MangaContext : DbContext
 		 */
         #region EntityDataSeeding
         modelBuilder
-            .ApplyConfiguration(configuration: new UserInfoDataSeeding())
-            .ApplyConfiguration(configuration: new TransactionHistoryDataSeeding())
-            .ApplyConfiguration(configuration: new ReviewComicDataSeeding())
-            .ApplyConfiguration(configuration: new ReviewChapterDataSeeding())
-            .ApplyConfiguration(configuration: new ReadingHistoryDataSeeding())
-            .ApplyConfiguration(configuration: new ComicSavingDataSeeding())
-            .ApplyConfiguration(configuration: new ComicDataSeeding())
-            .ApplyConfiguration(configuration: new ComicCategoryDataSeeding())
-            .ApplyConfiguration(configuration: new ChapterImageDataSeeding())
-            .ApplyConfiguration(configuration: new ChapterDataSeeding())
-            .ApplyConfiguration(configuration: new CategoryDataSeeding())
-            .ApplyConfiguration(configuration: new PublisherDataSeeding());
+            .ApplyConfiguration(configuration: new UserInfoEntityDataSeeding())
+            .ApplyConfiguration(configuration: new TransactionHistoryEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ReviewComicEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ReviewChapterEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ReadingHistoryEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ComicSavingEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ComicEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ComicCategoryEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ChapterImageEntityDataSeeding())
+            .ApplyConfiguration(configuration: new ChapterEntityDataSeeding())
+            .ApplyConfiguration(configuration: new CategoryEntityDataSeeding())
+            .ApplyConfiguration(configuration: new PublisherEntityDataSeeding());
         #endregion
     }
 }

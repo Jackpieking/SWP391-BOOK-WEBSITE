@@ -1,11 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-#nullable disable
-
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
-namespace MangaManagementAPI.Migrations
+namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
     public partial class Delete_default_constraint_and_modify_requirement_of_foreign_key : Migration

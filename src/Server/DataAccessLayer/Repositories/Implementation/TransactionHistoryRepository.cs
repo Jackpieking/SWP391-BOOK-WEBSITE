@@ -1,13 +1,13 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation.Base;
-using MangaManagementAPI.Data.Entites;
+using DataAccessLayer.Data.Entites;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
-public class TransactionHistoryRepository : GenericRepository<TransactionsHistory>, ITransactionRepository
+public class TransactionHistoryRepository : GenericRepository<TransactionsHistoryEntity>, ITransactionRepository
 {
-	public TransactionHistoryRepository(DbSet<TransactionsHistory> dbSet) : base(dbSet)
+	public TransactionHistoryRepository(DbSet<TransactionsHistoryEntity> dbSet) : base(dbSet)
 	{
 	}
 }

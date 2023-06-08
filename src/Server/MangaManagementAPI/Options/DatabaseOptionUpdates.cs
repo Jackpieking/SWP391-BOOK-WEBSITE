@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace MangaManagementAPI.Options
+namespace DataAccessLayer.Options
 {
 	public class DatabaseOptionUpdates : IConfigureOptions<DatabaseOptions>
 	{

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace MangaManagementAPI.Migrations
+namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
     public partial class Modify_Seed_Data : Migration

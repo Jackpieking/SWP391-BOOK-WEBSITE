@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MangaManagementAPI.DTO.Outgoing;
+namespace DataAccessLayer.DTO.Outgoing;
 
 public class GetAllComicAction_Out_Dto
 {

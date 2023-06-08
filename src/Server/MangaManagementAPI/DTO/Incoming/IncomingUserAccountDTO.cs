@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MangaManagementAPI.DTO.Incoming;
+namespace DataAccessLayer.DTO.Incoming;
 
 public class IncomingUserAccountDTO
 {

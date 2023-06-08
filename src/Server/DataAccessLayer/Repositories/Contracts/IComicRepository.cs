@@ -1,11 +1,11 @@
 ﻿using DataAccessLayer.Repositories.Contracts.Base;
-using MangaManagementAPI.Data.Entites;
+using DataAccessLayer.Data.Entites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
-public interface IComicRepository : IGenericRepository<Comic>
+public interface IComicRepository : IGenericRepository<ComicEntity>
 {
-    Task<IEnumerable<Comic>> GetAllComicAsync();
+    Task<IEnumerable<ComicEntity>> GetAllComicAsync();
 }

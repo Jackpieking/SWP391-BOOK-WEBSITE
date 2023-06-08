@@ -1,9 +1,9 @@
 ﻿using BusinessLogicLayer.Services.Contracts;
 using BusinessLogicLayer.Services.Implementations;
+using DataAccessLayer.Data;
+using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
-using MangaManagementAPI.Data;
-using MangaManagementAPI.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

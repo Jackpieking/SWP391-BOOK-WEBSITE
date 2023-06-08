@@ -1,13 +1,13 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation.Base;
-using MangaManagementAPI.Data.Entites;
+using DataAccessLayer.Data.Entites;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
-public class ReviewComicRepository : GenericRepository<ReviewComic>, IReviewComicRepository
+public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IReviewComicRepository
 {
-	public ReviewComicRepository(DbSet<ReviewComic> dbSet) : base(dbSet)
+	public ReviewComicRepository(DbSet<ReviewComicEntity> dbSet) : base(dbSet)
 	{
 	}
 }

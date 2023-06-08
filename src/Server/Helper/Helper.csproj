@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ObjectMappers\" />
+    <Folder Include="ObjectMappers\EntityToModel\" />
+    <Folder Include="ObjectMappers\ModelToDto\" />
+    <Folder Include="ObjectMappers\DtoToModel\" />
   </ItemGroup>
 
   <ItemGroup>

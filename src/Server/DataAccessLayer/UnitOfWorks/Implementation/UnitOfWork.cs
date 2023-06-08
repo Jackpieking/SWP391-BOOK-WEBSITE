@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation;
 using DataAccessLayer.UnitOfWorks.Contracts;
-using MangaManagementAPI.Data;
+using DataAccessLayer.Data;
 using System.Threading;
 using System.Threading.Tasks;
 

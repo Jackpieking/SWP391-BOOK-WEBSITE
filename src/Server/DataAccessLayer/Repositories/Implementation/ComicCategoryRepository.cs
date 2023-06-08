@@ -1,13 +1,13 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation.Base;
-using MangaManagementAPI.Data.Entites;
+using DataAccessLayer.Data.Entites;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
-public class ComicCategoryRepository : GenericRepository<ComicCategory>, IComicCategoryRepository
+public class ComicCategoryRepository : GenericRepository<ComicCategoryEntity>, IComicCategoryRepository
 {
-	public ComicCategoryRepository(DbSet<ComicCategory> dbSet) : base(dbSet)
+	public ComicCategoryRepository(DbSet<ComicCategoryEntity> dbSet) : base(dbSet)
 	{
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Services.Contracts;
-using MangaManagementAPI.DTO.Outgoing;
+using DataAccessLayer.DTO.Outgoing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace MangaManagementAPI.Controllers;
+namespace DataAccessLayer.Controllers;
 
 [Consumes(contentType: Application.Json)]
 [Produces(contentType: Application.Json)]
