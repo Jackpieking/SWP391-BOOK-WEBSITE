@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Helper.Helpers;
+namespace Helper.Extensions;
 
 public static class ExtensionMethod
 {

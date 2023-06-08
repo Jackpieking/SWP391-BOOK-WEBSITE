@@ -3,17 +3,18 @@ using System;
 using MangaManagementAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MangaManagementAPI.Migrations
 {
     [DbContext(typeof(MangaContext))]
-    partial class MangaContextModelSnapshot : ModelSnapshot
+    [Migration("20230608081559_Delete_default_constraint_and_modify_requirement_of_foreign_key")]
+    partial class Delete_default_constraint_and_modify_requirement_of_foreign_key
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

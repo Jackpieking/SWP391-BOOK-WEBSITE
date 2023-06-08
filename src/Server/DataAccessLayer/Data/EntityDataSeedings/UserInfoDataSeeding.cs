@@ -1,5 +1,5 @@
-﻿using MangaManagementAPI.Data.Entites;
-using MangaManagementAPI.Helpers;
+﻿using Helper.DefinedEnums;
+using MangaManagementAPI.Data.Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;

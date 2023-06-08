@@ -1,4 +1,4 @@
-﻿using MangaManagementAPI.Helpers;
+﻿using Helper.DefinedEnums;
 using System;
 using System.Collections.Generic;
 

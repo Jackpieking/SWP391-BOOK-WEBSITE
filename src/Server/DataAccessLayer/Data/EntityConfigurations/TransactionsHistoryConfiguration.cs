@@ -1,55 +1,44 @@
 using MangaManagementAPI.Data.Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace MangaManagementAPI.Data.EntityConfigurations;
 
 public class TransactionsHistoryConfiguration : IEntityTypeConfiguration<TransactionsHistory>
 {
-	/// <summary>
-	/// Configure TransactionsHistory table fiels and relationships
-	/// </summary>
-	/// <param name="builder"></param>
-	public void Configure(EntityTypeBuilder<TransactionsHistory> builder)
-	{
-		const string TableName = "transaction_history";
-		const string NUMERIC_6_0 = "NUMERIC(6, 0)";
-		const string GEN_RANDOM_UUID = "gen_random_uuid()";
-		const string NOW = "now()";
+    /// <summary>
+    /// Configure TransactionsHistory table fiels and relationships
+    /// </summary>
+    /// <param name="builder"></param>
+    public void Configure(EntityTypeBuilder<TransactionsHistory> builder)
+    {
+        const string TableName = "transaction_history";
+        const string NUMERIC_6_0 = "NUMERIC(6, 0)";
+        const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
-		builder.ToTable(name: TableName);
+        builder.ToTable(name: TableName);
 
-		//primary key: ID
-		builder.HasKey(keyExpression: transaction => transaction.TransactionIdentifier);
+        //primary key: ID
+        builder.HasKey(keyExpression: transaction => transaction.TransactionIdentifier);
 
-		builder
-			.Property(propertyExpression: transactionHistory => transactionHistory.TransactionIdentifier)
-			.HasDefaultValueSql(sql: GEN_RANDOM_UUID);
+        builder
+            .Property(propertyExpression: transactionHistory => transactionHistory.TransactionIdentifier)
+            .HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
-		//field: Amount
-		builder
-			.Property(propertyExpression: transaction => transaction.Amount)
-			.HasColumnType(typeName: NUMERIC_6_0)
-			.HasDefaultValue(value: default(double))
-			.IsRequired();
+        //field: Amount
+        builder
+            .Property(propertyExpression: transaction => transaction.Amount)
+            .HasColumnType(typeName: NUMERIC_6_0)
+            .IsRequired();
 
-		//field: EarnedCoin
-		builder
-			.Property(propertyExpression: transaction => transaction.EarnedCoin)
-			.HasDefaultValue(value: default(int))
-			.IsRequired();
+        //field: EarnedCoin
+        builder
+            .Property(propertyExpression: transaction => transaction.EarnedCoin)
+            .IsRequired();
 
-		//field: Date
-		builder
-			.Property(propertyExpression: transaction => transaction.Date)
-			.HasDefaultValueSql(sql: NOW)
-			.IsRequired();
-
-		//Foreign Key: UserIdentifier
-		builder
-			.Property(propertyExpression: transaction => transaction.UserIdentifier)
-			.HasDefaultValue(value: Guid.Empty)
-			.IsRequired();
-	}
+        //field: Date
+        builder
+            .Property(propertyExpression: transaction => transaction.Date)
+            .IsRequired();
+    }
 }
