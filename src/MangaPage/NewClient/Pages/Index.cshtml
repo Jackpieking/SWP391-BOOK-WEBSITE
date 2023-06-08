@@ -1,0 +1,366 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Manganexus";
+}
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="header__logo">
+                    <a href="./index.html">
+                        <img src="image/logo.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="header__nav">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="active"><a href="./index.html">Trang chủ</a></li>
+                            <li><a href="./categories.html">Hạng mục</a></li>
+                            <li><a href="./blog.html">Blog</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="header__right">
+                    <a href="#" class="search-switch"><span class="icon_search search__icon"></span></a>
+                    <a href="./login.html"><span class="icon_profile profile__icon"></span></a>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+    </div>
+</header>
+<!-- Header End -->
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="hero__slider owl-carousel">
+            @{
+                var allComicCount = Model.ComicService.Comics.LongCount();
+                var displayComicCount = allComicCount >= 6 ? 6 : allComicCount;
+                var autoDecrement = displayComicCount;
+            }
+            @foreach (var comic in Model.ComicService.Comics)
+            {
+                <div class="hero__items set-bg" data-setbg="image/comic/comic_avatar/@comic.Avatar">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="hero__text">
+                                @*Category here*@
+                                <div class="label">Category</div>
+                                <h2>@comic.Name</h2>
+                                <p>Description</p>
+                                <a href="./anime-details.html">
+                                    <span>
+                                        Read now
+                                        <i class="fa fa-angle-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="trending__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Đang hot</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="./anime-details.html" class="primary-btn">
+                                    View All <span class="arrow_right"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var recentlyAddComic in @Model.ComicService.Comics)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="ep__style">@recentlyAddComic.LatestChapter</div>
+                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.Avatar">
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            <li>Manga</li>
+                                        </ul>
+                                        <h5><a href="./anime-details.html">@recentlyAddComic.Name</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            if (autoDecrement == 1)
+                            {
+                                autoDecrement = displayComicCount;
+                                break;
+                            }
+
+                            autoDecrement -= 1;
+                        }
+                    </div>
+                </div>
+                <div class="popular__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Truyện mới được thêm</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var recentlyAddComic in @Model.ComicService.Comics)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="ep__style">@recentlyAddComic.LatestChapter</div>
+                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.Avatar">
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            <li>Manga</li>
+                                        </ul>
+                                        <h5><a href="./anime-details.html">@recentlyAddComic.Name</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            if (autoDecrement == 1)
+                            {
+                                autoDecrement = displayComicCount;
+                                break;
+                            }
+
+                            autoDecrement -= 1;
+                        }
+                    </div>
+                </div>
+                <div class="recent__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Tất cả</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var recentlyAddComic in @Model.ComicService.Comics)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="ep__style">@recentlyAddComic.LatestChapter</div>
+                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.Avatar">
+                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            <li>Manga</li>
+                                        </ul>
+                                        <h5><a href="./anime-details.html">@recentlyAddComic.Name</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            if (autoDecrement == 1)
+                            {
+                                autoDecrement = displayComicCount;
+                                break;
+                            }
+
+                            autoDecrement -= 1;
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="product__sidebar">
+                    <div class="product__sidebar__view">
+                        <div class="section-title">
+                            <h5>Top Views</h5>
+                        </div>
+                        <ul class="filter__controls">
+                            <li class="active" data-filter="*">Day</li>
+                            <li data-filter=".week">Week</li>
+                            <li data-filter=".month">Month</li>
+                            <li data-filter=".years">Years</li>
+                        </ul>
+                        <div class="filter__gallery">
+                            <div class="product__sidebar__view__item set-bg mix day years"
+                                    data-setbg="img/sidebar/tv-1.jpg">
+                                <div class="ep">18 / ?</div>
+                                <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                <h5><a href="./anime-details.html">Boruto: Naruto next generations</a></h5>
+                            </div>
+                            <div class="product__sidebar__view__item set-bg mix month week"
+                                    data-setbg="img/sidebar/tv-2.jpg">
+                                <div class="ep">18 / ?</div>
+                                <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                <h5><a href="./anime-details.html">The Seven Deadly Sins: Wrath of the Gods</a></h5>
+                            </div>
+                            <div class="product__sidebar__view__item set-bg mix week years"
+                                    data-setbg="img/sidebar/tv-3.jpg">
+                                <div class="ep">18 / ?</div>
+                                <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                <h5>
+                                    <a href="./anime-details.html">
+                                        Sword art online alicization war of
+                                        underworld
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="product__sidebar__view__item set-bg mix years month"
+                                    data-setbg="img/sidebar/tv-4.jpg">
+                                <div class="ep">18 / ?</div>
+                                <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                <h5>
+                                    <a href="./anime-details.html">
+                                        Fate/stay night: Heaven's Feel I. presage
+                                        flower
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="product__sidebar__view__item set-bg mix day"
+                                    data-setbg="img/sidebar/tv-5.jpg">
+                                <div class="ep">18 / ?</div>
+                                <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                <h5><a href="./anime-details.html">Fate stay night unlimited blade works</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product__sidebar__comment">
+                        <div class="section-title">
+                            <h5>New Comment</h5>
+                        </div>
+                        <div class="product__sidebar__comment__item">
+                            <div class="product__sidebar__comment__item__pic">
+                                <img src="img/sidebar/comment-1.jpg" alt="">
+                            </div>
+                            <div class="product__sidebar__comment__item__text">
+                                <ul>
+                                    <li>Active</li>
+                                    <li>Manga</li>
+                                </ul>
+                                <h5><a href="./anime-details.html">The Seven Deadly Sins: Wrath of the Gods</a></h5>
+                                <span><i class="fa fa-eye"></i> 19.141 Viewes</span>
+                            </div>
+                        </div>
+                        <div class="product__sidebar__comment__item">
+                            <div class="product__sidebar__comment__item__pic">
+                                <img src="img/sidebar/comment-2.jpg" alt="">
+                            </div>
+                            <div class="product__sidebar__comment__item__text">
+                                <ul>
+                                    <li>Active</li>
+                                    <li>Manga</li>
+                                </ul>
+                                <h5><a href="./anime-details.html">Shirogane Tamashii hen Kouhan sen</a></h5>
+                                <span><i class="fa fa-eye"></i> 19.141 Viewes</span>
+                            </div>
+                        </div>
+                        <div class="product__sidebar__comment__item">
+                            <div class="product__sidebar__comment__item__pic">
+                                <img src="img/sidebar/comment-3.jpg" alt="">
+                            </div>
+                            <div class="product__sidebar__comment__item__text">
+                                <ul>
+                                    <li>Active</li>
+                                    <li>Manga</li>
+                                </ul>
+                                <h5><a href="./anime-details.html">Kizumonogatari III: Reiket su-hen</a></h5>
+                                <span><i class="fa fa-eye"></i> 19.141 Viewes</span>
+                            </div>
+                        </div>
+                        <div class="product__sidebar__comment__item">
+                            <div class="product__sidebar__comment__item__pic">
+                                <img src="img/sidebar/comment-4.jpg" alt="">
+                            </div>
+                            <div class="product__sidebar__comment__item__text">
+                                <ul>
+                                    <li>Active</li>
+                                    <li>Manga</li>
+                                </ul>
+                                <h5><a href="./anime-details.html">Monogatari Series: Second Season</a></h5>
+                                <span><i class="fa fa-eye"></i> 19.141 Viewes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="page-up">
+        <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="footer__logo">
+                    <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="footer__nav">
+                    <ul>
+                        <li class="active"><a href="./index.html">Homepage</a></li>
+                        <li><a href="./categories.html">Categories</a></li>
+                        <li><a href="./blog.html">Our Blog</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+<!-- Search model Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch"><i class="icon_close"></i></div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search model end -->

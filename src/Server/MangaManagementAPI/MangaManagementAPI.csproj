@@ -19,8 +19,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTO\Outgoing\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
