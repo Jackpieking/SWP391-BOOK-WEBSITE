@@ -13,34 +13,21 @@ public class ComicCategoryEntityToComicCategoryModelProfile : Profile
     {
         CreateMap<ComicCategoryEntity, ComicCategoryModel>()
         #region Member mapping
-            //CategoryIdentifier
-            .ForMember(
-                destinationMember: userInfoEntity => userInfoEntity.CategoryIdentifier,
-                memberOptions: option =>
-                {
-                    option.MapFrom(mapExpression: source => source.CategoryIdentifier);
-                })
-            //ComicIdentifier
-            .ForMember(
-                destinationMember: userInfoEntity => userInfoEntity.ComicIdentifier,
-                memberOptions: option =>
-                {
-                    option.MapFrom(mapExpression: source => source.ComicIdentifier);
-                })
             //CategoryModel
             .ForMember(
-                destinationMember: userInfoEntity => userInfoEntity.CategoryModel,
+                destinationMember: comicCategoryEntity => comicCategoryEntity.CategoryModel,
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source => source.CategoryEntity);
                 })
             //ComicModel
             .ForMember(
-                destinationMember: userInfoEntity => userInfoEntity.ComicModel,
+                destinationMember: comicCategoryEntity => comicCategoryEntity.ComicModel,
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source => source.ComicEntity);
-                });
+                })
         #endregion
+        .ReverseMap();
     }
 }
