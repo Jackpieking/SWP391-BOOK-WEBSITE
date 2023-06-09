@@ -54,7 +54,8 @@ public class TransactionHistoryEntityToTransactionHistoryModelProfile : Profile
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source => source.UserEntity);
-                });
+                })
         #endregion
+        .ReverseMap();
     }
 }
