@@ -3,6 +3,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
+using Mapper.ModelAndDto;
 using Mapper.ModelToEntity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,8 @@ services
     .AddScoped<ComicService>()
     .AddScoped<ReadingHistoryService>()
     .AddAutoMapper(typeof(ComicEntityToComicModelProfile),
-                   typeof(ReviewComicEntityToReviewComicModelProfile))
+                   typeof(ReviewComicEntityToReviewComicModelProfile),
+                   typeof(ComicModelToGetAllComicDtoProfile))
     .ConfigureOptions<DatabaseOptionUpdates>()
     .AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
     {

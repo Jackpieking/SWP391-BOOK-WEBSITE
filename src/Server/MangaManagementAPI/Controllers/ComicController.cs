@@ -49,13 +49,7 @@ public class ComicController : ControllerBase
 
             foreach (var comicJoinComicReviewModel in comicJoinComicReviewModels)
             {
-                GetAllComicAction_Out_Dto getAllComicDto = new()
-                {
-                    ComicName = comicJoinComicReviewModel.ComicName,
-                    ComicLatestChapter = comicJoinComicReviewModel.ComicLatestChapter,
-                    ReviewCount = comicJoinComicReviewModel.ReviewComicModels.Count,
-                    ComicAvatar = comicJoinComicReviewModel.ComicAvatar
-                };
+                var getAllComicDto = _mapper.Map<GetAllComicAction_Out_Dto>(source: comicJoinComicReviewModel);
 
                 foreach (var readingHistoryJoinChapterModel in readingHistoryJoinChapterModels)
                 {

@@ -18,7 +18,6 @@ public class ReadingHistoryRepository : GenericRepository<ReadingHistoryEntity>,
         return _dbSet
             .Select(readingHistoryEntity => new ReadingHistoryEntity
             {
-                ChapterIdentifier = readingHistoryEntity.ChapterIdentifier,
                 ChapterEntity = readingHistoryEntity.ChapterEntity
             })
             .AsEnumerable();

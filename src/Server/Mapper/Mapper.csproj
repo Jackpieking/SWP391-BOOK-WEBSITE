@@ -28,8 +28,4 @@
     <ProjectReference Include="..\Models\Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ModelAndDto\" />
-  </ItemGroup>
-
 </Project>
