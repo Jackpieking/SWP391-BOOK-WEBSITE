@@ -6,14 +6,4 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="ObjectMappers\EntityToModel\" />
-    <Folder Include="ObjectMappers\ModelToDto\" />
-    <Folder Include="ObjectMappers\DtoToModel\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-  </ItemGroup>
-
 </Project>

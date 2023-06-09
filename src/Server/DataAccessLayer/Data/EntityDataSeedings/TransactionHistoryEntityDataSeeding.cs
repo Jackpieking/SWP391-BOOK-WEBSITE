@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Data.Entites;
+﻿using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -23,25 +23,25 @@ public class TransactionHistoryEntityDataSeeding : IEntityTypeConfiguration<Tran
             new()
             {
                 TransactionIdentifier = Guid.NewGuid(),
-                Amount = 100000,
-                Coin = 100,
-                Date = DateTime.UtcNow,
+                TransactionAmount = 100000,
+                TransactionCoin = 100,
+                TransactionDate = DateTime.UtcNow,
                 UserIdentifier = new(g: "2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
             },
             new()
             {
                 TransactionIdentifier = Guid.NewGuid(),
-                Amount = 50000,
-                Coin = 50,
-                Date = DateTime.UtcNow,
+                TransactionAmount = 50000,
+                TransactionCoin = 50,
+                TransactionDate = DateTime.UtcNow,
                 UserIdentifier = new(g: "2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
             },
             new()
             {
                 TransactionIdentifier = Guid.NewGuid(),
-                Amount = 200000,
-                Coin = 200,
-                Date = DateTime.UtcNow,
+                TransactionAmount = 200000,
+                TransactionCoin = 200,
+                TransactionDate = DateTime.UtcNow,
                 UserIdentifier = new(g: "1ef67686-f4ad-48f2-b56c-c828ec53a8d5")
             }
         };

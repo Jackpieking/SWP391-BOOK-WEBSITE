@@ -1,4 +1,4 @@
-using DataAccessLayer.Data.Entites;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,14 +24,14 @@ public class ReviewComicEntityConfiguration : IEntityTypeConfiguration<ReviewCom
             reviewComic.ComicIdentifier
         });
 
-        //field: RatingStar
+        //field: ComicRatingStar
         builder
-            .Property(propertyExpression: reviewComic => reviewComic.RatingStar)
+            .Property(propertyExpression: reviewComic => reviewComic.ComicRatingStar)
             .IsRequired();
 
-        //field: Comment
+        //field: ComicComment
         builder
-            .Property(propertyExpression: reviewComic => reviewComic.Comment)
+            .Property(propertyExpression: reviewComic => reviewComic.ComicComment)
             .HasColumnType(typeName: VARCHAR_200)
             .IsRequired();
 

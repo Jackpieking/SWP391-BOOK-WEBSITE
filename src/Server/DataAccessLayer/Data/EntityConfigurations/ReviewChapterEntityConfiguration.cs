@@ -1,4 +1,4 @@
-using DataAccessLayer.Data.Entites;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,14 +24,14 @@ public class ReviewChapterEntityConfiguration : IEntityTypeConfiguration<ReviewC
             reviewChapter.ChapterIdentifier
         });
 
-        //field: RatingStar
+        //field: ChapterRatingStar
         builder
-            .Property(propertyExpression: reviewChapter => reviewChapter.RatingStar)
+            .Property(propertyExpression: reviewChapter => reviewChapter.ChapterRatingStar)
             .IsRequired();
 
-        //field: Comment
+        //field: ChapterComment
         builder
-            .Property(propertyExpression: reviewChapter => reviewChapter.Comment)
+            .Property(propertyExpression: reviewChapter => reviewChapter.ChapterComment)
             .HasColumnType(typeName: VARCHAR_200)
             .IsRequired();
 

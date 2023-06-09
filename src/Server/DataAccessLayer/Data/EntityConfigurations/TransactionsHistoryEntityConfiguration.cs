@@ -1,4 +1,4 @@
-using DataAccessLayer.Data.Entites;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,27 +18,27 @@ public class TransactionsHistoryEntityConfiguration : IEntityTypeConfiguration<T
 
         builder.ToTable(name: TableName);
 
-        //primary key: ID
+        //primary key: TransactionIdentifier
         builder.HasKey(keyExpression: transaction => transaction.TransactionIdentifier);
 
         builder
             .Property(propertyExpression: transactionHistory => transactionHistory.TransactionIdentifier)
             .HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
-        //field: Amount
+        //field: TransactionAmount
         builder
-            .Property(propertyExpression: transaction => transaction.Amount)
+            .Property(propertyExpression: transaction => transaction.TransactionAmount)
             .HasColumnType(typeName: NUMERIC_6_0)
             .IsRequired();
 
-        //field: EarnedCoin
+        //field: TransactionCoin
         builder
-            .Property(propertyExpression: transaction => transaction.Coin)
+            .Property(propertyExpression: transaction => transaction.TransactionCoin)
             .IsRequired();
 
-        //field: Date
+        //field: TransactionDate
         builder
-            .Property(propertyExpression: transaction => transaction.Date)
+            .Property(propertyExpression: transaction => transaction.TransactionDate)
             .IsRequired();
     }
 }

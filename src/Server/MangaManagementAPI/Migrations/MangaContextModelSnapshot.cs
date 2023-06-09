@@ -22,7 +22,7 @@ namespace DataAccessLayer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DataAccessLayer.Data.Entites.BuyingHistory", b =>
+            modelBuilder.Entity("Entity.BuyingHistoryEntity", b =>
                 {
                     b.Property<Guid>("UserIdentifer")
                         .HasColumnType("uuid");
@@ -30,7 +30,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<Guid>("ChapterIdentifer")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("BuyingDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("UserIdentifer", "ChapterIdentifer");
@@ -38,48 +38,18 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("buying_history", (string)null);
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Data.Entites.Publisher", b =>
-                {
-                    b.Property<Guid>("PublisherIdentifier")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("gen_random_uuid()");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(200)");
-
-                    b.Property<Guid>("UserIdentifier")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("PublisherIdentifier");
-
-                    b.HasIndex("UserIdentifier")
-                        .IsUnique();
-
-                    b.ToTable("publisher", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224"),
-                            Description = "admin kiêm người đăng",
-                            UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
-                        });
-                });
-
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Category", b =>
+            modelBuilder.Entity("Entity.CategoryEntity", b =>
                 {
                     b.Property<Guid>("CategoryIdentifier")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CategoryDescription")
                         .IsRequired()
                         .HasColumnType("VARCHAR(500)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("VARCHAR(50)");
 
@@ -91,48 +61,48 @@ namespace DataAccessLayer.Migrations
                         new
                         {
                             CategoryIdentifier = new Guid("414e65b4-1949-48ce-a764-26fb66e95550"),
-                            Description = "Thể loại theo sau một tội ác (như giết người hoặc mất tích) từ thời điểm nó được thực hiện cho đến thời điểm nó được giải quyết",
-                            Name = "Mystery"
+                            CategoryDescription = "Thể loại theo sau một tội ác (như giết người hoặc mất tích) từ thời điểm nó được thực hiện cho đến thời điểm nó được giải quyết",
+                            CategoryName = "Mystery"
                         },
                         new
                         {
                             CategoryIdentifier = new Guid("1b9d5460-4c32-4703-b4bd-c52e5fb6e943"),
-                            Description = "Thường đề cập đến một loại tiểu thuyết thuộc thể loại viễn tưởng tập trung chủ yếu vào mối quan hệ và tình yêu lãng mạn giữa hai người, và thường có một kết thúc lạc quan và thỏa mãn về mặt cảm xúc",
-                            Name = "Romance"
+                            CategoryDescription = "Thường đề cập đến một loại tiểu thuyết thuộc thể loại viễn tưởng tập trung chủ yếu vào mối quan hệ và tình yêu lãng mạn giữa hai người, và thường có một kết thúc lạc quan và thỏa mãn về mặt cảm xúc",
+                            CategoryName = "Romance"
                         },
                         new
                         {
                             CategoryIdentifier = new Guid("ad2149ef-ac21-4759-88d8-e586e850e299"),
-                            Description = "Lấy bối cảnh là một giai đoạn lịch sử và cố gắng truyền đạt tinh thần, cách cư xử và điều kiện xã hội của một thời đại đã qua với các chi tiết hiện thực và sự trung thực (trong một số trường hợp chỉ là sự trung thực bề ngoài) với sự thật lịch sử",
-                            Name = "Historical"
+                            CategoryDescription = "Lấy bối cảnh là một giai đoạn lịch sử và cố gắng truyền đạt tinh thần, cách cư xử và điều kiện xã hội của một thời đại đã qua với các chi tiết hiện thực và sự trung thực (trong một số trường hợp chỉ là sự trung thực bề ngoài) với sự thật lịch sử",
+                            CategoryName = "Historical"
                         },
                         new
                         {
                             CategoryIdentifier = new Guid("edc6e266-7b95-4723-a420-8e51a78d99bc"),
-                            Description = "Phương thức cụ thể của tiểu thuyết được thể hiện trong biểu diễn: một vở kịch, opera, kịch câm, múa ba lê, v.v., được trình diễn trong rạp hát, hoặc trên đài phát thanh hoặc truyền hình",
-                            Name = "Drama"
+                            CategoryDescription = "Phương thức cụ thể của tiểu thuyết được thể hiện trong biểu diễn: một vở kịch, opera, kịch câm, múa ba lê, v.v., được trình diễn trong rạp hát, hoặc trên đài phát thanh hoặc truyền hình",
+                            CategoryName = "Drama"
                         },
                         new
                         {
                             CategoryIdentifier = new Guid("72522ef6-6633-4519-872b-36bc0675e328"),
-                            Description = "Một thể loại của tiểu thuyết suy đoán liên quan đến các yếu tố ma thuật, thường lấy bối cảnh trong một vũ trụ hư cấu và đôi khi lấy cảm hứng từ thần thoại và văn hóa dân gian",
-                            Name = "Fantasy"
+                            CategoryDescription = "Một thể loại của tiểu thuyết suy đoán liên quan đến các yếu tố ma thuật, thường lấy bối cảnh trong một vũ trụ hư cấu và đôi khi lấy cảm hứng từ thần thoại và văn hóa dân gian",
+                            CategoryName = "Fantasy"
                         },
                         new
                         {
                             CategoryIdentifier = new Guid("ddebafec-b0a5-49c6-ac6c-261079080dce"),
-                            Description = "Thể loại bao gồm những cuốn sách mà nhân vật chính thực hiện một cuộc hành trình sử thi, về mặt cá nhân hoặc địa lý",
-                            Name = "Adventure"
+                            CategoryDescription = "Thể loại bao gồm những cuốn sách mà nhân vật chính thực hiện một cuộc hành trình sử thi, về mặt cá nhân hoặc địa lý",
+                            CategoryName = "Adventure"
                         },
                         new
                         {
                             CategoryIdentifier = new Guid("322dbf35-54aa-416e-b121-42fc20b9d94b"),
-                            Description = "Một thể loại biên tập truyện tranh Nhật Bản nhắm đến đối tượng là các cậu bé vị thành niên",
-                            Name = "Shounen"
+                            CategoryDescription = "Một thể loại biên tập truyện tranh Nhật Bản nhắm đến đối tượng là các cậu bé vị thành niên",
+                            CategoryName = "Shounen"
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Chapter", b =>
+            modelBuilder.Entity("Entity.ChapterEntity", b =>
                 {
                     b.Property<Guid>("ChapterIdentifier")
                         .ValueGeneratedOnAdd()
@@ -142,11 +112,11 @@ namespace DataAccessLayer.Migrations
                     b.Property<double>("ChapterNumber")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("ChapterUnlockPrice")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("ComicIdentifier")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("UnlockPrice")
-                        .HasColumnType("integer");
 
                     b.HasKey("ChapterIdentifier");
 
@@ -159,40 +129,40 @@ namespace DataAccessLayer.Migrations
                         {
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
                             ChapterNumber = 1.0,
-                            ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
-                            UnlockPrice = 0
+                            ChapterUnlockPrice = 0,
+                            ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787")
                         },
                         new
                         {
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
                             ChapterNumber = 1.0,
-                            ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
-                            UnlockPrice = 0
+                            ChapterUnlockPrice = 0,
+                            ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3")
                         },
                         new
                         {
                             ChapterIdentifier = new Guid("94f15b6a-a89b-4546-82a4-98098bab83ff"),
                             ChapterNumber = 1.0,
-                            ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
-                            UnlockPrice = 0
+                            ChapterUnlockPrice = 0,
+                            ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f")
                         },
                         new
                         {
                             ChapterIdentifier = new Guid("ab9d0e26-4c6e-40a8-97e3-1d5d012b4d80"),
                             ChapterNumber = 1.0,
-                            ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
-                            UnlockPrice = 0
+                            ChapterUnlockPrice = 0,
+                            ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f")
                         },
                         new
                         {
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ChapterNumber = 1.0,
-                            ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
-                            UnlockPrice = 0
+                            ChapterUnlockPrice = 0,
+                            ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e")
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ChapterImage", b =>
+            modelBuilder.Entity("Entity.ChapterImageEntity", b =>
                 {
                     b.Property<Guid>("ImageIdentifier")
                         .ValueGeneratedOnAdd()
@@ -575,94 +545,7 @@ namespace DataAccessLayer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Comic", b =>
-                {
-                    b.Property<Guid>("ComicIdentifier")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("gen_random_uuid()");
-
-                    b.Property<string>("Avatar")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(50)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(1000)");
-
-                    b.Property<double>("LatestChapter")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(50)");
-
-                    b.Property<DateOnly>("PublishDate")
-                        .HasColumnType("date");
-
-                    b.Property<Guid>("PublisherIdentifier")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ComicIdentifier");
-
-                    b.HasIndex("PublisherIdentifier");
-
-                    b.ToTable("comic", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
-                            Avatar = "Thanh_Gươm_Diệt_Quỷ.jpg",
-                            Description = "Kimetsu no Yaiba – Tanjirou là con cả của gia đình vừa mất cha. Một ngày nọ, Tanjirou đến thăm thị trấn khác để bán than, khi đêm về cậu ở nghỉ tại nhà người khác thay vì về nhà vì lời đồn thổi về ác quỷ luôn rình mò gần núi vào buổi tối. Khi cậu về nhà vào ngày hôm sau, bị kịch đang đợi chờ cậu…",
-                            LatestChapter = 205.59999999999999,
-                            Name = "Thanh Gươm Diệt Quỷ",
-                            PublishDate = new DateOnly(2016, 11, 2),
-                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
-                        },
-                        new
-                        {
-                            ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
-                            Avatar = "Hội_Pháp_Sư_Nhiệm_Vụ_Trăm_Năm.jpg",
-                            Description = "Tuyện tiếp nối chap 545 của Fairy Tail, khi nhóm Natsu đi làm nhiệm vụ trăm năm.",
-                            LatestChapter = 132.0,
-                            Name = "Hội Pháp Sư Nhiệm Vụ Trăm Năm",
-                            PublishDate = new DateOnly(2018, 7, 25),
-                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
-                        },
-                        new
-                        {
-                            ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
-                            Avatar = "Onepunch_Man.jpg",
-                            Description = "Onepunch-Man là một Manga thể loại siêu anh hùng với đặc trưng phồng tôm đấm phát chết luôn… Lol!!! Nhân vật chính trong Onepunch-man là Saitama, một con người mà nhìn đâu cũng thấy “tầm thường”, từ khuôn mặt vô hồn, cái đầu trọc lóc, cho tới thể hình long tong. Tuy nhiên, con người nhìn thì tầm thường này lại chuyên giải quyết những vấn đề hết sức bất thường. Anh thực chất chính là một siêu anh hùng luôn tìm kiếm cho mình một đối thủ mạnh. Vấn đề là, cứ mỗi lần bắt gặp một đối thủ tiềm năng, thì đối thủ nào cũng như đối thủ nào, chỉ ăn một đấm của anh là… chết luôn. Liệu rằng Onepunch-Man Saitaman có thể tìm được cho mình một kẻ ác dữ dằn đủ sức đấu với anh? Hãy theo bước Saitama trên con đường một đấm tìm đối cực kỳ hài hước của anh!!\r\n\r\n",
-                            LatestChapter = 232.0,
-                            Name = "Onepunch Man",
-                            PublishDate = new DateOnly(2018, 3, 26),
-                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
-                        },
-                        new
-                        {
-                            ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
-                            Avatar = "Black_Clover_Thế_Giới_Phép_Thuật.jpg",
-                            Description = "Aster và Yuno là hai đứa trẻ bị bỏ rơi ở nhà thờ và cùng nhau lớn lên tại đó. Khi còn nhỏ, chúng đã hứa với nhau xem ai sẽ trở thành Ma pháp vương tiếp theo. Thế nhưng, khi cả hai lớn lên, mọi sô chuyện đã thay đổi. Yuno là thiên tài ma pháp với sức mạnh tuyệt đỉnh trong khi Aster lại không thể sử dụng ma pháp và cố gắng bù đắp bằng thể lực. Khi cả hai được nhận sách phép vào tuổi 15, Yuno đã được ban cuốn sách phép cỏ bốn bá (trong khi đa số là cỏ ba lá) mà Aster lại không có cuốn nào. Tuy nhiên, khi Yuno bị đe dọa, sự thật về sức mạnh của Aster đã được giải mã- cậu ta được ban cuốn sách phép cỏ năm lá, cuốn sách phá ma thuật màu đen. Bấy giờ, hai người bạn trẻ đang hướng ra thế giới, cùng chung mục tiêu.",
-                            LatestChapter = 360.0,
-                            Name = "Black Clover - Thế Giới Phép Thuật",
-                            PublishDate = new DateOnly(2015, 4, 18),
-                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
-                        },
-                        new
-                        {
-                            ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
-                            Avatar = "Thần_Y_Đích_Nữ.jpg",
-                            Description = "Một nữ quân y đặc cấp trong bộ đội lục chiến, thánh thủ trung tây y, tinh thông võ thuật, tiễn thuật vì một tai nạn trên không mà xuyên không về lịch sử. Mang trên mình mối thù, nàng sẽ làm gì đây?",
-                            LatestChapter = 302.0,
-                            Name = "Thần Y Đích Nữ",
-                            PublishDate = new DateOnly(2016, 5, 26),
-                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
-                        });
-                });
-
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ComicCategory", b =>
+            modelBuilder.Entity("Entity.ComicCategoryEntity", b =>
                 {
                     b.Property<Guid>("CategoryIdentifier")
                         .HasColumnType("uuid");
@@ -754,7 +637,94 @@ namespace DataAccessLayer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ComicSaving", b =>
+            modelBuilder.Entity("Entity.ComicEntity", b =>
+                {
+                    b.Property<Guid>("ComicIdentifier")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<string>("ComicAvatar")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(50)");
+
+                    b.Property<string>("ComicDescription")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(1000)");
+
+                    b.Property<double>("ComicLatestChapter")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("ComicName")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(50)");
+
+                    b.Property<DateOnly>("ComicPublishDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("PublisherIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ComicIdentifier");
+
+                    b.HasIndex("PublisherIdentifier");
+
+                    b.ToTable("comic", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
+                            ComicAvatar = "Thanh_Gươm_Diệt_Quỷ.jpg",
+                            ComicDescription = "Kimetsu no Yaiba – Tanjirou là con cả của gia đình vừa mất cha. Một ngày nọ, Tanjirou đến thăm thị trấn khác để bán than, khi đêm về cậu ở nghỉ tại nhà người khác thay vì về nhà vì lời đồn thổi về ác quỷ luôn rình mò gần núi vào buổi tối. Khi cậu về nhà vào ngày hôm sau, bị kịch đang đợi chờ cậu…",
+                            ComicLatestChapter = 205.59999999999999,
+                            ComicName = "Thanh Gươm Diệt Quỷ",
+                            ComicPublishDate = new DateOnly(2016, 11, 2),
+                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
+                        },
+                        new
+                        {
+                            ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
+                            ComicAvatar = "Hội_Pháp_Sư_Nhiệm_Vụ_Trăm_Năm.jpg",
+                            ComicDescription = "Tuyện tiếp nối chap 545 của Fairy Tail, khi nhóm Natsu đi làm nhiệm vụ trăm năm.",
+                            ComicLatestChapter = 132.0,
+                            ComicName = "Hội Pháp Sư Nhiệm Vụ Trăm Năm",
+                            ComicPublishDate = new DateOnly(2018, 7, 25),
+                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
+                        },
+                        new
+                        {
+                            ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
+                            ComicAvatar = "Onepunch_Man.jpg",
+                            ComicDescription = "Onepunch-Man là một Manga thể loại siêu anh hùng với đặc trưng phồng tôm đấm phát chết luôn… Lol!!! Nhân vật chính trong Onepunch-man là Saitama, một con người mà nhìn đâu cũng thấy “tầm thường”, từ khuôn mặt vô hồn, cái đầu trọc lóc, cho tới thể hình long tong. Tuy nhiên, con người nhìn thì tầm thường này lại chuyên giải quyết những vấn đề hết sức bất thường. Anh thực chất chính là một siêu anh hùng luôn tìm kiếm cho mình một đối thủ mạnh. Vấn đề là, cứ mỗi lần bắt gặp một đối thủ tiềm năng, thì đối thủ nào cũng như đối thủ nào, chỉ ăn một đấm của anh là… chết luôn. Liệu rằng Onepunch-Man Saitaman có thể tìm được cho mình một kẻ ác dữ dằn đủ sức đấu với anh? Hãy theo bước Saitama trên con đường một đấm tìm đối cực kỳ hài hước của anh!!\r\n\r\n",
+                            ComicLatestChapter = 232.0,
+                            ComicName = "Onepunch Man",
+                            ComicPublishDate = new DateOnly(2018, 3, 26),
+                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
+                        },
+                        new
+                        {
+                            ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
+                            ComicAvatar = "Black_Clover_Thế_Giới_Phép_Thuật.jpg",
+                            ComicDescription = "Aster và Yuno là hai đứa trẻ bị bỏ rơi ở nhà thờ và cùng nhau lớn lên tại đó. Khi còn nhỏ, chúng đã hứa với nhau xem ai sẽ trở thành Ma pháp vương tiếp theo. Thế nhưng, khi cả hai lớn lên, mọi sô chuyện đã thay đổi. Yuno là thiên tài ma pháp với sức mạnh tuyệt đỉnh trong khi Aster lại không thể sử dụng ma pháp và cố gắng bù đắp bằng thể lực. Khi cả hai được nhận sách phép vào tuổi 15, Yuno đã được ban cuốn sách phép cỏ bốn bá (trong khi đa số là cỏ ba lá) mà Aster lại không có cuốn nào. Tuy nhiên, khi Yuno bị đe dọa, sự thật về sức mạnh của Aster đã được giải mã- cậu ta được ban cuốn sách phép cỏ năm lá, cuốn sách phá ma thuật màu đen. Bấy giờ, hai người bạn trẻ đang hướng ra thế giới, cùng chung mục tiêu.",
+                            ComicLatestChapter = 360.0,
+                            ComicName = "Black Clover - Thế Giới Phép Thuật",
+                            ComicPublishDate = new DateOnly(2015, 4, 18),
+                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
+                        },
+                        new
+                        {
+                            ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
+                            ComicAvatar = "Thần_Y_Đích_Nữ.jpg",
+                            ComicDescription = "Một nữ quân y đặc cấp trong bộ đội lục chiến, thánh thủ trung tây y, tinh thông võ thuật, tiễn thuật vì một tai nạn trên không mà xuyên không về lịch sử. Mang trên mình mối thù, nàng sẽ làm gì đây?",
+                            ComicLatestChapter = 302.0,
+                            ComicName = "Thần Y Đích Nữ",
+                            ComicPublishDate = new DateOnly(2016, 5, 26),
+                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
+                        });
+                });
+
+            modelBuilder.Entity("Entity.ComicSavingEntity", b =>
                 {
                     b.Property<Guid>("ComicIdentifier")
                         .HasColumnType("uuid");
@@ -776,35 +746,65 @@ namespace DataAccessLayer.Migrations
                         {
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5199)
+                            SavingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1563)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5202)
+                            SavingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1565)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5203)
+                            SavingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1566)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5205)
+                            SavingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1568)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5206)
+                            SavingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1570)
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ReadingHistory", b =>
+            modelBuilder.Entity("Entity.PublisherEntity", b =>
+                {
+                    b.Property<Guid>("PublisherIdentifier")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<string>("PublisherDescription")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(200)");
+
+                    b.Property<Guid>("UserIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("PublisherIdentifier");
+
+                    b.HasIndex("UserIdentifier")
+                        .IsUnique();
+
+                    b.ToTable("publisher", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224"),
+                            PublisherDescription = "admin kiêm người đăng",
+                            UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
+                        });
+                });
+
+            modelBuilder.Entity("Entity.ReadingHistoryEntity", b =>
                 {
                     b.Property<Guid>("UserIdentifier")
                         .HasColumnType("uuid");
@@ -826,35 +826,35 @@ namespace DataAccessLayer.Migrations
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            LastReadingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5083)
+                            LastReadingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1493)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
-                            LastReadingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5129)
+                            LastReadingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1497)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
-                            LastReadingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5131)
+                            LastReadingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1499)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            LastReadingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5133)
+                            LastReadingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1501)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
-                            LastReadingTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5134)
+                            LastReadingTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1503)
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ReviewChapter", b =>
+            modelBuilder.Entity("Entity.ReviewChapterEntity", b =>
                 {
                     b.Property<Guid>("UserIdentifier")
                         .HasColumnType("uuid");
@@ -862,11 +862,11 @@ namespace DataAccessLayer.Migrations
                     b.Property<Guid>("ChapterIdentifier")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("ChapterComment")
                         .IsRequired()
                         .HasColumnType("VARCHAR(200)");
 
-                    b.Property<short>("RatingStar")
+                    b.Property<short>("ChapterRatingStar")
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("ReviewTime")
@@ -883,45 +883,45 @@ namespace DataAccessLayer.Migrations
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            Comment = "Nó hay vãi",
-                            RatingStar = (short)5,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4999)
+                            ChapterComment = "Nó hay vãi",
+                            ChapterRatingStar = (short)5,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1415)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            Comment = "Art đẹp, nhưng cốt truyện không hay",
-                            RatingStar = (short)3,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5003)
+                            ChapterComment = "Art đẹp, nhưng cốt truyện không hay",
+                            ChapterRatingStar = (short)3,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1419)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
-                            Comment = "Art tạm tạm",
-                            RatingStar = (short)2,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5005)
+                            ChapterComment = "Art tạm tạm",
+                            ChapterRatingStar = (short)2,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1422)
                         },
                         new
                         {
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
                             ChapterIdentifier = new Guid("ab9d0e26-4c6e-40a8-97e3-1d5d012b4d80"),
-                            Comment = "Meh không ổn tí nào",
-                            RatingStar = (short)1,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5006)
+                            ChapterComment = "Meh không ổn tí nào",
+                            ChapterRatingStar = (short)1,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1424)
                         },
                         new
                         {
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
                             ChapterIdentifier = new Guid("94f15b6a-a89b-4546-82a4-98098bab83ff"),
-                            Comment = "Được phết",
-                            RatingStar = (short)4,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(5008)
+                            ChapterComment = "Được phết",
+                            ChapterRatingStar = (short)4,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1425)
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ReviewComic", b =>
+            modelBuilder.Entity("Entity.ReviewComicEntity", b =>
                 {
                     b.Property<Guid>("UserIdentifier")
                         .HasColumnType("uuid");
@@ -929,11 +929,11 @@ namespace DataAccessLayer.Migrations
                     b.Property<Guid>("ComicIdentifier")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("ComicComment")
                         .IsRequired()
                         .HasColumnType("VARCHAR(200)");
 
-                    b.Property<short>("RatingStar")
+                    b.Property<short>("ComicRatingStar")
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("ReviewTime")
@@ -950,58 +950,58 @@ namespace DataAccessLayer.Migrations
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
-                            Comment = "Tổng quan về cốt truyện ở mức ổn",
-                            RatingStar = (short)3,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4920)
+                            ComicComment = "Tổng quan về cốt truyện ở mức ổn",
+                            ComicRatingStar = (short)3,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1331)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
-                            Comment = "Cốt truyện khó hiểu",
-                            RatingStar = (short)2,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4925)
+                            ComicComment = "Cốt truyện khó hiểu",
+                            ComicRatingStar = (short)2,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1338)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
-                            Comment = "Cười vãi",
-                            RatingStar = (short)5,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4927)
+                            ComicComment = "Cười vãi",
+                            ComicRatingStar = (short)5,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1339)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
-                            Comment = "Tui muốn gud end",
-                            RatingStar = (short)1,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4928)
+                            ComicComment = "Tui muốn gud end",
+                            ComicRatingStar = (short)1,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1341)
                         },
                         new
                         {
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
-                            Comment = "Đánh nhau ít nhưng tổng quan vẫn OK",
-                            RatingStar = (short)4,
-                            ReviewTime = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4930)
+                            ComicComment = "Đánh nhau ít nhưng tổng quan vẫn OK",
+                            ComicRatingStar = (short)4,
+                            ReviewTime = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(1343)
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.TransactionsHistory", b =>
+            modelBuilder.Entity("Entity.TransactionsHistoryEntity", b =>
                 {
                     b.Property<Guid>("TransactionIdentifier")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<double>("Amount")
+                    b.Property<double>("TransactionAmount")
                         .HasColumnType("NUMERIC(6, 0)");
 
-                    b.Property<int>("Coin")
+                    b.Property<int>("TransactionCoin")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserIdentifier")
@@ -1016,330 +1016,330 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            TransactionIdentifier = new Guid("0e7687cc-491a-4e65-a4f1-1480aeb42675"),
-                            Amount = 100000.0,
-                            Coin = 100,
-                            Date = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4851),
+                            TransactionIdentifier = new Guid("f0aa18ba-776d-45ce-a5a6-9e5577b0e38b"),
+                            TransactionAmount = 100000.0,
+                            TransactionCoin = 100,
+                            TransactionDate = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(382),
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
                         },
                         new
                         {
-                            TransactionIdentifier = new Guid("7204b04a-9b40-4e79-824b-9a3536634ff4"),
-                            Amount = 50000.0,
-                            Coin = 50,
-                            Date = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4856),
+                            TransactionIdentifier = new Guid("53ac7590-281d-48f7-9fe5-4bb80b4c25b1"),
+                            TransactionAmount = 50000.0,
+                            TransactionCoin = 50,
+                            TransactionDate = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(388),
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
                         },
                         new
                         {
-                            TransactionIdentifier = new Guid("dd97131a-c97b-4494-8767-98db0baeaaeb"),
-                            Amount = 200000.0,
-                            Coin = 200,
-                            Date = new DateTime(2023, 6, 8, 8, 34, 53, 413, DateTimeKind.Utc).AddTicks(4858),
+                            TransactionIdentifier = new Guid("618d6c1c-e1a5-41cc-b41a-5b8e2914a8a3"),
+                            TransactionAmount = 200000.0,
+                            TransactionCoin = 200,
+                            TransactionDate = new DateTime(2023, 6, 9, 8, 2, 55, 895, DateTimeKind.Utc).AddTicks(390),
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5")
                         });
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.UserInfo", b =>
+            modelBuilder.Entity("Entity.UserEntity", b =>
                 {
                     b.Property<Guid>("UserIdentifier")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<int>("AccountBalance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Avatar")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(50)");
-
-                    b.Property<DateOnly>("BirthDay")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(30)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(30)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("VARCHAR(50)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<int>("UserAccountBalance")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserAvatar")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(50)");
+
+                    b.Property<DateOnly>("UserBirthday")
+                        .HasColumnType("date");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(30)");
+
+                    b.Property<string>("UserFullName")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(30)");
+
+                    b.Property<int>("UserGender")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserPhoneNumber")
                         .IsRequired()
                         .HasColumnType("VARCHAR(13)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("VARCHAR(50)");
 
                     b.HasKey("UserIdentifier");
 
-                    b.ToTable("user_access", (string)null);
+                    b.ToTable("user", (string)null);
 
                     b.HasData(
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
-                            AccountBalance = 30,
-                            Avatar = "User_Empty.png",
-                            BirthDay = new DateOnly(2003, 12, 3),
-                            Email = "ledinhdangkhoa10a9@gmail.com",
-                            FullName = "Lê Đình Đăng Khoa",
-                            Gender = 0,
                             Password = "Jackpie2003",
-                            PhoneNumber = "0706042250",
-                            UserName = "Jackpieking"
+                            UserAccountBalance = 30,
+                            UserAvatar = "User_Empty.png",
+                            UserBirthday = new DateOnly(2003, 12, 3),
+                            UserEmail = "ledinhdangkhoa10a9@gmail.com",
+                            UserFullName = "Lê Đình Đăng Khoa",
+                            UserGender = 0,
+                            UserPhoneNumber = "0706042250",
+                            Username = "Jackpieking"
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
-                            AccountBalance = 100,
-                            Avatar = "User_Empty.png",
-                            BirthDay = new DateOnly(2003, 4, 2),
-                            Email = "nghialt123@gmail.com",
-                            FullName = "Lee Trung Nghĩa",
-                            Gender = 0,
                             Password = "NghiaLe123",
-                            PhoneNumber = "0903591555",
-                            UserName = "wibulord"
+                            UserAccountBalance = 100,
+                            UserAvatar = "User_Empty.png",
+                            UserBirthday = new DateOnly(2003, 4, 2),
+                            UserEmail = "nghialt123@gmail.com",
+                            UserFullName = "Lee Trung Nghĩa",
+                            UserGender = 0,
+                            UserPhoneNumber = "0903591555",
+                            Username = "wibulord"
                         },
                         new
                         {
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            AccountBalance = 0,
-                            Avatar = "User_Empty.png",
-                            BirthDay = new DateOnly(2003, 8, 15),
-                            Email = "lamvd@gmail.com",
-                            FullName = "Võ Đại Lâm",
-                            Gender = 0,
                             Password = "Lam123",
-                            PhoneNumber = "02343883333",
-                            UserName = "lamvd"
+                            UserAccountBalance = 0,
+                            UserAvatar = "User_Empty.png",
+                            UserBirthday = new DateOnly(2003, 8, 15),
+                            UserEmail = "lamvd@gmail.com",
+                            UserFullName = "Võ Đại Lâm",
+                            UserGender = 0,
+                            UserPhoneNumber = "02343883333",
+                            Username = "lamvd"
                         });
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Data.Entites.BuyingHistory", b =>
+            modelBuilder.Entity("Entity.BuyingHistoryEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Chapter", "Chapter")
-                        .WithMany("BuyingHistories")
+                    b.HasOne("Entity.ChapterEntity", "ChapterEntity")
+                        .WithMany("BuyingHistoryEntities")
                         .HasForeignKey("UserIdentifer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithMany("BuyingHistories")
+                    b.HasOne("Entity.UserEntity", "UserInfoEntity")
+                        .WithMany("BuyingHistorieEntities")
                         .HasForeignKey("UserIdentifer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Chapter");
+                    b.Navigation("ChapterEntity");
 
-                    b.Navigation("UserInfo");
+                    b.Navigation("UserInfoEntity");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Data.Entites.Publisher", b =>
+            modelBuilder.Entity("Entity.ChapterEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithOne("Publisher")
-                        .HasForeignKey("DataAccessLayer.Data.Entites.Publisher", "UserIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserInfo");
-                });
-
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Chapter", b =>
-                {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Comic", "Comic")
-                        .WithMany("Chapters")
+                    b.HasOne("Entity.ComicEntity", "ComicEntity")
+                        .WithMany("ChapterEntities")
                         .HasForeignKey("ComicIdentifier")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Comic");
+                    b.Navigation("ComicEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ChapterImage", b =>
+            modelBuilder.Entity("Entity.ChapterImageEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Chapter", "Chapter")
-                        .WithMany("ChapterImages")
+                    b.HasOne("Entity.ChapterEntity", "ChapterEntity")
+                        .WithMany("ChapterImageEntities")
                         .HasForeignKey("ChapterIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Chapter");
+                    b.Navigation("ChapterEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Comic", b =>
+            modelBuilder.Entity("Entity.ComicCategoryEntity", b =>
                 {
-                    b.HasOne("DataAccessLayer.Data.Entites.Publisher", "Publisher")
-                        .WithMany("Comics")
+                    b.HasOne("Entity.CategoryEntity", "CategoryEntity")
+                        .WithMany("ComicCategoryEntities")
+                        .HasForeignKey("CategoryIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Entity.ComicEntity", "ComicEntity")
+                        .WithMany("ComicCategoryEntities")
+                        .HasForeignKey("ComicIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryEntity");
+
+                    b.Navigation("ComicEntity");
+                });
+
+            modelBuilder.Entity("Entity.ComicEntity", b =>
+                {
+                    b.HasOne("Entity.PublisherEntity", "PublisherEntity")
+                        .WithMany("ComicEntities")
                         .HasForeignKey("PublisherIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Publisher");
+                    b.Navigation("PublisherEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ComicCategory", b =>
+            modelBuilder.Entity("Entity.ComicSavingEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Category", "Category")
-                        .WithMany("ComicCategories")
-                        .HasForeignKey("CategoryIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MangaManagementAPI.Data.Entites.Comic", "Comic")
-                        .WithMany("ComicCategories")
+                    b.HasOne("Entity.ComicEntity", "ComicEntity")
+                        .WithMany("ComicSavingEntities")
                         .HasForeignKey("ComicIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-
-                    b.Navigation("Comic");
-                });
-
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ComicSaving", b =>
-                {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Comic", "Comic")
-                        .WithMany("ComicSavings")
-                        .HasForeignKey("ComicIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithMany("ComicSavings")
+                    b.HasOne("Entity.UserEntity", "UserEntity")
+                        .WithMany("ComicSavingEntities")
                         .HasForeignKey("UserIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comic");
+                    b.Navigation("ComicEntity");
 
-                    b.Navigation("UserInfo");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ReadingHistory", b =>
+            modelBuilder.Entity("Entity.PublisherEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Chapter", "Chapter")
-                        .WithMany("ReadingHistories")
+                    b.HasOne("Entity.UserEntity", "UserEntity")
+                        .WithOne("PublisherEntity")
+                        .HasForeignKey("Entity.PublisherEntity", "UserIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserEntity");
+                });
+
+            modelBuilder.Entity("Entity.ReadingHistoryEntity", b =>
+                {
+                    b.HasOne("Entity.ChapterEntity", "ChapterEntity")
+                        .WithMany("ReadingHistoryEntities")
                         .HasForeignKey("ChapterIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithMany("ReadingHistories")
+                    b.HasOne("Entity.UserEntity", "UserEntity")
+                        .WithMany("ReadingHistorieEntities")
                         .HasForeignKey("UserIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Chapter");
+                    b.Navigation("ChapterEntity");
 
-                    b.Navigation("UserInfo");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ReviewChapter", b =>
+            modelBuilder.Entity("Entity.ReviewChapterEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Chapter", "Chapter")
-                        .WithMany("ReviewChapters")
+                    b.HasOne("Entity.ChapterEntity", "ChapterEntity")
+                        .WithMany("ReviewChapterEntities")
                         .HasForeignKey("ChapterIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithMany("ReviewChapters")
+                    b.HasOne("Entity.UserEntity", "UserEntity")
+                        .WithMany("ReviewChapterEntities")
                         .HasForeignKey("UserIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Chapter");
+                    b.Navigation("ChapterEntity");
 
-                    b.Navigation("UserInfo");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.ReviewComic", b =>
+            modelBuilder.Entity("Entity.ReviewComicEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.Comic", "Comic")
-                        .WithMany("ReviewComics")
+                    b.HasOne("Entity.ComicEntity", "ComicEntity")
+                        .WithMany("ReviewComicEntities")
                         .HasForeignKey("ComicIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithMany("ReviewComics")
+                    b.HasOne("Entity.UserEntity", "UserEntity")
+                        .WithMany("ReviewComicEntities")
                         .HasForeignKey("UserIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comic");
+                    b.Navigation("ComicEntity");
 
-                    b.Navigation("UserInfo");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.TransactionsHistory", b =>
+            modelBuilder.Entity("Entity.TransactionsHistoryEntity", b =>
                 {
-                    b.HasOne("MangaManagementAPI.Data.Entites.UserInfo", "UserInfo")
-                        .WithMany("TransactionHistories")
+                    b.HasOne("Entity.UserEntity", "UserEntity")
+                        .WithMany("TransactionHistoryEntities")
                         .HasForeignKey("UserIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("UserInfo");
+                    b.Navigation("UserEntity");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Data.Entites.Publisher", b =>
+            modelBuilder.Entity("Entity.CategoryEntity", b =>
                 {
-                    b.Navigation("Comics");
+                    b.Navigation("ComicCategoryEntities");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Category", b =>
+            modelBuilder.Entity("Entity.ChapterEntity", b =>
                 {
-                    b.Navigation("ComicCategories");
+                    b.Navigation("BuyingHistoryEntities");
+
+                    b.Navigation("ChapterImageEntities");
+
+                    b.Navigation("ReadingHistoryEntities");
+
+                    b.Navigation("ReviewChapterEntities");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Chapter", b =>
+            modelBuilder.Entity("Entity.ComicEntity", b =>
                 {
-                    b.Navigation("BuyingHistories");
+                    b.Navigation("ChapterEntities");
 
-                    b.Navigation("ChapterImages");
+                    b.Navigation("ComicCategoryEntities");
 
-                    b.Navigation("ReadingHistories");
+                    b.Navigation("ComicSavingEntities");
 
-                    b.Navigation("ReviewChapters");
+                    b.Navigation("ReviewComicEntities");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.Comic", b =>
+            modelBuilder.Entity("Entity.PublisherEntity", b =>
                 {
-                    b.Navigation("Chapters");
-
-                    b.Navigation("ComicCategories");
-
-                    b.Navigation("ComicSavings");
-
-                    b.Navigation("ReviewComics");
+                    b.Navigation("ComicEntities");
                 });
 
-            modelBuilder.Entity("MangaManagementAPI.Data.Entites.UserInfo", b =>
+            modelBuilder.Entity("Entity.UserEntity", b =>
                 {
-                    b.Navigation("BuyingHistories");
+                    b.Navigation("BuyingHistorieEntities");
 
-                    b.Navigation("ComicSavings");
+                    b.Navigation("ComicSavingEntities");
 
-                    b.Navigation("Publisher");
+                    b.Navigation("PublisherEntity");
 
-                    b.Navigation("ReadingHistories");
+                    b.Navigation("ReadingHistorieEntities");
 
-                    b.Navigation("ReviewChapters");
+                    b.Navigation("ReviewChapterEntities");
 
-                    b.Navigation("ReviewComics");
+                    b.Navigation("ReviewComicEntities");
 
-                    b.Navigation("TransactionHistories");
+                    b.Navigation("TransactionHistoryEntities");
                 });
 #pragma warning restore 612, 618
         }

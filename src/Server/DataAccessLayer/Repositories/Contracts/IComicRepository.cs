@@ -1,5 +1,5 @@
 ﻿using DataAccessLayer.Repositories.Contracts.Base;
-using DataAccessLayer.Data.Entites;
+using Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

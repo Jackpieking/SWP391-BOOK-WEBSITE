@@ -1,4 +1,4 @@
-using DataAccessLayer.Data.Entites;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,15 +27,15 @@ public class CategoryEntityConfiguration : IEntityTypeConfiguration<CategoryEnti
             .Property(propertyExpression: category => category.CategoryIdentifier)
             .HasDefaultValueSql(sql: GEN_RANDOM_UUID);
 
-        //field: Name
+        //field: CategoryName
         builder
-            .Property(propertyExpression: category => category.Name)
+            .Property(propertyExpression: category => category.CategoryName)
             .HasColumnType(typeName: VARCHAR_50)
             .IsRequired();
 
-        //field: Description
+        //field: CategoryDescription
         builder
-            .Property(propertyExpression: category => category.Description)
+            .Property(propertyExpression: category => category.CategoryDescription)
             .HasColumnType(typeName: VARCHAR_500)
             .IsRequired();
 
@@ -46,8 +46,8 @@ public class CategoryEntityConfiguration : IEntityTypeConfiguration<CategoryEnti
 			 */
         //One to Many: Category => ComicCategory
         builder
-            .HasMany(category => category.ComicCategories)
-            .WithOne(comicCategory => comicCategory.Category)
+            .HasMany(category => category.ComicCategoryEntities)
+            .WithOne(comicCategory => comicCategory.CategoryEntity)
             .HasPrincipalKey(category => category.CategoryIdentifier)
             .HasForeignKey(comicCategory => comicCategory.CategoryIdentifier)
             .OnDelete(deleteBehavior: DeleteBehavior.Cascade)

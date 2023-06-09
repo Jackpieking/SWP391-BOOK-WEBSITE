@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Data.Entites;
+﻿using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;

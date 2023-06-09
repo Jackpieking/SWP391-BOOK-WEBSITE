@@ -14,6 +14,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
+//Configure logging
 builder.Host.ConfigureLogging(configureLogging: logging =>
 {
     logging.ClearProviders();
@@ -58,17 +59,8 @@ services
 var app = builder.Build();
 
 //config http/https pipleline
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseExceptionHandler(errorHandlingPath: "/Error");
-    app.UseHsts();
-}
-
 app
+    .UseHsts()
     .UseHttpsRedirection()
     .UseCors()
     .UseRouting();

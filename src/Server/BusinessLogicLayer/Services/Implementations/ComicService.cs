@@ -1,6 +1,6 @@
 ﻿using BusinessLogicLayer.Services.Contracts;
 using DataAccessLayer.UnitOfWorks.Contracts;
-using DataAccessLayer.Models;
+using Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,11 +26,11 @@ public class ComicService : IComicService
             .Select(selector: comic => new ComicModel
             {
                 ComicIdentifier = comic.ComicIdentifier,
-                Name = comic.Name,
-                Description = comic.Description,
-                Avatar = comic.Avatar,
-                PublishDate = comic.PublishDate,
-                LatestChapter = comic.LatestChapter
+                ComicName = comic.ComicName,
+                ComicDescription = comic.ComicDescription,
+                ComicAvatar = comic.ComicAvatar,
+                ComicPublishDate = comic.ComicPublishDate,
+                ComicLatestChapter = comic.ComicLatestChapter
             });
 
     }

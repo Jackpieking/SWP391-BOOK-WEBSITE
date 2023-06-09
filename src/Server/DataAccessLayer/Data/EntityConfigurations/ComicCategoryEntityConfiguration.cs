@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Data.Entites;
+﻿using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +16,7 @@ public class ComicCategoryEntityConfiguration : IEntityTypeConfiguration<ComicCa
 
         builder.ToTable(name: TableName);
 
-        //Primary - foreign key: [CategoriesIdentifier - ComicIdentifier]
+        //Primary - foreign key: [CategoryIdentifier - ComicIdentifier]
         builder.HasKey(keyExpression: comicCategory => new
         {
             comicCategory.CategoryIdentifier,

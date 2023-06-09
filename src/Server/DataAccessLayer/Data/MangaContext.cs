@@ -1,7 +1,7 @@
-﻿using DataAccessLayer.Data.Entites;
-using DataAccessLayer.Data.EntityConfigurations;
+﻿using DataAccessLayer.Data.EntityConfigurations;
 using DataAccessLayer.Data.EntityDataSeedings;
 using DataAccessLayer.Data.ModelDataSeedings;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -12,7 +12,7 @@ public class MangaContext : DbContext
     /// Representation of each table in the Manga database
     /// </summary>
     #region DbSet
-    public DbSet<UserInfoEntity> UserInfos { get; set; }
+    public DbSet<UserEntity> UserInfos { get; set; }
 
     public DbSet<TransactionsHistoryEntity> TransactionsHistories { get; set; }
 
@@ -33,6 +33,10 @@ public class MangaContext : DbContext
     public DbSet<ReadingHistoryEntity> ReadingHistories { get; set; }
 
     public DbSet<ComicCategoryEntity> ComicCategories { get; set; }
+
+    public DbSet<PublisherEntity> PublisherEntities { get; set; }
+
+    public DbSet<BuyingHistoryEntity> BuyingHistoryEntities { get; set; }
     #endregion
 
     public MangaContext(DbContextOptions options) : base(options) { }
@@ -44,7 +48,7 @@ public class MangaContext : DbContext
 		 */
         #region EntityConfiguration
         modelBuilder
-            .ApplyConfiguration(configuration: new UserInfoEntityConfiguration())
+            .ApplyConfiguration(configuration: new UserEntityConfiguration())
             .ApplyConfiguration(configuration: new TransactionsHistoryEntityConfiguration())
             .ApplyConfiguration(configuration: new ReviewComicEntityConfiguration())
             .ApplyConfiguration(configuration: new ReviewChapterEntityConfiguration())
@@ -64,7 +68,7 @@ public class MangaContext : DbContext
 		 */
         #region EntityDataSeeding
         modelBuilder
-            .ApplyConfiguration(configuration: new UserInfoEntityDataSeeding())
+            .ApplyConfiguration(configuration: new UserEntityDataSeeding())
             .ApplyConfiguration(configuration: new TransactionHistoryEntityDataSeeding())
             .ApplyConfiguration(configuration: new ReviewComicEntityDataSeeding())
             .ApplyConfiguration(configuration: new ReviewChapterEntityDataSeeding())

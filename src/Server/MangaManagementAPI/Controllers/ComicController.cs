@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Services.Contracts;
-using DataAccessLayer.DTO.Outgoing;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -40,11 +40,11 @@ public class ComicController : ControllerBase
                 .Select(comicAsModel => new GetAllComicAction_Out_Dto
                 {
                     ComicIdentifier = comicAsModel.ComicIdentifier,
-                    Name = comicAsModel.Name,
-                    Description = comicAsModel.Description,
-                    Avatar = comicAsModel.Avatar,
-                    PublishDate = comicAsModel.PublishDate,
-                    LatestChapter = comicAsModel.LatestChapter
+                    Name = comicAsModel.ComicName,
+                    Description = comicAsModel.ComicDescription,
+                    Avatar = comicAsModel.ComicAvatar,
+                    PublishDate = comicAsModel.ComicPublishDate,
+                    LatestChapter = comicAsModel.ComicLatestChapter
                 }));
         }
         catch (NpgsqlException N_e)

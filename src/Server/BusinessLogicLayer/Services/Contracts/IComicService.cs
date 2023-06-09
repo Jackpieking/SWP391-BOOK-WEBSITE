@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

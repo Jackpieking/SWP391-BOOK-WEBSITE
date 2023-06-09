@@ -1,13 +1,13 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation.Base;
-using DataAccessLayer.Data.Entites;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
 public class CategoryRepository : GenericRepository<CategoryEntity>, ICategoryRepository
 {
-	public CategoryRepository(DbSet<CategoryEntity> dbSet) : base(dbSet)
-	{
-	}
+    public CategoryRepository(DbSet<CategoryEntity> dbSet) : base(dbSet: dbSet)
+    {
+    }
 }
