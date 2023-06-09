@@ -1,9 +1,9 @@
-﻿using BusinessLogicLayer.Services.Contracts;
-using BusinessLogicLayer.Services.Implementations;
+﻿using BusinessLogicLayer.Services;
 using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
+using Mapper.ModelToEntity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +26,10 @@ var services = builder.Services;
 
 services
     .AddScoped<IUnitOfWork, UnitOfWork>()
-    .AddScoped<IComicService, ComicService>()
+    .AddScoped<ComicService>()
+    .AddScoped<ReadingHistoryService>()
+    .AddAutoMapper(typeof(ComicEntityToComicModelProfile),
+                   typeof(ReviewComicEntityToReviewComicModelProfile))
     .ConfigureOptions<DatabaseOptionUpdates>()
     .AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
     {

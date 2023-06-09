@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Services.Contracts;
-using Services.Implementations;
+using Services;
 using System;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
 var services = builder.Services;
 
-services.AddScoped<IComicService, ComicService>();
+services.AddScoped<ComicService>();
 
 services
     .AddHttpClient(

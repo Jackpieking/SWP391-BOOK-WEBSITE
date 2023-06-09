@@ -1,6 +1,6 @@
-﻿namespace DTO;
+namespace Models;
 
-public class GetAllComicAction_Out_Dto
+public class GetAllComicActionModel
 {
     public string ComicName { get; set; }
 

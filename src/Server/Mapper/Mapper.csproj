@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DtoToModel\" />
-    <Folder Include="EntityToModel\" />
-    <Folder Include="ModelToDto\" />
+    <Compile Remove="DtoToModel\**" />
+    <Compile Remove="EntityToModel\**" />
+    <Compile Remove="ModelToDto\**" />
+    <EmbeddedResource Remove="DtoToModel\**" />
+    <EmbeddedResource Remove="EntityToModel\**" />
+    <EmbeddedResource Remove="ModelToDto\**" />
+    <None Remove="DtoToModel\**" />
+    <None Remove="EntityToModel\**" />
+    <None Remove="ModelToDto\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +26,10 @@
     <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
     <ProjectReference Include="..\Models\Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ModelAndDto\" />
   </ItemGroup>
 
 </Project>

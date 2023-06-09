@@ -28,15 +28,15 @@ public class UserEntity
 
     public PublisherEntity PublisherEntity { get; set; }
 
-    public ICollection<TransactionsHistoryEntity> TransactionHistoryEntities { get; set; } = new List<TransactionsHistoryEntity>();
+    public IEnumerable<TransactionsHistoryEntity> TransactionHistoryEntities { get; set; } = new List<TransactionsHistoryEntity>();
 
-    public ICollection<ComicSavingEntity> ComicSavingEntities { get; set; } = new List<ComicSavingEntity>();
+    public IEnumerable<ComicSavingEntity> ComicSavingEntities { get; set; } = new List<ComicSavingEntity>();
 
-    public ICollection<ReadingHistoryEntity> ReadingHistorieEntities { get; set; } = new List<ReadingHistoryEntity>();
+    public IEnumerable<ReadingHistoryEntity> ReadingHistorieEntities { get; set; } = new List<ReadingHistoryEntity>();
 
-    public ICollection<ReviewComicEntity> ReviewComicEntities { get; set; } = new List<ReviewComicEntity>();
+    public IEnumerable<ReviewComicEntity> ReviewComicEntities { get; set; } = new List<ReviewComicEntity>();
 
-    public ICollection<ReviewChapterEntity> ReviewChapterEntities { get; set; } = new List<ReviewChapterEntity>();
+    public IEnumerable<ReviewChapterEntity> ReviewChapterEntities { get; set; } = new List<ReviewChapterEntity>();
 
-    public ICollection<BuyingHistoryEntity> BuyingHistorieEntities { get; set; } = new List<BuyingHistoryEntity>();
+    public IEnumerable<BuyingHistoryEntity> BuyingHistorieEntities { get; set; } = new List<BuyingHistoryEntity>();
 }

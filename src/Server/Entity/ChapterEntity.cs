@@ -15,11 +15,11 @@ public class ChapterEntity
 
     public ComicEntity ComicEntity { get; set; }
 
-    public ICollection<ReviewChapterEntity> ReviewChapterEntities { get; set; } = new List<ReviewChapterEntity>();
+    public IEnumerable<ReviewChapterEntity> ReviewChapterEntities { get; set; } = new List<ReviewChapterEntity>();
 
-    public ICollection<ReadingHistoryEntity> ReadingHistoryEntities { get; set; } = new List<ReadingHistoryEntity>();
+    public IEnumerable<ReadingHistoryEntity> ReadingHistoryEntities { get; set; } = new List<ReadingHistoryEntity>();
 
-    public ICollection<ChapterImageEntity> ChapterImageEntities { get; set; } = new List<ChapterImageEntity>();
+    public IEnumerable<ChapterImageEntity> ChapterImageEntities { get; set; } = new List<ChapterImageEntity>();
 
-    public ICollection<BuyingHistoryEntity> BuyingHistoryEntities { get; set; } = new List<BuyingHistoryEntity>();
+    public IEnumerable<BuyingHistoryEntity> BuyingHistoryEntities { get; set; } = new List<BuyingHistoryEntity>();
 }

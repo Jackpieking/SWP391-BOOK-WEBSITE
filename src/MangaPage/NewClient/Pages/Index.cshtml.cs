@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Models;
 using Newtonsoft.Json;
-using Services.Contracts;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,12 +18,12 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public IComicService ComicService { get; set; }
+    public ComicService ComicService { get; set; }
 
     public IndexModel(
         ILogger<IndexModel> logger,
         IHttpClientFactory httpClientFactory,
-        IComicService comicService)
+        ComicService comicService)
     {
 
         _logger = logger;
@@ -30,7 +31,7 @@ public class IndexModel : PageModel
         ComicService = comicService;
     }
 
-    public async Task OnGet()
+    public async Task<IActionResult> OnGet()
     {
         try
         {
@@ -46,19 +47,27 @@ public class IndexModel : PageModel
 
             JsonSerializer jsonSerializer = new();
 
-            ComicService.Comics = jsonSerializer.Deserialize<IEnumerable<ComicModel>>(reader: jsonReader);
+            ComicService.GetAllComicActionModels = jsonSerializer.Deserialize<IEnumerable<GetAllComicActionModel>>(reader: jsonReader);
+
+            return Page();
         }
         catch (TaskCanceledException TC_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {TC_2.Message}", DateTime.Now, TC_e.Message);
+
+            return NotFound("Error");
         }
         catch (HttpRequestException HR_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
+
+            return NotFound("Error");
         }
         catch (JsonSerializationException JS_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {JS_e.Message}", DateTime.Now, JS_e.Message);
+
+            return NotFound("Error");
         }
     }
 }

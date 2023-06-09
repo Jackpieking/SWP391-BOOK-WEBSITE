@@ -21,11 +21,11 @@ public class ComicEntity
 
     public PublisherEntity PublisherEntity { get; set; }
 
-    public ICollection<ReviewComicEntity> ReviewComicEntities { get; set; } = new List<ReviewComicEntity>();
+    public IEnumerable<ReviewComicEntity> ReviewComicEntities { get; set; } = new List<ReviewComicEntity>();
 
-    public ICollection<ComicSavingEntity> ComicSavingEntities { get; set; } = new List<ComicSavingEntity>();
+    public IEnumerable<ComicSavingEntity> ComicSavingEntities { get; set; } = new List<ComicSavingEntity>();
 
-    public ICollection<ChapterEntity> ChapterEntities { get; set; } = new List<ChapterEntity>();
+    public IEnumerable<ChapterEntity> ChapterEntities { get; set; } = new List<ChapterEntity>();
 
-    public ICollection<ComicCategoryEntity> ComicCategoryEntities { get; set; } = new List<ComicCategoryEntity>();
+    public IEnumerable<ComicCategoryEntity> ComicCategoryEntities { get; set; } = new List<ComicCategoryEntity>();
 }

@@ -697,6 +697,10 @@ ol {
   bottom: 10px;
 }
 
+.comment__icon {
+    margin-right: 3px;  
+}
+
 .product__item__pic .view {
   font-size: 13px;
   color: #ffffff;

@@ -47,19 +47,19 @@
     <div class="container">
         <div class="hero__slider owl-carousel">
             @{
-                var allComicCount = Model.ComicService.Comics.LongCount();
+                var allComicCount = Model.ComicService.GetAllComicActionModels.LongCount();
                 var displayComicCount = allComicCount >= 6 ? 6 : allComicCount;
                 var autoDecrement = displayComicCount;
             }
-            @foreach (var comic in Model.ComicService.Comics)
+            @foreach (var comic in Model.ComicService.GetAllComicActionModels)
             {
-                <div class="hero__items set-bg" data-setbg="image/comic/comic_avatar/@comic.Avatar">
+                <div class="hero__items set-bg" data-setbg="image/comic/comic_avatar/@comic.ComicAvatar">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="hero__text">
                                 @*Category here*@
                                 <div class="label">Category</div>
-                                <h2>@comic.Name</h2>
+                                <h2>@comic.ComicName</h2>
                                 <p>Description</p>
                                 <a href="./anime-details.html">
                                     <span>
@@ -71,6 +71,14 @@
                         </div>
                     </div>
                 </div>
+
+                if (autoDecrement == 3)
+                {
+                    autoDecrement = displayComicCount;
+                    break;
+                }
+
+                autoDecrement -= 1;
             }
         </div>
     </div>
@@ -97,20 +105,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        @foreach (var recentlyAddComic in @Model.ComicService.Comics)
+                        @foreach (var recentlyAddComic in @Model.ComicService.GetAllComicActionModels)
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="ep__style">@recentlyAddComic.LatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.Avatar">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                    <div class="ep__style">@recentlyAddComic.ComicLatestChapter</div>
+                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.ComicAvatar">
+                                        <div class="comment"><i class="fa fa-comments"></i> @recentlyAddComic.ReviewCount</div>
+                                        <div class="view"><i class="fa fa-eye"></i> @recentlyAddComic.NumberOfReaderHasRead</div>
                                     </div>
                                     <div class="product__item__text">
                                         <ul>
                                             <li>Manga</li>
                                         </ul>
-                                        <h5><a href="./anime-details.html">@recentlyAddComic.Name</a></h5>
+                                        <h5><a href="./anime-details.html">@recentlyAddComic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -139,20 +147,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        @foreach (var recentlyAddComic in @Model.ComicService.Comics)
+                        @foreach (var recentlyAddComic in @Model.ComicService.GetAllComicActionModels)
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="ep__style">@recentlyAddComic.LatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.Avatar">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                    <div class="ep__style">@recentlyAddComic.ComicLatestChapter</div>
+                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.ComicAvatar">
+                                        <div class="comment"><i class="fa fa-comments"></i> @recentlyAddComic.ReviewCount</div>
+                                        <div class="view"><i class="fa fa-eye"></i> @recentlyAddComic.NumberOfReaderHasRead</div>
                                     </div>
                                     <div class="product__item__text">
                                         <ul>
                                             <li>Manga</li>
                                         </ul>
-                                        <h5><a href="./anime-details.html">@recentlyAddComic.Name</a></h5>
+                                        <h5><a href="./anime-details.html">@recentlyAddComic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -181,20 +189,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        @foreach (var recentlyAddComic in @Model.ComicService.Comics)
+                        @foreach (var recentlyAddComic in @Model.ComicService.GetAllComicActionModels)
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="ep__style">@recentlyAddComic.LatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.Avatar">
-                                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                    <div class="ep__style">@recentlyAddComic.ComicLatestChapter</div>
+                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@recentlyAddComic.ComicAvatar">
+                                        <div class="comment"><i class="fa fa-comments"></i> @recentlyAddComic.ReviewCount</div>
+                                        <div class="view"><i class="fa fa-eye"></i> @recentlyAddComic.NumberOfReaderHasRead</div>
                                     </div>
                                     <div class="product__item__text">
                                         <ul>
                                             <li>Manga</li>
                                         </ul>
-                                        <h5><a href="./anime-details.html">@recentlyAddComic.Name</a></h5>
+                                        <h5><a href="./anime-details.html">@recentlyAddComic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
