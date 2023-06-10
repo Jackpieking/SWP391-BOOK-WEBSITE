@@ -13,18 +13,26 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     {
     }
 
-    public IEnumerable<ComicEntity> GetAllComicWithReviewComicFromDatabase()
+    /// <summary>
+    /// Select from "comic" table these fields:
+    /// - ComicIdentifier
+    /// - ComicPublishDate
+    /// - ComicName
+    /// - ComicLastestChapter
+    /// - ComicAvatars
+    /// </summary>
+    /// <returns>IEnumerable<ComicEntity></returns>
+    public IEnumerable<ComicEntity> GetAllComicFromDatabase()
     {
         return _dbSet
             .AsSplitQuery()
-            .Select(comicEntity => new ComicEntity
+            .Select(selector: comicEntity => new ComicEntity
             {
                 ComicIdentifier = comicEntity.ComicIdentifier,
+                ComicPublishDate = comicEntity.ComicPublishDate,
                 ComicName = comicEntity.ComicName,
                 ComicLatestChapter = comicEntity.ComicLatestChapter,
-                ComicAvatar = comicEntity.ComicAvatar,
-                ReviewComicEntities = comicEntity.ReviewComicEntities
-                    .Select(reviewComic => new ReviewComicEntity { }),
+                ComicAvatar = comicEntity.ComicAvatar
             })
             .AsEnumerable();
     }

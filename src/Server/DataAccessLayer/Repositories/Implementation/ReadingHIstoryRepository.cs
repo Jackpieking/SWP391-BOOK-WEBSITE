@@ -13,10 +13,15 @@ public class ReadingHistoryRepository : GenericRepository<ReadingHistoryEntity>,
     {
     }
 
+    /// <summary>
+    /// Select from "ReadingHistory" table these fields:
+    /// - All field from "Chapter" table
+    /// </summary>
+    /// <returns>IEnumerable<ReadingHistoryEntity></returns>
     public IEnumerable<ReadingHistoryEntity> GetAllReadingHistoryWithChapterWithComicFromDatabase()
     {
         return _dbSet
-            .Select(readingHistoryEntity => new ReadingHistoryEntity
+            .Select(selector: readingHistoryEntity => new ReadingHistoryEntity
             {
                 ChapterEntity = readingHistoryEntity.ChapterEntity
             })

@@ -3,6 +3,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
+using Helper.ObjectMappers.ModelToEntity;
 using Mapper.ModelAndDto;
 using Mapper.ModelToEntity;
 using Microsoft.AspNetCore.Builder;
@@ -29,8 +30,21 @@ services
     .AddScoped<IUnitOfWork, UnitOfWork>()
     .AddScoped<ComicService>()
     .AddScoped<ReadingHistoryService>()
-    .AddAutoMapper(typeof(ComicEntityToComicModelProfile),
-                   typeof(ReviewComicEntityToReviewComicModelProfile),
+    .AddScoped<ReviewComicService>()
+    .AddAutoMapper(
+                   typeof(UserInfoEntityAndUserInfoModelProfile),
+                   typeof(TransactionHistoryEntityAndTransactionHistoryModelProfile),
+                   typeof(ReviewComicEntityAndReviewComicModelProfile),
+                   typeof(ReviewChapterEntityAndReviewChapterModelProfile),
+                   typeof(ReadingHistoryEntityAndReadingHistoryModelProfile),
+                   typeof(PublisherEntityAndPublisherModelProfile),
+                   typeof(ComicSavingEntityAndComicSavingModelProfile),
+                   typeof(ComicEntityAndComicModelProfile),
+                   typeof(ComicCategoryEntityAndComicCategoryModelProfile),
+                   typeof(ChapterImageEntityAndChapterImageModelProfile),
+                   typeof(ChapterEntityAndChapterModelProfile),
+                   typeof(CategoryEntityAndCategoryModelProfile),
+                   typeof(BuyingHistoryEntityAndBuyingHistoryModelProfile),
                    typeof(ComicModelToGetAllComicDtoProfile))
     .ConfigureOptions<DatabaseOptionUpdates>()
     .AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>

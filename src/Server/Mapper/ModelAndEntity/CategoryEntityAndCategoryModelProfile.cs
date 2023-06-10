@@ -4,12 +4,12 @@ using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class CategoryEntityToCategoryModelProfile : Profile
+public class CategoryEntityAndCategoryModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from CategoryEntity => CategoryModel
     /// </summary>
-    public CategoryEntityToCategoryModelProfile()
+    public CategoryEntityAndCategoryModelProfile()
     {
         CreateMap<CategoryEntity, CategoryModel>()
         #region Member mapping
@@ -19,7 +19,7 @@ public class CategoryEntityToCategoryModelProfile : Profile
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source => source.ComicCategoryEntities);
-                })    
+                })
         #endregion
         .ReverseMap();
     }

@@ -4,12 +4,12 @@ using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class ComicEntityToComicModelProfile : Profile
+public class ComicEntityAndComicModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from ComicEntity => ComicModel
     /// </summary>
-    public ComicEntityToComicModelProfile()
+    public ComicEntityAndComicModelProfile()
     {
         CreateMap<ComicEntity, ComicModel>()
         #region Member mapping

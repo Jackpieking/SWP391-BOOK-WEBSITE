@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using Entity;
-using Microsoft.Extensions.Options;
 using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class ChapterEntityToChapterModelProfile : Profile
+public class ChapterEntityAndChapterModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from ChapterEntity => ChapterModel
     /// </summary>
-    public ChapterEntityToChapterModelProfile()
+    public ChapterEntityAndChapterModelProfile()
     {
         CreateMap<ChapterEntity, ChapterModel>()
         #region Member mapping

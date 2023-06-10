@@ -18,6 +18,10 @@ public class ReadingHistoryService
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get all reading history with reference chapter from database
+    /// </summary>
+    /// <returns>IEnumerable<ReadingHistoryModel></returns>
     public IEnumerable<ReadingHistoryModel> GetAllReadingHistoryWithChapter()
     {
         var readingHistoryWithChapterEntities = _unitOfWork

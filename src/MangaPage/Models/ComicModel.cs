@@ -1,6 +1,6 @@
 namespace Models;
 
-public class GetAllComicActionModel
+public class ComicModel
 {
     public string ComicName { get; set; }
 

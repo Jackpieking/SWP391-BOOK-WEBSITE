@@ -4,12 +4,12 @@ using Model;
 
 namespace Helper.ObjectMappers.ModelToEntity;
 
-public class UserInfoEntityToUserInfoModelProfile : Profile
+public class UserInfoEntityAndUserInfoModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from UserInfoEntity => UserInfoModel
     /// </summary>
-    public UserInfoEntityToUserInfoModelProfile()
+    public UserInfoEntityAndUserInfoModelProfile()
     {
         CreateMap<UserEntity, UserModel>()
         #region Member mapping

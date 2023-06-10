@@ -6,5 +6,5 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicRepository : IGenericRepository<ComicEntity>
 {
-    IEnumerable<ComicEntity> GetAllComicWithReviewComicFromDatabase();
+    IEnumerable<ComicEntity> GetAllComicFromDatabase();
 }

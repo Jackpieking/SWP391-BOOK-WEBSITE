@@ -20,12 +20,12 @@ public class ComicModelToGetAllComicDtoProfile : Profile
                 {
                     option.MapFrom(mapExpression: source => source.ComicName);
                 })
-            //ReviewCount
+            //ComicPublishDate
             .ForMember(
-                destinationMember: destination => destination.ReviewCount,
+                destinationMember: destination => destination.ComicPublishDate,
                 memberOptions: option =>
                 {
-                    option.MapFrom(mapExpression: source => source.ReviewComicModels.Count);
+                    option.MapFrom(mapExpression: source => source.ComicPublishDate);
                 })
             //ComicLastestChapter
             .ForMember(

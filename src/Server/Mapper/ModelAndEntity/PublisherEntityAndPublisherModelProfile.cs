@@ -4,12 +4,12 @@ using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class PublisherEntityToPublisherModelProfile : Profile
+public class PublisherEntityAndPublisherModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from PublisherEntity => PublisherModel
     /// </summary>
-    public PublisherEntityToPublisherModelProfile()
+    public PublisherEntityAndPublisherModelProfile()
     {
         CreateMap<PublisherEntity, PublisherModel>()
         #region Member mapping

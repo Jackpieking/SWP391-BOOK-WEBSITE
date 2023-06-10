@@ -4,12 +4,12 @@ using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class ReadingHistoryEntityToReadingHistoryModelProfile : Profile
+public class ReadingHistoryEntityAndReadingHistoryModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from ReadingHistoryEntity => ReadingHistoryModel
     /// </summary>
-    public ReadingHistoryEntityToReadingHistoryModelProfile()
+    public ReadingHistoryEntityAndReadingHistoryModelProfile()
     {
         CreateMap<ReadingHistoryEntity, ReadingHistoryModel>()
         #region Member mapping

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
-namespace DTO;
+namespace NewClient.Models;
 
-public class GetAllComicAction_Out_Dto
+public class ComicModel
 {
     public string ComicName { get; set; }
 

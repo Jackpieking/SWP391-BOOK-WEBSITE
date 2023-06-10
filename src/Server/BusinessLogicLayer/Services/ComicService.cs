@@ -18,11 +18,15 @@ public class ComicService
         _mapper = mapper;
     }
 
-    public IEnumerable<ComicModel> GetAllComicWithComicReview()
+    /// <summary>
+    /// Get all comic without any reference from database
+    /// </summary>
+    /// <returns>IEnumerable<ComicModel></returns>
+    public IEnumerable<ComicModel> GetAllComic()
     {
         var comicJoinReviewComicEntities = _unitOfWork
             .ComicRepository
-            .GetAllComicWithReviewComicFromDatabase();
+            .GetAllComicFromDatabase();
 
         return _mapper.Map<IEnumerable<ComicModel>>(source: comicJoinReviewComicEntities);
 

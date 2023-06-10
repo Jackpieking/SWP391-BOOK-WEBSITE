@@ -4,12 +4,12 @@ using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class ChapterImageEntityToChapterImageModelProfile : Profile
+public class ChapterImageEntityAndChapterImageModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from ChapterImageEntity => ChapterImageModel
     /// </summary>
-    public ChapterImageEntityToChapterImageModelProfile()
+    public ChapterImageEntityAndChapterImageModelProfile()
     {
         CreateMap<ChapterImageEntity, ChapterImageModel>()
         #region Member mapping

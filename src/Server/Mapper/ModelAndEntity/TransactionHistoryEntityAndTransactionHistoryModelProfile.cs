@@ -4,12 +4,12 @@ using Model;
 
 namespace Mapper.ModelToEntity;
 
-public class TransactionHistoryEntityToTransactionHistoryModelProfile : Profile
+public class TransactionHistoryEntityAndTransactionHistoryModelProfile : Profile
 {
     /// <summary>
     /// Map configuration from TransactionHistoryEntity => TransactionHistoryModel
     /// </summary>
-    public TransactionHistoryEntityToTransactionHistoryModelProfile()
+    public TransactionHistoryEntityAndTransactionHistoryModelProfile()
     {
         CreateMap<TransactionsHistoryEntity, TransactionsHistoryModel>()
         #region Member mapping
