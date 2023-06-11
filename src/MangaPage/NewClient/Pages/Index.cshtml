@@ -16,7 +16,7 @@
             <div class="col-lg-2">
                 <div class="header__logo">
                     <a asp-page="Index">
-                        <img src="image/logo.png" alt="">
+                        <img src="~/image/Logo.png" alt="">
                     </a>
                 </div>
             </div>
@@ -53,16 +53,16 @@
             }
             @foreach (var comic in Model.AllComicModels)
             {
-                <div class="hero__items set-bg" data-setbg="image/comic/comic_avatar/@comic.ComicAvatar">
+                <div class="hero__items set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="hero__text">
                                 @*Category here*@
                                 <div class="label">Manga</div>
                                 <h2>@comic.ComicName</h2>
-                                <a href="./anime-details.html">
+                                <a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">
                                     <span>
-                                        Đọc ngay
+                                        Xem ngay
                                         <i class="fa fa-angle-right"></i>
                                     </span>
                                 </a>
@@ -110,7 +110,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@comic.ComicAvatar">
+                                    <div class="product__item__pic set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
                                         <div class="comment"><i class="fa fa-comments"></i> @comic.ReviewCount</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.NumberOfReaderHasRead</div>
                                     </div>
@@ -118,7 +118,7 @@
                                         <ul>
                                             <li>Manga</li>
                                         </ul>
-                                        <h5><a href="./anime-details.html">@comic.ComicName</a></h5>
+                                        <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +153,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@comic.ComicAvatar">
+                                    <div class="product__item__pic set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
                                         <div class="comment"><i class="fa fa-comments"></i> @comic.ReviewCount</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.NumberOfReaderHasRead</div>
                                     </div>
@@ -161,7 +161,7 @@
                                         <ul>
                                             <li>Manga</li>
                                         </ul>
-                                        <h5><a href="./anime-details.html">@comic.ComicName</a></h5>
+                                        <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="image/comic/comic_avatar/@comic.ComicAvatar">
+                                    <div class="product__item__pic set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
                                         <div class="comment"><i class="fa fa-comments"></i> @comic.ReviewCount</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.NumberOfReaderHasRead</div>
                                     </div>
@@ -204,7 +204,7 @@
                                         <ul>
                                             <li>Manga</li>
                                         </ul>
-                                        <h5><a href="./anime-details.html">@comic.ComicName</a></h5>
+                                        <h5><a asp-page="MangaDetail" asp-route-MangaIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -235,13 +235,13 @@
                         <div class="filter__gallery">
                             @foreach (var comic in Model.HotComicModels)
                             {
-                                <div>
+                                <div class="position-relative">
                                     <div class="blur"></div>
                                     <div class="product__sidebar__view__item set-bg mix"
-                                         data-setbg="image/comic/comic_avatar/@comic.ComicAvatar">
+                                         data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
                                         <div class="ep">@comic.ComicLatestChapter</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.NumberOfReaderHasRead</div>
-                                        <h5><a href="./anime-details.html">@comic.ComicName</a></h5>
+                                        <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
 
@@ -260,18 +260,18 @@
                         <div class="section-title">
                             <h5>Đánh giá mới</h5>
                         </div>
-                        @foreach (var comicHasTheLastestComicReviewModel in Model.ComicHasTheLastestComicReviewModels)
+                        @foreach (var comic in Model.ComicHasTheLastestComicReviewModels)
                         {
                             <div class="product__sidebar__comment__item">
                                 <div class="product__sidebar__comment__item__pic">
-                                    <img class="image__size" src="image/comic/comic_avatar/@comicHasTheLastestComicReviewModel.ComicAvatar" alt="">
+                                    <img class="image__size" src="/image/comic/comic_avatar/@comic.ComicAvatar" alt="">
                                 </div>
                                 <div class="product__sidebar__comment__item__text">
                                     <ul>
                                         <li>Manga</li>
                                     </ul>
-                                    <h5><a href="./anime-details.html">@comicHasTheLastestComicReviewModel.ComicName</a></h5>
-                                    <span><i class="fa fa-eye"></i> @comicHasTheLastestComicReviewModel.NumberOfReaderHasRead</span>
+                                    <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
+                                    <span><i class="fa fa-eye"></i> @comic.NumberOfReaderHasRead</span>
                                 </div>
                             </div>
 
@@ -300,7 +300,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="footer__logo">
-                    <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                    <a asp-page="Index"><img src="image/Logo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">

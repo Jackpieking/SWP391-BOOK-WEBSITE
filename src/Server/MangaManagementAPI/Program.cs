@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer.Services;
+﻿using BusinessLogicLayer.Services.EntityManagementServices;
 using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
@@ -28,9 +28,11 @@ var services = builder.Services;
 
 services
     .AddScoped<IUnitOfWork, UnitOfWork>()
-    .AddScoped<ComicService>()
-    .AddScoped<ReadingHistoryService>()
-    .AddScoped<ReviewComicService>()
+    .AddScoped<ComicServiceManagement>()
+    .AddScoped<ReadingHistoryServiceManagement>()
+    .AddScoped<ReviewComicServiceManagement>()
+    .AddScoped<PublisherServiceManagement>()
+    .AddScoped<ComicCategoryManagementService>()
     .AddAutoMapper(
                    typeof(UserInfoEntityAndUserInfoModelProfile),
                    typeof(TransactionHistoryEntityAndTransactionHistoryModelProfile),
@@ -73,7 +75,7 @@ services
 
 
     })
-    .AddControllers();
+    .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
 
 var app = builder.Build();
 

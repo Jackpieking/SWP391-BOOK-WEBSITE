@@ -20,6 +20,13 @@ public class ReviewComicEntityAndReviewComicModelProfile : Profile
                 {
                     option.MapFrom(mapExpression: source => source.ComicEntity);
                 })
+            //UserModel
+            .ForMember(
+                destinationMember: reviewComicEntity => reviewComicEntity.UserModel,
+                memberOptions: option =>
+                {
+                    option.MapFrom(mapExpression: source => source.UserEntity);
+                })
         #endregion
         .ReverseMap();
     }

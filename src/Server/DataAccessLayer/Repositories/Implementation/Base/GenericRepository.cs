@@ -1,9 +1,5 @@
 ﻿using DataAccessLayer.Repositories.Contracts.Base;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Implementation.Base;
@@ -25,9 +21,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public void DeleteRange(params T[] items)
         => _dbSet.RemoveRange(entities: items);
-
-    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
-        => _dbSet.Where(predicate: predicate).AsEnumerable();
 
     public void Update(T item)
         => _dbSet.Update(entity: item);

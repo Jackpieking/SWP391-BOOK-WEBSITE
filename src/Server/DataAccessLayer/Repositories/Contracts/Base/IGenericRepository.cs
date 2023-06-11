@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Contracts.Base;
 
@@ -13,5 +10,4 @@ public interface IGenericRepository<T> where T : class
     void UpdateRange(params T[] items);
     void Delete(T item);
     void DeleteRange(params T[] items);
-    IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
 }

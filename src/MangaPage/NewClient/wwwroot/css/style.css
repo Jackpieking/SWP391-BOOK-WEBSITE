@@ -374,7 +374,6 @@ ol {
 
 .header__menu ul li:hover {
   background: #e53637;
-  ;
 }
 
 .header__menu ul li:hover a {
@@ -1048,7 +1047,7 @@ ol {
   top: 0;
 }
 
-.anime__details__rating .rating i {
+    .rating i {
   font-size: 24px;
   color: #e89f12;
   display: inline-block;
@@ -1089,7 +1088,7 @@ ol {
 
 .anime__details__widget ul li span {
   color: #b7b7b7;
-  width: 115px;
+  width: 135px;
   display: inline-block;
 }
 
@@ -1103,34 +1102,49 @@ ol {
   text-transform: uppercase;
   padding: 14px 20px;
   border-radius: 4px;
-  margin-right: 11px;
+  margin-right: 15px;
 }
 
-.anime__details__btn .watch-btn span {
-  font-size: 13px;
-  color: #ffffff;
-  background: #e53637;
-  display: inline-block;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 14px 20px;
-  border-radius: 4px 0 0 4px;
-  margin-right: 1px;
-}
+    .anime__details__btn .follow-btn:hover {
+        background-color: #ffffff;
+        color: #e53637
+    }
 
-.anime__details__btn .watch-btn i {
-  font-size: 20px;
-  display: inline-block;
-  background: #e53637;
-  padding: 11px 5px 16px 8px;
-  color: #ffffff;
-  border-radius: 0 4px 4px 0;
-}
+    .anime__details__btn .watch-btn span {
+        font-size: 13px;
+        color: #ffffff;
+        background: #e53637;
+        display: inline-block;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 1px 20px;
+        border-radius: 4px;
+    }
 
-.anime__details__review {
-  margin-bottom: 55px;
-}
+        .anime__details__btn .watch-btn span:hover {
+            background-color: #ffffff;
+            color: #e53637
+        }
+
+
+        .anime__details__btn .watch-btn i {
+            font-size: 20px;
+            display: inline-block;
+            background: #e53637;
+            padding: 11.7px 0 16px 8px;
+            color: #ffffff;
+            border-radius: 0 4px 4px 0;
+        }
+
+            .anime__details__btn .watch-btn span:hover i {
+                background-color: #ffffff;
+                color: #e53637
+            }
+
+            .anime__details__review {
+                margin-bottom: 55px;
+            }
 
 .anime__review__item {
   overflow: hidden;
@@ -1188,7 +1202,6 @@ ol {
 .anime__details__form form textarea {
   width: 100%;
   font-size: 15px;
-  color: #b7b7b7;
   padding-left: 20px;
   padding-top: 12px;
   height: 110px;
@@ -1210,12 +1223,16 @@ ol {
   border-radius: 2px;
 }
 
+.review__submit-button:hover {
+    color: #e53637 !important;
+    background-color: #ffffff !important
+}
+
 /*---------------------
   Anime Watching
 -----------------------*/
-
 .anime__video__player {
-  margin-bottom: 70px;
+    margin-bottom: 70px;
 }
 
 .anime__video__player .plyr--video {
@@ -1990,6 +2007,15 @@ ol {
   border-radius: 50%;
 }
 
+.page-up a:hover {
+    background-color: #ffffff;
+    color: #e53637;
+}
+
+    .page-up a span:hover i {
+        color: #e53637;
+    }
+
 .page-up a span {
   position: relative;
   top: 2px;
@@ -2159,7 +2185,7 @@ ol {
   }
 
   .anime__details__widget ul li span {
-    width: 90px;
+    width: 135px;
   }
 
   .anime__details__pic {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using NewClient.Models;
@@ -12,40 +12,33 @@ using System.Threading.Tasks;
 
 namespace NewClient.Pages;
 
-public class IndexModel : PageModel
+public class MangaDetailModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly ILogger<MangaDetailModel> _logger;
     private readonly ComicService _comicService;
 
-    public IEnumerable<ComicModel> AllComicModels { get; set; }
+    public ComicWithPublisherModel ComicWithPublisherModel { get; set; }
 
     public IEnumerable<ComicModel> HotComicModels { get; set; }
 
-    public IEnumerable<ComicModel> RecentlyAddedComicModels { get; set; }
-
-    public IEnumerable<ComicModel> ComicHasTheLastestComicReviewModels { get; set; }
-
-    public IndexModel(
-        ILogger<IndexModel> logger,
+    public MangaDetailModel(
+        ILogger<MangaDetailModel> logger,
         ComicService comicService)
     {
-
         _logger = logger;
         _comicService = comicService;
     }
 
-    public async Task<IActionResult> OnGet()
+    public async Task<IActionResult> OnGetAsync([FromRoute] Guid comicIdentifier)
     {
         try
         {
-            AllComicModels = await _comicService.GetAllComicModelFromApiAsync();
-            HotComicModels = AllComicModels
-                .OrderByDescending(keySelector: comicModel => comicModel.NumberOfReaderHasRead)
-                .ThenByDescending(keySelector: comicModel => comicModel.ReviewCount);
-            RecentlyAddedComicModels = AllComicModels
-                .OrderByDescending(keySelector: comicModel => comicModel.ComicPublishDate);
-            ComicHasTheLastestComicReviewModels = AllComicModels
-                .OrderByDescending(keySelector: comicModel => comicModel.LastestComicReviewDate);
+            ComicWithPublisherModel = await _comicService
+                .GetComicDetailFromApiAsync(comicIdentifier);
+
+            HotComicModels = (await _comicService
+                .GetAllComicModelFromApiAsync())
+                .OrderByDescending(keySelector: comicModel => comicModel.NumberOfReaderHasRead);
 
             return Page();
         }
@@ -65,7 +58,13 @@ public class IndexModel : PageModel
         {
             _logger.LogError("[{DateTime.Now}] - Error: {JS_e.Message}", DateTime.Now, JS_e.Message);
 
-            return NotFound("Error");
+            return NotFound(value: "Error");
         }
+    }
+
+    public IActionResult OnPost([FromForm] string reviewComic)
+    {
+        return RedirectToAction(actionName: nameof(OnGetAsync),
+                                routeValues: ViewData["comicIdentifier"]);
     }
 }
