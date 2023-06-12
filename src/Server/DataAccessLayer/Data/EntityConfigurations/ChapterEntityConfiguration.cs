@@ -34,6 +34,11 @@ public class ChapterEntityConfiguration : IEntityTypeConfiguration<ChapterEntity
             .Property(propertyExpression: chapter => chapter.ChapterUnlockPrice)
             .IsRequired();
 
+        //field: AddedDate
+        builder
+            .Property(propertyExpression: chapter => chapter.AddedDate)
+            .IsRequired();
+
         /**
 		 *
 		 * Relationship

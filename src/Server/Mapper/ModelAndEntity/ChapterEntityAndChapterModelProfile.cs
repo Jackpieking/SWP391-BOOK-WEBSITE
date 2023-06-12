@@ -13,7 +13,7 @@ public class ChapterEntityAndChapterModelProfile : Profile
     {
         CreateMap<ChapterEntity, ChapterModel>()
         #region Member mapping
-            //ChapterModels
+            //ComicModels
             .ForMember(
                 destinationMember: chapterEntity => chapterEntity.ComicModel,
                 memberOptions: option =>

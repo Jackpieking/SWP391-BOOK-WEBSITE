@@ -26,7 +26,7 @@ public class ComicController : ControllerBase
     private readonly ReviewComicServiceManagement _reviewComicService;
     private readonly PublisherServiceManagement _publisherService;
     private readonly ComicCategoryManagementService _comicCategoryManagementService;
-    private readonly ILogger _logger;
+    private readonly ILogger<ComicController> _logger;
     private readonly IMapper _mapper;
 
     public ComicController(
@@ -52,18 +52,18 @@ public class ComicController : ControllerBase
     /// </summary>
     /// <returns>[200 - 500]</returns>
     [HttpGet]
-    public IActionResult GetAllComic()
+    public async Task<IActionResult> GetAllComicGeneralInformationAsync()
     {
         try
         {
-            var comicModels = _comicService
-                .GetAllComic();
+            var comicModels = await _comicService
+                .GetAllComicAsync();
 
-            var readingHistoryJoinChapterModels = _readingHistoryService
-                .GetAllReadingHistoryWithChapter();
+            var readingHistoryJoinChapterModels = await _readingHistoryService
+                .GetAllReadingHistoryWithChapterAsync();
 
-            var reviewComicModels = _reviewComicService
-                .GetAllReviewComic();
+            var reviewComicModels = await _reviewComicService
+                .GetAllReviewComicAsync();
 
             //Dto for returning
             ICollection<GetAllComicAction_Out_Dto> getAllComicDtos = new List<GetAllComicAction_Out_Dto>();
@@ -79,7 +79,7 @@ public class ComicController : ControllerBase
                     if (comicModel.ComicIdentifier
                         == readingHistoryJoinChapterModel.ChapterModel.ComicIdentifier)
                     {
-                        getAllComicDto.NumberOfReaderHasRead++;
+                        getAllComicDto.ReadersCounts++;
                     }
                 });
 
@@ -89,7 +89,7 @@ public class ComicController : ControllerBase
                     if (comicModel.ComicIdentifier
                         == reviewComicModel.ComicIdentifier)
                     {
-                        getAllComicDto.ReviewCount++;
+                        getAllComicDto.ReviewCounts++;
                     }
                 });
 
@@ -124,25 +124,25 @@ public class ComicController : ControllerBase
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>[200 - 404]</returns>
-    [HttpGet(template: "{comicIdentifier}")]
+    [HttpGet(template: "{comicIdentifier:guid}")]
     public async Task<IActionResult> GetComicDetailAsync([FromRoute] Guid comicIdentifier)
     {
         try
         {
             var comicModel = await _comicService
-                .GetAComicByComicIdentifierAsync(comicIdentifer: comicIdentifier);
+                .GetAComicWithListOfChapterByComicIdentifierAsync(comicIdentifer: comicIdentifier);
 
             var publisherModel = await _publisherService
                 .GetPublisherWithUserByPublisherIdentifierAsync(publisherIdentifier: comicModel.PublisherModel.PublisherIdentifier);
 
-            var reviewComicModels = _reviewComicService
-                .GetAllReviewComicByComicIdentifier(comicIdentifier: comicIdentifier);
+            var reviewComicModels = await _reviewComicService
+                .GetAllReviewComicByComicIdentifierAsync(comicIdentifier: comicIdentifier);
 
-            var readingHistoryModels = _readingHistoryService
-                .GetAllReadingHistoryByComicIdentifier(comicIdentifier: comicIdentifier);
+            var readingHistoryModels = await _readingHistoryService
+                .GetAllReadingHistoryByComicIdentifierAsync(comicIdentifier: comicIdentifier);
 
-            var comicCategoryModels = _comicCategoryManagementService
-                .GetAllComicCategoryByComicIdentifier(comicIdentifier);
+            var comicCategoryModels = await _comicCategoryManagementService
+                .GetAllComicCategoryByComicIdentifierAsync(comicIdentifier);
 
             if (Equals(objA: comicModel, objB: null))
             {
@@ -153,26 +153,18 @@ public class ComicController : ControllerBase
             var getComicDetailDto = _mapper.Map<GetComicDetailAction_Out_Dto>(source: comicModel);
 
             getComicDetailDto.PublisherName = publisherModel.UserModel.Username;
-            getComicDetailDto.NumberOfReaderHasRead = readingHistoryModels.Count();
-            getComicDetailDto.ReviewComicDtos = new List<GetComicDetailAction_Out_Dto.ReviewComicDto>();
-            getComicDetailDto.CategoryNames = new List<string>();
+            getComicDetailDto.ReaderCounts = readingHistoryModels.Count();
 
             reviewComicModels.ForEach(action: reviewComicModel =>
             {
-                GetComicDetailAction_Out_Dto.ReviewComicDto reviewComicDto = new()
-                {
-                    ComicRatingStar = reviewComicModel.ComicRatingStar,
-                    ComicComment = reviewComicModel.ComicComment,
-                    ReviewTime = reviewComicModel.ReviewTime,
-                    Username = reviewComicModel.UserModel.Username,
-                    UserAvatar = reviewComicModel.UserModel.UserAvatar
-                };
-
-                getComicDetailDto.ReviewComicDtos.Add(item: reviewComicDto);
+                getComicDetailDto.ComicReviews
+                    .Add(item: _mapper
+                        .Map<GetComicDetailAction_Out_Dto.ReviewComicDto>(source: reviewComicModel));
             });
 
             comicCategoryModels.ForEach(action: comicCategoryModel
-                => getComicDetailDto.CategoryNames.Add(item: comicCategoryModel.CategoryModel.CategoryName));
+                => getComicDetailDto.CategoryNames
+                    .Add(item: comicCategoryModel.CategoryModel.CategoryName));
 
             return Ok(value: getComicDetailDto);
         }

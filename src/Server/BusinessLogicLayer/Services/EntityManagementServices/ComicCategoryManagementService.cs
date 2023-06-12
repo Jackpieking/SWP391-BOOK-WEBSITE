@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.EntityManagementServices;
 
@@ -28,11 +29,15 @@ public class ComicCategoryManagementService
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>IEnumerable<ComicCategoryModel></returns>
-    public IEnumerable<ComicCategoryModel> GetAllComicCategoryByComicIdentifier(Guid comicIdentifier)
+    public async Task<IEnumerable<ComicCategoryModel>> GetAllComicCategoryByComicIdentifierAsync(Guid comicIdentifier)
     {
-        var comicCategory = _unitOfWork
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Category Table", args: DateTime.Now);
+
+        var comicCategory = await _unitOfWork
             .ComicCategoryRepository
-            .GetAllComicCategoryByComicIdentifierFromDatabase(comicIdentifier: comicIdentifier);
+            .GetAllComicCategoryByComicIdentifierFromDatabaseAsync(comicIdentifier: comicIdentifier);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Comic Category Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ComicCategoryModel>>(source: comicCategory);
     }

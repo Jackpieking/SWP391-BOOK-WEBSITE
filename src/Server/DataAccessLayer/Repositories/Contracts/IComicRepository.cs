@@ -8,6 +8,6 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicRepository : IGenericRepository<ComicEntity>
 {
-    IEnumerable<ComicEntity> GetAllComicFromDatabase();
-    Task<ComicEntity> GetComicByComicIdentifierDatabaseAsync(Guid comicIdentifier);
+    Task<IEnumerable<ComicEntity>> GetAllComicFromDatabaseAsync();
+    Task<ComicEntity> GetComicWithListOfChapterByComicIdentifierDatabaseAsync(Guid comicIdentifier);
 }

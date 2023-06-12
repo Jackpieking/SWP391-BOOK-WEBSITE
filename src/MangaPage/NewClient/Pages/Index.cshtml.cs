@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using NewClient.Models;
@@ -17,13 +18,13 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
     private readonly ComicService _comicService;
 
-    public IEnumerable<ComicModel> AllComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> AllComicModels { get; set; }
 
-    public IEnumerable<ComicModel> HotComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> HotComicModels { get; set; }
 
-    public IEnumerable<ComicModel> RecentlyAddedComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> RecentlyAddedComicModels { get; set; }
 
-    public IEnumerable<ComicModel> ComicHasTheLastestComicReviewModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> ComicHasTheLastestComicReviewModels { get; set; }
 
     public IndexModel(
         ILogger<IndexModel> logger,
@@ -38,10 +39,11 @@ public class IndexModel : PageModel
     {
         try
         {
-            AllComicModels = await _comicService.GetAllComicModelFromApiAsync();
+            AllComicModels = await _comicService
+                .GetAllComicModelFromApiAsync();
             HotComicModels = AllComicModels
-                .OrderByDescending(keySelector: comicModel => comicModel.NumberOfReaderHasRead)
-                .ThenByDescending(keySelector: comicModel => comicModel.ReviewCount);
+                .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts)
+                .ThenByDescending(keySelector: comicModel => comicModel.ReviewCounts);
             RecentlyAddedComicModels = AllComicModels
                 .OrderByDescending(keySelector: comicModel => comicModel.ComicPublishDate);
             ComicHasTheLastestComicReviewModels = AllComicModels
@@ -53,19 +55,19 @@ public class IndexModel : PageModel
         {
             _logger.LogError("[{DateTime.Now}] - Error: {TC_2.Message}", DateTime.Now, TC_e.Message);
 
-            return NotFound(value: "Error");
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
         catch (HttpRequestException HR_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
 
-            return NotFound(value: "Error");
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
         catch (JsonSerializationException JS_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {JS_e.Message}", DateTime.Now, JS_e.Message);
 
-            return NotFound("Error");
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 }

@@ -24,10 +24,9 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     /// - ComicAvatars
     /// </summary>
     /// <returns>IEnumerable<ComicEntity></returns>
-    public IEnumerable<ComicEntity> GetAllComicFromDatabase()
+    public async Task<IEnumerable<ComicEntity>> GetAllComicFromDatabaseAsync()
     {
-        return _dbSet
-            .AsSplitQuery()
+        return await _dbSet
             .Select(selector: comicEntity => new ComicEntity
             {
                 ComicIdentifier = comicEntity.ComicIdentifier,
@@ -36,7 +35,7 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
                 ComicLatestChapter = comicEntity.ComicLatestChapter,
                 ComicAvatar = comicEntity.ComicAvatar
             })
-            .AsEnumerable();
+            .ToListAsync();
     }
 
     /// <summary>
@@ -46,7 +45,7 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>Task<ComicEntity></returns>
-    public async Task<ComicEntity> GetComicByComicIdentifierDatabaseAsync(Guid comicIdentifier)
+    public async Task<ComicEntity> GetComicWithListOfChapterByComicIdentifierDatabaseAsync(Guid comicIdentifier)
     {
         return await _dbSet
             .Where(predicate: comicEntity
@@ -62,7 +61,13 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
                 PublisherEntity = new()
                 {
                     PublisherIdentifier = comicEntity.PublisherIdentifier,
-                    UserEntity = comicEntity.PublisherEntity.UserEntity
+                    UserEntity = new()
+                    {
+                        Username = comicEntity
+                            .PublisherEntity
+                            .UserEntity
+                            .Username
+                    }
                 }
             })
             .FirstOrDefaultAsync();

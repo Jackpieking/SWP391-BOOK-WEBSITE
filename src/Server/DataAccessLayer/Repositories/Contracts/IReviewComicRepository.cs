@@ -2,11 +2,12 @@
 using Entity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IReviewComicRepository : IGenericRepository<ReviewComicEntity>
 {
-    IEnumerable<ReviewComicEntity> GetAllReviewComicFromDatabase();
-    IEnumerable<ReviewComicEntity> GetAllReviewComicByComicIdentifierFromDatabase(Guid comicIdentifier);
+    Task<IEnumerable<ReviewComicEntity>> GetAllReviewComicFromDatabaseAsync();
+    Task<IEnumerable<ReviewComicEntity>> GetAllReviewComicByComicIdentifierFromDatabaseAsync(Guid comicIdentifier);
 }

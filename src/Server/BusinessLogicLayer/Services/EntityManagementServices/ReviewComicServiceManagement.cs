@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.EntityManagementServices;
 
@@ -27,15 +28,15 @@ public class ReviewComicServiceManagement
     /// Get all review comic without any reference from the database
     /// </summary>
     /// <returns>IEnumerable<ReviewComicModel></returns>
-    public IEnumerable<ReviewComicModel> GetAllReviewComic()
+    public async Task<IEnumerable<ReviewComicModel>> GetAllReviewComicAsync()
     {
-        _logger.LogCritical(message: "[{DateTime.Now}]: Start Querying On Review Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Review Comic Table", args: DateTime.Now);
 
-        var reviewComic = _unitOfWork
+        var reviewComic = await _unitOfWork
             .ReviewComicRepository
-            .GetAllReviewComicFromDatabase();
+            .GetAllReviewComicFromDatabaseAsync();
 
-        _logger.LogCritical(message: "[{DateTime.Now}]: End Querying On Review Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Review Comic Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ReviewComicModel>>(source: reviewComic);
     }
@@ -45,15 +46,15 @@ public class ReviewComicServiceManagement
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>IEnumerable<ReviewComicModel></returns>
-    public IEnumerable<ReviewComicModel> GetAllReviewComicByComicIdentifier(Guid comicIdentifier)
+    public async Task<IEnumerable<ReviewComicModel>> GetAllReviewComicByComicIdentifierAsync(Guid comicIdentifier)
     {
-        _logger.LogCritical(message: "[{DateTime.Now}]: Start Querying On Review Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Review Comic Table", args: DateTime.Now);
 
-        var reviewComic = _unitOfWork
+        var reviewComic = await _unitOfWork
             .ReviewComicRepository
-            .GetAllReviewComicByComicIdentifierFromDatabase(comicIdentifier: comicIdentifier);
+            .GetAllReviewComicByComicIdentifierFromDatabaseAsync(comicIdentifier: comicIdentifier);
 
-        _logger.LogCritical(message: "[{DateTime.Now}]: End Querying On Review Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Review Comic Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ReviewComicModel>>(source: reviewComic);
     }

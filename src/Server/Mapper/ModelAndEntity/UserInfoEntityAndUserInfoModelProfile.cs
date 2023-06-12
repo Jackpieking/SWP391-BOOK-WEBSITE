@@ -55,7 +55,7 @@ public class UserInfoEntityAndUserInfoModelProfile : Profile
                 {
                     option.MapFrom(mapExpression: source => source.ReviewChapterEntities);
                 })
-            //BuyingHistory
+            //BuyingHistoryModels
             .ForMember(
                 destinationMember: userInfoEntity => userInfoEntity.BuyingHistoryModels,
                 memberOptions: option =>

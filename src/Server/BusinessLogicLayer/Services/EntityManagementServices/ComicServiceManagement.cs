@@ -28,15 +28,15 @@ public class ComicServiceManagement
     /// Get all comic without any reference from database
     /// </summary>
     /// <returns>IEnumerable<ComicModel></returns>
-    public IEnumerable<ComicModel> GetAllComic()
+    public async Task<IEnumerable<ComicModel>> GetAllComicAsync()
     {
-        _logger.LogCritical(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
 
-        var comicJoinReviewComicEntities = _unitOfWork
+        var comicJoinReviewComicEntities = await _unitOfWork
             .ComicRepository
-            .GetAllComicFromDatabase();
+            .GetAllComicFromDatabaseAsync();
 
-        _logger.LogCritical(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ComicModel>>(source: comicJoinReviewComicEntities);
 
@@ -47,15 +47,19 @@ public class ComicServiceManagement
     /// </summary>
     /// <param name="comicIdentifer"></param>
     /// <returns>Task<ComicModel></returns>
-    public async Task<ComicModel> GetAComicByComicIdentifierAsync(Guid comicIdentifer)
+    public async Task<ComicModel> GetAComicWithListOfChapterByComicIdentifierAsync(Guid comicIdentifer)
     {
-        _logger.LogCritical(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
 
         var comicEntity = await _unitOfWork
             .ComicRepository
-            .GetComicByComicIdentifierDatabaseAsync(comicIdentifier: comicIdentifer);
+            .GetComicWithListOfChapterByComicIdentifierDatabaseAsync(comicIdentifier: comicIdentifer);
 
-        _logger.LogCritical(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+        comicEntity.ChapterEntities = await _unitOfWork
+            .ChapterRepository
+            .GetAllChapterOfAComicAsync(comicIdentifier: comicIdentifer);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
         return _mapper.Map<ComicModel>(source: comicEntity);
 

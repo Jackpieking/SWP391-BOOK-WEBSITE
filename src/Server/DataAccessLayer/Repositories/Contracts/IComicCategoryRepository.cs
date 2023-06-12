@@ -2,10 +2,11 @@
 using Entity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicCategoryRepository : IGenericRepository<ComicCategoryEntity>
 {
-    IEnumerable<ComicCategoryEntity> GetAllComicCategoryByComicIdentifierFromDatabase(Guid comicIdentifier);
+    Task<IEnumerable<ComicCategoryEntity>> GetAllComicCategoryByComicIdentifierFromDatabaseAsync(Guid comicIdentifier);
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.EntityManagementServices;
 
@@ -27,15 +28,15 @@ public class ReadingHistoryServiceManagement
     /// Get all reading history with reference chapter from database
     /// </summary>
     /// <returns>IEnumerable<ReadingHistoryModel></returns>
-    public IEnumerable<ReadingHistoryModel> GetAllReadingHistoryWithChapter()
+    public async Task<IEnumerable<ReadingHistoryModel>> GetAllReadingHistoryWithChapterAsync()
     {
-        _logger.LogCritical(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
 
-        var readingHistoryWithChapterEntities = _unitOfWork
+        var readingHistoryWithChapterEntities = await _unitOfWork
             .ReadingHistoryRepository
-            .GetAllReadingHistoryWithChapterFromDatabase();
+            .GetAllReadingHistoryWithChapterFromDatabaseAsync();
 
-        _logger.LogCritical(message: "[{DateTime.Now}]: End Querying On Reading History Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Reading History Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ReadingHistoryModel>>(source: readingHistoryWithChapterEntities);
     }
@@ -45,15 +46,15 @@ public class ReadingHistoryServiceManagement
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns> IEnumerable<ReadingHistoryModel></returns>
-    public IEnumerable<ReadingHistoryModel> GetAllReadingHistoryByComicIdentifier(Guid comicIdentifier)
+    public async Task<IEnumerable<ReadingHistoryModel>> GetAllReadingHistoryByComicIdentifierAsync(Guid comicIdentifier)
     {
-        _logger.LogCritical(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
 
-        var readingHistoryWithChapterEntities = _unitOfWork
+        var readingHistoryWithChapterEntities = await _unitOfWork
             .ReadingHistoryRepository
-            .GetAllReadingHistoryByComicIdentiferFromDatabase(comicIdentifier: comicIdentifier);
+            .GetAllReadingHistoryByComicIdentiferFromDatabaseAsync(comicIdentifier: comicIdentifier);
 
-        _logger.LogCritical(message: "[{DateTime.Now}]: End Querying On Reading History Table", args: DateTime.Now);
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Reading History Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ReadingHistoryModel>>(source: readingHistoryWithChapterEntities);
     }

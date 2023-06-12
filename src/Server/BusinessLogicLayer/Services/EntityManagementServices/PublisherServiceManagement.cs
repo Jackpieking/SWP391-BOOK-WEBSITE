@@ -29,9 +29,13 @@ public class PublisherServiceManagement
     /// <returns>Publisher</returns>
     public async Task<PublisherModel> GetPublisherWithUserByPublisherIdentifierAsync(Guid publisherIdentifier)
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Publisher Table", args: DateTime.Now);
+
         var publisherEntity = await _unitOfWork
             .PublisherRepository
             .GetPublisherWithUserByPublisherIdentifierFromDatabaseAsync(publisherIdentifier: publisherIdentifier);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Publisher Table", args: DateTime.Now);
 
         return _mapper.Map<PublisherModel>(source: publisherEntity);
     }

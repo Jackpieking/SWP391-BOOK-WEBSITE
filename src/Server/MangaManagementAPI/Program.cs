@@ -33,6 +33,7 @@ services
     .AddScoped<ReviewComicServiceManagement>()
     .AddScoped<PublisherServiceManagement>()
     .AddScoped<ComicCategoryManagementService>()
+    .AddScoped<ChapterImageManagementService>()
     .AddAutoMapper(
                    typeof(UserInfoEntityAndUserInfoModelProfile),
                    typeof(TransactionHistoryEntityAndTransactionHistoryModelProfile),
@@ -47,7 +48,9 @@ services
                    typeof(ChapterEntityAndChapterModelProfile),
                    typeof(CategoryEntityAndCategoryModelProfile),
                    typeof(BuyingHistoryEntityAndBuyingHistoryModelProfile),
-                   typeof(ComicModelToGetAllComicDtoProfile))
+                   typeof(ComicModelToGetAllComicDtoProfile),
+                   typeof(ComicModelToGetComicDetailDtoProfile),
+                   typeof(ChapterImageToGetAllChapterImageOfAChapterDtoProfile))
     .ConfigureOptions<DatabaseOptionUpdates>()
     .AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
     {

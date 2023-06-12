@@ -2,13 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewClient.Services;
-using System;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
 var services = builder.Services;
 
 services.AddScoped<ComicService>();
+services.AddScoped<ChapterImageService>();
 
 services
     .AddHttpClient(
@@ -16,7 +16,6 @@ services
         configureClient: httpClient =>
         {
             httpClient.BaseAddress = new(uriString: "https://localhost:7174");
-            httpClient.Timeout = TimeSpan.FromSeconds(value: 5);
         });
 
 services.AddRazorPages();

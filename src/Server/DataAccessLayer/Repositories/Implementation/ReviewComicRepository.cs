@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
@@ -22,9 +23,9 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>IEnumerable<ReviewComicEntity></returns>
-    public IEnumerable<ReviewComicEntity> GetAllReviewComicByComicIdentifierFromDatabase(Guid comicIdentifier)
+    public async Task<IEnumerable<ReviewComicEntity>> GetAllReviewComicByComicIdentifierFromDatabaseAsync(Guid comicIdentifier)
     {
-        return _dbSet
+        return await _dbSet
             .Where(predicate: reviewComicEntity
                 => reviewComicEntity.ComicIdentifier == comicIdentifier)
             .Select(selector: reviewComicEntity => new ReviewComicEntity
@@ -38,7 +39,7 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
                     UserAvatar = reviewComicEntity.UserEntity.UserAvatar
                 }
             })
-            .AsEnumerable();
+            .ToListAsync();
     }
 
     /// <summary>
@@ -47,14 +48,14 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
     /// - ReviewTime
     /// </summary>
     /// <returns>IEnumerable<ReviewComicEntity></returns>
-    public IEnumerable<ReviewComicEntity> GetAllReviewComicFromDatabase()
+    public async Task<IEnumerable<ReviewComicEntity>> GetAllReviewComicFromDatabaseAsync()
     {
-        return _dbSet
+        return await _dbSet
             .Select(selector: reviewComic => new ReviewComicEntity
             {
                 ComicIdentifier = reviewComic.ComicIdentifier,
                 ReviewTime = reviewComic.ReviewTime
             })
-            .AsEnumerable();
+            .ToListAsync();
     }
 }

@@ -1,0 +1,127 @@
+﻿@page "/truyen-tranh/{comicIdentifier:guid}/{chapterIdentifier:guid}"
+@model NewClient.Pages.ComicReadingModel
+@{
+    ViewData["Title"] = $"{TempData["ComicName"]} Chap 1 Next Chap 2 Tiếng Việt";
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-page="Index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a asp-page="MangaDetail" asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]">@TempData["ComicName"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<!-- Anime Section Begin -->
+<section class="anime-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="card bg-dark w-100 mb-5" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title text-center text-bg-dark">Black Clover - Thế Giới Phép Thuật - Chapter 1</h5>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="btn btn-outline-warning m-1">
+                            <i class="fa fa-arrow-left"></i>
+                            Chap trước
+                        </button>
+                        <button class="btn btn-outline-info text-white m-1">
+                            <i class="fa fa-arrow-right"></i>
+                            Chap sau
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var image in Model.ImagesOfAChapterModels)
+            {
+                <img src="/image/comic/comic_image/Black_Clover_Thế_Giới_Phép_Thuật/Chap_1/@image.ImageURL" alt="none" loading="lazy" style="width:100%" />
+            }
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-8">
+                <div class="anime__details__review">
+                    <div class="section-title">
+                        <h5>Đánh giá</h5>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="img/anime/review-1.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Chris Curry - <span>1 Hour ago</span></h6>
+                            <p>
+                                whachikan Just noticed that someone categorized this as belonging to the genre
+                                "demons" LOL
+                            </p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="img/anime/review-2.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Lewis Mann - <span>5 Hour ago</span></h6>
+                            <p>Finally it came out ages ago</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="img/anime/review-3.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Louis Tyler - <span>20 Hour ago</span></h6>
+                            <p>Where is the episode 15 ? Slow update! Tch</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="img/anime/review-4.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Chris Curry - <span>1 Hour ago</span></h6>
+                            <p>
+                                whachikan Just noticed that someone categorized this as belonging to the genre
+                                "demons" LOL
+                            </p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="img/anime/review-5.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Lewis Mann - <span>5 Hour ago</span></h6>
+                            <p>Finally it came out ages ago</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="img/anime/review-6.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Louis Tyler - <span>20 Hour ago</span></h6>
+                            <p>Where is the episode 15 ? Slow update! Tch</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime__details__form mb-5">
+                    <div class="section-title">
+                        <h5>Đánh giá của bạn</h5>
+                    </div>
+                    <form action="#">
+                        <textarea placeholder="Đánh giá vào đây"></textarea>
+                        <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Đánh giá</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Anime Section End -->

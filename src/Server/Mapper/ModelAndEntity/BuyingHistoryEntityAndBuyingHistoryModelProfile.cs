@@ -19,7 +19,8 @@ public class BuyingHistoryEntityAndBuyingHistoryModelProfile : Profile
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source => source.ChapterEntity);
-                });
+                })
         #endregion
+        .ReverseMap();
     }
 }

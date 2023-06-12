@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
@@ -21,9 +22,9 @@ public class ComicCategoryRepository : GenericRepository<ComicCategoryEntity>, I
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns></returns>
-    public IEnumerable<ComicCategoryEntity> GetAllComicCategoryByComicIdentifierFromDatabase(Guid comicIdentifier)
+    public async Task<IEnumerable<ComicCategoryEntity>> GetAllComicCategoryByComicIdentifierFromDatabaseAsync(Guid comicIdentifier)
     {
-        return _dbSet
+        return await _dbSet
             .Where(predicate: comicCategoryEntity
                 => comicCategoryEntity.ComicIdentifier == comicIdentifier)
             .Select(selector: comicCategoryEntity => new ComicCategoryEntity
@@ -32,6 +33,7 @@ public class ComicCategoryRepository : GenericRepository<ComicCategoryEntity>, I
                 {
                     CategoryName = comicCategoryEntity.CategoryEntity.CategoryName
                 }
-            });
+            })
+            .ToListAsync();
     }
 }

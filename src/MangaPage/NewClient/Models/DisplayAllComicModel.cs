@@ -2,7 +2,7 @@ using System;
 
 namespace NewClient.Models;
 
-public class ComicModel
+public class DisplayAllComicModel
 {
     public Guid ComicIdentifier { get; set; }
 
@@ -14,9 +14,9 @@ public class ComicModel
 
     public string ComicAvatar { get; set; }
 
-    public int NumberOfReaderHasRead { get; set; }
+    public int ReadersCounts { get; set; }
 
-    public int ReviewCount { get; set; }
+    public int ReviewCounts { get; set; }
 
     public DateTime LastestComicReviewDate { get; set; }
 }

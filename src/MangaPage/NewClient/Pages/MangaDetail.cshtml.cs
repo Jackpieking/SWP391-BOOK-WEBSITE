@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -17,9 +18,9 @@ public class MangaDetailModel : PageModel
     private readonly ILogger<MangaDetailModel> _logger;
     private readonly ComicService _comicService;
 
-    public ComicWithPublisherModel ComicWithPublisherModel { get; set; }
+    public DisplayComicInformationModel DisplayComicInformationModel { get; set; }
 
-    public IEnumerable<ComicModel> HotComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> HotComicModels { get; set; }
 
     public MangaDetailModel(
         ILogger<MangaDetailModel> logger,
@@ -33,12 +34,12 @@ public class MangaDetailModel : PageModel
     {
         try
         {
-            ComicWithPublisherModel = await _comicService
-                .GetComicDetailFromApiAsync(comicIdentifier);
+            DisplayComicInformationModel = await _comicService
+                .GetComicDetailFromApiAsync(comicIdentifier: comicIdentifier);
 
             HotComicModels = (await _comicService
                 .GetAllComicModelFromApiAsync())
-                .OrderByDescending(keySelector: comicModel => comicModel.NumberOfReaderHasRead);
+                .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts);
 
             return Page();
         }
@@ -46,19 +47,19 @@ public class MangaDetailModel : PageModel
         {
             _logger.LogError("[{DateTime.Now}] - Error: {TC_2.Message}", DateTime.Now, TC_e.Message);
 
-            return NotFound(value: "Error");
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
         catch (HttpRequestException HR_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
 
-            return NotFound(value: "Error");
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
         catch (JsonSerializationException JS_e)
         {
             _logger.LogError("[{DateTime.Now}] - Error: {JS_e.Message}", DateTime.Now, JS_e.Message);
 
-            return NotFound(value: "Error");
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 

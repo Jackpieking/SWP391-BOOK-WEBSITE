@@ -23,7 +23,7 @@ public class ComicService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IEnumerable<ComicModel>> GetAllComicModelFromApiAsync()
+    public async Task<IEnumerable<DisplayAllComicModel>> GetAllComicModelFromApiAsync()
     {
         const string GetAllComicEndpointURL = "api/comic";
 
@@ -50,7 +50,7 @@ public class ComicService
 
             JsonSerializer jsonSerializer = new();
 
-            return jsonSerializer.Deserialize<IEnumerable<ComicModel>>(reader: jsonReader);
+            return jsonSerializer.Deserialize<IEnumerable<DisplayAllComicModel>>(reader: jsonReader);
         }
         catch (TaskCanceledException)
         {
@@ -66,7 +66,7 @@ public class ComicService
         }
     }
 
-    public async Task<ComicWithPublisherModel> GetComicDetailFromApiAsync(Guid comicIdentifier)
+    public async Task<DisplayComicInformationModel> GetComicDetailFromApiAsync(Guid comicIdentifier)
     {
         var GetComicDetailEndpointURL = $"api/comic/{comicIdentifier}";
 
@@ -84,6 +84,11 @@ public class ComicService
                                 DateTime.Now,
                                 GetComicDetailEndpointURL);
 
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(message: "404 - Not found");
+            }
+
             using var responseContent = response.Content;
             using var stream = await responseContent
                 .ReadAsStreamAsync()
@@ -93,7 +98,7 @@ public class ComicService
 
             JsonSerializer jsonSerializer = new();
 
-            return jsonSerializer.Deserialize<ComicWithPublisherModel>(reader: jsonReader);
+            return jsonSerializer.Deserialize<DisplayComicInformationModel>(reader: jsonReader);
         }
         catch (TaskCanceledException)
         {

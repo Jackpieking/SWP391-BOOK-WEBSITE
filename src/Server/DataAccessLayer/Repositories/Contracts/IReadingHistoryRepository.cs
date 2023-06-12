@@ -2,11 +2,12 @@
 using Entity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IReadingHistoryRepository : IGenericRepository<ReadingHistoryEntity>
 {
-    IEnumerable<ReadingHistoryEntity> GetAllReadingHistoryWithChapterFromDatabase();
-    IEnumerable<ReadingHistoryEntity> GetAllReadingHistoryByComicIdentiferFromDatabase(Guid comicIdentifier);
+    Task<IEnumerable<ReadingHistoryEntity>> GetAllReadingHistoryWithChapterFromDatabaseAsync();
+    Task<IEnumerable<ReadingHistoryEntity>> GetAllReadingHistoryByComicIdentiferFromDatabaseAsync(Guid comicIdentifier);
 }

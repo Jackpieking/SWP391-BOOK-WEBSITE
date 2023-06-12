@@ -3,17 +3,18 @@ using System;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(MangaContext))]
-    partial class MangaContextModelSnapshot : ModelSnapshot
+    [Migration("20230611123013_Add_AddedDate_Field_To_Chapter_Table")]
+    partial class Add_AddedDate_Field_To_Chapter_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,357 +200,357 @@ namespace DataAccessLayer.Migrations
                             ImageIdentifier = new Guid("ad981387-1e98-4036-8934-868c5e0880a9"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)0,
-                            ImageURL = "0.jpg"
+                            ImageURL = "0.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("9a4c2922-3a3b-4cc1-ba2e-d62317c8c0e0"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)1,
-                            ImageURL = "1.jpg"
+                            ImageURL = "1.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("48a81e89-dbad-4fb5-b992-66b0a575d781"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)2,
-                            ImageURL = "2.jpg"
+                            ImageURL = "2.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("31ae274b-4dfc-4deb-af28-46de52cb6feb"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)3,
-                            ImageURL = "3.jpg"
+                            ImageURL = "3.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("cb4b4f62-523f-4044-9d58-1ae3f12d430c"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)4,
-                            ImageURL = "4.jpg"
+                            ImageURL = "4.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("3aaaa9a7-4465-494a-a7bd-08157d913586"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)5,
-                            ImageURL = "5.jpg"
+                            ImageURL = "5.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("7fb2316f-4341-401d-b28a-40146f8a7a0b"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)6,
-                            ImageURL = "6.jpg"
+                            ImageURL = "6.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("d9c7b2a1-67e0-4daa-8ad0-b8560938e847"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)7,
-                            ImageURL = "7.jpg"
+                            ImageURL = "7.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("25a2ab91-5674-44aa-bbac-2ea3bceb71d4"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)8,
-                            ImageURL = "8.jpg"
+                            ImageURL = "8.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("785fb0ef-b383-4f44-98b5-bd6a555f0626"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)9,
-                            ImageURL = "9.jpg"
+                            ImageURL = "9.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("c2fa7cbe-138b-42e5-ad7b-c0afd43f43fd"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)10,
-                            ImageURL = "10.jpg"
+                            ImageURL = "10.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("cb117933-9ccc-4ad6-afcf-65da344ba69a"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)11,
-                            ImageURL = "11.jpg"
+                            ImageURL = "11.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("d119637e-bf32-4b23-81ff-a09c1d910b81"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)12,
-                            ImageURL = "12.jpg"
+                            ImageURL = "12.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("e992e5d9-67a8-4164-9273-ae229e648556"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)13,
-                            ImageURL = "13.jpg"
+                            ImageURL = "13.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("bf280315-0e15-4074-978e-c0014a946383"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)14,
-                            ImageURL = "14.jpg"
+                            ImageURL = "14.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("97ce8e61-ac01-4e85-9a12-67d94f5b7102"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)15,
-                            ImageURL = "15.jpg"
+                            ImageURL = "15.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("1d73b99e-f451-4b55-9b20-ea4d572bc3a0"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)16,
-                            ImageURL = "16.jpg"
+                            ImageURL = "16.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("4aca6f3a-2ccf-49de-af02-0b1776e793ee"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)17,
-                            ImageURL = "17.jpg"
+                            ImageURL = "17.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("f78ffa61-a567-479a-aa79-011dfa2fdc4e"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)18,
-                            ImageURL = "18.jpg"
+                            ImageURL = "18.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("a79456c1-8024-4128-9a31-db46f7eeef08"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)19,
-                            ImageURL = "19.jpg"
+                            ImageURL = "19.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("2cd639ce-c96f-4589-8014-0e6e7f9ff69f"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)20,
-                            ImageURL = "20.jpg"
+                            ImageURL = "20.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("1c9b47b7-27a5-46c4-a8d0-e7163f1c3e7f"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)21,
-                            ImageURL = "21.jpg"
+                            ImageURL = "21.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("2abfb23c-34fa-4a48-b442-a1b28201ff32"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)22,
-                            ImageURL = "22.jpg"
+                            ImageURL = "22.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("45c4dfd6-910c-49a4-bb1c-f499377c8c61"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)23,
-                            ImageURL = "23.jpg"
+                            ImageURL = "23.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("64e10a07-b7f7-4335-9ef9-a3c7a5b67d7c"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)24,
-                            ImageURL = "24.jpg"
+                            ImageURL = "24.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("0e66730c-50f5-4f72-b8cd-2f720ddf6d7e"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)25,
-                            ImageURL = "25.jpg"
+                            ImageURL = "25.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("71147712-b450-4e4b-8df1-ed5d50160bf9"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)26,
-                            ImageURL = "26.jpg"
+                            ImageURL = "26.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("853addd5-5496-490f-86bd-cc12ba04e2bd"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)27,
-                            ImageURL = "27.jpg"
+                            ImageURL = "27.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("97c8d20b-0f88-47a6-91cb-e76d0b357ad3"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)28,
-                            ImageURL = "28.jpg"
+                            ImageURL = "28.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("19954bda-0156-48f9-aee6-c8c258dafa58"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)29,
-                            ImageURL = "29.jpg"
+                            ImageURL = "29.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("ae3756ad-6b22-4645-90c6-a01b60b04d59"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)30,
-                            ImageURL = "30.jpg"
+                            ImageURL = "30.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("bc5a3dbb-6b9e-4c4c-a013-f66ad22077dc"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)31,
-                            ImageURL = "31.jpg"
+                            ImageURL = "31.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("eec8c785-84cf-4b8e-bcf2-128a4d9876da"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)32,
-                            ImageURL = "32.jpg"
+                            ImageURL = "32.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("87e12554-c4a1-4bb7-906f-71c16042aaf3"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)33,
-                            ImageURL = "33.jpg"
+                            ImageURL = "33.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("b8f10d3d-74fb-448e-87a6-c2a46514e0e8"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)34,
-                            ImageURL = "34.jpg"
+                            ImageURL = "34.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("f1a77aa3-ffc5-4e9f-adcd-757545657941"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)35,
-                            ImageURL = "35.jpg"
+                            ImageURL = "35.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("6788fa1f-f257-4582-842e-ad505f1c8e92"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)36,
-                            ImageURL = "36.jpg"
+                            ImageURL = "36.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("f85d2bd9-6d9c-4a92-85b1-11c3ad17c133"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)37,
-                            ImageURL = "37.jpg"
+                            ImageURL = "37.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("a11be2b5-3c5c-4adc-8642-d2dfda33813d"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)38,
-                            ImageURL = "38.jpg"
+                            ImageURL = "38.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("4e86fa98-7b46-44e7-92bc-dcc997c3574a"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)39,
-                            ImageURL = "39.jpg"
+                            ImageURL = "39.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("22a1a283-80c0-4dc2-a9da-0a71a13b5dc0"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)40,
-                            ImageURL = "40.jpg"
+                            ImageURL = "40.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("3d6be27d-6bcc-4e23-9fde-f785d000a72e"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)41,
-                            ImageURL = "41.jpg"
+                            ImageURL = "41.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("5b2c0a01-6bc0-4b9c-b66f-72c45c8bdcb7"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)42,
-                            ImageURL = "42.jpg"
+                            ImageURL = "42.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("0c17d220-7f8e-4b58-b15d-a3f9d37a70dd"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)43,
-                            ImageURL = "43.jpg"
+                            ImageURL = "43.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("47059dc1-e213-4dc9-a1f3-1e263f7f29f2"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)44,
-                            ImageURL = "44.jpg"
+                            ImageURL = "44.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("34c310fd-4fdc-4048-9b11-7b0a29d3b440"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)45,
-                            ImageURL = "45.jpg"
+                            ImageURL = "45.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("6819a0d1-31a5-4e13-aaab-57fa19edc770"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)46,
-                            ImageURL = "46.jpg"
+                            ImageURL = "46.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("9f58f9f7-40c0-46bc-8052-7cb0ffca9a2c"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)47,
-                            ImageURL = "47.jpg"
+                            ImageURL = "47.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("7bd54d5b-d802-4d60-91a8-82a9079b1876"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)48,
-                            ImageURL = "48.jpg"
+                            ImageURL = "48.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("72b0ea4d-8f47-4e40-8fbb-9a5d5e1c87d3"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)49,
-                            ImageURL = "49.jpg"
+                            ImageURL = "49.png"
                         },
                         new
                         {
                             ImageIdentifier = new Guid("d3c2b7fa-2f9f-4883-862d-a9556d24a35d"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ImageNumber = (short)50,
-                            ImageURL = "50.jpg"
+                            ImageURL = "50.png"
                         });
                 });
 
@@ -754,31 +755,31 @@ namespace DataAccessLayer.Migrations
                         {
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7124)
+                            SavingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6474)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7128)
+                            SavingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6479)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7130)
+                            SavingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6482)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7132)
+                            SavingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6484)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7134)
+                            SavingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6486)
                         });
                 });
 
@@ -834,31 +835,31 @@ namespace DataAccessLayer.Migrations
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            LastReadingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7042)
+                            LastReadingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6368)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
-                            LastReadingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7049)
+                            LastReadingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6374)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
-                            LastReadingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7050)
+                            LastReadingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6377)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            LastReadingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7052)
+                            LastReadingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6378)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
-                            LastReadingTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(7053)
+                            LastReadingTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6380)
                         });
                 });
 
@@ -893,7 +894,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
                             ChapterComment = "Nó hay vãi",
                             ChapterRatingStar = (short)5,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6965)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6251)
                         },
                         new
                         {
@@ -901,7 +902,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
                             ChapterComment = "Art đẹp, nhưng cốt truyện không hay",
                             ChapterRatingStar = (short)3,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6968)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6257)
                         },
                         new
                         {
@@ -909,7 +910,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ChapterComment = "Art tạm tạm",
                             ChapterRatingStar = (short)2,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6972)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6260)
                         },
                         new
                         {
@@ -917,7 +918,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("ab9d0e26-4c6e-40a8-97e3-1d5d012b4d80"),
                             ChapterComment = "Meh không ổn tí nào",
                             ChapterRatingStar = (short)1,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6973)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6263)
                         },
                         new
                         {
@@ -925,7 +926,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("94f15b6a-a89b-4546-82a4-98098bab83ff"),
                             ChapterComment = "Được phết",
                             ChapterRatingStar = (short)4,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6975)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6265)
                         });
                 });
 
@@ -960,7 +961,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             ComicComment = "Tổng quan về cốt truyện ở mức ổn",
                             ComicRatingStar = (short)3,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6817)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6137)
                         },
                         new
                         {
@@ -968,7 +969,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             ComicComment = "Cốt truyện khó hiểu",
                             ComicRatingStar = (short)2,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6822)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6145)
                         },
                         new
                         {
@@ -976,7 +977,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             ComicComment = "Cười vãi",
                             ComicRatingStar = (short)5,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6824)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6147)
                         },
                         new
                         {
@@ -984,7 +985,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             ComicComment = "Tui muốn gud end",
                             ComicRatingStar = (short)1,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6826)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6149)
                         },
                         new
                         {
@@ -992,7 +993,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
                             ComicComment = "Đánh nhau ít nhưng tổng quan vẫn OK",
                             ComicRatingStar = (short)4,
-                            ReviewTime = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6828)
+                            ReviewTime = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6152)
                         });
                 });
 
@@ -1024,26 +1025,26 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            TransactionIdentifier = new Guid("33d85aab-2f59-4d92-a1e7-7b346c67facc"),
+                            TransactionIdentifier = new Guid("8ea3ffc6-d8b9-4267-b7f9-bc1fb5594fdd"),
                             TransactionAmount = 100000.0,
                             TransactionCoin = 100,
-                            TransactionDate = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6734),
+                            TransactionDate = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6023),
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
                         },
                         new
                         {
-                            TransactionIdentifier = new Guid("dac3cef5-d6a2-417e-875e-c790f62c1d63"),
+                            TransactionIdentifier = new Guid("4294f30a-0f88-4d8c-9571-a8e21e43d3e3"),
                             TransactionAmount = 50000.0,
                             TransactionCoin = 50,
-                            TransactionDate = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6740),
+                            TransactionDate = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6032),
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
                         },
                         new
                         {
-                            TransactionIdentifier = new Guid("1d96460f-c42d-4b4d-a8f0-b8dfc5499d78"),
+                            TransactionIdentifier = new Guid("bf3b0085-c46d-4a3c-9121-02fd9d8a999e"),
                             TransactionAmount = 200000.0,
                             TransactionCoin = 200,
-                            TransactionDate = new DateTime(2023, 6, 11, 16, 26, 25, 471, DateTimeKind.Utc).AddTicks(6742),
+                            TransactionDate = new DateTime(2023, 6, 11, 12, 30, 13, 520, DateTimeKind.Utc).AddTicks(6034),
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5")
                         });
                 });

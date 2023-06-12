@@ -11,6 +11,8 @@ public class ChapterEntity
 
     public int ChapterUnlockPrice { get; set; }
 
+    public DateOnly AddedDate { get; set; }
+
     public Guid ComicIdentifier { get; set; }
 
     public ComicEntity ComicEntity { get; set; }

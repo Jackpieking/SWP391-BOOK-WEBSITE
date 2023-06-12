@@ -14,9 +14,9 @@ public class GetAllComicAction_Out_Dto
 
     public string ComicAvatar { get; set; }
 
-    public int NumberOfReaderHasRead { get; set; }
+    public int ReadersCounts { get; set; }
 
-    public int ReviewCount { get; set; }
+    public int ReviewCounts { get; set; }
 
     public DateTime LastestComicReviewDate { get; set; }
 }
