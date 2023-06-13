@@ -2,7 +2,6 @@
 using NewClient.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ public class ChapterImageService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IEnumerable<DisplayAllChapterImagesOfAChapterModel>> GetAllChapterImagesOfAChapterModelsAsync(Guid chapterIdentifier)
+    public async Task<DisplayAllChapterImagesOfAChapterModel> GetAllChapterImagesOfAChapterModelsAsync(Guid chapterIdentifier)
     {
         var GetAllChapterImageOfAChapterEndpointURL = $"api/ChapterImage/{chapterIdentifier}";
 
@@ -50,7 +49,7 @@ public class ChapterImageService
 
             JsonSerializer jsonSerializer = new();
 
-            return jsonSerializer.Deserialize<IEnumerable<DisplayAllChapterImagesOfAChapterModel>>(reader: jsonReader);
+            return jsonSerializer.Deserialize<DisplayAllChapterImagesOfAChapterModel>(reader: jsonReader);
         }
         catch (TaskCanceledException)
         {

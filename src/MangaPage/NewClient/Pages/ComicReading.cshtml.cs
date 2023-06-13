@@ -6,7 +6,6 @@ using NewClient.Models;
 using NewClient.Services;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace NewClient.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ChapterImageService _chapterImageService;
 
-        public IEnumerable<DisplayAllChapterImagesOfAChapterModel> ImagesOfAChapterModels { get; set; }
+        public DisplayAllChapterImagesOfAChapterModel ReadingChapterModel { get; set; }
 
         public ComicReadingModel(
             ILogger<IndexModel> logger,
@@ -31,7 +30,7 @@ namespace NewClient.Pages
         {
             try
             {
-                ImagesOfAChapterModels = await _chapterImageService
+                ReadingChapterModel = await _chapterImageService
                     .GetAllChapterImagesOfAChapterModelsAsync(chapterIdentifier: chapterIdentifier);
 
                 return Page();

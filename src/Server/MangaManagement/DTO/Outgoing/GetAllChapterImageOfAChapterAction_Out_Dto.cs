@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NewClient.Models;
+namespace DTO.Outgoing;
 
-public class DisplayAllChapterImagesOfAChapterModel
+public class GetAllChapterImageOfAChapterAction_Out_Dto
 {
     public string ComicName { get; set; }
 
