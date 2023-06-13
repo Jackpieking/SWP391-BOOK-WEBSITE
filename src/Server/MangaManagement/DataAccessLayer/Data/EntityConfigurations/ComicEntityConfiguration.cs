@@ -43,9 +43,9 @@ public class ComicEntityConfiguration : IEntityTypeConfiguration<ComicEntity>
             .Property(propertyExpression: comic => comic.PublisherIdentifier)
             .IsRequired();
 
-        //field: ComicLatestChapter
+        //field: ComicStatus
         builder
-            .Property(propertyExpression: comic => comic.ComicLatestChapter)
+            .Property(propertyExpression: comic => comic.ComicStatus)
             .IsRequired();
 
         //field: ComicAvatar

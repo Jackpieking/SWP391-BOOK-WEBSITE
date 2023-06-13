@@ -5,6 +5,7 @@ using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
 using Helper.ObjectMappers.ModelToEntity;
 using Mapper.ModelAndDto;
+using Mapper.ModelAndEntity;
 using Mapper.ModelToEntity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +18,20 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args: args);
 
 //Configure logging
-builder.Host.ConfigureLogging(configureLogging: logging =>
-{
-    logging.ClearProviders();
-    logging.AddConsole();
-});
+builder.Host.ConfigureLogging(configureLogging: logging
+    => logging.AddConsole());
 
 //add services to application
 var services = builder.Services;
 
+//others
 services
     .AddScoped<IUnitOfWork, UnitOfWork>()
     .AddScoped<EntityManagementService>()
+    .ConfigureOptions<DatabaseOptionUpdates>();
+
+//mapper profile
+services
     .AddAutoMapper(
                    typeof(UserInfoEntityAndUserInfoModelProfile),
                    typeof(TransactionHistoryEntityAndTransactionHistoryModelProfile),
@@ -43,17 +46,23 @@ services
                    typeof(ChapterEntityAndChapterModelProfile),
                    typeof(CategoryEntityAndCategoryModelProfile),
                    typeof(BuyingHistoryEntityAndBuyingHistoryModelProfile),
+                   typeof(ComicLikeEntityAndComicLikeModelProfile),
                    typeof(ComicModelToGetAllComicDtoProfile),
                    typeof(ComicModelToGetComicDetailDtoProfile),
-                   typeof(ChapterImageToGetAllChapterImageOfAChapterDtoProfile))
-    .ConfigureOptions<DatabaseOptionUpdates>()
+                   typeof(ChapterImageToGetAllChapterImageOfAChapterDtoProfile));
+
+//cors
+services
     .AddCors(setupAction: cors => cors.AddDefaultPolicy(configurePolicy: policy =>
     {
         policy
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowAnyOrigin();
-    }))
+    }));
+
+//dbcontext
+services
     .AddDbContextPool<MangaContext>((service, config) =>
     {
         var databaseOptions = service.GetRequiredService<IOptions<DatabaseOptions>>().Value;
@@ -72,7 +81,10 @@ services
             .EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyCheck);
 
 
-    })
+    });
+
+//controller
+services
     .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
 
 var app = builder.Build();

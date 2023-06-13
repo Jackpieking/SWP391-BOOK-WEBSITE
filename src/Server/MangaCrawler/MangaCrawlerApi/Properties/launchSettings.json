@@ -12,8 +12,8 @@
     "MangaCrawlerApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "launchUrl": "hangfire",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7229",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

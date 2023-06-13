@@ -15,7 +15,7 @@ services
         name: "MangaAPI",
         configureClient: httpClient =>
         {
-            httpClient.BaseAddress = new(uriString: "https://localhost:7174");
+            httpClient.BaseAddress = new(uriString: "https://localhost:7174/");
         });
 
 services.AddRazorPages();

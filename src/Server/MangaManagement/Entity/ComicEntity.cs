@@ -17,7 +17,7 @@ public class ComicEntity
 
     public DateOnly ComicPublishedDate { get; set; }
 
-    public double ComicLatestChapter { get; set; }
+    public string ComicStatus { get; set; }
 
     public PublisherEntity PublisherEntity { get; set; }
 

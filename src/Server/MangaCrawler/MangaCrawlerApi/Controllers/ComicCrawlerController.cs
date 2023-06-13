@@ -1,7 +1,8 @@
-﻿using MangaCrawlerApi.Services;
+﻿using Hangfire;
+using MangaCrawlerApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MangaCrawlerApi.Controllers;
@@ -12,22 +13,36 @@ namespace MangaCrawlerApi.Controllers;
 [ApiController]
 public class ComicCrawlerController : ControllerBase
 {
-    private readonly ILogger<ComicCrawlerController> _logger;
     private readonly TruyenQQPageHandlerService _service;
 
-    public ComicCrawlerController(
-        ILogger<ComicCrawlerController> logger,
-        TruyenQQPageHandlerService service)
+    public ComicCrawlerController(TruyenQQPageHandlerService service)
     {
-        _logger = logger;
         _service = service;
     }
 
+    /// <summary>
+    /// Start a crawling manga job
+    /// </summary>
+    ///<response code="200">Start a background task fro crawling manga</response>
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public IActionResult StartCrawlJob(CancellationToken cancellationToken)
     {
-        await _service.ParsePageAndGetAllComicOfPage();
+        BackgroundJob.Enqueue(methodCall: () => AsyncMethodWrapper(cancellationToken));
+
+        //RecurringJob.AddOrUpdate(
+        //    recurringJobId: "crawl-truyenqqne",
+        //    methodCall: () => AsyncMethodWrapper(cancellationToken),
+        //    cronExpression: Cron.Hourly());
 
         return Ok();
+    }
+
+    public void AsyncMethodWrapper(CancellationToken cancellationToken)
+    {
+        Task
+            .Run(
+                function: async () => await _service.ParsePageAndGetAllComicOfPage(cancellationToken: cancellationToken),
+                cancellationToken: cancellationToken)
+            .Wait(cancellationToken);
     }
 }

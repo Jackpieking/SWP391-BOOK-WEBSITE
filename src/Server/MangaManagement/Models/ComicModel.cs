@@ -18,7 +18,7 @@ public class ComicModel
 
     public DateOnly ComicPublishDate { get; set; }
 
-    public double ComicLatestChapter { get; set; }
+    public string ComicStatus { get; set; }
 
     public PublisherModel PublisherModel { get; set; }
 

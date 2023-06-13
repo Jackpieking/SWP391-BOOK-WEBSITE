@@ -110,8 +110,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateOnly>("AddedDate")
                         .HasColumnType("date");
 
-                    b.Property<double>("ChapterNumber")
-                        .HasColumnType("double precision");
+                    b.Property<string>("ChapterNumber")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(30)");
 
                     b.Property<int>("ChapterUnlockPrice")
                         .HasColumnType("integer");
@@ -130,7 +131,7 @@ namespace DataAccessLayer.Migrations
                         {
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
                             AddedDate = new DateOnly(2023, 6, 13),
-                            ChapterNumber = 1.0,
+                            ChapterNumber = "1",
                             ChapterUnlockPrice = 0,
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787")
                         },
@@ -138,7 +139,7 @@ namespace DataAccessLayer.Migrations
                         {
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
                             AddedDate = new DateOnly(2023, 6, 13),
-                            ChapterNumber = 1.0,
+                            ChapterNumber = "1",
                             ChapterUnlockPrice = 0,
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3")
                         },
@@ -146,7 +147,7 @@ namespace DataAccessLayer.Migrations
                         {
                             ChapterIdentifier = new Guid("94f15b6a-a89b-4546-82a4-98098bab83ff"),
                             AddedDate = new DateOnly(2023, 6, 13),
-                            ChapterNumber = 1.0,
+                            ChapterNumber = "1",
                             ChapterUnlockPrice = 0,
                             ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f")
                         },
@@ -154,7 +155,7 @@ namespace DataAccessLayer.Migrations
                         {
                             ChapterIdentifier = new Guid("ab9d0e26-4c6e-40a8-97e3-1d5d012b4d80"),
                             AddedDate = new DateOnly(2023, 6, 13),
-                            ChapterNumber = 1.0,
+                            ChapterNumber = "1",
                             ChapterUnlockPrice = 0,
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f")
                         },
@@ -162,7 +163,7 @@ namespace DataAccessLayer.Migrations
                         {
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             AddedDate = new DateOnly(2023, 6, 13),
-                            ChapterNumber = 1.0,
+                            ChapterNumber = "1",
                             ChapterUnlockPrice = 0,
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e")
                         });
@@ -658,15 +659,16 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(1000)");
 
-                    b.Property<double>("ComicLatestChapter")
-                        .HasColumnType("double precision");
-
                     b.Property<string>("ComicName")
                         .IsRequired()
                         .HasColumnType("VARCHAR(50)");
 
                     b.Property<DateOnly>("ComicPublishedDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("ComicStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("PublisherIdentifier")
                         .HasColumnType("uuid");
@@ -683,9 +685,9 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             ComicAvatar = "Thanh_Gươm_Diệt_Quỷ.jpg",
                             ComicDescription = "Kimetsu no Yaiba – Tanjirou là con cả của gia đình vừa mất cha. Một ngày nọ, Tanjirou đến thăm thị trấn khác để bán than, khi đêm về cậu ở nghỉ tại nhà người khác thay vì về nhà vì lời đồn thổi về ác quỷ luôn rình mò gần núi vào buổi tối. Khi cậu về nhà vào ngày hôm sau, bị kịch đang đợi chờ cậu…",
-                            ComicLatestChapter = 205.59999999999999,
                             ComicName = "Thanh Gươm Diệt Quỷ",
                             ComicPublishedDate = new DateOnly(2016, 11, 2),
+                            ComicStatus = "Đang Cập Nhật",
                             PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
                         },
                         new
@@ -693,9 +695,9 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
                             ComicAvatar = "Hội_Pháp_Sư_Nhiệm_Vụ_Trăm_Năm.jpg",
                             ComicDescription = "Tuyện tiếp nối chap 545 của Fairy Tail, khi nhóm Natsu đi làm nhiệm vụ trăm năm.",
-                            ComicLatestChapter = 132.0,
                             ComicName = "Hội Pháp Sư Nhiệm Vụ Trăm Năm",
                             ComicPublishedDate = new DateOnly(2018, 7, 25),
+                            ComicStatus = "Đang Cập Nhật",
                             PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
                         },
                         new
@@ -703,9 +705,9 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
                             ComicAvatar = "Onepunch_Man.jpg",
                             ComicDescription = "Onepunch-Man là một Manga thể loại siêu anh hùng với đặc trưng phồng tôm đấm phát chết luôn… Lol!!! Nhân vật chính trong Onepunch-man là Saitama, một con người mà nhìn đâu cũng thấy “tầm thường”, từ khuôn mặt vô hồn, cái đầu trọc lóc, cho tới thể hình long tong. Tuy nhiên, con người nhìn thì tầm thường này lại chuyên giải quyết những vấn đề hết sức bất thường. Anh thực chất chính là một siêu anh hùng luôn tìm kiếm cho mình một đối thủ mạnh. Vấn đề là, cứ mỗi lần bắt gặp một đối thủ tiềm năng, thì đối thủ nào cũng như đối thủ nào, chỉ ăn một đấm của anh là… chết luôn. Liệu rằng Onepunch-Man Saitaman có thể tìm được cho mình một kẻ ác dữ dằn đủ sức đấu với anh? Hãy theo bước Saitama trên con đường một đấm tìm đối cực kỳ hài hước của anh!!\r\n\r\n",
-                            ComicLatestChapter = 232.0,
                             ComicName = "Onepunch Man",
                             ComicPublishedDate = new DateOnly(2018, 3, 26),
+                            ComicStatus = "Đang Cập Nhật",
                             PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
                         },
                         new
@@ -713,9 +715,9 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
                             ComicAvatar = "Black_Clover_Thế_Giới_Phép_Thuật.jpg",
                             ComicDescription = "Aster và Yuno là hai đứa trẻ bị bỏ rơi ở nhà thờ và cùng nhau lớn lên tại đó. Khi còn nhỏ, chúng đã hứa với nhau xem ai sẽ trở thành Ma pháp vương tiếp theo. Thế nhưng, khi cả hai lớn lên, mọi sô chuyện đã thay đổi. Yuno là thiên tài ma pháp với sức mạnh tuyệt đỉnh trong khi Aster lại không thể sử dụng ma pháp và cố gắng bù đắp bằng thể lực. Khi cả hai được nhận sách phép vào tuổi 15, Yuno đã được ban cuốn sách phép cỏ bốn bá (trong khi đa số là cỏ ba lá) mà Aster lại không có cuốn nào. Tuy nhiên, khi Yuno bị đe dọa, sự thật về sức mạnh của Aster đã được giải mã- cậu ta được ban cuốn sách phép cỏ năm lá, cuốn sách phá ma thuật màu đen. Bấy giờ, hai người bạn trẻ đang hướng ra thế giới, cùng chung mục tiêu.",
-                            ComicLatestChapter = 360.0,
                             ComicName = "Black Clover - Thế Giới Phép Thuật",
                             ComicPublishedDate = new DateOnly(2015, 4, 18),
+                            ComicStatus = "Đang Cập Nhật",
                             PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
                         },
                         new
@@ -723,9 +725,9 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             ComicAvatar = "Thần_Y_Đích_Nữ.jpg",
                             ComicDescription = "Một nữ quân y đặc cấp trong bộ đội lục chiến, thánh thủ trung tây y, tinh thông võ thuật, tiễn thuật vì một tai nạn trên không mà xuyên không về lịch sử. Mang trên mình mối thù, nàng sẽ làm gì đây?",
-                            ComicLatestChapter = 302.0,
                             ComicName = "Thần Y Đích Nữ",
                             ComicPublishedDate = new DateOnly(2016, 5, 26),
+                            ComicStatus = "Đang Cập Nhật",
                             PublisherIdentifier = new Guid("51b02aef-2b58-4433-adea-e73c37b9f224")
                         });
                 });
@@ -779,31 +781,31 @@ namespace DataAccessLayer.Migrations
                         {
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9641)
+                            SavingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5522)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9643)
+                            SavingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5526)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("8aa5080b-0212-4b9c-9b70-0afc2bc4b99f"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9647)
+                            SavingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5529)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9649)
+                            SavingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5532)
                         },
                         new
                         {
                             ComicIdentifier = new Guid("aadadaf7-fc21-4559-a53c-f97eb1ba583f"),
                             UserIdentifier = new Guid("c6d20823-3d00-48a0-8074-36587bee2693"),
-                            SavingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9650)
+                            SavingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5534)
                         });
                 });
 
@@ -859,31 +861,31 @@ namespace DataAccessLayer.Migrations
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            LastReadingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9554)
+                            LastReadingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5425)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
-                            LastReadingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9562)
+                            LastReadingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5431)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("ef26e85e-4bd5-414f-9a2b-40bc43534523"),
-                            LastReadingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9564)
+                            LastReadingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5433)
                         },
                         new
                         {
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5"),
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
-                            LastReadingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9565)
+                            LastReadingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5435)
                         },
                         new
                         {
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72"),
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
-                            LastReadingTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9567)
+                            LastReadingTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5437)
                         });
                 });
 
@@ -918,7 +920,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
                             ChapterComment = "Nó hay vãi",
                             ChapterRatingStar = (short)5,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9468)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5321)
                         },
                         new
                         {
@@ -926,7 +928,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("3f5a415f-caa3-426b-8926-a11a55dc49b0"),
                             ChapterComment = "Art đẹp, nhưng cốt truyện không hay",
                             ChapterRatingStar = (short)3,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9472)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5325)
                         },
                         new
                         {
@@ -934,7 +936,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("dc31637b-416c-458d-9942-74fa1470ca20"),
                             ChapterComment = "Art tạm tạm",
                             ChapterRatingStar = (short)2,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9474)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5329)
                         },
                         new
                         {
@@ -942,7 +944,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("ab9d0e26-4c6e-40a8-97e3-1d5d012b4d80"),
                             ChapterComment = "Meh không ổn tí nào",
                             ChapterRatingStar = (short)1,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9476)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5332)
                         },
                         new
                         {
@@ -950,7 +952,7 @@ namespace DataAccessLayer.Migrations
                             ChapterIdentifier = new Guid("94f15b6a-a89b-4546-82a4-98098bab83ff"),
                             ChapterComment = "Được phết",
                             ChapterRatingStar = (short)4,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9478)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5334)
                         });
                 });
 
@@ -985,7 +987,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             ComicComment = "Tổng quan về cốt truyện ở mức ổn",
                             ComicRatingStar = (short)3,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9296)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5204)
                         },
                         new
                         {
@@ -993,7 +995,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             ComicComment = "Cốt truyện khó hiểu",
                             ComicRatingStar = (short)2,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9301)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5210)
                         },
                         new
                         {
@@ -1001,7 +1003,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("4dfe12e0-cb8a-4282-8e74-3b1e8053f787"),
                             ComicComment = "Cười vãi",
                             ComicRatingStar = (short)5,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9303)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5213)
                         },
                         new
                         {
@@ -1009,7 +1011,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("b8d6abf3-b7e0-4a20-8647-f8f4f1ac04d3"),
                             ComicComment = "Tui muốn gud end",
                             ComicRatingStar = (short)1,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9304)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5215)
                         },
                         new
                         {
@@ -1017,7 +1019,7 @@ namespace DataAccessLayer.Migrations
                             ComicIdentifier = new Guid("5d34237a-f44c-4f3f-8495-2b36047e034e"),
                             ComicComment = "Đánh nhau ít nhưng tổng quan vẫn OK",
                             ComicRatingStar = (short)4,
-                            ReviewTime = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9307)
+                            ReviewTime = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5219)
                         });
                 });
 
@@ -1049,26 +1051,26 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            TransactionIdentifier = new Guid("c58c229b-8e76-4cc5-93b8-3ba23b314dd5"),
+                            TransactionIdentifier = new Guid("4818b343-9b3a-4556-8fad-90794ba15f2e"),
                             TransactionAmount = 100000.0,
                             TransactionCoin = 100,
-                            TransactionDate = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9207),
+                            TransactionDate = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5104),
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
                         },
                         new
                         {
-                            TransactionIdentifier = new Guid("19d2629b-88ef-4d5d-8e40-727f7c44be8a"),
+                            TransactionIdentifier = new Guid("dea2fd0f-912c-4441-abaf-a5ba03cc0e57"),
                             TransactionAmount = 50000.0,
                             TransactionCoin = 50,
-                            TransactionDate = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9213),
+                            TransactionDate = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5110),
                             UserIdentifier = new Guid("2231dfa9-c0f7-49c9-b0af-dac2cac61c72")
                         },
                         new
                         {
-                            TransactionIdentifier = new Guid("8c488635-cacf-4531-afe1-ace71ed52768"),
+                            TransactionIdentifier = new Guid("e80ca438-390f-4fa6-bf4c-03c4ab3d86d7"),
                             TransactionAmount = 200000.0,
                             TransactionCoin = 200,
-                            TransactionDate = new DateTime(2023, 6, 13, 3, 45, 0, 620, DateTimeKind.Utc).AddTicks(9215),
+                            TransactionDate = new DateTime(2023, 6, 13, 8, 5, 51, 392, DateTimeKind.Utc).AddTicks(5112),
                             UserIdentifier = new Guid("1ef67686-f4ad-48f2-b56c-c828ec53a8d5")
                         });
                 });

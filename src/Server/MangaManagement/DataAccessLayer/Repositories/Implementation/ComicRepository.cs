@@ -23,7 +23,7 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
                 ComicIdentifier = comicEntity.ComicIdentifier,
                 ComicPublishedDate = comicEntity.ComicPublishedDate,
                 ComicName = comicEntity.ComicName,
-                ComicLatestChapter = comicEntity.ComicLatestChapter,
+                //ComicLatestChapter = comicEntity.ComicLatestChapter,
                 ComicAvatar = comicEntity.ComicAvatar
             })
             .ToListAsync();
@@ -41,7 +41,7 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
                 ComicDescription = comicEntity.ComicDescription,
                 ComicAvatar = comicEntity.ComicAvatar,
                 ComicPublishedDate = comicEntity.ComicPublishedDate,
-                ComicLatestChapter = comicEntity.ComicLatestChapter,
+                //ComicLatestChapter = comicEntity.ComicLatestChapter,
                 PublisherEntity = new()
                 {
                     PublisherIdentifier = comicEntity.PublisherIdentifier,

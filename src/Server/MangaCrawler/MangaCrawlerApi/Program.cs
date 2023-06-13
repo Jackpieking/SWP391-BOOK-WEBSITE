@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.IO;
+using System.Reflection;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
@@ -23,9 +25,33 @@ builder.Host.ConfigureLogging(configureLogging: logging
 // Add services to the container.
 var services = builder.Services;
 
+//others
 services
     .ConfigureOptions<DatabaseOptionsSetup>()
-    .AddScoped<TruyenQQPageHandlerService>();
+    .AddScoped<TruyenQQPageHandlerService>()
+    .AddScoped<UpdateCrawlDataToDatabaseService>();
+
+// Add swagger
+services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc(name: "v1", info: new()
+    {
+        Version = "v1",
+        Title = "Crawl Manga Api",
+        Description = @"An ASP.NET Core Web API for crawling manga using hangfire as background service</br>
+                        Please also open following path ""https://localhost:7229/hangfire""
+                        to open the hangfire dashboard for monitoring background task",
+        License = new()
+        {
+            Name = "License: MIT",
+            Url = new(uriString: "https://opensource.org/license/mit/")
+        }
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(filePath: Path.Combine(path1: AppContext.BaseDirectory, path2: xmlFilename));
+});
+
 
 //hangfire services
 services
@@ -84,12 +110,30 @@ services
     .AddControllers(configure: option
         => option.SuppressAsyncSuffixInActionNames = true);
 
+//Httpclient
+services
+    .AddHttpClient(name: "truyenqqne", configureClient: configure =>
+    {
+        configure.DefaultRequestHeaders.Add(name: "Referer", value: "https://truyenqqne.com/");
+        configure.BaseAddress = new(uriString: "https://truyenqqne.com/");
+        configure.Timeout = TimeSpan.FromSeconds(value: 10);
+    });
+
+services
+    .AddHttpClient(name: "MangaApi", configureClient: configure =>
+    {
+        configure.BaseAddress = new(uriString: "https://localhost:7174/");
+        configure.Timeout = TimeSpan.FromSeconds(value: 10);
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (builder.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    app
+        .UseSwagger()
+        .UseSwaggerUI();
 }
 
 app

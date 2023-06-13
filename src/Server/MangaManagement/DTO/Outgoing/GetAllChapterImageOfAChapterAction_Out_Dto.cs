@@ -7,7 +7,7 @@ public class GetAllChapterImageOfAChapterAction_Out_Dto
 {
     public string ComicName { get; set; }
 
-    public double ChapterNumber { get; set; }
+    public string ChapterNumber { get; set; }
 
     public Guid ChapterIdentifier { get; set; }
 

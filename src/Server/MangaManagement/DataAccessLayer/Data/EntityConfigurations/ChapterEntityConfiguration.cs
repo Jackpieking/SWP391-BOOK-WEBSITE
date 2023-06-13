@@ -13,6 +13,7 @@ public class ChapterEntityConfiguration : IEntityTypeConfiguration<ChapterEntity
     public void Configure(EntityTypeBuilder<ChapterEntity> builder)
     {
         const string TableName = "chapter";
+        const string VARCHAR_30 = "VARCHAR(30)";
         const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
         builder.ToTable(name: TableName);
@@ -27,6 +28,7 @@ public class ChapterEntityConfiguration : IEntityTypeConfiguration<ChapterEntity
         //field: ChapterNumber
         builder
             .Property(propertyExpression: chapter => chapter.ChapterNumber)
+            .HasColumnType(typeName: VARCHAR_30)
             .IsRequired();
 
         //field: ChapterUnlockPrice

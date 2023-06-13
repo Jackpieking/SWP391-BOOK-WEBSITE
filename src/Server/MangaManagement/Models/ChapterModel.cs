@@ -7,7 +7,7 @@ public class ChapterModel
 {
     public Guid ChapterIdentifier { get; set; }
 
-    public double ChapterNumber { get; set; }
+    public string ChapterNumber { get; set; }
 
     public int ChapterUnlockPrice { get; set; }
 
