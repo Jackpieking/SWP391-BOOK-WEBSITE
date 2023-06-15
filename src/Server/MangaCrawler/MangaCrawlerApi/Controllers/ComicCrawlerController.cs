@@ -1,8 +1,6 @@
-﻿using Hangfire;
-using MangaCrawlerApi.Services;
+﻿using MangaCrawlerApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MangaCrawlerApi.Controllers;
@@ -13,36 +11,29 @@ namespace MangaCrawlerApi.Controllers;
 [ApiController]
 public class ComicCrawlerController : ControllerBase
 {
-    private readonly TruyenQQPageHandlerService _service;
+	private readonly TruyenQQPageHandlerService _service;
 
-    public ComicCrawlerController(TruyenQQPageHandlerService service)
-    {
-        _service = service;
-    }
+	public ComicCrawlerController(TruyenQQPageHandlerService service)
+	{
+		_service = service;
+	}
 
-    /// <summary>
-    /// Start a crawling manga job
-    /// </summary>
-    ///<response code="200">Start a background task fro crawling manga</response>
-    [HttpGet]
-    public IActionResult StartCrawlJob(CancellationToken cancellationToken)
-    {
-        BackgroundJob.Enqueue(methodCall: () => AsyncMethodWrapper(cancellationToken));
+	/// <summary>
+	/// Start a crawling manga job
+	/// </summary>
+	///<response code="200">Start a background task fro crawling manga</response>
+	[HttpGet]
+	public async Task<IActionResult> TriggerCrawlJobAsync()
+	{
+		await _service.EntryPointAsync();
 
-        //RecurringJob.AddOrUpdate(
-        //    recurringJobId: "crawl-truyenqqne",
-        //    methodCall: () => AsyncMethodWrapper(cancellationToken),
-        //    cronExpression: Cron.Hourly());
+		//BackgroundJob.Enqueue(methodCall: () => _service.EntryPoint());
 
-        return Ok();
-    }
+		//RecurringJob.AddOrUpdate(
+		//    recurringJobId: "crawl-truyenqqne",
+		//    methodCall: () => AsyncMethodWrapper(cancellationToken),
+		//    cronExpression: Cron.Hourly());
 
-    public void AsyncMethodWrapper(CancellationToken cancellationToken)
-    {
-        Task
-            .Run(
-                function: async () => await _service.ParsePageAndGetAllComicOfPage(cancellationToken: cancellationToken),
-                cancellationToken: cancellationToken)
-            .Wait(cancellationToken);
-    }
+		return Ok();
+	}
 }

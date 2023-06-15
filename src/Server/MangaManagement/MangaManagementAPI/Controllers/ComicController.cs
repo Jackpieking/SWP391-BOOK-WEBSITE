@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.Services;
 using DTO;
+using DTO.Incoming;
 using DTO.Outgoing;
 using Helper;
 using Microsoft.AspNetCore.Http;
@@ -165,5 +166,11 @@ public class ComicController : ControllerBase
 
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
+    }
+
+    [HttpPost(template: "Update")]
+    public IActionResult UpdateAllComicAndChapterToDatabase([FromBody] UpdateCrawlDataToDatabaseAction_In_Dto dto)
+    {
+        return Ok();
     }
 }
