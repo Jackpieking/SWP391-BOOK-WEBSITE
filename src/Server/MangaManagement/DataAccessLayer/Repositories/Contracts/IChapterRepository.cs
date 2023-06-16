@@ -8,7 +8,7 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IChapterRepository : IGenericRepository<ChapterEntity>
 {
-	Task<IEnumerable<ChapterEntity>> GetAllChaptersOfAComicFromDatabaseAsync(Guid comicIdentifier);
-	Task<ChapterEntity> GetAChapterWithComicByChapterIdentifierFromDatabaseAsync(Guid chapterIdentifier);
-	Task UpdateCrawlDataAsync(IEnumerable<ChapterEntity> crawlChapterEntities, string comicName);
+	Task<IList<ChapterEntity>> GetChaptersOfAComicFromDatabaseAsync(Guid comicIdentifier);
+	Task<ChapterEntity> GetChapterWithComicByChapterIdentifierFromDatabaseAsync(Guid chapterIdentifier);
+	Task UpdateCrawlDataAsync(IList<ChapterEntity> crawlChapterEntities, Guid comicIdentifier);
 }

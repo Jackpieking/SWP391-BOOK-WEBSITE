@@ -1,12 +1,9 @@
-using Hangfire;
-using Hangfire.PostgreSql;
 using MangaCrawlerApi.Data;
 using MangaCrawlerApi.Mappers;
 using MangaCrawlerApi.Options;
 using MangaCrawlerApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -56,23 +53,23 @@ services.AddSwaggerGen(options =>
 });
 
 
-//hangfire services
-services
-	.AddHangfire(configuration: configuration =>
-	{
-		var connectionString = builder
-			.Configuration
-			.GetConnectionString(name: "DefaultConnectionString");
+////hangfire services
+//services
+//	.AddHangfire(configuration: configuration =>
+//	{
+//		var connectionString = builder
+//			.Configuration
+//			.GetConnectionString(name: "DefaultConnectionString");
 
-		configuration
-				.SetDataCompatibilityLevel(compatibilityLevel: CompatibilityLevel.Version_180)
-				.UseSimpleAssemblyNameTypeSerializer()
-				.UseRecommendedSerializerSettings()
-				.UsePostgreSqlStorage(connectionString: connectionString);
-	});
+//		configuration
+//				.SetDataCompatibilityLevel(compatibilityLevel: CompatibilityLevel.Version_180)
+//				.UseSimpleAssemblyNameTypeSerializer()
+//				.UseRecommendedSerializerSettings()
+//				.UsePostgreSqlStorage(connectionString: connectionString);
+//	});
 
-//hangfire server
-services.AddHangfireServer();
+////hangfire server
+//services.AddHangfireServer();
 
 //dbcontext
 services
@@ -149,6 +146,6 @@ app
 	.UseCors();
 
 app.MapControllers();
-app.MapHangfireDashboard();
+//app.MapHangfireDashboard();
 
 app.Run();

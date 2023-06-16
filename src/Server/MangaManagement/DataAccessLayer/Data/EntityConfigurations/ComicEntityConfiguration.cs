@@ -13,7 +13,7 @@ public class ComicEntityConfiguration : IEntityTypeConfiguration<ComicEntity>
 	public void Configure(EntityTypeBuilder<ComicEntity> builder)
 	{
 		const string TableName = "comic";
-		const string VARCHAR_1000 = "VARCHAR(1000)";
+		const string TEXT = "TEXT";
 		const string VARCHAR_100 = "VARCHAR(100)";
 		const string GEN_RANDOM_UUID = "gen_random_uuid()";
 
@@ -35,7 +35,7 @@ public class ComicEntityConfiguration : IEntityTypeConfiguration<ComicEntity>
 		//field: ComicDescription
 		builder
 			.Property(propertyExpression: comic => comic.ComicDescription)
-			.HasColumnType(typeName: VARCHAR_1000)
+			.HasColumnType(typeName: TEXT)
 			.IsRequired();
 
 		//field: PublisherIdentifier

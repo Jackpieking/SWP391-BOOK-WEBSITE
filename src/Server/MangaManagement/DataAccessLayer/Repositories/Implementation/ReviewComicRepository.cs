@@ -11,37 +11,37 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IReviewComicRepository
 {
-    public ReviewComicRepository(DbSet<ReviewComicEntity> dbSet) : base(dbSet: dbSet)
-    {
-    }
+	public ReviewComicRepository(DbSet<ReviewComicEntity> dbSet) : base(dbSet: dbSet)
+	{
+	}
 
-    public async Task<IEnumerable<ReviewComicEntity>> GetAllReviewComicsByComicIdentifierFromDatabaseAsync(Guid comicIdentifier)
-    {
-        return await _dbSet
-            .Where(predicate: reviewComicEntity
-                => reviewComicEntity.ComicIdentifier == comicIdentifier)
-            .Select(selector: reviewComicEntity => new ReviewComicEntity
-            {
-                ComicRatingStar = reviewComicEntity.ComicRatingStar,
-                ComicComment = reviewComicEntity.ComicComment,
-                ReviewTime = reviewComicEntity.ReviewTime,
-                UserEntity = new()
-                {
-                    Username = reviewComicEntity.UserEntity.Username,
-                    UserAvatar = reviewComicEntity.UserEntity.UserAvatar
-                }
-            })
-            .ToListAsync();
-    }
+	public async Task<IList<ReviewComicEntity>> GetReviewComicsByComicIdentifierFromDatabaseAsync(Guid comicIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: reviewComicEntity
+				=> reviewComicEntity.ComicIdentifier == comicIdentifier)
+			.Select(selector: reviewComicEntity => new ReviewComicEntity
+			{
+				ComicRatingStar = reviewComicEntity.ComicRatingStar,
+				ComicComment = reviewComicEntity.ComicComment,
+				ReviewTime = reviewComicEntity.ReviewTime,
+				UserEntity = new()
+				{
+					Username = reviewComicEntity.UserEntity.Username,
+					UserAvatar = reviewComicEntity.UserEntity.UserAvatar
+				}
+			})
+			.ToListAsync();
+	}
 
-    public async Task<IEnumerable<ReviewComicEntity>> GetAllReviewComicsFromDatabaseAsync()
-    {
-        return await _dbSet
-            .Select(selector: reviewComic => new ReviewComicEntity
-            {
-                ComicIdentifier = reviewComic.ComicIdentifier,
-                ReviewTime = reviewComic.ReviewTime
-            })
-            .ToListAsync();
-    }
+	public async Task<IList<ReviewComicEntity>> GetReviewComicsFromDatabaseAsync()
+	{
+		return await _dbSet
+			.Select(selector: reviewComic => new ReviewComicEntity
+			{
+				ComicIdentifier = reviewComic.ComicIdentifier,
+				ReviewTime = reviewComic.ReviewTime
+			})
+			.ToListAsync();
+	}
 }

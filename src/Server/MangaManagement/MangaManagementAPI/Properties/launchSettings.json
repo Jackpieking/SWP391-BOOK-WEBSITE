@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Kestrel": {
+    "MangaManagementApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

@@ -15,7 +15,11 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
 	{
 	}
 
-	public async Task<IEnumerable<ComicEntity>> GetAllComicsFromDatabaseAsync()
+	/// <summary>
+	///
+	/// </summary>
+	/// <returns></returns>
+	public async Task<IList<ComicEntity>> GetComicsFromDatabaseAsync()
 	{
 		return await _dbSet
 			.Select(selector: comicEntity => new ComicEntity
@@ -29,14 +33,30 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
 			.ToListAsync();
 	}
 
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="comicName"></param>
+	/// <returns></returns>
 	public async Task<Guid> GetComicIdentifierByComicNameAsync(string comicName)
 	{
 		var comicEntity = await _dbSet
-			.FirstOrDefaultAsync(comicEntity => comicEntity.ComicName.Equals(comicName));
+			.Where(predicate: comicEntity
+				=> comicEntity.ComicName.Equals(comicName))
+			.Select(comicEntity => new ComicEntity
+			{
+				ComicIdentifier = comicEntity.ComicIdentifier
+			})
+			.FirstOrDefaultAsync();
 
 		return comicEntity.ComicIdentifier;
 	}
 
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="comicIdentifier"></param>
+	/// <returns></returns>
 	public async Task<ComicEntity> GetComicWithChapterListByComicIdentifierDatabaseAsync(Guid comicIdentifier)
 	{
 		return await _dbSet
@@ -65,39 +85,49 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
 			.FirstOrDefaultAsync();
 	}
 
-	public async Task UpdateCrawlDataAsync(ComicEntity crawlComicEntity)
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="crawlComicEntity"></param>
+	/// <returns></returns>
+	public async Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity)
 	{
+		//find the existing comic by comic name
 		var comicEntityIsFound = await _dbSet
 			.FirstOrDefaultAsync(predicate: comicEntity
 				=> comicEntity.ComicName == crawlComicEntity.ComicName);
 
+		//comic is not exist
 		if (Equals(objA: comicEntityIsFound, objB: null))
 		{
 			await _dbSet.AddAsync(entity: crawlComicEntity);
 
-			return;
+			return crawlComicEntity.ComicIdentifier;
 		}
 
+		//update comic descripttion
 		if (!comicEntityIsFound.ComicDescription.Equals(
-			value: crawlComicEntity.ComicDescription,
-			comparisonType: StringComparison.Ordinal))
+			value: crawlComicEntity.ComicDescription))
 		{
 			comicEntityIsFound.ComicDescription = crawlComicEntity.ComicDescription;
 		}
 
+		//update comic published date
 		if (!comicEntityIsFound.ComicPublishedDate.Equals(
 			value: crawlComicEntity.ComicPublishedDate))
 		{
 			comicEntityIsFound.ComicPublishedDate = crawlComicEntity.ComicPublishedDate;
 		}
 
+		//update comic status
 		if (!comicEntityIsFound.ComicStatus.Equals(
-			value: crawlComicEntity.ComicStatus,
-			comparisonType: StringComparison.Ordinal))
+			value: crawlComicEntity.ComicStatus))
 		{
 			comicEntityIsFound.ComicStatus = crawlComicEntity.ComicStatus;
 		}
 
 		_dbSet.Update(entity: comicEntityIsFound);
+
+		return comicEntityIsFound.ComicIdentifier;
 	}
 }

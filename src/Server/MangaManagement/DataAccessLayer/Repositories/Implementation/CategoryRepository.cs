@@ -4,6 +4,7 @@ using Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Implementation;
@@ -14,30 +15,55 @@ public class CategoryRepository : GenericRepository<CategoryEntity>, ICategoryRe
 	{
 	}
 
-	public async Task<IEnumerable<Guid>> GetCategoryIdentifierByCategoryNameAsync(IEnumerable<string> categoryNames)
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="crawlCategoryNames"></param>
+	/// <returns></returns>
+	public async Task<IList<Guid>> GetCategoryIdentifiersByCrawlCategoryNameAsync(IEnumerable<string> crawlCategoryNames)
 	{
-		IList<Guid> categoryEntities = new List<Guid>();
+		IList<Guid> categoryIdentifiers = new List<Guid>();
 
-		foreach (var categoryName in categoryNames)
+		foreach (var crawlCategoryName in crawlCategoryNames)
 		{
-			var categoryEntity = await _dbSet
-				.FirstOrDefaultAsync(categoryModel
-					=> categoryModel.CategoryName.Equals(categoryName));
+			//find category identifier base on category name
+			var foundCategoryEntity = await _dbSet
+				.Where(predicate: categoryEntity
+					=> categoryEntity.CategoryName.Equals(crawlCategoryName))
+				.Select(selector: categoryEntity => new CategoryEntity
+				{
+					CategoryIdentifier = categoryEntity.CategoryIdentifier
+				})
+				.FirstOrDefaultAsync();
 
-			categoryEntities.Add(item: categoryEntity.CategoryIdentifier);
+			//add to category name containers
+			categoryIdentifiers.Add(item: foundCategoryEntity.CategoryIdentifier);
 		}
 
-		return categoryEntities;
+		return categoryIdentifiers;
 	}
 
-	public async Task UpdateCrawlDataAsync(IEnumerable<CategoryEntity> crawlCategoryEntities)
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="crawlCategoryEntities"></param>
+	/// <returns></returns>
+	public async Task UpdateCrawlDataAsync(IList<CategoryEntity> crawlCategoryEntities)
 	{
 		foreach (var crawlCategoryEntity in crawlCategoryEntities)
 		{
+			//find existing category by category name
 			var foundCategory = await _dbSet
-				.FirstOrDefaultAsync(predicate: categoryEntity
-					=> categoryEntity.CategoryName.Equals(crawlCategoryEntity.CategoryName));
+				.Where(predicate: categoryEntity
+					=> categoryEntity.CategoryName
+						.Equals(crawlCategoryEntity.CategoryName))
+				.Select(selector: categoryEntity => new CategoryEntity
+				{
+					CategoryIdentifier = crawlCategoryEntity.CategoryIdentifier
+				})
+				.FirstOrDefaultAsync();
 
+			//if category is not exist
 			if (Equals(objA: foundCategory, objB: null))
 			{
 				await _dbSet.AddAsync(entity: crawlCategoryEntity);

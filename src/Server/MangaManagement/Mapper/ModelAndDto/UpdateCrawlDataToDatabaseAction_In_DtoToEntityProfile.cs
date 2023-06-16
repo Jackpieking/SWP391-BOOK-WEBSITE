@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DTO.Incoming;
 using Model;
 using System;
+using System.IO;
 
 namespace Mapper.ModelAndDto;
 
@@ -13,7 +13,16 @@ public class UpdateCrawlDataToDatabaseAction_In_DtoToEntityProfile : Profile
 	public UpdateCrawlDataToDatabaseAction_In_DtoToEntityProfile()
 	{
 		#region Member mapping
-		CreateMap<UpdateCrawlDataToDatabaseAction_In_Dto.ComicDtoType, ComicModel>()
+		CreateMap<CrawlComicModel, ComicModel>()
+			//comic identifier
+			.ForMember(
+				destinationMember: destination => destination.ComicIdentifier,
+				memberOptions: option =>
+				{
+					option.MapFrom(mapExpression: source => Guid.NewGuid());
+				})
+
+			//publisher identifier
 			.ForMember(
 				destinationMember: destination => destination.PublisherIdentifier,
 				memberOptions: option =>
@@ -21,17 +30,56 @@ public class UpdateCrawlDataToDatabaseAction_In_DtoToEntityProfile : Profile
 					option.MapFrom(mapExpression: source => new Guid("51b02aef-2b58-4433-adea-e73c37b9f224"));
 				});
 
-		CreateMap<UpdateCrawlDataToDatabaseAction_In_Dto.CategoryDtoType, CategoryModel>();
+		CreateMap<CrawlChapterModel, ChapterModel>()
+			//chapter identifier
+			.ForMember(
+				destinationMember: destination => destination.ChapterIdentifier,
+				memberOptions: option =>
+				{
+					option.MapFrom(mapExpression: source => Guid.NewGuid());
+				})
 
-		CreateMap<UpdateCrawlDataToDatabaseAction_In_Dto.ChapterDtoType, ChapterModel>()
+			//chapter image models
 			.ForMember(
 				destinationMember: destination => destination.ChapterImageModels,
 				memberOptions: option =>
 				{
-					option.MapFrom(mapExpression: source => source.ChapterImageDtos);
+					option.MapFrom(mapExpression: source => source.CrawlChapterImageModels);
 				});
 
-		CreateMap<UpdateCrawlDataToDatabaseAction_In_Dto.ChapterDtoType.ChapterImageDtoType, ChapterImageModel>();
+		CreateMap<CrawlChapterImageModel, ChapterImageModel>()
+			//image identifier
+			.ForMember(
+				destinationMember: destination => destination.ImageIdentifier,
+				memberOptions: option =>
+				{
+					option.MapFrom(mapExpression: source => Guid.NewGuid());
+				})
+
+			//image url
+			.ForMember(
+				destinationMember: destination => destination.ImageURL,
+				memberOptions: option =>
+				{
+					option.MapFrom(mapExpression: source => $"{source.ImageNumber}{Path.GetExtension(new Uri(source.ImageUrl).GetLeftPart(UriPartial.Path))}");
+				});
+
+		CreateMap<CrawlCategoryModel, CategoryModel>()
+			//category identifier
+			.ForMember(
+				destinationMember: destination => destination.CategoryIdentifier,
+				memberOptions: option =>
+				{
+					option.MapFrom(mapExpression: source => Guid.NewGuid());
+				})
+
+			//category description
+			.ForMember(
+				destinationMember: destination => destination.CategoryDescription,
+				memberOptions: option =>
+				{
+					option.MapFrom(mapExpression: source => string.Empty);
+				});
 		#endregion
 	}
 }

@@ -11,22 +11,27 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ChapterImageRepository : GenericRepository<ChapterImageEntity>, IChapterImageRepository
 {
-    public ChapterImageRepository(DbSet<ChapterImageEntity> dbSet) : base(dbSet: dbSet)
-    {
-    }
+	public ChapterImageRepository(DbSet<ChapterImageEntity> dbSet) : base(dbSet: dbSet)
+	{
+	}
 
-    public async Task<IEnumerable<ChapterImageEntity>> GetAllChapterImagesOfAChapterFromDatabaseAsync(Guid chapterIdentifier)
-    {
-        return await _dbSet
-            .Where(predicate: predicate
-                => predicate.ChapterIdentifier == chapterIdentifier)
-            .Select(selector: chapterImage => new ChapterImageEntity
-            {
-                ImageNumber = chapterImage.ImageNumber,
-                ImageURL = chapterImage.ImageURL
-            })
-            .OrderBy(keySelector: chapterImage
-                => chapterImage.ImageNumber)
-            .ToListAsync();
-    }
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="chapterIdentifier"></param>
+	/// <returns></returns>
+	public async Task<IList<ChapterImageEntity>> GetChapterImagesByChapterIdentifierFromDatabaseAsync(Guid chapterIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: predicate
+				=> predicate.ChapterIdentifier == chapterIdentifier)
+			.Select(selector: chapterImage => new ChapterImageEntity
+			{
+				ImageNumber = chapterImage.ImageNumber,
+				ImageURL = chapterImage.ImageURL
+			})
+			.OrderBy(keySelector: chapterImage
+				=> chapterImage.ImageNumber)
+			.ToListAsync();
+	}
 }

@@ -70,7 +70,7 @@ public class TruyenQQPageHandlerService
 				//remove all special letter from comic name
 				var formatComicName = FormatComicName(comicName: comic.ComicName);
 
-				await Task.Delay(millisecondsDelay: 2000);
+				await Task.Delay(millisecondsDelay: 500);
 
 				//call api to update database
 				UpdateCrawlDataToDatabaseAction_Out_Dto dto = new();
@@ -187,7 +187,7 @@ public class TruyenQQPageHandlerService
 						$"{image.ImageNumber}"),
 					httpClientName: "truyenqqne");
 
-				await Task.Delay(millisecondsDelay: 5000);
+				await Task.Delay(millisecondsDelay: 3000);
 			}
 		}
 	}
@@ -232,7 +232,8 @@ public class TruyenQQPageHandlerService
 		comic.ComicPublishedDate = DateOnly.ParseExact(
 				s: htmlDocument
 					.DocumentNode
-					.QuerySelector(selector: ".works-chapter-item .time-chap")
+					.QuerySelectorAll(selector: ".works-chapter-item .time-chap")
+					.Last()
 					.InnerText
 					.Trim(),
 				format: "dd/MM/yyyy");
@@ -375,7 +376,7 @@ public class TruyenQQPageHandlerService
 			//add chapter to comic chapter conatiner
 			comic.ComicChapters.Add(item: chapter);
 
-			await Task.Delay(millisecondsDelay: 5000);
+			await Task.Delay(millisecondsDelay: 3000);
 		};
 
 		return comic;

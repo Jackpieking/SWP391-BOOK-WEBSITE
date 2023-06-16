@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Services;
+using BusinessLogicLayer.Services.ComicCrawlerService;
 using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
@@ -14,8 +15,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Net;
 using System.Reflection;
 
+ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder(args: args);
@@ -31,6 +34,8 @@ var services = builder.Services;
 services
 	.AddScoped<IUnitOfWork, UnitOfWork>()
 	.AddScoped<EntityManagementService>()
+	.AddScoped<TruyenQQPageHandlerService>()
+	.AddScoped<ApiCallingService>()
 	.ConfigureOptions<DatabaseOptionUpdates>();
 
 //mapper profile
@@ -85,6 +90,15 @@ services
 			.EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyCheck);
 
 
+	});
+
+//Httpclient
+services
+	.AddHttpClient(name: "truyenqqne", configureClient: configure =>
+	{
+		configure.DefaultRequestHeaders.Add(name: "Referer", value: "https://truyenqqne.com/");
+		configure.BaseAddress = new(uriString: "https://truyenqqne.com/");
+		configure.Timeout = TimeSpan.FromSeconds(value: 30);
 	});
 
 //controller

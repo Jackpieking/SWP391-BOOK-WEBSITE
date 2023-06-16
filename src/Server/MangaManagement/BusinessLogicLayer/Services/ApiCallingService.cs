@@ -1,11 +1,9 @@
-﻿using MangaCrawlerApi.DTOs.Outgoing;
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace MangaCrawlerApi.Services;
+namespace BusinessLogicLayer.Services;
 
 public class ApiCallingService
 {
@@ -44,23 +42,5 @@ public class ApiCallingService
 
 		await using var fileStream = File.Create(path: chapterImageFilePath);
 		await stream.CopyToAsync(destination: fileStream);
-	}
-
-	public async Task UpdateComicToDatabaseAsync(UpdateCrawlDataToDatabaseAction_Out_Dto dto)
-	{
-		var httpclient = _httpClientFactory.CreateClient(name: "MangaApi");
-
-		const string UpdateEndpointUrl = "api/update/comic";
-
-		Console.WriteLine(value: $"Start calling api: path: [{UpdateEndpointUrl}]");
-
-		using var response = await httpclient.PutAsJsonAsync(requestUri: UpdateEndpointUrl, value: dto);
-
-		if (!response.IsSuccessStatusCode)
-		{
-			throw new TaskCanceledException(message: $"Status code: {(short)response.StatusCode}");
-		}
-
-		Console.WriteLine(value: $"End calling api: Path: [{UpdateEndpointUrl}] - Status Code: {(short)response.StatusCode}");
 	}
 }

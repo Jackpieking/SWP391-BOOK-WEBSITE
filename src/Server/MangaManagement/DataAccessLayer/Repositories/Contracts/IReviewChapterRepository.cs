@@ -8,5 +8,5 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IReviewChapterRepository : IGenericRepository<ReviewChapterEntity>
 {
-    Task<IEnumerable<ReviewChapterEntity>> GetAllChapterReviewsOfAChapterAsync(Guid chapterIdentifier);
+	Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier);
 }

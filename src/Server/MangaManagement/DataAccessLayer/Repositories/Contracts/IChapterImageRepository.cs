@@ -8,5 +8,5 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IChapterImageRepository : IGenericRepository<ChapterImageEntity>
 {
-    Task<IEnumerable<ChapterImageEntity>> GetAllChapterImagesOfAChapterFromDatabaseAsync(Guid chapterIdentifier);
+	Task<IList<ChapterImageEntity>> GetChapterImagesByChapterIdentifierFromDatabaseAsync(Guid chapterIdentifier);
 }

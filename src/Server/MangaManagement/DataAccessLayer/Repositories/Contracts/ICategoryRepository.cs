@@ -8,6 +8,6 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface ICategoryRepository : IGenericRepository<CategoryEntity>
 {
-	Task UpdateCrawlDataAsync(IEnumerable<CategoryEntity> crawlCategoryEntities);
-	Task<IEnumerable<Guid>> GetCategoryIdentifierByCategoryNameAsync(IEnumerable<string> crawlCategoryName);
+	Task UpdateCrawlDataAsync(IList<CategoryEntity> crawlCategoryEntities);
+	Task<IList<Guid>> GetCategoryIdentifiersByCrawlCategoryNameAsync(IEnumerable<string> crawlCategoryNames);
 }
