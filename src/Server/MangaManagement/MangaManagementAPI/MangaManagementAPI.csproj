@@ -38,4 +38,9 @@
     <ProjectReference Include="..\Mapper\Mapper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\font-awesome\" />
+    <Folder Include="wwwroot\lib\jquery-easing\" />
+  </ItemGroup>
+
 </Project>

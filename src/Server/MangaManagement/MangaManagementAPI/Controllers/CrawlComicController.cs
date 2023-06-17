@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.Services.ComicCrawlerService;
+﻿using BusinessLogicLayer.Services.ComicCrawlerService;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -12,22 +11,19 @@ namespace MangaManagementAPI.Controllers;
 [ApiController]
 public class CrawlComicController : ControllerBase
 {
-	private readonly IMapper _mapper;
-	private readonly TruyenQQPageHandlerService _truyenQQPageHandlerService;
+    private readonly TruyenQQPageHandlerService _truyenQQPageHandlerService;
 
-	public CrawlComicController(
-		IMapper mapper,
-		TruyenQQPageHandlerService truyenQQPageHandlerService)
-	{
-		_mapper = mapper;
-		_truyenQQPageHandlerService = truyenQQPageHandlerService;
-	}
+    public CrawlComicController(
+        TruyenQQPageHandlerService truyenQQPageHandlerService)
+    {
+        _truyenQQPageHandlerService = truyenQQPageHandlerService;
+    }
 
-	[HttpGet]
-	public async Task<IActionResult> UpdateComicToDatabaseAsync()
-	{
-		await _truyenQQPageHandlerService.CrawlComicsAsync(startPage: 1, endPage: 2);
+    [HttpGet]
+    public async Task<IActionResult> UpdateComicToDatabaseAsync()
+    {
+        await _truyenQQPageHandlerService.CrawlComicsAsync(startPage: 1, endPage: 2);
 
-		return Ok();
-	}
+        return Ok();
+    }
 }
