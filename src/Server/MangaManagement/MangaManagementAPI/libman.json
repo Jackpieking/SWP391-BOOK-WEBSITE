@@ -2,7 +2,7 @@
   "version": "1.0",
   "defaultProvider": "cdnjs",
   "libraries": [
-    {
+        {
       "library": "font-awesome@5.15.3",
       "destination": "wwwroot/lib/font-awesome/"
     }
@@ -10,6 +10,15 @@
     {
       "library": "jquery-easing@1.4.1",
       "destination": "wwwroot/lib/jquery-easing/"
+    },
+    {
+      "library": "jquery@3.7.0",
+      "files": [
+        "jquery.min.js",
+        "jquery.js",
+        "jquery.min.map"
+      ],
+      "destination": "wwwroot/lib/jquery/"
     }
   ]
 }
