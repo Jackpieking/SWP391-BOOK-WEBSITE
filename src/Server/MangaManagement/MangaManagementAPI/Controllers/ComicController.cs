@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -21,149 +20,169 @@ namespace DataAccessLayer.Controllers;
 [ApiController]
 public class ComicController : ControllerBase
 {
-	private readonly EntityManagementService _entityManagementService;
-	private readonly ILogger<ComicController> _logger;
-	private readonly IMapper _mapper;
+    private readonly EntityManagementService _entityManagementService;
+    private readonly ILogger<ComicController> _logger;
+    private readonly IMapper _mapper;
 
-	public ComicController(
-		EntityManagementService entityManagementService,
-		ILogger<ComicController> logger,
-		IMapper mapper)
-	{
-		_entityManagementService = entityManagementService;
-		_logger = logger;
-		_mapper = mapper;
-	}
+    public ComicController(
+        EntityManagementService entityManagementService,
+        ILogger<ComicController> logger,
+        IMapper mapper)
+    {
+        _entityManagementService = entityManagementService;
+        _logger = logger;
+        _mapper = mapper;
+    }
 
 
 
-	/// <summary>
-	/// Return some general information about all comic
-	/// </summary>
-	/// <returns>[200 - 500]</returns>
-	[HttpGet]
-	public async Task<IActionResult> GetAllComicGeneralInformationAsync()
-	{
-		try
-		{
-			var comicModels = await _entityManagementService
-				.GetAllComicAsync();
+    /// <summary>
+    /// Return some general information about all comic
+    /// </summary>
+    /// <returns>[200 - 500]</returns>
+    [HttpGet]
+    public async Task<IActionResult> GetAllComicAsync()
+    {
+        _logger.LogCritical(message: "Start Transaction Get All Comic !!");
 
-			var readingHistoryModels = await _entityManagementService
-				.GetAllReadingHistoriesWithChapterAsync();
+        try
+        {
+            var comicModels = await _entityManagementService
+                .GetAllComicWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
 
-			var reviewComicModels = await _entityManagementService
-				.GetAllReviewComicAsync();
+            var readingHistoryModels = await _entityManagementService
+                .GetAllReadingHistoriesWith_ChapterIdentifierAsync();
 
-			//list of dto for returning
-			ICollection<GetAllComicAction_Out_Dto> getAllComicDtolist = new List<GetAllComicAction_Out_Dto>();
+            var reviewComicModels = await _entityManagementService
+                .GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync();
 
-			foreach (var comicModel in comicModels)
-			{
-				//create dto for each comicModel
-				var getAllComicDto = _mapper.Map<GetAllComicAction_Out_Dto>(source: comicModel);
+            var chapterModels = await _entityManagementService
+                .GetAllChaptersWith_ChapterNumberAsync();
 
-				//get the current number of reader for each comic
-				readingHistoryModels.ForEach(action: readingHistoryModel =>
-				{
-					if (comicModel.ComicIdentifier
-						== readingHistoryModel.ChapterModel.ComicIdentifier)
-					{
-						getAllComicDto.ReadersCounts++;
-					}
-				});
+            //list of dto for returning
+            ICollection<GetAllComicAction_Out_Dto> getAllComicDtolist = new List<GetAllComicAction_Out_Dto>();
 
-				//get the current number of review for each comic
-				reviewComicModels.ForEach(action: reviewComicModel =>
-				{
-					if (comicModel.ComicIdentifier
-						== reviewComicModel.ComicIdentifier)
-					{
-						getAllComicDto.ReviewCounts++;
-					}
-				});
+            comicModels.ForEach(comicModel =>
+            {
+                //create dto for each comicModel
+                var getAllComicDto = _mapper.Map<GetAllComicAction_Out_Dto>(source: comicModel);
 
-				//get the lastest review for each comic
-				foreach (var reviewComicModel in reviewComicModels
-					.OrderByDescending(keySelector: reviewComicModel
-						=> reviewComicModel.ReviewTime))
-				{
-					if (comicModel.ComicIdentifier
-						== reviewComicModel.ComicIdentifier)
-					{
-						getAllComicDto.LastestComicReviewDate = reviewComicModel.ReviewTime;
+                //get the current number of reader for each comic
+                readingHistoryModels.ForEach(action: readingHistoryModel =>
+                {
+                    if (comicModel.ComicIdentifier
+                        == readingHistoryModel.ChapterModel.ComicIdentifier)
+                    {
+                        getAllComicDto.ReadersCounts++;
+                    }
+                });
 
-						break;
-					}
-				}
+                //get the current number of review for each comic
+                reviewComicModels.ForEach(action: reviewComicModel =>
+                {
+                    if (comicModel.ComicIdentifier
+                        == reviewComicModel.ComicIdentifier)
+                    {
+                        getAllComicDto.ReviewCounts++;
+                    }
+                });
 
-				getAllComicDtolist.Add(item: getAllComicDto);
-			}
+                //get the lastest review for each comic
+                foreach (var reviewComicModel in reviewComicModels)
+                {
+                    if (comicModel.ComicIdentifier == reviewComicModel.ComicIdentifier)
+                    {
+                        getAllComicDto.LastestComicReviewDate = reviewComicModel.ReviewTime;
 
-			return Ok(value: getAllComicDtolist);
-		}
-		catch (NpgsqlException N_e)
-		{
-			_logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
+                        break;
+                    }
+                }
 
-			return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-		}
-	}
+                //get the latest chapter
+                foreach (var chapterModel in chapterModels)
+                {
+                    if (chapterModel.ComicIdentifier == comicModel.ComicIdentifier)
+                    {
+                        getAllComicDto.ComicLatestChapter = chapterModel.ChapterNumber;
 
-	/// <summary>
-	/// Return a comic detail by comicIdentifier
-	/// </summary>
-	/// <param name="comicIdentifier"></param>
-	/// <returns>[200 - 404]</returns>
-	[HttpGet(template: "{comicIdentifier:guid}")]
-	public async Task<IActionResult> GetComicDetailAsync([FromRoute] Guid comicIdentifier)
-	{
-		try
-		{
-			var comicModel = await _entityManagementService
-				.GetAComicWithComicChapterListByComicIdentifierAsync(comicIdentifer: comicIdentifier);
+                        break;
+                    }
+                }
 
-			var publisherModel = await _entityManagementService
-				.GetAPublisherWithUserByPublisherIdentifierAsync(publisherIdentifier: comicModel.PublisherModel.PublisherIdentifier);
+                //add to dto container
+                getAllComicDtolist.Add(item: getAllComicDto);
+            });
 
-			var reviewComicModels = await _entityManagementService
-				.GetAllReviewComicByComicIdentifierAsync(comicIdentifier: comicIdentifier);
+            return Ok(value: getAllComicDtolist);
+        }
+        catch (NpgsqlException N_e)
+        {
+            _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
 
-			var readingHistoryModels = await _entityManagementService
-				.GetAllReadingHistoriesByComicIdentifierAsync(comicIdentifier: comicIdentifier);
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
+        finally
+        {
+            _logger.LogCritical(message: "End Transaction Get All Comic !!");
+        }
+    }
 
-			var comicCategoryModels = await _entityManagementService
-				.GetAllComicCategoryByComicIdentifierAsync(comicIdentifier: comicIdentifier);
+    /// <summary>
+    /// Return a comic detail by comicIdentifier
+    /// </summary>
+    /// <param name="comicIdentifier"></param>
+    /// <returns>[200 - 404]</returns>
+    [HttpGet(template: "{comicIdentifier:guid}")]
+    public async Task<IActionResult> GetComicDetailAsync([FromRoute] Guid comicIdentifier)
+    {
+        _logger.LogCritical(message: "Start Transaction Get Comic Detail !!");
 
-			if (Equals(objA: comicModel, objB: null))
-			{
-				return NotFound();
-			}
+        try
+        {
+            var comicModel = await _entityManagementService
+                .GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(comicIdentifer: comicIdentifier);
 
-			//Dto for return result
-			var getComicDetailDto = _mapper.Map<GetComicDetailAction_Out_Dto>(source: comicModel);
 
-			getComicDetailDto.PublisherName = publisherModel.UserModel.Username;
-			getComicDetailDto.ReaderCounts = readingHistoryModels.Count();
+            if (Equals(objA: comicModel, objB: null))
+            {
+                return NotFound();
+            }
 
-			reviewComicModels.ForEach(action: reviewComicModel =>
-			{
-				getComicDetailDto.ComicReviews
-					.Add(item: _mapper
-						.Map<GetComicDetailAction_Out_Dto.ReviewComicDto>(source: reviewComicModel));
-			});
+            var publisherModel = await _entityManagementService
+                .GetPublisherWith_UsernameByPublisherIdentifierAsync(publisherIdentifier: comicModel.PublisherIdentifier);
 
-			comicCategoryModels.ForEach(action: comicCategoryModel
-				=> getComicDetailDto.CategoryNames
-					.Add(item: comicCategoryModel.CategoryModel.CategoryName));
+            var reviewComicModels = await _entityManagementService
+                .GetAllReviewComicWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(comicIdentifier: comicIdentifier);
 
-			return Ok(value: getComicDetailDto);
-		}
-		catch (NpgsqlException N_e)
-		{
-			_logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
+            var readingHistoryCount = await _entityManagementService
+                .GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(comicIdentifier: comicIdentifier);
 
-			return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-		}
-	}
+            var comicCategoryModels = await _entityManagementService
+                .GetAllComicCategoryByComicIdentifierAsync(comicIdentifier: comicIdentifier);
+
+            //Dto for return result
+            var comicDetailDto = _mapper.Map<GetComicDetailAction_Out_Dto>(source: comicModel);
+
+            comicDetailDto.PublisherName = publisherModel.UserModel.Username;
+
+            comicDetailDto.ReaderCounts = readingHistoryCount;
+
+            comicDetailDto.ReviewComics = _mapper.Map<List<GetComicDetailAction_Out_Dto.ReviewComicDto>>(source: reviewComicModels);
+
+            comicCategoryModels.ForEach(action: comicCategoryModel
+                => comicDetailDto.CategoryNames.Add(item: comicCategoryModel.CategoryModel.CategoryName));
+
+            return Ok(value: comicDetailDto);
+        }
+        catch (NpgsqlException N_e)
+        {
+            _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
+
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
+        finally
+        {
+            _logger.LogCritical(message: "End Transaction Get Comic Detail !!");
+        }
+    }
 }

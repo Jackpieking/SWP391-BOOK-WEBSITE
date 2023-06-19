@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Helper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -41,11 +42,18 @@ public class IndexModel : PageModel
         {
             AllComicModels = await _comicService
                 .GetAllComicModelFromApiAsync();
+
+            AllComicModels.ForEach(action: comicModel
+                => comicModel.ComicAvatar
+                    = $"https://localhost:7174/api/Image/ComicAvatar/{comicModel.ComicAvatar}");
+
             HotComicModels = AllComicModels
                 .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts)
                 .ThenByDescending(keySelector: comicModel => comicModel.ReviewCounts);
+
             RecentlyAddedComicModels = AllComicModels
                 .OrderByDescending(keySelector: comicModel => comicModel.ComicPublishDate);
+
             ComicHasTheLastestComicReviewModels = AllComicModels
                 .OrderByDescending(keySelector: comicModel => comicModel.LastestComicReviewDate);
 

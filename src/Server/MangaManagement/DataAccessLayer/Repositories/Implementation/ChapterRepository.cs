@@ -43,7 +43,7 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns></returns>
-    public async Task<IList<ChapterEntity>> GetChaptersOfAComicFromDatabaseAsync(Guid comicIdentifier)
+    public async Task<IList<ChapterEntity>> GetChapterWith_ChapterIdentifier_ChapterNumber_ChapterUnlockPrice_ChapterAddedDateAsync(Guid comicIdentifier)
     {
         return await _dbSet
             .Where(predicate: chapterEntity
@@ -55,6 +55,7 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
                 ChapterUnlockPrice = chapterEntity.ChapterUnlockPrice,
                 AddedDate = chapterEntity.AddedDate
             })
+            .OrderByDescending(keySelector: chapterEntity => chapterEntity.ChapterNumber)
             .ToListAsync();
     }
 
@@ -102,5 +103,22 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
                 await _dbSet.AddAsync(entity: crawlChapterEntity);
             }
         }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IEnumerable<ChapterEntity>> GetAllChapterWith_ChapterNumber_ComicIdentitiferAsync()
+    {
+        return await _dbSet
+            .Select(selector: chapterEntity => new ChapterEntity
+            {
+                ComicIdentifier = chapterEntity.ComicIdentifier,
+                ChapterNumber = chapterEntity.ChapterNumber
+            })
+            .OrderByDescending(keySelector: chapterEntity => chapterEntity.ComicIdentifier)
+            .ThenByDescending(keySelector: chapterEntity => chapterEntity.ChapterNumber)
+            .ToListAsync();
     }
 }

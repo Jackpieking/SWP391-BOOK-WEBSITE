@@ -8,6 +8,6 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IReadingHistoryRepository : IGenericRepository<ReadingHistoryEntity>
 {
-	Task<IList<ReadingHistoryEntity>> GetReadingHistoriesWithChapterFromDatabaseAsync();
-	Task<IList<ReadingHistoryEntity>> GetReadingHistoriesByComicIdentiferFromDatabaseAsync(Guid comicIdentifier);
+    Task<IList<ReadingHistoryEntity>> GetAllReadingHistoriesWith_ChapterIdentifierAsync();
+    Task<int> GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(Guid comicIdentifier);
 }

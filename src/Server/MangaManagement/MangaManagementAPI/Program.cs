@@ -103,7 +103,7 @@ services
 services
     .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
 
-//RazerPage
+//Razor Page
 services.AddRazorPages().AddRazorPagesOptions(options =>
 {
     options.RootDirectory = "/Views";

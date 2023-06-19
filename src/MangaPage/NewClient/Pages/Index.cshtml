@@ -15,7 +15,7 @@
             }
             @foreach (var comic in Model.AllComicModels)
             {
-                <div class="hero__items set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
+                <div style="height: 464.5px" class="hero__items set-bg" data-setbg="@comic.ComicAvatar">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="hero__text">
@@ -74,7 +74,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
+                                    <div class="product__item__pic set-bg" data-setbg="@comic.ComicAvatar">
                                         <div class="comment"><i class="fa fa-comments"></i> @comic.ReadersCounts</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.ReadersCounts</div>
                                     </div>
@@ -119,7 +119,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
+                                    <div class="product__item__pic set-bg" data-setbg="@comic.ComicAvatar">
                                         <div class="comment"><i class="fa fa-comments"></i> @comic.ReviewCounts</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.ReadersCounts</div>
                                     </div>
@@ -164,7 +164,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
-                                    <div class="product__item__pic set-bg" data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
+                                    <div class="product__item__pic set-bg" data-setbg="@comic.ComicAvatar">
                                         <div class="comment"><i class="fa fa-comments"></i> @comic.ReviewCounts</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.ReadersCounts</div>
                                     </div>
@@ -208,7 +208,7 @@
                                 <div class="position-relative">
                                     <div class="blur"></div>
                                     <div class="product__sidebar__view__item set-bg mix"
-                                         data-setbg="/image/comic/comic_avatar/@comic.ComicAvatar">
+                                         data-setbg="@comic.ComicAvatar">
                                         <div class="ep">@comic.ComicLatestChapter</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.ReadersCounts</div>
                                         <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
@@ -234,7 +234,7 @@
                         {
                             <div class="product__sidebar__comment__item">
                                 <div class="product__sidebar__comment__item__pic">
-                                    <img class="image__size" src="/image/comic/comic_avatar/@comic.ComicAvatar" alt="">
+                                    <img class="image__size" src="@comic.ComicAvatar" alt="">
                                 </div>
                                 <div class="product__sidebar__comment__item__text">
                                     <ul>
@@ -262,4 +262,8 @@
         </div>
     </div>
 </section>
+
+<script>
+    
+</script>
 <!-- Product Section End -->

@@ -1,3 +1,4 @@
+using Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -37,9 +38,17 @@ public class MangaDetailModel : PageModel
             DisplayComicInformationModel = await _comicService
                 .GetComicDetailFromApiAsync(comicIdentifier: comicIdentifier);
 
+            DisplayComicInformationModel.ComicAvatar
+                = $"https://localhost:7174/api/Image/ComicAvatar/{DisplayComicInformationModel.ComicAvatar}";
+
             HotComicModels = (await _comicService
                 .GetAllComicModelFromApiAsync())
                 .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts);
+
+            HotComicModels.ForEach(action: comicModel =>
+                comicModel.ComicAvatar
+                    = $"https://localhost:7174/api/Image/ComicAvatar/{comicModel.ComicAvatar}");
+
 
             return Page();
         }

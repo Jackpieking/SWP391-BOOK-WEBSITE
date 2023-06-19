@@ -5,23 +5,19 @@ namespace DTO.Outgoing;
 
 public class GetComicDetailAction_Out_Dto
 {
-    public Guid ComicIdentifier { get; set; }
-
     public string ComicName { get; set; }
 
     public string ComicDescription { get; set; }
 
     public string ComicAvatar { get; set; }
 
-    public DateOnly ComicPublishDate { get; set; }
-
-    public double ComicLatestChapter { get; set; }
-
     public string PublisherName { get; set; }
 
-    public int ReaderCounts { get; set; }
+    public DateOnly ComicPublishedDate { get; set; }
 
-    public ICollection<ReviewComicDto> ComicReviews { get; set; }
+    public int ReaderCounts { get; set; } //
+
+    public ICollection<ReviewComicDto> ReviewComics { get; set; }
 
     public ICollection<string> CategoryNames { get; set; }
 
