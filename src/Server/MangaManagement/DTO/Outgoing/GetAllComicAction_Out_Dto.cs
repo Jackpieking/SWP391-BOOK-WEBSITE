@@ -10,7 +10,7 @@ public class GetAllComicAction_Out_Dto
 
     public DateOnly ComicPublishDate { get; set; }
 
-    public double ComicLatestChapter { get; set; }
+    public string ComicLatestChapter { get; set; }
 
     public string ComicAvatar { get; set; }
 

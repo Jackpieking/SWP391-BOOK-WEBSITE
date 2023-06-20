@@ -27,6 +27,24 @@ public class EntityManagementService
     }
 
     /// <summary>
+    /// Get all comic without any reference from database
+    /// </summary>
+    /// <returns>Task<IEnumerable<ComicModel></ComicModel>></returns>
+    public async Task<IEnumerable<ComicModel>> GetAllComicAsync()
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+
+        var comicEntities = await _unitOfWork
+            .ComicRepository
+            .GetAllComicAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+
+        return _mapper.Map<IEnumerable<ComicModel>>(source: comicEntities);
+
+    }
+
+    /// <summary>
     /// Get a chapter with comic and chapter reviews reference by chapter identifier from database
     /// </summary>
     /// <param name="chapterIdentifier"></param>
@@ -70,13 +88,13 @@ public class EntityManagementService
     /// Get all comic without any reference from database
     /// </summary>
     /// <returns>Task<IEnumerable<ComicModel></ComicModel>></returns>
-    public async Task<IEnumerable<ComicModel>> GetAllComicAsync()
+    public async Task<IEnumerable<ComicModel>> GetAllComicWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync()
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
 
         var comicJoinReviewComicEntities = await _unitOfWork
             .ComicRepository
-            .GetComicsFromDatabaseAsync();
+            .GetAllComicWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
 
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
@@ -89,17 +107,17 @@ public class EntityManagementService
     /// </summary>
     /// <param name="comicIdentifer"></param>
     /// <returns>Task<ComicModel></returns>
-    public async Task<ComicModel> GetAComicWithComicChapterListByComicIdentifierAsync(Guid comicIdentifer)
+    public async Task<ComicModel> GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(Guid comicIdentifer)
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
 
         var comicEntity = await _unitOfWork
             .ComicRepository
-            .GetComicWithChapterListByComicIdentifierDatabaseAsync(comicIdentifier: comicIdentifer);
+            .GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(comicIdentifier: comicIdentifer);
 
         comicEntity.ChapterEntities = await _unitOfWork
             .ChapterRepository
-            .GetChaptersOfAComicFromDatabaseAsync(comicIdentifier: comicIdentifer);
+            .GetChapterWith_ChapterIdentifier_ChapterNumber_ChapterUnlockPrice_ChapterAddedDateAsync(comicIdentifier: comicIdentifer);
 
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
@@ -112,13 +130,13 @@ public class EntityManagementService
     /// </summary>
     /// <param name="publisherIdentifier"></param>
     /// <returns>Task<Publisher></returns>
-    public async Task<PublisherModel> GetAPublisherWithUserByPublisherIdentifierAsync(Guid publisherIdentifier)
+    public async Task<PublisherModel> GetPublisherWith_UsernameByPublisherIdentifierAsync(Guid publisherIdentifier)
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Publisher Table", args: DateTime.Now);
 
         var publisherEntity = await _unitOfWork
             .PublisherRepository
-            .GetPublisherWithUserByPublisherIdentifierFromDatabaseAsync(publisherIdentifier: publisherIdentifier);
+            .GetPublisherWith_UsernameByPublisherIdentifierAsync(publisherIdentifier: publisherIdentifier);
 
         _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Publisher Table", args: DateTime.Now);
 
@@ -129,13 +147,13 @@ public class EntityManagementService
     /// Get all reading history with reference chapter from database
     /// </summary>
     /// <returns>Task<IEnumerable<ReadingHistoryModel>>></returns>
-    public async Task<IEnumerable<ReadingHistoryModel>> GetAllReadingHistoriesWithChapterAsync()
+    public async Task<IEnumerable<ReadingHistoryModel>> GetAllReadingHistoriesWith_ChapterIdentifierAsync()
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
 
         var readingHistoryWithChapterEntities = await _unitOfWork
             .ReadingHistoryRepository
-            .GetReadingHistoriesWithChapterFromDatabaseAsync();
+            .GetAllReadingHistoriesWith_ChapterIdentifierAsync();
 
         _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Reading History Table", args: DateTime.Now);
 
@@ -147,30 +165,30 @@ public class EntityManagementService
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>Task<IEnumerable<ReadingHistoryModel>></returns>
-    public async Task<IEnumerable<ReadingHistoryModel>> GetAllReadingHistoriesByComicIdentifierAsync(Guid comicIdentifier)
+    public async Task<int> GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(Guid comicIdentifier)
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
 
-        var readingHistoryWithChapterEntities = await _unitOfWork
+        var readingHistoryCount = await _unitOfWork
             .ReadingHistoryRepository
-            .GetReadingHistoriesByComicIdentiferFromDatabaseAsync(comicIdentifier: comicIdentifier);
+            .GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(comicIdentifier: comicIdentifier);
 
         _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Reading History Table", args: DateTime.Now);
 
-        return _mapper.Map<IEnumerable<ReadingHistoryModel>>(source: readingHistoryWithChapterEntities);
+        return readingHistoryCount;
     }
 
     /// <summary>
     /// Get all review comic without any reference from the database
     /// </summary>
     /// <returns>Task<IEnumerable<ReviewComicModel>></returns>
-    public async Task<IEnumerable<ReviewComicModel>> GetAllReviewComicAsync()
+    public async Task<IEnumerable<ReviewComicModel>> GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync()
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Review Comic Table", args: DateTime.Now);
 
         var reviewComic = await _unitOfWork
             .ReviewComicRepository
-            .GetReviewComicsFromDatabaseAsync();
+            .GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync();
 
         _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Review Comic Table", args: DateTime.Now);
 
@@ -182,13 +200,13 @@ public class EntityManagementService
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>Task<IEnumerable<ReviewComicModel></ReviewComicModel>></returns>
-    public async Task<IEnumerable<ReviewComicModel>> GetAllReviewComicByComicIdentifierAsync(Guid comicIdentifier)
+    public async Task<IEnumerable<ReviewComicModel>> GetAllReviewComicWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(Guid comicIdentifier)
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Review Comic Table", args: DateTime.Now);
 
         var reviewComic = await _unitOfWork
             .ReviewComicRepository
-            .GetReviewComicsByComicIdentifierFromDatabaseAsync(comicIdentifier: comicIdentifier);
+            .GetAllReviewComicsWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(comicIdentifier: comicIdentifier);
 
         _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Review Comic Table", args: DateTime.Now);
 
@@ -268,4 +286,20 @@ public class EntityManagementService
 
         await _unitOfWork.SaveAsync();
     }
+
+    public async Task<IEnumerable<ChapterModel>> GetAllChaptersWith_ChapterNumberAsync()
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Chapter Table", args: DateTime.Now);
+
+        var comicCategory = await _unitOfWork
+            .ChapterRepository
+            .GetAllChapterWith_ChapterNumber_ComicIdentitiferAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Chapter Table", args: DateTime.Now);
+
+        return _mapper.Map<IEnumerable<ChapterModel>>(source: comicCategory);
+    }
+
+    //void ForAdminOperation()
+    //_unitofwork.ChapterImageRepo
 }

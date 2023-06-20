@@ -30,8 +30,8 @@ namespace NewClient.Pages
         {
             try
             {
-                ReadingChapterModel = await _chapterImageService
-                    .GetAllChapterImagesOfAChapterModelsAsync(chapterIdentifier: chapterIdentifier);
+                var totolNumberOfImagesOfAChapter = await _chapterImageService
+                    .GetTotalNumberOfImagesOfAChapter(chapterIdentifier: chapterIdentifier);
 
                 return Page();
             }

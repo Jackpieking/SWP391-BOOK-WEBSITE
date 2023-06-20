@@ -21,7 +21,7 @@ public class PublisherRepository : GenericRepository<PublisherEntity>, IPublishe
     /// </summary>
     /// <param name="publisherIdentifier"></param>
     /// <returns>Task<PublisherEntity></returns>
-    public async Task<PublisherEntity> GetPublisherWithUserByPublisherIdentifierFromDatabaseAsync(Guid publisherIdentifier)
+    public async Task<PublisherEntity> GetPublisherWith_UsernameByPublisherIdentifierAsync(Guid publisherIdentifier)
     {
         return await _dbSet
             .Where(predicate: publisherEntity

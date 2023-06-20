@@ -13,18 +13,11 @@ public class ComicModelToGetComicDetailDtoProfile : Profile
         #region Member mapping
             //ReviewComicDtos
             .ForMember(
-                destinationMember: comicModel => comicModel.ComicReviews,
+                destinationMember: comicModel => comicModel.ReviewComics,
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source
                         => new List<GetComicDetailAction_Out_Dto.ReviewComicDto>());
-                })
-            //CategoryNames
-            .ForMember(
-                destinationMember: comicModel => comicModel.CategoryNames,
-                memberOptions: option =>
-                {
-                    option.MapFrom(mapExpression: source => new List<string>());
                 })
             //ChapterDtos
             .ForMember(

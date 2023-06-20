@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using NewClient.Models;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -22,9 +21,9 @@ public class ChapterImageService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<DisplayAllChapterImagesOfAChapterModel> GetAllChapterImagesOfAChapterModelsAsync(Guid chapterIdentifier)
+    public async Task<int> GetTotalNumberOfImagesOfAChapter(Guid chapterIdentifier)
     {
-        var GetAllChapterImageOfAChapterEndpointURL = $"api/ChapterImage/{chapterIdentifier}";
+        var GetAllChapterImageOfAChapterEndpointURL = $"api/ChapterImage/Total/{chapterIdentifier}";
 
         try
         {
@@ -49,7 +48,7 @@ public class ChapterImageService
 
             JsonSerializer jsonSerializer = new();
 
-            return jsonSerializer.Deserialize<DisplayAllChapterImagesOfAChapterModel>(reader: jsonReader);
+            return jsonSerializer.Deserialize<int>(reader: jsonReader);
         }
         catch (TaskCanceledException)
         {

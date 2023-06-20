@@ -10,7 +10,7 @@ public class DisplayAllComicModel
 
     public DateOnly ComicPublishDate { get; set; }
 
-    public double ComicLatestChapter { get; set; }
+    public string ComicLatestChapter { get; set; }
 
     public string ComicAvatar { get; set; }
 
