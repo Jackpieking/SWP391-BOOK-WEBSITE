@@ -1,4 +1,4 @@
-@page "/admin/users-management/{userId:guid?}"
+@page "/admin/users-management/"
 @model MangaManagementAPI.Views.Pages.UsersModel
 @{
     ViewData["Title"] = "Admin | Users Management";
@@ -70,7 +70,7 @@
                                     </td>
                                     <td>@user.UserAccountBalance</td>
                                     <td>
-                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier" asp-page-handler="UserDetails">Details</a>
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier" asp-page-handler="userdetails">Details</a>
                                     </td>
                                 </tr>
                             }

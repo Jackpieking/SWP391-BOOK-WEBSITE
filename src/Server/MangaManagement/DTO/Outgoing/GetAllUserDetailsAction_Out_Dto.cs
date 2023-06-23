@@ -8,23 +8,7 @@ namespace DTO.Outgoing
 {
     public class GetAllUserDetailsAction_Out_Dto
     {
-        public Guid UserIdentifier { get; set; }
-
-        public string Username { get; set; }
-
-        public string UserFullName { get; set; }
-
-        public DefinedGender UserGender { get; set; }
-
-        public DateOnly UserBirthday { get; set; }
-
-        public string UserPhoneNumber { get; set; }
-
-        public string UserEmail { get; set; }
-
-        public int UserAccountBalance { get; set; }
-
-        public string UserAvatar { get; set; }
+        public GetAllUserAction_Out_Dto UserBasicInfo {get; set;}
 
         public ICollection<TransactionsHistoryDto> TransactionHistoryOutDto { get; set; } = new List<TransactionsHistoryDto>();
 

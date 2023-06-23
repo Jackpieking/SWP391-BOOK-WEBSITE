@@ -59,14 +59,7 @@ namespace MangaManagementAPI.Views.Pages
 
                 GetAllUserDetailsAction_Out_Dto userDetailsDto = new()
                 {
-                    UserIdentifier = userModel.UserIdentifier,
-                    Username = userModel.Username,
-                    UserFullName = userModel.UserFullName,
-                    UserPhoneNumber = userModel.UserPhoneNumber,
-                    UserEmail = userModel.UserEmail,
-                    UserBirthday = userModel.UserBirthday,
-                    UserGender = userModel.UserGender,
-                    UserAccountBalance = userModel.UserAccountBalance,
+                    UserBasicInfo = _mapper.Map<GetAllUserAction_Out_Dto>(userModel),
                     ReadingHistoriesOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReadingHistoryDto>>(readingHistoryModels),
                     BuyingHistorieOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.BuyingHistoryDto>>(buyingHistoryModel),
                     ReviewChapterOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReviewChapterDtoForUser>>(reviewChapterModel),
