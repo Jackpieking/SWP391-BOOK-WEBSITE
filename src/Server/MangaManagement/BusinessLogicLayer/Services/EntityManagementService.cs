@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using Entity;
+using Helper.DefinedEnums;
 using Microsoft.Extensions.Logging;
 using Model;
 using System;
@@ -26,22 +27,51 @@ public class EntityManagementService
         _logger = logger;
     }
 
+    public Task<int> Count(DefinedEntity entity)
+    {
+        switch (entity)
+        {
+            case DefinedEntity.Chapter: return _unitOfWork.ChapterRepository.Count();
+            case DefinedEntity.ChapterImage: return _unitOfWork.ChapterImageRepository.Count();
+            case DefinedEntity.Category: return _unitOfWork.CategoryRepository.Count();
+            case DefinedEntity.Comic: return _unitOfWork.ComicRepository.Count();
+            case DefinedEntity.ComicSaving: return _unitOfWork.ComicSavingRepository.Count();
+        }
+        return Task.FromResult(0);
+    }
+
     /// <summary>
     /// Get all comic without any reference from database
     /// </summary>
     /// <returns>Task<IEnumerable<ComicModel></ComicModel>></returns>
-    public async Task<IEnumerable<ComicModel>> GetAllComicAsync()
+    public async Task<IEnumerable<ComicModel>> GetAllComicNoRelationAsync()
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
 
         var comicEntities = await _unitOfWork
             .ComicRepository
-            .GetAllComicAsync();
+            .GetAllComicNoRelationAsync();
 
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ComicModel>>(source: comicEntities);
+    }
 
+    /// <summary>
+    /// Get all category without any reference from database
+    /// </summary>
+    /// <returns>Task<IEnumerable<ComicModel></ComicModel>></returns>
+    public async Task<IEnumerable<CategoryModel>> GetAllCategoryNoRelationAsync()
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+
+        var comicEntities = await _unitOfWork
+            .CategoryRepository
+            .GetAllCategoryNoRelationAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+
+        return _mapper.Map<IEnumerable<CategoryModel>>(source: comicEntities);
     }
 
     /// <summary>

@@ -8,7 +8,7 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicRepository : IGenericRepository<ComicEntity>
 {
-    Task<IList<ComicEntity>> GetAllComicAsync();
+    Task<IEnumerable<ComicEntity>> GetAllComicNoRelationAsync();
     Task<IList<ComicEntity>> GetAllComicWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
     Task<ComicEntity> GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(Guid comicIdentifier);
     Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity);

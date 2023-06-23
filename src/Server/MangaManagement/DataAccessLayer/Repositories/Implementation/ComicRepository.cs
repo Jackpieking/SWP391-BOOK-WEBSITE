@@ -19,9 +19,19 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     ///
     /// </summary>
     /// <returns></returns>
-    public async Task<IList<ComicEntity>> GetAllComicAsync()
+    public async Task<IEnumerable<ComicEntity>> GetAllComicNoRelationAsync()
     {
         return await _dbSet
+            .Select(selector: comicEntity => new ComicEntity
+            {
+                ComicIdentifier = comicEntity.ComicIdentifier,
+                ComicName = comicEntity.ComicName,
+                ComicDescription = comicEntity.ComicDescription,
+                ComicAvatar = comicEntity.ComicAvatar,
+                ComicPublishedDate = comicEntity.ComicPublishedDate,
+                PublisherIdentifier = comicEntity.PublisherIdentifier,
+                ComicStatus = comicEntity.ComicStatus
+            })
             .ToListAsync();
     }
 

@@ -15,10 +15,10 @@
                                                                    href="https://datatables.net">official DataTables documentation</a>.
     </p>
 
-    <!-- DataTales Example -->
+    <!-- Comics Table -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Comics Table</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -58,18 +58,62 @@
                                     <td>@comic.ComicIdentifier</td>
                                     <td>@comic.ComicName</td>
                                     <td>@comic.ComicDescription</td>
-                                    <td>@comic.ComicAvatar</td>
+                                    <td class="text-truncate" style="max-width: 150px;">@comic.ComicAvatar</td>
                                     <td>@comic.ComicPublishedDate</td>
                                     <td>@comic.PublisherIdentifier</td>
                                     <td>@comic.ComicStatus</td>
                                 </tr>
                             }
                         }
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <!-- Comics Table End -->
 
+    <!-- Categories Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Categories Table</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model.CategoryList == null)
+                        {
+                            <tr class="error">Error</tr>
+                        }
+                        else
+                        {
+                            foreach (var category in Model.CategoryList)
+                            {
+                                <tr>
+                                    <td>@category.CategoryIdentifier</td>
+                                    <td>@category.CategoryName</td>
+                                    <td>@category.CategoryDescription</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Categories Table End -->
 </div>
