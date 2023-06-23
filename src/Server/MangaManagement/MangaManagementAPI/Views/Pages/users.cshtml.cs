@@ -31,10 +31,30 @@ namespace MangaManagementAPI.Views.Pages
             _mapper = mapper;
         }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            var users = await _userManagementService.GetAllUserAsync();
-            UserList = _mapper.Map<IEnumerable<GetAllUserAction_Out_Dto>>(users);
+            _logger.LogCritical(message: "Start Transaction To Get All Users !!");
+
+            try
+            {
+                var users = await _userManagementService.GetAllUserAsync();
+                UserList = _mapper.Map<IEnumerable<GetAllUserAction_Out_Dto>>(users);
+                return Page();
+            }
+
+            catch (NpgsqlException N_e)
+
+            {
+                _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+
+            finally
+
+            {
+                _logger.LogCritical(message: "End Transaction To Get All Users !!");
+            }
 
         }
 
