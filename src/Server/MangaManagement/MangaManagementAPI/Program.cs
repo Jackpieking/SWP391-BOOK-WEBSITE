@@ -34,6 +34,7 @@ var services = builder.Services;
 services
     .AddScoped<IUnitOfWork, UnitOfWork>()
     .AddScoped<EntityManagementService>()
+    .AddScoped<UserManagementService>()
     .AddScoped<TruyenQQPageHandlerService>()
     .AddScoped<ApiCallingService>()
     .ConfigureOptions<DatabaseOptionUpdates>();

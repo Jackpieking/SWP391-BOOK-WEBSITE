@@ -10,4 +10,5 @@ public interface IReadingHistoryRepository : IGenericRepository<ReadingHistoryEn
 {
     Task<IList<ReadingHistoryEntity>> GetAllReadingHistoriesWith_ChapterIdentifierAsync();
     Task<int> GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(Guid comicIdentifier);
+    Task<IList<ReadingHistoryEntity>> GetAllReadingHistoresOfAUserByUserId(Guid userIndentifier);
 }

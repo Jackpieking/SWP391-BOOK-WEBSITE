@@ -46,4 +46,22 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
             .ThenByDescending(keySelector: reviewComicModel => reviewComicModel.ReviewTime)
             .ToListAsync();
     }
+
+    public async Task<IList<ReviewComicEntity>> GetComicReviewsOfAUserByUserId(Guid userId)
+    {
+        return await _dbSet
+            .Where(predicate: reviewComic => reviewComic.UserIdentifier.Equals(userId))
+            .Select(reviewComic => new ReviewComicEntity
+            {
+                ComicEntity = new ComicEntity()
+                {
+                    ComicName = reviewComic.ComicEntity.ComicName
+                },
+                ComicComment = reviewComic.ComicComment,
+                ComicRatingStar = reviewComic.ComicRatingStar,
+                ReviewTime = reviewComic.ReviewTime
+            })
+            .ToListAsync();
+    }
+
 }

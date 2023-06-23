@@ -39,4 +39,22 @@ public class ReadingHistoryRepository : GenericRepository<ReadingHistoryEntity>,
             })
             .ToListAsync();
     }
+
+    public async Task<IList<ReadingHistoryEntity>> GetAllReadingHistoresOfAUserByUserId(Guid userIndentifier)
+    {
+        return await _dbSet
+            .Where(predicate: reeadingHistoryEntity => reeadingHistoryEntity.UserIdentifier.Equals(userIndentifier))
+            .Select( selector: reeadingHistoryEntity => new ReadingHistoryEntity
+            {
+                LastReadingTime = reeadingHistoryEntity.LastReadingTime,
+                ChapterEntity = new ChapterEntity()
+                {
+                    ChapterNumber = reeadingHistoryEntity.ChapterEntity.ChapterNumber,
+                    ComicEntity = new ComicEntity()
+                    {
+                        ComicName = reeadingHistoryEntity.ChapterEntity.ComicEntity.ComicName
+                    }
+                }
+            }).ToListAsync();
+    }
 }
