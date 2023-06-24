@@ -18,7 +18,7 @@
                     <p><strong>User Id:</strong> @user.UserBasicInfo.UserIdentifier</p>
                     <p><strong>Username:</strong> @user.UserBasicInfo.Username</p>
                     <p><strong>Fullname:</strong> @user.UserBasicInfo.UserFullName</p>
-                    <p><strong>Birthday:</strong> @user.UserBasicInfo.UserBirthday</p>                 
+                    <p><strong>Birthday:</strong> @user.UserBasicInfo.UserBirthday</p>
                 </div>
                 <div class="col-md-6">
                     <p><strong>Email:</strong> @user.UserBasicInfo.UserEmail</p>
@@ -42,150 +42,192 @@
             <hr>
 
             <h6 class="m-2 font-weight-bold text-primary">Buying Histories</h6>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Fullname</th>
-                            <th>Birthday</th>
-                            <th>Birthday</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var buyingHistory in @user.BuyingHistorieOutDto)
-                        {
+            @if (@user.BuyingHistorieOutDto.Count == 0)
+            {
+                <p class="m-2">Nothing to show</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                             <tr>
-                                <td>@buyingHistory.ComicName</td>
-                                <td>@buyingHistory.ChapterNumber</td>
-                                <td>@buyingHistory.ChapterUnlockPrice vnd</td>
-                                <td>@buyingHistory.BuyingDate</td>
+                                <th>Manga Name</th>
+                                <th>Chapter Number</th>
+                                <th>Unlock price</th>
+                                <th>Buying Date</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var buyingHistory in @user.BuyingHistorieOutDto)
+                            {
+                                <tr>
+                                    <td>@buyingHistory.ComicName</td>
+                                    <td>@buyingHistory.ChapterNumber</td>
+                                    <td>@buyingHistory.ChapterUnlockPrice vnd</td>
+                                    <td>@buyingHistory.BuyingDate</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
 
             <h6 class="m-2 font-weight-bold text-primary">Transaction Histories</h6>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Transaction Amount</th>
-                            <th>TransactionDate</th>
-                            <th>TransactionCoin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var transactionHistory in @user.TransactionHistoryOutDto)
-                        {
+            @if (@user.TransactionHistoryOutDto.Count == 0)
+            {
+                <p class="m-2">Nothing to show</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                             <tr>
-                                <td>@transactionHistory.TransactionAmount vnd</td>
-                                <td>@transactionHistory.TransactionDate</td>
-                                <td>@transactionHistory.TransactionCoin vnd</td>
+                                <th>Transaction Amount</th>
+                                <th>TransactionDate</th>
+                                <th>TransactionCoin</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var transactionHistory in @user.TransactionHistoryOutDto)
+                            {
+                                <tr>
+                                    <td>@transactionHistory.TransactionAmount vnd</td>
+                                    <td>@transactionHistory.TransactionDate</td>
+                                    <td>@transactionHistory.TransactionCoin vnd</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
 
             <h6 class="m-2 font-weight-bold text-primary">Comics Reviewed</h6>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Comic Name</th>
-                            <th>Comment</th>
-                            <th>Rating Star</th>
-                            <th>Review Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var comic in @user.ReviewComicOutDto)
-                        {
+            @if (@user.ReviewComicOutDto.Count == 0)
+            {
+                <p class="m-2">Nothing to show</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                             <tr>
-                                <td>@comic.ComicName</td>
-                                <td>@comic.ComicComment</td>
-                                <td>@comic.ComicRatingStar</td>
-                                <td>@comic.ReviewTime</td>
+                                <th>Comic Name</th>
+                                <th>Comment</th>
+                                <th>Rating Star</th>
+                                <th>Review Time</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-
+                        </thead>
+                        <tbody>
+                            @foreach (var comic in @user.ReviewComicOutDto)
+                            {
+                                <tr>
+                                    <td>@comic.ComicName</td>
+                                    <td>@comic.ComicComment</td>
+                                    <td>@comic.ComicRatingStar</td>
+                                    <td>@comic.ReviewTime</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
             <h6 class="m-2 font-weight-bold text-primary">Chapters Reviewed</h6>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Comic Name</th>
-                            <th>Chapter Number</th>
-                            <th>Chapter Comment</th>
-                            <th>Rating Star</th>
-                            <th>Reviewed Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var chapter in @user.ReviewChapterOutDto)
-                        {
+            @if (@user.ReviewChapterOutDto.Count == 0)
+            {
+                <p class="m-2">Nothing to show</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
                             <tr>
-                                <td>@chapter.ComicName</td>
-                                <td>@chapter.ChapterNumber</td>
-                                <td>@chapter.ChapterComment</td>
-                                <td>@chapter.ChapterRatingStar</td>
-                                <td>@chapter.ReviewTime</td>
+                                <th>Comic Name</th>
+                                <th>Chapter Number</th>
+                                <th>Chapter Comment</th>
+                                <th>Rating Star</th>
+                                <th>Reviewed Time</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var chapter in @user.ReviewChapterOutDto)
+                            {
+                                <tr>
+                                    <td>@chapter.ComicName</td>
+                                    <td>@chapter.ChapterNumber</td>
+                                    <td>@chapter.ChapterComment</td>
+                                    <td>@chapter.ChapterRatingStar</td>
+                                    <td>@chapter.ReviewTime</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
 
             <div class="row">
                 <div class="col-md-6 card-body">
                     <h6 class="m-2 font-weight-bold text-primary">Comics Liked</h6>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Comic Avatar</th>
-                                    <th>Comic Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var comic in @user.ComicLikeOutDto)
-                                {
+                    @if (@user.ComicLikeOutDto.Count == 0)
+                    {
+                        <p class="m-2">Nothing to show</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
                                     <tr>
-                                        <td>@comic.ComicAvatar</td>
-                                        <td>@comic.ComicName</td>
+                                        <th>Comic Avatar</th>
+                                        <th>Comic Name</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    @foreach (var comic in @user.ComicLikeOutDto)
+                                    {
+                                        <tr>
+                                            <td>@comic.ComicAvatar</td>
+                                            <td>@comic.ComicName</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 </div>
 
                 <div class="col-md-6 card-body">
                     <h6 class="m-2 font-weight-bold text-primary">Comics Saved</h6>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Comic Name</th>
-                                    <th>Saving Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var comic in @user.ComicSavingOutDto)
-                                {
+                    @if (@user.ComicSavingOutDto.Count == 0)
+                    {
+                        <p class="m-2">Nothing to show</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
                                     <tr>
-                                        <td>@comic.ComicName</td>
-                                        <td>@comic.SavingTime</td>
+                                        <th>Comic Name</th>
+                                        <th>Saving Time</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    @foreach (var comic in @user.ComicSavingOutDto)
+                                    {
+                                        <tr>
+                                            <td>@comic.ComicName</td>
+                                            <td>@comic.SavingTime</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

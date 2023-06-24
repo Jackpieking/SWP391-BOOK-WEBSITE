@@ -111,7 +111,7 @@ namespace BusinessLogicLayer.Services
             var reviewChapterEntites = await
                 _unitOfWork
                 .ReviewChapterRepository
-                .GetChapterReviewsOfAChapterAsync(userId);
+                .GetChapterReviewsOfAUserByUserId(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Chapter Review Table", args: DateTime.Now);
 

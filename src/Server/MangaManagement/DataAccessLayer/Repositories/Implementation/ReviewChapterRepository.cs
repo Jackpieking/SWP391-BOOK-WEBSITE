@@ -22,7 +22,7 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 				=> reviewChapterEntity.ChapterIdentifier == chapterIdentifier)
 			.Select(selector: reviewChapterEntity => new ReviewChapterEntity
 			{
-				UserEntity = new()
+				UserEntity = new UserEntity()
 				{
 					Username = reviewChapterEntity.UserEntity.Username,
 					UserAvatar = reviewChapterEntity.UserEntity.UserAvatar
@@ -31,6 +31,7 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 				ChapterRatingStar = reviewChapterEntity.ChapterRatingStar,
 				ReviewTime = reviewChapterEntity.ReviewTime
 			})
+			.OrderBy(reviewChapterEntity => reviewChapterEntity.ReviewTime)
 			.ToListAsync();
 	}
 

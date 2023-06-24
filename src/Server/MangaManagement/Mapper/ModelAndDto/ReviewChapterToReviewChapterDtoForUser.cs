@@ -17,7 +17,14 @@ namespace Mapper.ModelAndDto
                 options => 
                 {
                     options.MapFrom(mapExpression: source => source.ChapterModel.ComicModel.ComicName); 
-                });
+                })
+                
+                .ForMember(destinationMember: destination => destination.ChapterNumber,
+                options =>
+                {
+                    options.MapFrom(mapExpression: source => source.ChapterModel.ChapterNumber);
+                })
+                ;
         }
     }
 }
