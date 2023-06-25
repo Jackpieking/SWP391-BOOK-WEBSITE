@@ -74,9 +74,9 @@ namespace BusinessLogicLayer.Services
                 _unitOfWork
                 .TransactionRepository
                 .GetTransactionHistoriesOfAUserByUserId(userId);
-     
+
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Transaction History Table", args: DateTime.Now);
-            return _mapper.Map<ICollection<TransactionsHistoryModel>>(transactionHistoryEntities); 
+            return _mapper.Map<ICollection<TransactionsHistoryModel>>(transactionHistoryEntities);
         }
 
 
@@ -193,6 +193,20 @@ namespace BusinessLogicLayer.Services
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Like Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ComicLikeModel>>(comicLikeEntities);
+        }
+
+        public async Task DeleteUserByIdAsync(Guid userId)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Delete User", args: DateTime.Now);
+
+            await _unitOfWork
+                .UserInfoRepository
+                .DeleteUserByIdAsync(userId);
+
+            await _unitOfWork
+                .SaveAsync();
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Delete User", args: DateTime.Now);
         }
     }
 }

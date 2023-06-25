@@ -50,4 +50,13 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task DeleteUserByIdAsync(Guid userId)
+    {
+        UserEntity userNeedToDelete = await GetUserDetailsById(userId);
+        if (userNeedToDelete != null)
+        {
+            _dbSet.Remove(userNeedToDelete);
+        }
+    }
+
 }

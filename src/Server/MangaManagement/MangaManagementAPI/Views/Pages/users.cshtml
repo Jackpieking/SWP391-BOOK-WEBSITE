@@ -55,7 +55,7 @@
                                     <td>@user.UserBirthday</td>
                                     <td>@user.UserEmail</td>
                                     <td>@user.UserPhoneNumber</td>
-                                    <td>    
+                                    <td>
                                         @{
                                             var enumValue = ((int)user.UserGender);
                                             string result = string.Empty;
@@ -69,8 +69,17 @@
                                         @result
                                     </td>
                                     <td>@user.UserAccountBalance</td>
-                                    <td>
-                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier" asp-page-handler="userdetails">Details</a>
+
+                                    <td class="d-flex justify-content-center">
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="userdetails" class="mx-2" style="color: blue;"><i
+                                                class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="deleteuser" class="mx-2" style="color: red;"><i
+                                                class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="userdetails" class="mx-2" style="color: rgb(0, 15, 128);"><i
+                                                class="fa fa-cog" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             }

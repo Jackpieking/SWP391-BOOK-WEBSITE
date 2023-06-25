@@ -11,4 +11,5 @@ public interface IUserRepository : IGenericRepository<UserEntity>
     
     Task<IList<UserEntity>> GetAllUserAsync();
     Task<UserEntity> GetUserDetailsById(Guid id);
+    Task DeleteUserByIdAsync (Guid id);
 }

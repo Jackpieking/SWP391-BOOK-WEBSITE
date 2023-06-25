@@ -1,9 +1,8 @@
 @page "/admin/users-management/{userId:guid?}/"
 @model MangaManagementAPI.Views.Pages.UserDetailsModel
 @{
-    ViewData["Title"] = "Admin | User Details";
-    Layout = "Pages/Shared/_MangaManagementWithNoJs";
     var user = @Model.UserDetails;
+    ViewData["Title"] = $"Admin | {user.UserBasicInfo.Username} Details";
 }
 <div class="container-fluid">
 
@@ -15,14 +14,9 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <p><strong>User Id:</strong> @user.UserBasicInfo.UserIdentifier</p>
                     <p><strong>Username:</strong> @user.UserBasicInfo.Username</p>
                     <p><strong>Fullname:</strong> @user.UserBasicInfo.UserFullName</p>
                     <p><strong>Birthday:</strong> @user.UserBasicInfo.UserBirthday</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Email:</strong> @user.UserBasicInfo.UserEmail</p>
-                    <p><strong>Phone:</strong> @user.UserBasicInfo.UserPhoneNumber</p>
                     @{
                         var enumValue = ((int)user.UserBasicInfo.UserGender);
                         string result = string.Empty;
@@ -34,14 +28,20 @@
                         }
                     }
                     <p><strong>Gender:</strong> @result</p>
+
+                    <a asp-page="" asp-route-userId="" class="btn btn-danger">Delete User</a>
+                    <a asp-page="" asp-route-userId="" class="btn btn-primary">Update User</a>
+                    <a asp-page="" asp-route-userId="" class="btn btn-secondary">Review publisher request</a>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Email:</strong> @user.UserBasicInfo.UserEmail</p>
+                    <p><strong>Phone:</strong> @user.UserBasicInfo.UserPhoneNumber</p>
                     <p><strong>Account Balance:</strong> @user.UserBasicInfo.UserAccountBalance</p>
-                    <p>
-                    </p>
                 </div>
             </div>
             <hr>
 
-            <h6 class="m-2 font-weight-bold text-primary">Buying Histories</h6>
+            <h5 class="m-2 font-weight-bold text-primary">Buying Histories</h5>
             @if (@user.BuyingHistorieOutDto.Count == 0)
             {
                 <p class="m-2">Nothing to show</p>
@@ -73,7 +73,7 @@
                 </div>
             }
 
-            <h6 class="m-2 font-weight-bold text-primary">Transaction Histories</h6>
+            <h5 class="m-2 font-weight-bold text-primary">Transaction Histories</h5>
             @if (@user.TransactionHistoryOutDto.Count == 0)
             {
                 <p class="m-2">Nothing to show</p>
@@ -104,7 +104,7 @@
             }
 
 
-            <h6 class="m-2 font-weight-bold text-primary">Comics Reviewed</h6>
+            <h5 class="m-2 font-weight-bold text-primary">Comics Reviewed</h5>
             @if (@user.ReviewComicOutDto.Count == 0)
             {
                 <p class="m-2">Nothing to show</p>
@@ -135,7 +135,7 @@
                     </table>
                 </div>
             }
-            <h6 class="m-2 font-weight-bold text-primary">Chapters Reviewed</h6>
+            <h5 class="m-2 font-weight-bold text-primary">Chapters Reviewed</h5>
             @if (@user.ReviewChapterOutDto.Count == 0)
             {
                 <p class="m-2">Nothing to show</p>
@@ -171,7 +171,7 @@
 
             <div class="row">
                 <div class="col-md-6 card-body">
-                    <h6 class="m-2 font-weight-bold text-primary">Comics Liked</h6>
+                    <h5 class="m-2 font-weight-bold text-primary">Comics Liked</h5>
                     @if (@user.ComicLikeOutDto.Count == 0)
                     {
                         <p class="m-2">Nothing to show</p>
@@ -201,7 +201,7 @@
                 </div>
 
                 <div class="col-md-6 card-body">
-                    <h6 class="m-2 font-weight-bold text-primary">Comics Saved</h6>
+                    <h5 class="m-2 font-weight-bold text-primary">Comics Saved</h5>
                     @if (@user.ComicSavingOutDto.Count == 0)
                     {
                         <p class="m-2">Nothing to show</p>

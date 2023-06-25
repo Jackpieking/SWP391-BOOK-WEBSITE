@@ -64,9 +64,9 @@ namespace MangaManagementAPI.Views.Pages
                     BuyingHistorieOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.BuyingHistoryDto>>(buyingHistoryModel),
                     ReviewChapterOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReviewChapterDtoForUser>>(reviewChapterModel),
                     ReviewComicOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReviewComicDtoForUser>>(reviewComicModel),
-                    TransactionHistoryOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.TransactionsHistoryDto>>(transactionsHistoryModel),
                     ComicLikeOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ComicLikeDto>>(comicLikeModel),
-                    ComicSavingOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ComicSavingDto>>(comicSavingModel)
+                    ComicSavingOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ComicSavingDto>>(comicSavingModel),
+                    TransactionHistoryOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.TransactionsHistoryDto>>(transactionsHistoryModel)
                 };
                 _logger.LogCritical(message: "End Transaction Get User Detail !!");
 
@@ -85,6 +85,33 @@ namespace MangaManagementAPI.Views.Pages
                 _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
 
                 return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        public async Task<IActionResult> OnGetDeleteUser([FromRoute] Guid userId)
+        {
+            _logger.LogCritical(message: "Start Transaction To Delete User !!");
+
+            try
+            {
+                await _userManagementService.DeleteUserByIdAsync(userId);
+                return RedirectToPage("users");
+            }
+            catch (TaskCanceledException TC_e)
+            {
+                _logger.LogError("[{DateTime.Now}] - Error: {TC_2.Message}", DateTime.Now, TC_e.Message);
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+            catch (HttpRequestException HR_e)
+            {
+                _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+            finally
+            {
+                _logger.LogCritical(message: "Finished Transaction To Delete User !!");
             }
         }
     }
