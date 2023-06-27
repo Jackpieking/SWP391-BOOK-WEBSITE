@@ -11,12 +11,12 @@ services.AddScoped<ComicService>();
 services.AddScoped<ChapterImageService>();
 
 services
-    .AddHttpClient(
-        name: "MangaAPI",
-        configureClient: httpClient =>
-        {
-            httpClient.BaseAddress = new(uriString: "https://localhost:7174/");
-        });
+	.AddHttpClient(
+		name: "MangaAPI",
+		configureClient: httpClient =>
+		{
+			httpClient.BaseAddress = new(uriString: "https://localhost:7174/");
+		});
 
 services.AddRazorPages();
 
@@ -24,15 +24,15 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+	app.UseDeveloperExceptionPage();
 }
 
 app
-    .UseExceptionHandler(errorHandlingPath: "/Error")
-    .UseHsts()
-    .UseHttpsRedirection()
-    .UseStaticFiles()
-    .UseRouting();
+	.UseExceptionHandler(errorHandlingPath: "/Error")
+	.UseHsts()
+	.UseHttpsRedirection()
+	.UseStaticFiles()
+	.UseRouting();
 
 app.MapRazorPages();
 

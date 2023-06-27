@@ -11,10 +11,11 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IReviewComicRepository
 {
-    public ReviewComicRepository(DbSet<ReviewComicEntity> dbSet) : base(dbSet: dbSet)
-    {
-    }
+	public ReviewComicRepository(DbSet<ReviewComicEntity> dbSet) : base(dbSet: dbSet)
+	{
+	}
 
+<<<<<<< Updated upstream
     public async Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(Guid comicIdentifier)
     {
         return await _dbSet
@@ -80,4 +81,75 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
     }
 
 >>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
+=======
+	public async Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(Guid comicIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: reviewComicEntity
+				=> reviewComicEntity.ComicIdentifier == comicIdentifier)
+			.Select(selector: reviewComicEntity => new ReviewComicEntity
+			{
+				ComicRatingStar = reviewComicEntity.ComicRatingStar,
+				ComicComment = reviewComicEntity.ComicComment,
+				ReviewTime = reviewComicEntity.ReviewTime,
+				UserEntity = new()
+				{
+					Username = reviewComicEntity.UserEntity.Username,
+					UserAvatar = reviewComicEntity.UserEntity.UserAvatar
+				}
+			})
+			.ToListAsync();
+	}
+
+	public async Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync()
+	{
+		return await _dbSet
+			.Select(selector: reviewComic => new ReviewComicEntity
+			{
+				ComicIdentifier = reviewComic.ComicIdentifier,
+				ReviewTime = reviewComic.ReviewTime
+			})
+			.OrderByDescending(keySelector: reviewComicModel => reviewComicModel.ComicIdentifier)
+			.ThenByDescending(keySelector: reviewComicModel => reviewComicModel.ReviewTime)
+			.ToListAsync();
+	}
+
+	public async Task<IDictionary<Guid, int>> GetReviewComicCountOfAllComicsAsync()
+	{
+		var queryResult = from reviewComicEntity in _dbSet
+						  group reviewComicEntity by reviewComicEntity.ComicIdentifier
+						  into result
+						  select new
+						  {
+							  ComicIdentifier = result.Key,
+							  ComicIdentiferCount = result.Count()
+						  };
+
+		return await queryResult.ToDictionaryAsync(
+			keySelector: res => res.ComicIdentifier,
+			elementSelector: res => res.ComicIdentiferCount);
+	}
+
+	public async Task<IDictionary<Guid, DateTime>> GetLastestComicReviewDateOfAllComicsAsync()
+	{
+		IDictionary<Guid, DateTime> latestReviewComics = new Dictionary<Guid, DateTime>();
+
+		await _dbSet
+			.Select(reviewComicEntity => new ReviewComicEntity
+			{
+				ComicIdentifier = reviewComicEntity.ComicIdentifier,
+				ReviewTime = reviewComicEntity.ReviewTime
+			})
+			.OrderByDescending(keySelector: reviewComicEntity => reviewComicEntity.ComicIdentifier)
+			.OrderByDescending(keySelector: reviewComicEntity => reviewComicEntity.ReviewTime)
+			.ForEachAsync(reviewComicEntity =>
+			{
+				latestReviewComics.TryAdd(
+					key: reviewComicEntity.ComicIdentifier,
+					value: reviewComicEntity.ReviewTime);
+			});
+
+		return latestReviewComics;
+	}
+>>>>>>> Stashed changes
 }

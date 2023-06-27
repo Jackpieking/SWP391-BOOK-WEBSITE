@@ -1,3 +1,4 @@
+using Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,7 +17,7 @@ namespace NewClient.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ChapterImageService _chapterImageService;
 
-        public DisplayAllChapterImagesOfAChapterModel ReadingChapterModel { get; set; }
+        public DisplayAllChapterImagesOfAChapterModel DisplayAllChapterImagesOfAChapterModel { get; set; }
 
         public ComicReadingModel(
             ILogger<IndexModel> logger,
@@ -30,8 +31,12 @@ namespace NewClient.Pages
         {
             try
             {
-                var totolNumberOfImagesOfAChapter = await _chapterImageService
+                DisplayAllChapterImagesOfAChapterModel = await _chapterImageService
                     .GetTotalNumberOfImagesOfAChapter(chapterIdentifier: chapterIdentifier);
+
+                DisplayAllChapterImagesOfAChapterModel.ChapterImages.ForEach(action: chapterImage
+                    => chapterImage.ImageURL
+                        = $"https://localhost:7174/api/Image/ComicImages/{DisplayAllChapterImagesOfAChapterModel.ComicName}?chapterNumber={DisplayAllChapterImagesOfAChapterModel.ChapterNumber}&imageURL={chapterImage.ImageURL}");
 
                 return Page();
             }

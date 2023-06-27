@@ -11,10 +11,11 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
 {
-    public ComicRepository(DbSet<ComicEntity> dbSet) : base(dbSet: dbSet)
-    {
-    }
+	public ComicRepository(DbSet<ComicEntity> dbSet) : base(dbSet: dbSet)
+	{
+	}
 
+<<<<<<< Updated upstream
     /// <summary>
     ///
     /// </summary>
@@ -91,23 +92,42 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
             })
             .ToListAsync();
     }
+=======
+	/// <summary>
+	///
+	/// </summary>
+	/// <returns></returns>
+	public async Task<IList<ComicEntity>> GetAllComicsWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync()
+	{
+		return await _dbSet
+			.Select(selector: comicEntity => new ComicEntity
+			{
+				ComicIdentifier = comicEntity.ComicIdentifier,
+				ComicName = comicEntity.ComicName,
+				ComicPublishedDate = comicEntity.ComicPublishedDate,
+				ComicAvatar = comicEntity.ComicAvatar
+			})
+			.ToListAsync();
+	}
+>>>>>>> Stashed changes
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="comicName"></param>
-    /// <returns></returns>
-    public async Task<Guid> GetComicIdentifierByComicNameAsync(string comicName)
-    {
-        var comicEntity = await _dbSet
-            .Where(predicate: comicEntity
-                => comicEntity.ComicName.Equals(comicName))
-            .Select(comicEntity => new ComicEntity
-            {
-                ComicIdentifier = comicEntity.ComicIdentifier
-            })
-            .FirstOrDefaultAsync();
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="comicName"></param>
+	/// <returns></returns>
+	public async Task<Guid> GetComicIdentifierByComicNameAsync(string comicName)
+	{
+		var comicEntity = await _dbSet
+			.Where(predicate: comicEntity
+				=> comicEntity.ComicName.Equals(comicName))
+			.Select(comicEntity => new ComicEntity
+			{
+				ComicIdentifier = comicEntity.ComicIdentifier
+			})
+			.FirstOrDefaultAsync();
 
+<<<<<<< Updated upstream
         return comicEntity.ComicIdentifier;
 >>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
     }
@@ -174,51 +194,82 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
             })
             .FirstOrDefaultAsync();
     }
+=======
+		return comicEntity.ComicIdentifier;
+	}
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="crawlComicEntity"></param>
-    /// <returns></returns>
-    public async Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity)
-    {
-        //find the existing comic by comic name
-        var comicEntityIsFound = await _dbSet
-            .FirstOrDefaultAsync(predicate: comicEntity
-                => comicEntity.ComicName == crawlComicEntity.ComicName);
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="comicIdentifier"></param>
+	/// <returns></returns>
+	public async Task<ComicEntity> GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_PunlisherIdentifier_ByComicIdentifierAsync(Guid comicIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: comicEntity
+				=> comicEntity.ComicIdentifier == comicIdentifier)
+			.Select(comicEntity => new ComicEntity
+			{
+				ComicIdentifier = comicEntity.ComicIdentifier,
+				ComicName = comicEntity.ComicName,
+				ComicDescription = comicEntity.ComicDescription,
+				ComicAvatar = comicEntity.ComicAvatar,
+				ComicPublishedDate = comicEntity.ComicPublishedDate,
+				PublisherIdentifier = comicEntity.PublisherIdentifier
+			})
+			.FirstOrDefaultAsync();
+	}
+>>>>>>> Stashed changes
 
-        //comic is not exist
-        if (Equals(objA: comicEntityIsFound, objB: null))
-        {
-            await _dbSet.AddAsync(entity: crawlComicEntity);
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="crawlComicEntity"></param>
+	/// <returns></returns>
+	public async Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity)
+	{
+		//find the existing comic by comic name
+		var comicEntityIsFound = await _dbSet
+			.FirstOrDefaultAsync(predicate: comicEntity
+				=> comicEntity.ComicName == crawlComicEntity.ComicName);
 
-            return crawlComicEntity.ComicIdentifier;
-        }
+		//comic is not exist
+		if (Equals(objA: comicEntityIsFound, objB: null))
+		{
+			await _dbSet.AddAsync(entity: crawlComicEntity);
 
-        //update comic descripttion
-        if (!comicEntityIsFound.ComicDescription.Equals(
-            value: crawlComicEntity.ComicDescription))
-        {
-            comicEntityIsFound.ComicDescription = crawlComicEntity.ComicDescription;
-        }
+			return crawlComicEntity.ComicIdentifier;
+		}
 
-        //update comic published date
-        if (!comicEntityIsFound.ComicPublishedDate.Equals(
-            value: crawlComicEntity.ComicPublishedDate))
-        {
-            comicEntityIsFound.ComicPublishedDate = crawlComicEntity.ComicPublishedDate;
-        }
+		//update comic descripttion
+		if (!comicEntityIsFound.ComicDescription.Equals(
+			value: crawlComicEntity.ComicDescription))
+		{
+			comicEntityIsFound.ComicDescription = crawlComicEntity.ComicDescription;
+		}
 
-        //update comic status
-        if (!comicEntityIsFound.ComicStatus.Equals(
-            value: crawlComicEntity.ComicStatus))
-        {
-            comicEntityIsFound.ComicStatus = crawlComicEntity.ComicStatus;
-        }
+		//update comic published date
+		if (!comicEntityIsFound.ComicPublishedDate.Equals(
+			value: crawlComicEntity.ComicPublishedDate))
+		{
+			comicEntityIsFound.ComicPublishedDate = crawlComicEntity.ComicPublishedDate;
+		}
 
-        _dbSet.Update(entity: comicEntityIsFound);
+		//update comic status
+		if (!comicEntityIsFound.ComicStatus.Equals(
+			value: crawlComicEntity.ComicStatus))
+		{
+			comicEntityIsFound.ComicStatus = crawlComicEntity.ComicStatus;
+		}
 
+		_dbSet.Update(entity: comicEntityIsFound);
+
+<<<<<<< Updated upstream
 >>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
         return comicEntityIsFound.ComicIdentifier;
     }
+=======
+		return comicEntityIsFound.ComicIdentifier;
+	}
+>>>>>>> Stashed changes
 }

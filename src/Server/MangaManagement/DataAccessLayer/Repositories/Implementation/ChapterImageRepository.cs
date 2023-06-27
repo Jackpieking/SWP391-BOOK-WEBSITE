@@ -20,18 +20,16 @@ public class ChapterImageRepository : GenericRepository<ChapterImageEntity>, ICh
     /// </summary>
     /// <param name="chapterIdentifier"></param>
     /// <returns></returns>
-    public async Task<IList<ChapterImageEntity>> GetChapterImagesByChapterIdentifierFromDatabaseAsync(Guid chapterIdentifier)
+    public async Task<IEnumerable<ChapterImageEntity>> GetChapterImagesWith_ImageUrlByChapterIdentifierAsync(Guid chapterIdentifier)
     {
         return await _dbSet
             .Where(predicate: predicate
                 => predicate.ChapterIdentifier == chapterIdentifier)
+            .OrderBy(keySelector: chapterImage => chapterImage.ImageNumber)
             .Select(selector: chapterImage => new ChapterImageEntity
             {
-                ImageNumber = chapterImage.ImageNumber,
-                ImageURL = chapterImage.ImageURL
+                ImageURL = chapterImage.ImageURL,
             })
-            .OrderBy(keySelector: chapterImage
-                => chapterImage.ImageNumber)
             .ToListAsync();
     }
 }

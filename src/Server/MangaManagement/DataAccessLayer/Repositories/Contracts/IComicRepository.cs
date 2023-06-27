@@ -8,6 +8,7 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicRepository : IGenericRepository<ComicEntity>
 {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
     Task<IList<ComicEntity>> GetAllComicAsync();
@@ -16,4 +17,10 @@ public interface IComicRepository : IGenericRepository<ComicEntity>
     Task<ComicEntity> GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(Guid comicIdentifier);
     Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity);
     Task<Guid> GetComicIdentifierByComicNameAsync(string comicName);
+=======
+	Task<IList<ComicEntity>> GetAllComicsWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
+	Task<ComicEntity> GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_PunlisherIdentifier_ByComicIdentifierAsync(Guid comicIdentifier);
+	Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity);
+	Task<Guid> GetComicIdentifierByComicNameAsync(string comicName);
+>>>>>>> Stashed changes
 }

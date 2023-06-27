@@ -43,77 +43,76 @@ public class ComicController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllComicAsync()
     {
-        _logger.LogCritical(message: "Start Transaction Get All Comic !!");
+        _logger.LogCritical(message: "Endpoint api/comic !!");
 
         try
         {
             var comicModels = await _entityManagementService
-                .GetAllComicWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
+                .GetAllComicsWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
 
-            var readingHistoryModels = await _entityManagementService
-                .GetAllReadingHistoriesWith_ChapterIdentifierAsync();
+            var readingHistoryCounts = await _entityManagementService
+                .GetReadingHistoryCountOfAllComicsAsync();
 
-            var reviewComicModels = await _entityManagementService
-                .GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync();
+            var reviewComicCounts = await _entityManagementService
+                .GetReviewComicCountOfAllComicsAsync();
 
-            var chapterModels = await _entityManagementService
-                .GetAllChaptersWith_ChapterNumberAsync();
+            var latestChapters = await _entityManagementService
+                .GetTheLastestChapterNumberOfAllComicsAsync();
+
+            var lastestComicReviews = await _entityManagementService
+                .GetLastestComicReviewDateOfAllComicsAsync();
 
             //list of dto for returning
-            ICollection<GetAllComicAction_Out_Dto> getAllComicDtolist = new List<GetAllComicAction_Out_Dto>();
+            var dtos = _mapper.Map<IEnumerable<GetAllComicAction_Out_Dto>>(source: comicModels);
 
-            comicModels.ForEach(comicModel =>
+            dtos.ForEach(action: dto =>
             {
-                //create dto for each comicModel
-                var getAllComicDto = _mapper.Map<GetAllComicAction_Out_Dto>(source: comicModel);
-
-                //get the current number of reader for each comic
-                readingHistoryModels.ForEach(action: readingHistoryModel =>
+                //set the review comic count for dto
+                foreach (var reviewComicCount in reviewComicCounts)
                 {
-                    if (comicModel.ComicIdentifier
-                        == readingHistoryModel.ChapterModel.ComicIdentifier)
+                    if (reviewComicCount.Key.Equals(g: dto.ComicIdentifier))
                     {
-                        getAllComicDto.ReadersCounts++;
-                    }
-                });
-
-                //get the current number of review for each comic
-                reviewComicModels.ForEach(action: reviewComicModel =>
-                {
-                    if (comicModel.ComicIdentifier
-                        == reviewComicModel.ComicIdentifier)
-                    {
-                        getAllComicDto.ReviewCounts++;
-                    }
-                });
-
-                //get the lastest review for each comic
-                foreach (var reviewComicModel in reviewComicModels)
-                {
-                    if (comicModel.ComicIdentifier == reviewComicModel.ComicIdentifier)
-                    {
-                        getAllComicDto.LastestComicReviewDate = reviewComicModel.ReviewTime;
+                        dto.ReviewCounts = reviewComicCount.Value;
 
                         break;
                     }
                 }
 
-                //get the latest chapter
-                foreach (var chapterModel in chapterModels)
+                //set the comic lastest chapter for dto
+                foreach (var latestChapter in latestChapters)
                 {
-                    if (chapterModel.ComicIdentifier == comicModel.ComicIdentifier)
+                    if (latestChapter.Key.Equals(g: dto.ComicIdentifier))
                     {
-                        getAllComicDto.ComicLatestChapter = chapterModel.ChapterNumber;
+                        dto.ComicLatestChapter = latestChapter.Value;
 
                         break;
                     }
                 }
 
-                //add to dto container
-                getAllComicDtolist.Add(item: getAllComicDto);
+                //set the reader count for dto
+                foreach (var readingHistory in readingHistoryCounts)
+                {
+                    if (readingHistory.Key.Equals(g: dto.ComicIdentifier))
+                    {
+                        dto.ReadersCounts = readingHistory.Value;
+
+                        break;
+                    }
+                }
+
+                //set latest comic review date for dto
+                foreach (var lastestComicReview in lastestComicReviews)
+                {
+                    if (lastestComicReview.Key.Equals(g: dto.ComicIdentifier))
+                    {
+                        dto.LastestComicReviewDate = lastestComicReview.Value;
+
+                        break;
+                    }
+                }
             });
 
-            return Ok(value: getAllComicDtolist);
+            return Ok(value: dtos);
         }
         catch (NpgsqlException N_e)
         {
@@ -121,9 +120,11 @@ public class ComicController : ControllerBase
 
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
-        finally
+        catch (Exception e)
         {
-            _logger.LogCritical(message: "End Transaction Get All Comic !!");
+            _logger.LogError(message: $"[{DateTime.Now}]: Error: {e.Message}");
+
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 
@@ -135,18 +136,12 @@ public class ComicController : ControllerBase
     [HttpGet(template: "{comicIdentifier:guid}")]
     public async Task<IActionResult> GetComicDetailAsync([FromRoute] Guid comicIdentifier)
     {
-        _logger.LogCritical(message: "Start Transaction Get Comic Detail !!");
+        _logger.LogCritical(message: "Endpoint api/comic/{comicIdentifier} !!", comicIdentifier);
 
         try
         {
             var comicModel = await _entityManagementService
-                .GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(comicIdentifer: comicIdentifier);
-
-
-            if (Equals(objA: comicModel, objB: null))
-            {
-                return NotFound();
-            }
+                .GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_PublisherIdentifier_ByComicIdentifierAsync(comicIdentifer: comicIdentifier);
 
             var publisherModel = await _entityManagementService
                 .GetPublisherWith_UsernameByPublisherIdentifierAsync(publisherIdentifier: comicModel.PublisherIdentifier);
@@ -155,7 +150,7 @@ public class ComicController : ControllerBase
                 .GetAllReviewComicWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(comicIdentifier: comicIdentifier);
 
             var readingHistoryCount = await _entityManagementService
-                .GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(comicIdentifier: comicIdentifier);
+                .GetReadingHistoryCountByComicIdentiferAsync(comicIdentifier: comicIdentifier);
 
             var comicCategoryModels = await _entityManagementService
                 .GetAllComicCategoryByComicIdentifierAsync(comicIdentifier: comicIdentifier);
@@ -163,12 +158,16 @@ public class ComicController : ControllerBase
             //Dto for return result
             var comicDetailDto = _mapper.Map<GetComicDetailAction_Out_Dto>(source: comicModel);
 
+            //set publisher name for dto
             comicDetailDto.PublisherName = publisherModel.UserModel.Username;
 
+            //set number fo reader for dto
             comicDetailDto.ReaderCounts = readingHistoryCount;
 
-            comicDetailDto.ReviewComics = _mapper.Map<List<GetComicDetailAction_Out_Dto.ReviewComicDto>>(source: reviewComicModels);
+            //set review comic for dto
+            comicDetailDto.ReviewComics = _mapper.Map<IEnumerable<GetComicDetailAction_Out_Dto.ReviewComicDto>>(source: reviewComicModels);
 
+            //set all category for dto
             comicCategoryModels.ForEach(action: comicCategoryModel
                 => comicDetailDto.CategoryNames.Add(item: comicCategoryModel.CategoryModel.CategoryName));
 
@@ -179,10 +178,6 @@ public class ComicController : ControllerBase
             _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
 
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-        }
-        finally
-        {
-            _logger.LogCritical(message: "End Transaction Get Comic Detail !!");
         }
     }
 }

@@ -15,7 +15,7 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 	{
 	}
 
-	public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier)
+	public async Task<IEnumerable<ReviewChapterEntity>> GetAllChapterReviewsWith_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdentifierAsync(Guid chapterIdentifier)
 	{
 		return await _dbSet
 			.Where(predicate: reviewChapterEntity

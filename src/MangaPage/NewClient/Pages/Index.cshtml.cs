@@ -21,11 +21,11 @@ public class IndexModel : PageModel
 
     public IEnumerable<DisplayAllComicModel> AllComicModels { get; set; }
 
-    public IEnumerable<DisplayAllComicModel> HotComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> AllHotComicModels { get; set; }
 
-    public IEnumerable<DisplayAllComicModel> RecentlyAddedComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> AllRecentlyAddedComicModels { get; set; }
 
-    public IEnumerable<DisplayAllComicModel> ComicHasTheLastestComicReviewModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> AllComicHasTheLastestComicReviewModels { get; set; }
 
     public IndexModel(
         ILogger<IndexModel> logger,
@@ -41,20 +41,20 @@ public class IndexModel : PageModel
         try
         {
             AllComicModels = await _comicService
-                .GetAllComicModelFromApiAsync();
+                .GetAllComicFromApiAsync();
 
             AllComicModels.ForEach(action: comicModel
                 => comicModel.ComicAvatar
                     = $"https://localhost:7174/api/Image/ComicAvatar/{comicModel.ComicAvatar}");
 
-            HotComicModels = AllComicModels
+            AllHotComicModels = AllComicModels
                 .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts)
                 .ThenByDescending(keySelector: comicModel => comicModel.ReviewCounts);
 
-            RecentlyAddedComicModels = AllComicModels
-                .OrderByDescending(keySelector: comicModel => comicModel.ComicPublishDate);
+            AllRecentlyAddedComicModels = AllComicModels
+                .OrderByDescending(keySelector: comicModel => comicModel.ComicPublishedDate);
 
-            ComicHasTheLastestComicReviewModels = AllComicModels
+            AllComicHasTheLastestComicReviewModels = AllComicModels
                 .OrderByDescending(keySelector: comicModel => comicModel.LastestComicReviewDate);
 
             return Page();

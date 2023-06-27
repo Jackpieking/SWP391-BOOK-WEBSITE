@@ -16,6 +16,14 @@
         "jquery.validate.unobtrusive.min.js"
       ],
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "bootstrap@5.3.0",
+      "files": [
+        "js/bootstrap.bundle.min.js",
+        "css/bootstrap.min.css"
+      ],
+      "destination": "wwwroot/lib/bootstrap/"
     }
   ]
 }

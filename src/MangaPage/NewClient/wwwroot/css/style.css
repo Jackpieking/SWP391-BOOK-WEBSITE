@@ -45,6 +45,16 @@
     background: linear-gradient(180deg, rgba(255,255,255,0) 30%, rgba(2,2,2,0.8856136204481793) 100%, rgba(255,255,255,1) 100%, rgba(255,255,255,1) 100%, rgba(101,98,98,1) 100%);
 }
 
+.blur__large {
+    height: 550px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 30%, rgba(2,2,2,0.8856136204481793) 100%, rgba(255,255,255,1) 100%, rgba(255,255,255,1) 100%, rgba(101,98,98,1) 100%);
+}
+
 html,
 body {
     height: 100%;
@@ -1995,17 +2005,20 @@ ol {
   margin-left: -25px;
 }
 
-.page-up a {
-  display: inline-block;
-  font-size: 36px;
-  color: #ffffff;
-  height: 50px;
-  width: 50px;
-  background: #e53637;
-  line-height: 50px;
-  text-align: center;
-  border-radius: 50%;
-}
+    .page-up a {
+        position: fixed;
+        bottom: 75px;
+        right: 25px;
+        display: none;
+        font-size: 36px;
+        color: #ffffff;
+        height: 50px;
+        width: 50px;
+        background: #e53637;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 50%;
+    }
 
 .page-up a:hover {
     background-color: #ffffff;
@@ -2497,4 +2510,14 @@ ol {
 
 .profile__icon:hover {
   color: #ffffff;
+}
+
+.red-on-hover:hover {
+    color: #e53637 !important;
+}
+
+.bottom__tool {
+    height: 45px;
+    z-index: 2;
+    margin-top: 45px;
 }

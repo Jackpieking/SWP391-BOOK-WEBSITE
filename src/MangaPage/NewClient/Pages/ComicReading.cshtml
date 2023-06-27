@@ -1,7 +1,7 @@
 ﻿@page "/truyen-tranh/{comicIdentifier:guid}/{chapterIdentifier:guid}"
 @model NewClient.Pages.ComicReadingModel
 @{
-    ViewData["Title"] = $"{Model.ReadingChapterModel.ComicName} Chap {Model.ReadingChapterModel.ChapterNumber} Next Chap {Model.ReadingChapterModel.ChapterNumber + 1} Tiếng Việt";
+    ViewData["Title"] = $"{Model.DisplayAllChapterImagesOfAChapterModel.ComicName} Chap {Model.DisplayAllChapterImagesOfAChapterModel.ChapterNumber} Next Chap {Model.DisplayAllChapterImagesOfAChapterModel.ChapterNumber + 1} Tiếng Việt";
 }
 
 <!-- Breadcrumb Begin -->
@@ -13,12 +13,12 @@
                     <a asp-page="Index"><i class="fa fa-home"></i> Trang chủ</a>
                     <a
                         asp-page="MangaDetail"
-                        asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]">@Model.ReadingChapterModel.ComicName
+                        asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]">@Model.DisplayAllChapterImagesOfAChapterModel.ComicName
                     </a>
                     <a
                         asp-page="ComicReading"
                         asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]"
-                        asp-route-chapterIdentifier="@Request.RouteValues["chapterIdentifier"]">Chap @Model.ReadingChapterModel.ChapterNumber
+                        asp-route-chapterIdentifier="@Request.RouteValues["chapterIdentifier"]">Chương @Model.DisplayAllChapterImagesOfAChapterModel.ChapterNumber
                     </a>
                 </div>
             </div>
@@ -32,33 +32,84 @@
         <div class="row">
             <div class="card bg-dark w-100 mb-5" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title text-center text-bg-dark">@Model.ReadingChapterModel.ComicName - Chapter @Model.ReadingChapterModel.ChapterNumber</h5>
+                    <h5 class="card-title text-center text-bg-dark">@Model.DisplayAllChapterImagesOfAChapterModel.ComicName - Chương @Model.DisplayAllChapterImagesOfAChapterModel.ChapterNumber</h5>
                     <div class="d-flex justify-content-center mt-4">
-                        <button class="btn btn-outline-warning m-1">
-                            <i class="fa fa-arrow-left"></i>
-                            Chap trước
-                        </button>
-                        <button class="btn btn-outline-info text-white m-1">
-                            <i class="fa fa-arrow-right"></i>
-                            Chap sau
-                        </button>
+                        @if (Model
+                            .DisplayAllChapterImagesOfAChapterModel
+                            .LastChapterIdentifier
+                            .Equals(
+                                Model
+                                .DisplayAllChapterImagesOfAChapterModel
+                                .FirstChapterIdentifier))
+                        {
+
+                        }
+                        else if (Model
+                            .DisplayAllChapterImagesOfAChapterModel
+                            .ChapterIdentifier
+                            .Equals(
+                                Model
+                                .DisplayAllChapterImagesOfAChapterModel
+                                .FirstChapterIdentifier))
+                        {
+                            <a asp-page="ComicReading"
+                               asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]"
+                               asp-route-chapterIdentifier="@Model.DisplayAllChapterImagesOfAChapterModel.NextChapterIdentifier"
+                               class="btn btn-outline-info text-white m-1 next-chap__btn">
+                                Chương sau
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        }
+                        else if (Model
+                            .DisplayAllChapterImagesOfAChapterModel
+                            .ChapterIdentifier
+                            .Equals(
+                                Model
+                                .DisplayAllChapterImagesOfAChapterModel
+                                .LastChapterIdentifier))
+                        {
+                            <a asp-page="ComicReading"
+                               asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]"
+                               asp-route-chapterIdentifier="@Model.DisplayAllChapterImagesOfAChapterModel.PreviousChapterIdentifier"
+                               class="btn btn-outline-warning m-1 previous-chap__btn">
+                                <i class="fa fa-arrow-left"></i>
+                                Chương trước
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-page="ComicReading"
+                               asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]"
+                               asp-route-chapterIdentifier="@Model.DisplayAllChapterImagesOfAChapterModel.PreviousChapterIdentifier"
+                               class="btn btn-outline-warning m-1 previous-chap__btn">
+                                <i class="fa fa-arrow-left"></i>
+                                Chương trước
+                            </a>
+                            <a asp-page="ComicReading"
+                               asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"]"
+                               asp-route-chapterIdentifier="@Model.DisplayAllChapterImagesOfAChapterModel.NextChapterIdentifier"
+                               class="btn btn-outline-info text-white m-1 next-chap__btn">
+                                Chương sau
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            @if (Model.ReadingChapterModel.ChapterImages.Count() == 0)
+            @if (Model.DisplayAllChapterImagesOfAChapterModel.ChapterImages.Count() == 0)
             {
                 <div class="alert alert-danger text-center font-weight-bolder fs-3" role="alert">
-                    Chưa có ảnh chap
+                    Chưa có ảnh
 
                 </div>
             }
             else
             {
-                @foreach (var image in Model.ReadingChapterModel.ChapterImages)
+                @foreach (var image in Model.DisplayAllChapterImagesOfAChapterModel.ChapterImages)
                 {
-                    <img src="/image/comic/comic_image/Black_Clover_Thế_Giới_Phép_Thuật/Chap_1/@image.ImageURL" alt="none" loading="lazy" style="width:100%" />
+                    <img src="@image.ImageURL" alt="none" loading="lazy" style="width:100%" />
                 }
             }
         </div>
@@ -66,9 +117,9 @@
             <div class="col-lg-8">
                 <div class="anime__details__review">
                     <div class="section-title">
-                        <h5>Đánh giá</h5>
+                        <h5>Bình luận</h5>
                     </div>
-                    @if (Model.ReadingChapterModel.ChapterReviews.Count() == 0)
+                    @if (Model.DisplayAllChapterImagesOfAChapterModel.ChapterReviews.Count() == 0)
                     {
                         <div class="alert alert-danger" role="alert">
                             Chưa có bình luận
@@ -76,7 +127,7 @@
                     }
                     else
                     {
-                        @foreach (var reviewItem in Model.ReadingChapterModel.ChapterReviews)
+                        @foreach (var reviewItem in Model.DisplayAllChapterImagesOfAChapterModel.ChapterReviews)
                         {
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
@@ -98,7 +149,7 @@
                 </div>
                 <div class="anime__details__form mb-5">
                     <div class="section-title">
-                        <h5>Đánh giá của bạn</h5>
+                        <h5>Bình luận của bạn</h5>
                     </div>
                     <form action="#">
                         <textarea placeholder="Đánh giá vào đây"></textarea>
@@ -108,5 +159,8 @@
             </div>
         </div>
     </div>
+</section>
+<section class="bottom__tool position-fixed bottom-0 w-100 bg-secondary bg-gradient">
+
 </section>
 <!-- Anime Section End -->

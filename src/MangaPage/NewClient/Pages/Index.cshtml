@@ -9,32 +9,33 @@
     <div class="container">
         <div class="hero__slider owl-carousel">
             @{
-                var allComicCount = Model.AllComicModels.LongCount();
+                var allComicCount = Model.AllComicModels.Count();
                 var displayComicCount = allComicCount >= 6 ? 6 : allComicCount;
                 var autoDecrement = displayComicCount;
             }
             @foreach (var comic in Model.AllComicModels)
             {
-                <div style="height: 464.5px" class="hero__items set-bg" data-setbg="@comic.ComicAvatar">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <div class="hero__text">
-                                @*Category here*@
-                                <div class="label">Manga</div>
-                                <div class="label">Manhwa</div>
-                                <div class="label">Manhua</div>
-                                <h2>@comic.ComicName</h2>
-                                <a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">
-                                    <span>
-                                        Xem ngay
-                                        <i class="fa fa-angle-right"></i>
-                                    </span>
-                                </a>
+                <div>
+                    <div class="blur__large"></div>
+                    <div style="height: 550px" class="hero__items set-bg" data-setbg="@comic.ComicAvatar">
+                        <div class="row">
+                            <div class="col-9 mt-5">
+                                <div class="hero__text">
+                                    <div class="label">Manga</div>
+                                    <div class="label">Manhwa</div>
+                                    <div class="label">Manhua</div>
+                                    <h2 class="fs-2 mt-1 mb-4">@comic.ComicName</h2>
+                                    <a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">
+                                        <span>
+                                            Xem ngay
+                                            <i class="fa fa-angle-right"></i>
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 if (autoDecrement == 3)
                 {
                     autoDecrement = displayComicCount;
@@ -62,20 +63,20 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="btn__all">
-                                <a href="./anime-details.html" class="primary-btn">
+                                <a asp-page="AllComic" class="primary-btn red-on-hover">
                                     Xem thêm <span class="arrow_right"></span>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        @foreach (var comic in @Model.HotComicModels)
+                        @foreach (var comic in @Model.AllHotComicModels)
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="ep__style">@comic.ComicLatestChapter</div>
                                     <div class="product__item__pic set-bg" data-setbg="@comic.ComicAvatar">
-                                        <div class="comment"><i class="fa fa-comments"></i> @comic.ReadersCounts</div>
+                                        <div class="comment"><i class="fa fa-comments"></i> @comic.ReviewCounts</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.ReadersCounts</div>
                                     </div>
                                     <div class="product__item__text">
@@ -84,7 +85,7 @@
                                             <li>Manhwa</li>
                                             <li>Manhua</li>
                                         </ul>
-                                        <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
+                                        <h5><a class="red-on-hover d-block" asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -109,12 +110,12 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="btn__all">
-                                <a href="#" class="primary-btn">Xem thêm <span class="arrow_right"></span></a>
+                                <a asp-page="AllComic" class="primary-btn red-on-hover">Xem thêm <span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        @foreach (var comic in @Model.RecentlyAddedComicModels)
+                        @foreach (var comic in @Model.AllRecentlyAddedComicModels)
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
@@ -129,7 +130,7 @@
                                             <li>Manhwa</li>
                                             <li>Manhua</li>
                                         </ul>
-                                        <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
+                                        <h5><a class="red-on-hover d-block" asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +155,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="btn__all">
-                                <a href="#" class="primary-btn">Xem thêm <span class="arrow_right"></span></a>
+                                <a asp-page="AllComic" class="primary-btn red-on-hover">Xem thêm <span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -174,7 +175,7 @@
                                             <li>Manhwa</li>
                                             <li>Manhua</li>
                                         </ul>
-                                        <h5><a asp-page="MangaDetail" asp-route-MangaIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
+                                        <h5><a class="red-on-hover d-block" asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +204,7 @@
                             <li data-filter=".years">Năm</li>
                         </ul>*@
                         <div class="filter__gallery">
-                            @foreach (var comic in Model.HotComicModels)
+                            @foreach (var comic in Model.AllHotComicModels)
                             {
                                 <div class="position-relative">
                                     <div class="blur"></div>
@@ -211,7 +212,7 @@
                                          data-setbg="@comic.ComicAvatar">
                                         <div class="ep">@comic.ComicLatestChapter</div>
                                         <div class="view"><i class="fa fa-eye"></i> @comic.ReadersCounts</div>
-                                        <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
+                                        <h5><a class="red-on-hover d-block" asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     </div>
                                 </div>
 
@@ -230,7 +231,7 @@
                         <div class="section-title">
                             <h5>Đánh giá mới</h5>
                         </div>
-                        @foreach (var comic in Model.ComicHasTheLastestComicReviewModels)
+                        @foreach (var comic in Model.AllComicHasTheLastestComicReviewModels)
                         {
                             <div class="product__sidebar__comment__item">
                                 <div class="product__sidebar__comment__item__pic">
@@ -242,7 +243,7 @@
                                         <li>Manhwa</li>
                                         <li>Manhua</li>
                                     </ul>
-                                    <h5><a asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
+                                    <h5><a class="red-on-hover d-block" asp-page="MangaDetail" asp-route-ComicIdentifier="@comic.ComicIdentifier">@comic.ComicName</a></h5>
                                     <span><i class="fa fa-eye"></i> @comic.ReadersCounts</span>
                                 </div>
                             </div>
@@ -262,8 +263,4 @@
         </div>
     </div>
 </section>
-
-<script>
-    
-</script>
 <!-- Product Section End -->

@@ -21,7 +21,7 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
     /// </summary>
     /// <param name="chapterIdentifier"></param>
     /// <returns></returns>
-    public async Task<ChapterEntity> GetChapterWithComicByChapterIdentifierFromDatabaseAsync(Guid chapterIdentifier)
+    public async Task<ChapterEntity> GetChapterWith_ComicIdentifierByChapterIdentifierAsync(Guid chapterIdentifier)
     {
         return await _dbSet
             .Where(predicate: chapterEntity
@@ -43,7 +43,7 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns></returns>
-    public async Task<IList<ChapterEntity>> GetChapterWith_ChapterIdentifier_ChapterNumber_ChapterUnlockPrice_ChapterAddedDateAsync(Guid comicIdentifier)
+    public async Task<IEnumerable<ChapterEntity>> GetChapterWith_ChapterIdentifier_ChapterNumber_ChapterUnlockPrice_ChapterAddedDateAsync(Guid comicIdentifier)
     {
         return await _dbSet
             .Where(predicate: chapterEntity
@@ -119,6 +119,41 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
             })
             .OrderByDescending(keySelector: chapterEntity => chapterEntity.ComicIdentifier)
             .ThenByDescending(keySelector: chapterEntity => chapterEntity.ChapterNumber)
+            .ToListAsync();
+    }
+
+    public async Task<IDictionary<Guid, string>> GetTheLastestChapterNumberOfAllComicsAsync()
+    {
+        IDictionary<Guid, string> comicWithLatestChapterNumber = new Dictionary<Guid, string>();
+
+        await _dbSet
+            .Select(selector: chapterEntity => new ChapterEntity
+            {
+                ComicIdentifier = chapterEntity.ComicIdentifier,
+                ChapterNumber = chapterEntity.ChapterNumber
+            })
+            .OrderByDescending(keySelector: chapterEntity => chapterEntity.ComicIdentifier)
+            .ThenByDescending(keySelector: chapterEntity => chapterEntity.ChapterNumber)
+            .ForEachAsync(chapterEntity =>
+            {
+                comicWithLatestChapterNumber.TryAdd(
+                    key: chapterEntity.ComicIdentifier,
+                    value: chapterEntity.ChapterNumber);
+            });
+
+        return comicWithLatestChapterNumber;
+    }
+
+    public async Task<IList<ChapterEntity>> GetAllChapterWith_ChapterIdentifier_ChapterNumberByComicNameAsync(string comicName)
+    {
+        return await _dbSet
+            .Where(predicate: chapterEntity => chapterEntity.ComicEntity.ComicName.Equals(comicName))
+            .OrderBy(keySelector: chapterEntity => chapterEntity.ChapterNumber)
+            .Select(selector: chapterEntity => new ChapterEntity
+            {
+                ChapterNumber = chapterEntity.ChapterNumber,
+                ChapterIdentifier = chapterEntity.ChapterIdentifier
+            })
             .ToListAsync();
     }
 }

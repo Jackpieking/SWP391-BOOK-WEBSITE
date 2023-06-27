@@ -78,52 +78,28 @@
     });
 
     /*------------------
-        Video Player
-    --------------------*/
-    const player = new Plyr('#player', {
-        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'captions', 'settings', 'fullscreen'],
-        seekTime: 25
-    });
-
-    /*------------------
-        Niceselect
-    --------------------*/
-    $('select').niceSelect();
-
-    /*------------------
         Scroll To Top
     --------------------*/
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 200) {
+            $('#scrollToTopButton').fadeIn();
+        } else {
+            $('#scrollToTopButton').fadeOut();
+        }
+    });
+
     $("#scrollToTopButton").click(function () {
         $("html, body").animate({ scrollTop: 0 }, "slow");
         return false;
     });
 
-})(jQuery);
-
-const loginFrom = document.querySelector("#loginForm");
-
-loginFrom.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const payload = new FormData(loginFrom);
-
-    const rawResponse = await fetch('https://localhost:7174/login', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-            {
-                UserName: payload.get("Username"),
-                Password: payload.get('Password')
-            })
+    $(document).keydown(function (e) {
+        if (e.which == 37) {
+            document.querySelector(".previous-chap__btn").click()
+        }
+        else if (e.which == 39) {
+            document.querySelector(".next-chap__btn").click()
+        }
     });
 
-    if (rawResponse.status == 200) {
-        location.replace("http://127.0.0.1:56462/index.html");
-    }
-    else {
-        alert("Password or Username is not correct")
-    }
-});
+})(jQuery);

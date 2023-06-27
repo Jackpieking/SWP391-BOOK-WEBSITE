@@ -19,9 +19,9 @@ public class MangaDetailModel : PageModel
     private readonly ILogger<MangaDetailModel> _logger;
     private readonly ComicService _comicService;
 
-    public DisplayComicInformationModel DisplayComicInformationModel { get; set; }
+    public DisplayComicDetailModel DisplayComicDetailModel { get; set; }
 
-    public IEnumerable<DisplayAllComicModel> HotComicModels { get; set; }
+    public IEnumerable<DisplayAllComicModel> AllRecentlyAddedComicModels { get; set; }
 
     public MangaDetailModel(
         ILogger<MangaDetailModel> logger,
@@ -35,17 +35,17 @@ public class MangaDetailModel : PageModel
     {
         try
         {
-            DisplayComicInformationModel = await _comicService
+            DisplayComicDetailModel = await _comicService
                 .GetComicDetailFromApiAsync(comicIdentifier: comicIdentifier);
 
-            DisplayComicInformationModel.ComicAvatar
-                = $"https://localhost:7174/api/Image/ComicAvatar/{DisplayComicInformationModel.ComicAvatar}";
+            DisplayComicDetailModel.ComicAvatar
+                = $"https://localhost:7174/api/Image/ComicAvatar/{DisplayComicDetailModel.ComicAvatar}";
 
-            HotComicModels = (await _comicService
-                .GetAllComicModelFromApiAsync())
-                .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts);
+            AllRecentlyAddedComicModels = (await _comicService
+                .GetAllComicFromApiAsync())
+                .OrderByDescending(keySelector: comicModel => comicModel.ComicPublishedDate);
 
-            HotComicModels.ForEach(action: comicModel =>
+            AllRecentlyAddedComicModels.ForEach(action: comicModel =>
                 comicModel.ComicAvatar
                     = $"https://localhost:7174/api/Image/ComicAvatar/{comicModel.ComicAvatar}");
 
@@ -74,7 +74,8 @@ public class MangaDetailModel : PageModel
 
     public IActionResult OnPost([FromForm] string reviewComic)
     {
-        return RedirectToAction(actionName: nameof(OnGetAsync),
-                                routeValues: ViewData["comicIdentifier"]);
+        return RedirectToAction(
+            actionName: nameof(OnGetAsync),
+            routeValues: ViewData["comicIdentifier"]);
     }
 }

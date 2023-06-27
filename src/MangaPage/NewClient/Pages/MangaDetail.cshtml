@@ -1,7 +1,7 @@
 ﻿@page "/truyen-tranh/{ComicIdentifier:guid}"
 @model NewClient.Pages.MangaDetailModel
 @{
-    ViewData["Title"] = $"{Model.DisplayComicInformationModel.ComicName} [Tới Chapter {Model.DisplayComicInformationModel.ComicChapters.First().ChapterNumber}] Tiếng Việt | Manganexus.Com";
+    ViewData["Title"] = $"{Model.DisplayComicDetailModel.ComicName} [Tới Chapter {Model.DisplayComicDetailModel.ComicChapters.First().ChapterNumber}] Tiếng Việt | Manganexus.Com";
 }
 
 <!-- Breadcrumb Begin -->
@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
                     <a asp-page="Index"><i class="fa fa-home"></i> Trang chủ</a>
-                    <a asp-page="MangaDetail" asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"].ToString()"> @Model.DisplayComicInformationModel.ComicName</a>
+                    <a asp-page="MangaDetail" asp-route-ComicIdentifier="@Request.RouteValues["ComicIdentifier"].ToString()"> @Model.DisplayComicDetailModel.ComicName</a>
                 </div>
             </div>
         </div>
@@ -24,22 +24,22 @@
         <div class="anime__details__content">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="anime__details__pic set-bg" data-setbg="@Model.DisplayComicInformationModel.ComicAvatar">
-                        <div class="comment"><i class="fa fa-comments"></i> @Model.DisplayComicInformationModel.ReviewComics.Count</div>
-                        <div class="view"><i class="fa fa-eye"></i> @Model.DisplayComicInformationModel.ReaderCounts</div>
+                    <div class="anime__details__pic set-bg" data-setbg="@Model.DisplayComicDetailModel.ComicAvatar">
+                        <div class="comment"><i class="fa fa-comments"></i> @Model.DisplayComicDetailModel.ReviewComics.Count</div>
+                        <div class="view"><i class="fa fa-eye"></i> @Model.DisplayComicDetailModel.ReaderCounts</div>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="anime__details__text">
 						<div class="row">
-                            <div class="anime__details__title col-lg-9">
-                                <h3>@Model.DisplayComicInformationModel.ComicName</h3>
+                            <div class="anime__details__title col-lg-9 col-sm-9">
+                                <h3>@Model.DisplayComicDetailModel.ComicName</h3>
                             </div>
-                            <div class="anime__details__rating col-lg-3">
+                            <div class="anime__details__rating col-lg-3 col-sm-3">
                                 @{
                                     var totalStars = default(decimal);
                                     var averageStars = default(decimal);
-                                    var reviewComicDtoCount = Model.DisplayComicInformationModel.ReviewComics.Count;
+                                    var reviewComicDtoCount = Model.DisplayComicDetailModel.ReviewComics.Count;
 
                                     if (reviewComicDtoCount == 0)
                                     {
@@ -47,7 +47,7 @@
                                     }
                                     else
                                     {
-                                        foreach (var reviewComic in Model.DisplayComicInformationModel.ReviewComics)
+                                        foreach (var reviewComic in Model.DisplayComicDetailModel.ReviewComics)
                                         {
                                             totalStars += reviewComic.ComicRatingStar;
                                         }
@@ -69,19 +69,19 @@
                                 <span>@reviewComicDtoCount Bình chọn</span>
                             </div>
                         </div>
-                        <p>@Model.DisplayComicInformationModel.ComicDescription</p>
+                        <p>@Model.DisplayComicDetailModel.ComicDescription</p>
                         <div class="anime__details__widget">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <ul>
-                                        <li><span>Người đăng:</span> @Model.DisplayComicInformationModel.PublisherName</li>
-                                        <li><span>Ngày đăng:</span> @Model.DisplayComicInformationModel.ComicPublishedDate</li>
-                                        <li><span>Chương mới nhất:</span> @Model.DisplayComicInformationModel.ComicChapters.First().ChapterNumber</li>
+                                        <li><span>Người đăng:</span> @Model.DisplayComicDetailModel.PublisherName</li>
+                                        <li><span>Ngày đăng:</span> @Model.DisplayComicDetailModel.ComicPublishedDate</li>
+                                        <li><span>Chương mới nhất:</span> @Model.DisplayComicDetailModel.ComicChapters.First().ChapterNumber</li>
                                         <li>
                                             <span>Thể loại: </span>
-                                            @string.Join(", ", Model.DisplayComicInformationModel.CategoryNames)
+                                            @string.Join(", ", Model.DisplayComicDetailModel.CategoryNames)
                                         </li>
-                                        <li><span>Số người đã đọc:</span> @Model.DisplayComicInformationModel.ReaderCounts</li>
+                                        <li><span>Số người đã đọc:</span> @Model.DisplayComicDetailModel.ReaderCounts</li>
                                         <li><span>Số bình luận:</span> @reviewComicDtoCount</li>
                                     </ul>
                                 </div>
@@ -91,7 +91,7 @@
                             <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Yêu thích</a>
                             <a
                                 asp-page="ComicReading"
-                                asp-route-ChapterIdentifier="@Model.DisplayComicInformationModel.ComicChapters.Last().ChapterIdentifier"
+                                asp-route-ChapterIdentifier="@Model.DisplayComicDetailModel.ComicChapters.Last().ChapterIdentifier"
                                 asp-route-ComicIdentifier="@Request.RouteValues["comicIdentifier"].ToString()"
                                 class="watch-btn">
                                 <span>Đọc ngay
@@ -108,24 +108,17 @@
                 <h5>Danh sách chương</h5>
             </div>
             <div class="col-lg-12 col-md-12">
-                @{
-                    var chapterCount = Model.DisplayComicInformationModel.ComicChapters.Count;
-
-                    var chapterBoxHeight = chapterCount >= 10
-                        ? 10 * 55
-                        : chapterCount * 55;
-                }
-                <div class="card bg-dark border-white" style="height:@(chapterBoxHeight)px;overflow-y:scroll">
+                <div class="card bg-dark border-white" style="height:375px;overflow-y:scroll">
                     <div class="card-body">
                         <div class="list-group list-group-flush">
-                            @foreach (var chapter in Model.DisplayComicInformationModel.ComicChapters)
+                            @foreach (var chapter in Model.DisplayComicDetailModel.ComicChapters)
                             {
                                 <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-end bg-dark p-1">
                                     <div>
                                         <a asp-page="ComicReading"
-                                           asp-route-ChapterIdentifier="@chapter.ChapterIdentifier"
                                            asp-route-ComicIdentifier="@Request.RouteValues["comicIdentifier"].ToString()"
-                                           class="text-bg-dark">
+                                           asp-route-ChapterIdentifier="@chapter.ChapterIdentifier"
+                                           class="text-bg-dark red-on-hover">
                                            Chapter @chapter.ChapterNumber</a>
                                     </div>
                                     <div class="d-flex">
@@ -147,9 +140,9 @@
             <div class="col-lg-8 col-md-8">
                 <div class="anime__details__review">
                     <div class="section-title mb-4">
-                        <h5>Đánh giá</h5>
+                        <h5>Bình luận</h5>
                     </div>
-                    @if (Model.DisplayComicInformationModel.ReviewComics.Count == 0)
+                    @if (Model.DisplayComicDetailModel.ReviewComics.Count == 0)
                     {
                         <div class="alert alert-danger" role="alert">
                             Chưa có bình luận
@@ -157,7 +150,7 @@
                     }
                     else
                     {
-                        @foreach (var reviewItem in Model.DisplayComicInformationModel.ReviewComics)
+                        @foreach (var reviewItem in Model.DisplayComicDetailModel.ReviewComics)
                         {
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
@@ -180,7 +173,7 @@
                 <div class="anime__details__form">
                     <form method="post" class="form-floating">
                         <div class="section-title form">
-                            <h5>Đánh giá của bạn</h5>
+                            <h5>Bình luận của bạn</h5>
                         </div>
                         <textarea name="reviewComic" placeholder="Đánh giá vào đây"></textarea>
                         <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Đánh giá</button>
@@ -195,7 +188,7 @@
                     @{
                         byte counter = 4;
 
-                        foreach (var comic in Model.HotComicModels)
+                        foreach (var comic in Model.AllRecentlyAddedComicModels)
                         {
                             <div class="position-relative">
                                 <div class="blur"></div>
