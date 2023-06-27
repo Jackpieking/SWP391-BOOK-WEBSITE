@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DataAccessLayer.Migrations
 {
-	[DbContext(typeof(MangaContext))]
+    [DbContext(typeof(MangaContext))]
     partial class MangaContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

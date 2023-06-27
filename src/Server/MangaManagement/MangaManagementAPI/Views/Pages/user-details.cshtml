@@ -9,7 +9,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h4 class="m-0 font-weight-bold text-primary">@Model.UserDetails.UserBasicInfo.UserFullName Details</h4>
+            <h4 class="m-0 font-weight-bold text-primary">@user.UserBasicInfo.UserFullName Details</h4>
         </div>
         <div class="card-body">
             <div class="row">
@@ -29,9 +29,8 @@
                     }
                     <p><strong>Gender:</strong> @result</p>
 
-                    <a asp-page="" asp-route-userId="" class="btn btn-danger">Delete User</a>
-                    <a asp-page="" asp-route-userId="" class="btn btn-primary">Update User</a>
-                    <a asp-page="" asp-route-userId="" class="btn btn-secondary">Review publisher request</a>
+                    <a asp-page="user-details" asp-route-userId="@user.UserBasicInfo.UserIdentifier" asp-page-handler="deleteuser" class="btn btn-danger">Delete User</a>
+                    <a asp-page="user-update" asp-route-userId="@user.UserBasicInfo.UserIdentifier" asp-page-handler="getinfo" class="btn btn-primary">Update User</a>
                 </div>
                 <div class="col-md-6">
                     <p><strong>Email:</strong> @user.UserBasicInfo.UserEmail</p>

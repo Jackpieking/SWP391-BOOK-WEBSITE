@@ -119,6 +119,24 @@ namespace BusinessLogicLayer.Services
 
         }
 
+        /// <summary>
+        /// Get A Publisher Model of a user by user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Task<PublisherModel></returns>
+        public async Task<PublisherModel> GetPublisherModelOfAUserByUserIdAsync(Guid userId)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Publisher Table", args: DateTime.Now);
+
+            var publisherEntity = await
+            _unitOfWork
+            .PublisherRepository
+            .GetPublisherInfoByUserIdAsync(userId);
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Publisher Table", args: DateTime.Now);
+
+            return _mapper.Map<PublisherModel>(publisherEntity);
+        }
 
         /// <summary>
         /// Get all user's buying history on chapter by userIndetifier reference from database
@@ -208,5 +226,22 @@ namespace BusinessLogicLayer.Services
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Delete User", args: DateTime.Now);
         }
+
+        
+        public async Task UpdateUserAsync(UserModel user)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Update User", args: DateTime.Now);
+
+            await _unitOfWork
+                .UserInfoRepository
+                .UpdateUserAsync(_mapper.Map<UserEntity>(user));
+
+            await _unitOfWork
+                .SaveAsync();
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Update User", args: DateTime.Now);
+        }
+
+
     }
 }

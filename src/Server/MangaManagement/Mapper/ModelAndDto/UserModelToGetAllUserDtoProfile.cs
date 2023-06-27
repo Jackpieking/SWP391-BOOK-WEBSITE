@@ -12,7 +12,13 @@ namespace Mapper.ModelAndDto
     {
         public UserModelToGetAllUserDtoProfile()
         {
-            CreateMap<UserModel, GetAllUserAction_Out_Dto>();
+            CreateMap<UserModel, GetAllUserAction_Out_Dto>()
+            .ForMember(destinationMember: destination => destination.PublisherDto,
+            options => 
+            {
+                options.MapFrom(mapExpression: source => source.PublisherModel);
+            })
+            .ReverseMap();
         }
     }
 }

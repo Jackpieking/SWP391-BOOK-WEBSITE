@@ -58,6 +58,7 @@ services
                    typeof(ComicLikeEntityAndComicLikeModelProfile),
                    typeof(ComicModelToGetAllComicDtoProfile),
                    typeof(ComicModelToGetComicDetailDtoProfile),
+                   typeof(PublisherModelToGetPublisherDto),
                    typeof(ChapterImageToGetAllChapterImageOfAChapterDtoProfile),
                    typeof(UpdateCrawlDataToDatabaseAction_In_DtoToEntityProfile));
 

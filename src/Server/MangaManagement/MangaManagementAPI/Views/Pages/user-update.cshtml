@@ -1,54 +1,71 @@
-@page "/admin/users-management/update/{userId:guid?}"
+@page "/admin/users-management/update/{userId:guid?}/"
 @model MangaManagementAPI.Views.Pages.UserUpdate
 @{
     ViewData["Title"] = $"Update {@Model.User.Username}";
 }
 
-<form method="post" asp-page="user-update">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="Username" required>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="@Model.User.UserAvatar" alt="User Avatar" class="img-fluid rounded-circle mb-3"
+                        width="128" height="128">
+                    <h5 class="card-title">@Model.User.Username</h5>
+                    <p class="card-text">@Model.User.UserFullName</p>
+                    <p class="card-text">@Model.User.UserEmail</p>
+                    <p class="card-text">@Model.User.UserPhoneNumber</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <form method="post" enctype="multipart/form-data" asp-page-handler="updateuser" asp-route-userId="@Model.User.UserIdentifier">
+
+                <div class="form-group">
+                    <label for="userAvatar">Avatar</label>
+                    <input type="file" class="form-control-file" id="userAvatar" name="UserAvatar" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="Username" required
+                        value="@Model.User.Username">
+                </div>
+
+                <div class="form-group">
+                    <label for="userFullName">Full Name</label>
+                    <input type="text" class="form-control" id="userFullName" name="UserFullName" required
+                        value="@Model.User.UserFullName">
+                </div>
+
+                <div class="form-group">
+                    <label for="userGender">Gender</label>
+                    <select class="form-control" id="userGender" name="UserGender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="userBirthday">Birthday</label>
+                    <input type="date" class="form-control" id="userBirthday" name="UserBirthday" required
+                        value="@Model.User.UserBirthday.ToString("yyyy-MM-dd")">
+                </div>
+
+                @* <div class="form-group">
+                <label for="userPhoneNumber">Phone Number</label>
+                <input type="tel" class="form-control" readonly id="userPhoneNumber" name="UserPhoneNumber" required
+                value="@Model.User.UserPhoneNumber">
+                </div>
+
+                <div class="form-group">
+                <label for="userEmail">Email</label>
+                <input type="email" class="form-control" readonly id="userEmail" name="UserEmail" required
+                value="@Model.User.UserEmail">
+                </div> *@
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="userFullName">Full Name</label>
-        <input type="text" class="form-control" id="userFullName" name="UserFullName" required>
-    </div>
-
-    <div class="form-group">
-        <label for="userGender">Gender</label>
-        <select class="form-control" id="userGender" name="UserGender" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="userBirthday">Birthday</label>
-        <input type="date" class="form-control" id="userBirthday" name="UserBirthday" required>
-    </div>
-
-    <div class="form-group">
-        <label for="userPhoneNumber">Phone Number</label>
-        <input type="tel" class="form-control" id="userPhoneNumber" name="UserPhoneNumber" required>
-    </div>
-
-    <div class="form-group">
-        <label for="userEmail">Email</label>
-        <input type="email" class="form-control" id="userEmail" name="UserEmail" required>
-    </div>
-
-    <div class="form-group">
-        <label for="userAccountBalance">Account Balance</label>
-        <input type="number" class="form-control" id="userAccountBalance" name="UserAccountBalance" required>
-    </div>
-
-    <div class="form-group">
-        <label for="userAvatar">Avatar</label>
-        <input type="text" class="form-control" id="userAvatar" name="UserAvatar" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
+</div>

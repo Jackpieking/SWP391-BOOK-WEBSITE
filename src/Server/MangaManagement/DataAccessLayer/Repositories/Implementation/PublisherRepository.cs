@@ -14,6 +14,26 @@ public class PublisherRepository : GenericRepository<PublisherEntity>, IPublishe
     {
     }
 
+
+    /// <summary>
+    /// Get Publisher Id and Publisher descrition of a specific user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns>Task<PublisherEntity></returns>
+    public async Task<PublisherEntity> GetPublisherInfoByUserIdAsync(Guid userId)
+    {
+        return await _dbSet
+            .Where(predicate: publisherEntity 
+                => publisherEntity.UserIdentifier.Equals(userId))
+            .Select(selector: publisherEntity => new PublisherEntity
+            {
+                PublisherIdentifier = publisherEntity.PublisherIdentifier,
+                PublisherDescription = publisherEntity.PublisherDescription
+            })
+            .FirstOrDefaultAsync();
+    }
+
+
     /// <summary>
     /// Select from "publisher" table with these fields:
     /// - Field Username of "user" table

@@ -27,7 +27,8 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
                 UserEmail = user.UserEmail,
                 UserBirthday = user.UserBirthday,
                 UserGender = user.UserGender,
-                UserAccountBalance = user.UserAccountBalance
+                UserAccountBalance = user.UserAccountBalance,
+                PublisherEntity = user.PublisherEntity
             })
             .ToListAsync();
     }
@@ -45,7 +46,8 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
                 UserEmail = user.UserEmail,
                 UserBirthday = user.UserBirthday,
                 UserGender = user.UserGender,
-                UserAccountBalance = user.UserAccountBalance
+                UserAccountBalance = user.UserAccountBalance,
+                PublisherEntity = user.PublisherEntity
             })
             .FirstOrDefaultAsync();
     }
@@ -59,4 +61,21 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
         }
     }
 
+    public async Task UpdateUserAsync(UserEntity user)
+    {
+        var existingUser = await _dbSet.FindAsync(user.UserIdentifier);
+        if (existingUser != null)
+        {
+            // Update the properties of the existing user with the values from the updated user
+            existingUser.UserFullName = user.UserFullName;
+            existingUser.Username = user.Username;
+            existingUser.UserGender = user.UserGender;
+            existingUser.UserBirthday = user.UserBirthday;
+        }
+        else
+        {
+            throw new Exception("User not found."); // Or handle the error appropriately
+        }
+    }
+    //make func dedicate for update user -> service to save to db
 }

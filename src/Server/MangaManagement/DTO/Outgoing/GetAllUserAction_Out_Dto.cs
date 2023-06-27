@@ -25,5 +25,7 @@ namespace DTO.Outgoing
         public int UserAccountBalance { get; set; }
 
         public string UserAvatar { get; set; }
+
+        public GetPublisherAction_Out_Dto PublisherDto {get; set;}
     }
 }
