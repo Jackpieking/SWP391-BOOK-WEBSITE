@@ -33,6 +33,7 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
             })
             .ToListAsync();
     }
+<<<<<<< HEAD
 
     public async Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync()
     {
@@ -46,4 +47,37 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
             .ThenByDescending(keySelector: reviewComicModel => reviewComicModel.ReviewTime)
             .ToListAsync();
     }
+=======
+
+    public async Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync()
+    {
+        return await _dbSet
+            .Select(selector: reviewComic => new ReviewComicEntity
+            {
+                ComicIdentifier = reviewComic.ComicIdentifier,
+                ReviewTime = reviewComic.ReviewTime
+            })
+            .OrderByDescending(keySelector: reviewComicModel => reviewComicModel.ComicIdentifier)
+            .ThenByDescending(keySelector: reviewComicModel => reviewComicModel.ReviewTime)
+            .ToListAsync();
+    }
+
+    public async Task<IList<ReviewComicEntity>> GetComicReviewsOfAUserByUserId(Guid userId)
+    {
+        return await _dbSet
+            .Where(predicate: reviewComic => reviewComic.UserIdentifier.Equals(userId))
+            .Select(reviewComic => new ReviewComicEntity
+            {
+                ComicEntity = new ComicEntity()
+                {
+                    ComicName = reviewComic.ComicEntity.ComicName
+                },
+                ComicComment = reviewComic.ComicComment,
+                ComicRatingStar = reviewComic.ComicRatingStar,
+                ReviewTime = reviewComic.ReviewTime
+            })
+            .ToListAsync();
+    }
+
+>>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
 }

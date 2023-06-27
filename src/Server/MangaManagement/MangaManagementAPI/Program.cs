@@ -34,6 +34,7 @@ var services = builder.Services;
 services
     .AddScoped<IUnitOfWork, UnitOfWork>()
     .AddScoped<EntityManagementService>()
+    .AddScoped<UserManagementService>()
     .AddScoped<TruyenQQPageHandlerService>()
     .AddScoped<ApiCallingService>()
     .ConfigureOptions<DatabaseOptionUpdates>();
@@ -103,11 +104,21 @@ services
 services
     .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
 
+<<<<<<< HEAD
 //Razor Page
 services.AddRazorPages().AddRazorPagesOptions(options =>
 {
     options.RootDirectory = "/Views";
 });
+=======
+//RazerPage
+services
+    .AddRazorPages()
+    .AddRazorPagesOptions(options =>
+    {
+        options.RootDirectory = "/Views";
+    });
+>>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
 
 var app = builder.Build();
 

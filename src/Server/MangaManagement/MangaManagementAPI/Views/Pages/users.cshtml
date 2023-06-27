@@ -1,0 +1,92 @@
+@page "/admin/users-management/"
+@model MangaManagementAPI.Views.Pages.UsersModel
+@{
+    ViewData["Title"] = "Admin | Users Management";
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">User Tables</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">User DataTables</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Birthday</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Gender</th>
+                            <th>Balance</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Birthday</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Gender</th>
+                            <th>Balance</th>
+                            <th>Options</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model.UserList == null)
+                        {
+                            <tr class="error">Error</tr>
+                        }
+                        else
+                        {
+                            foreach (var user in Model.UserList)
+                            {
+                                <tr>
+                                    <td>@user.Username</td>
+                                    <td>@user.UserFullName</td>
+                                    <td>@user.UserBirthday</td>
+                                    <td>@user.UserEmail</td>
+                                    <td>@user.UserPhoneNumber</td>
+                                    <td>
+                                        @{
+                                            var enumValue = ((int)user.UserGender);
+                                            string result = string.Empty;
+                                            switch (enumValue)
+                                            {
+                                                case 0: result = "Male"; break;
+                                                case 1: result = "Female"; break;
+                                                case 2: result = "Others"; break;
+                                            }
+                                        }
+                                        @result
+                                    </td>
+                                    <td>@user.UserAccountBalance</td>
+
+                                    <td class="d-flex justify-content-center">
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="userdetails" class="mx-2" style="color: blue;"><i
+                                                class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="deleteuser" class="mx-2" style="color: red;"><i
+                                                class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="userdetails" class="mx-2" style="color: rgb(0, 15, 128);"><i
+                                                class="fa fa-cog" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

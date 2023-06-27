@@ -27,6 +27,24 @@ public class EntityManagementService
     }
 
     /// <summary>
+    /// Get all comic without any reference from database
+    /// </summary>
+    /// <returns>Task<IEnumerable<ComicModel></ComicModel>></returns>
+    public async Task<IEnumerable<ComicModel>> GetAllComicAsync()
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+
+        var comicEntities = await _unitOfWork
+            .ComicRepository
+            .GetAllComicAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+
+        return _mapper.Map<IEnumerable<ComicModel>>(source: comicEntities);
+
+    }
+
+    /// <summary>
     /// Get a chapter with comic and chapter reviews reference by chapter identifier from database
     /// </summary>
     /// <param name="chapterIdentifier"></param>

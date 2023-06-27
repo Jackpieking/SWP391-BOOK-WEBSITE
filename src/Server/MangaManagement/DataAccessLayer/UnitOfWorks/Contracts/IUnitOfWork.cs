@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Repositories.Contracts;
+using DataAccessLayer.Repositories.Contracts.Base;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.UnitOfWorks.Contracts;
@@ -18,5 +19,6 @@ public interface IUnitOfWork
 	IUserRepository UserInfoRepository { get; }
 	IPublisherRepository PublisherRepository { get; }
 	IBuyingHistoryRepository BuyingHistoryRepository { get; }
+	IComicLikeRepository ComicLikeRepository {get; }
 	Task SaveAsync();
 }

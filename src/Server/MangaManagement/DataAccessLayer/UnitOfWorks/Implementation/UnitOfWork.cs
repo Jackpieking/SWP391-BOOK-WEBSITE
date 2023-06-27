@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Repositories.Contracts;
+using DataAccessLayer.Repositories.Contracts.Base;
 using DataAccessLayer.Repositories.Implementation;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
 	private IUserRepository _userInfoRepository;
 	private IPublisherRepository _publisherRepository;
 	private IBuyingHistoryRepository _buyingHistoryRepository;
+	private IComicLikeRepository _comicLikeRepository;
 
 	public UnitOfWork(MangaContext context) => _context = context;
 
@@ -153,6 +155,15 @@ public class UnitOfWork : IUnitOfWork
 			_buyingHistoryRepository ??= new BuyingHistoryRepository(dbSet: _context.BuyingHistoryEntities);
 
 			return _buyingHistoryRepository;
+		}
+	}
+
+	public IComicLikeRepository ComicLikeRepository
+	{
+		get 
+		{
+			_comicLikeRepository ??= new ComicLikeRepository(dbSet: _context.ComicLikeEntities);
+			return _comicLikeRepository;
 		}
 	}
 	#endregion

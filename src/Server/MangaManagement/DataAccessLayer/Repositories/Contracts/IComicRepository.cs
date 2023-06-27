@@ -8,6 +8,10 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicRepository : IGenericRepository<ComicEntity>
 {
+<<<<<<< HEAD
+=======
+    Task<IList<ComicEntity>> GetAllComicAsync();
+>>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
     Task<IList<ComicEntity>> GetAllComicWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
     Task<ComicEntity> GetComicWith_ComicIdentifier_ComicName_ComicDescription_ComicAvatar_ComicPublishedDate_Username_ByComicIdentifierAsync(Guid comicIdentifier);
     Task<Guid> UpdateCrawlDataAsync(ComicEntity crawlComicEntity);
