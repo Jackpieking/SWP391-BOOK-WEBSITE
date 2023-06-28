@@ -20,7 +20,7 @@ public class CategoryRepository : GenericRepository<CategoryEntity>, ICategoryRe
 	/// </summary>
 	/// <param name="crawlCategoryNames"></param>
 	/// <returns></returns>
-	public async Task<IList<Guid>> GetCategoryIdentifiersByCrawlCategoryNameAsync(IEnumerable<string> crawlCategoryNames)
+	public async Task<IList<Guid>> GetCategoryIdsByCrawlCategoryNameAsync(IEnumerable<string> crawlCategoryNames)
 	{
 		IList<Guid> categoryIdentifiers = new List<Guid>();
 

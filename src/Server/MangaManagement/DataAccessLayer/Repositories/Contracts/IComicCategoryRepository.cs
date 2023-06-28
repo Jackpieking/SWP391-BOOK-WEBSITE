@@ -8,7 +8,7 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IComicCategoryRepository : IGenericRepository<ComicCategoryEntity>
 {
-    Task<IList<ComicCategoryEntity>> GetComicCategoryNameByComicIdentifierFromDatabaseAsync(Guid comicIdentifier);
-    void DeleteComicCategoriesByComicIdentifier(Guid comicIdentifier);
-    Task UpdateCrawlDataAsync(Guid comicIdentifier, IList<Guid> categoryidentifiers);
+	Task<IList<ComicCategoryEntity>> GetComicCategoryNamesByComicIdAsync(Guid comicIdentifier);
+	void DeleteComicCategoriesByComicId(Guid comicIdentifier);
+	Task UpdateCrawlDataAsync(Guid comicIdentifier, IList<Guid> categoryidentifiers);
 }

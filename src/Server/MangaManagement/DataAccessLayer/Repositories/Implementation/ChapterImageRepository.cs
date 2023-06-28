@@ -11,25 +11,25 @@ namespace DataAccessLayer.Repositories.Implementation;
 
 public class ChapterImageRepository : GenericRepository<ChapterImageEntity>, IChapterImageRepository
 {
-    public ChapterImageRepository(DbSet<ChapterImageEntity> dbSet) : base(dbSet: dbSet)
-    {
-    }
+	public ChapterImageRepository(DbSet<ChapterImageEntity> dbSet) : base(dbSet: dbSet)
+	{
+	}
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="chapterIdentifier"></param>
-    /// <returns></returns>
-    public async Task<IEnumerable<ChapterImageEntity>> GetChapterImagesWith_ImageUrlByChapterIdentifierAsync(Guid chapterIdentifier)
-    {
-        return await _dbSet
-            .Where(predicate: predicate
-                => predicate.ChapterIdentifier == chapterIdentifier)
-            .OrderBy(keySelector: chapterImage => chapterImage.ImageNumber)
-            .Select(selector: chapterImage => new ChapterImageEntity
-            {
-                ImageURL = chapterImage.ImageURL,
-            })
-            .ToListAsync();
-    }
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="chapterIdentifier"></param>
+	/// <returns></returns>
+	public async Task<IEnumerable<ChapterImageEntity>> GetChapterImagesWith_ImageUrlByChapterIdAsync(Guid chapterIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: predicate
+				=> predicate.ChapterIdentifier == chapterIdentifier)
+			.OrderBy(keySelector: chapterImage => chapterImage.ImageNumber)
+			.Select(selector: chapterImage => new ChapterImageEntity
+			{
+				ImageURL = chapterImage.ImageURL,
+			})
+			.ToListAsync();
+	}
 }

@@ -7,5 +7,5 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IPublisherRepository : IGenericRepository<PublisherEntity>
 {
-    Task<PublisherEntity> GetPublisherWith_UsernameByPublisherIdentifierAsync(Guid publisherIdentifier);
+	Task<PublisherEntity> GetPublisherWith_UsernameByPublisherIdAsync(Guid publisherIdentifier);
 }

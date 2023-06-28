@@ -1,15 +1,15 @@
-﻿using System;
+﻿using DataAccessLayer.Repositories.Contracts.Base;
+using Entity;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataAccessLayer.Repositories.Contracts.Base;
-using Entity;
 
 namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IUserRepository : IGenericRepository<UserEntity>
 {
-    
-    Task<IList<UserEntity>> GetAllUserAsync();
-    Task<UserEntity> GetUserDetailsById(Guid id);
-    Task DeleteUserByIdAsync (Guid id);
+
+	Task<IList<UserEntity>> GetUsersAsync();
+	Task<UserEntity> GetUserDetailsByUserIdAsync(Guid id);
+	Task DeleteUserByUserIdAsync(Guid id);
 }

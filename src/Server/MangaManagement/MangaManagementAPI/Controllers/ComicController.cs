@@ -48,7 +48,7 @@ public class ComicController : ControllerBase
         try
         {
             var comicModels = await _entityManagementService
-                .GetAllComicsWith_ComicIdentifier_ComicPublishedDate_ComicName_ComicAvatarAsync();
+                .GetComicsWith_ComicId_ComicName_ComicPublishedDate_ComicAvatarAsync();
 
             var readingHistoryCounts = await _entityManagementService
                 .GetReadingHistoryCountOfAllComicsAsync();

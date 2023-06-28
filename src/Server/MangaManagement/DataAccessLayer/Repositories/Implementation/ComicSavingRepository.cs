@@ -15,7 +15,7 @@ public class ComicSavingRepository : GenericRepository<ComicSavingEntity>, IComi
     {
     }
 
-    public async Task<IList<ComicSavingEntity>> GetComicSavingsOfAUserByUserId(Guid userId)
+    public async Task<IList<ComicSavingEntity>> GetComicSavingsByUserIdAsync(Guid userId)
     {
         return await _dbSet
             .Where(comincSaving => comincSaving.UserIdentifier.Equals(userId))

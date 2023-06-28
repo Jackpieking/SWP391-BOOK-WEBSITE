@@ -15,27 +15,23 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 	{
 	}
 
-	public async Task<IEnumerable<ReviewChapterEntity>> GetAllChapterReviewsWith_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdentifierAsync(Guid chapterIdentifier)
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="chapterIdentifier"></param>
+	/// <returns></returns>
+	/// <exception cref="NotImplementedException"></exception>
+	public Task<IList<ReviewChapterEntity>> GetChapterReviewsByChapterIdAsync(Guid chapterIdentifier)
 	{
-		return await _dbSet
-			.Where(predicate: reviewChapterEntity
-				=> reviewChapterEntity.ChapterIdentifier == chapterIdentifier)
-			.Select(selector: reviewChapterEntity => new ReviewChapterEntity
-			{
-				UserEntity = new UserEntity()
-				{
-					Username = reviewChapterEntity.UserEntity.Username,
-					UserAvatar = reviewChapterEntity.UserEntity.UserAvatar
-				},
-				ChapterComment = reviewChapterEntity.ChapterComment,
-				ChapterRatingStar = reviewChapterEntity.ChapterRatingStar,
-				ReviewTime = reviewChapterEntity.ReviewTime
-			})
-			.OrderBy(reviewChapterEntity => reviewChapterEntity.ReviewTime)
-			.ToListAsync();
+		throw new NotImplementedException();
 	}
 
-	public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId)
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="userId"></param>
+	/// <returns></returns>
+	public async Task<IList<ReviewChapterEntity>> GetChapterReviewsWith_ChapterNumber_ComicName_ChapterComment_ChapterRatingStar_ReviewTimeByUserIdAsync(Guid userId)
 	{
 		return await _dbSet
 			.Where(reviewChapter => reviewChapter.UserIdentifier.Equals(userId))
@@ -57,4 +53,28 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 			.ToListAsync();
 	}
 
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="chapterIdentifier"></param>
+	/// <returns></returns>
+	public async Task<IEnumerable<ReviewChapterEntity>> GetChapterReviewsWith_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdAsync(Guid chapterIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: reviewChapterEntity
+				=> reviewChapterEntity.ChapterIdentifier == chapterIdentifier)
+			.Select(selector: reviewChapterEntity => new ReviewChapterEntity
+			{
+				UserEntity = new UserEntity()
+				{
+					Username = reviewChapterEntity.UserEntity.Username,
+					UserAvatar = reviewChapterEntity.UserEntity.UserAvatar
+				},
+				ChapterComment = reviewChapterEntity.ChapterComment,
+				ChapterRatingStar = reviewChapterEntity.ChapterRatingStar,
+				ReviewTime = reviewChapterEntity.ReviewTime
+			})
+			.OrderBy(reviewChapterEntity => reviewChapterEntity.ReviewTime)
+			.ToListAsync();
+	}
 }

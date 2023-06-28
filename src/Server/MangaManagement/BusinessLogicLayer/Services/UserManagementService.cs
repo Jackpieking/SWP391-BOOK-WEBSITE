@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
             var userEntities = await
                 _unitOfWork
                 .UserInfoRepository
-                .GetAllUserAsync();
+                .GetUsersAsync();
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On User Table", args: DateTime.Now);
             return _mapper.Map<IEnumerable<UserModel>>(userEntities);
@@ -54,7 +54,7 @@ namespace BusinessLogicLayer.Services
             var userEntity = await
             _unitOfWork
             .UserInfoRepository
-            .GetUserDetailsById(userId);
+            .GetUserDetailsByUserIdAsync(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On User Table", args: DateTime.Now);
             return _mapper.Map<UserModel>(userEntity);
@@ -73,7 +73,7 @@ namespace BusinessLogicLayer.Services
             var transactionHistoryEntities = await
                 _unitOfWork
                 .TransactionRepository
-                .GetTransactionHistoriesOfAUserByUserId(userId);
+                .GetTransactionHistoriesWith_TransactionAmount_TransactionDate_TransactionCointByUserIdAsync(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Transaction History Table", args: DateTime.Now);
             return _mapper.Map<ICollection<TransactionsHistoryModel>>(transactionHistoryEntities);
@@ -92,7 +92,7 @@ namespace BusinessLogicLayer.Services
             var reviewComicEntities = await
                 _unitOfWork
                 .ReviewComicRepository
-                .GetComicReviewsOfAUserByUserId(userId);
+                .GetComicReviewsByUserId(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Review Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ReviewComicModel>>(reviewComicEntities);
@@ -111,7 +111,7 @@ namespace BusinessLogicLayer.Services
             var reviewChapterEntites = await
                 _unitOfWork
                 .ReviewChapterRepository
-                .GetChapterReviewsOfAUserByUserId(userId);
+                .GetChapterReviewsWith_ChapterNumber_ComicName_ChapterComment_ChapterRatingStar_ReviewTimeByUserIdAsync(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Chapter Review Table", args: DateTime.Now);
 
@@ -132,7 +132,7 @@ namespace BusinessLogicLayer.Services
             var buyingHistoryEntities = await
                 _unitOfWork
                 .BuyingHistoryRepository
-                .GetBuyingHistoriesOfAUserByUserId(userId);
+                .GetBuyingHistoriesByUserId(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Buying History Table", args: DateTime.Now);
             return _mapper.Map<ICollection<BuyingHistoryModel>>(buyingHistoryEntities);
@@ -151,7 +151,7 @@ namespace BusinessLogicLayer.Services
             var comicSavingEntities = await
                 _unitOfWork
                 .ComicSavingRepository
-                .GetComicSavingsOfAUserByUserId(userId);
+                .GetComicSavingsByUserIdAsync(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Saving Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ComicSavingModel>>(comicSavingEntities);
@@ -170,7 +170,7 @@ namespace BusinessLogicLayer.Services
             var readingHistoryEntities = await
                 _unitOfWork
                 .ReadingHistoryRepository
-                .GetAllReadingHistoresOfAUserByUserId(userId);
+                .GetReadingHistoresWith_LastReadingTime_ChapterNumber_ComicNameByUserIdAsync(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Saving Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ReadingHistoryModel>>(readingHistoryEntities);
@@ -189,7 +189,7 @@ namespace BusinessLogicLayer.Services
             var comicLikeEntities = await
                 _unitOfWork
                 .ComicLikeRepository
-                .GetComicLikesOfAUserByUserId(userId);
+                .GetComicLikesByUserIdAsync(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Like Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ComicLikeModel>>(comicLikeEntities);
@@ -201,7 +201,7 @@ namespace BusinessLogicLayer.Services
 
             await _unitOfWork
                 .UserInfoRepository
-                .DeleteUserByIdAsync(userId);
+                .DeleteUserByUserIdAsync(userId);
 
             await _unitOfWork
                 .SaveAsync();

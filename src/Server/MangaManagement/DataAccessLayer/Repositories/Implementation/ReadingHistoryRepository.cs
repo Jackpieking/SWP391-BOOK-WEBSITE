@@ -15,56 +15,12 @@ public class ReadingHistoryRepository : GenericRepository<ReadingHistoryEntity>,
 	{
 	}
 
-	public async Task<int> GetReadingHistoryCountByComicIdentiferAsync(Guid comicIdentifier)
-	{
-		return await _dbSet
-			.Where(predicate: readingHistoryEntity
-				=> readingHistoryEntity.ChapterEntity.ComicIdentifier == comicIdentifier)
-			.Select(selector: readingHistoryEntity => new ReadingHistoryEntity
-			{
-				ChapterIdentifier = readingHistoryEntity.ChapterIdentifier
-			})
-			.CountAsync();
-	}
-
-<<<<<<< Updated upstream
-    public async Task<IList<ReadingHistoryEntity>> GetAllReadingHistoriesWith_ChapterIdentifierAsync()
-    {
-        return await _dbSet
-            .Select(selector: readingHistoryEntity => new ReadingHistoryEntity
-            {
-                ChapterEntity = new()
-                {
-                    ComicIdentifier = readingHistoryEntity.ChapterEntity.ComicIdentifier
-                }
-            })
-            .ToListAsync();
-    }
-<<<<<<< HEAD
-=======
-
-    public async Task<IList<ReadingHistoryEntity>> GetAllReadingHistoresOfAUserByUserId(Guid userIndentifier)
-    {
-        return await _dbSet
-            .Where(predicate: reeadingHistoryEntity => reeadingHistoryEntity.UserIdentifier.Equals(userIndentifier))
-            .Select( selector: reeadingHistoryEntity => new ReadingHistoryEntity
-            {
-                LastReadingTime = reeadingHistoryEntity.LastReadingTime,
-                ChapterEntity = new ChapterEntity()
-                {
-                    ChapterNumber = reeadingHistoryEntity.ChapterEntity.ChapterNumber,
-                    ComicEntity = new ComicEntity()
-                    {
-                        ComicName = reeadingHistoryEntity.ChapterEntity.ComicEntity.ComicName
-                    }
-                }
-            }).ToListAsync();
-    }
->>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
-=======
-	public async Task<IList<ReadingHistoryEntity>> GetAllReadingHistoriesWith_ChapterIdentifierAsync()
-	{
-		return await _dbSet
+	/// <summary>
+	///
+	/// </summary>
+	/// <returns></returns>
+	public async Task<IList<ReadingHistoryEntity>> GetReadingHistoriesWith_ComicIdAsync()
+		=> await _dbSet
 			.Select(selector: readingHistoryEntity => new ReadingHistoryEntity
 			{
 				ChapterEntity = new()
@@ -73,9 +29,48 @@ public class ReadingHistoryRepository : GenericRepository<ReadingHistoryEntity>,
 				}
 			})
 			.ToListAsync();
-	}
 
-	public async Task<IDictionary<Guid, int>> GetReadingHistoryCountOfAllComicsAsync()
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="comicIdentifier"></param>
+	/// <returns></returns>
+	public async Task<int> GetReadingHistoryCountByComicIdAsync(Guid comicIdentifier)
+		=> await _dbSet
+			.Where(predicate: readingHistoryEntity
+				=> readingHistoryEntity.ChapterEntity.ComicIdentifier == comicIdentifier)
+			.Select(selector: readingHistoryEntity => new ReadingHistoryEntity
+			{
+				ChapterIdentifier = readingHistoryEntity.ChapterIdentifier
+			})
+			.CountAsync();
+
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="userIndentifier"></param>
+	/// <returns></returns>
+	public async Task<IList<ReadingHistoryEntity>> GetReadingHistoresWith_LastReadingTime_ChapterNumber_ComicNameByUserIdAsync(Guid userIndentifier)
+		=> await _dbSet
+			.Where(predicate: reeadingHistoryEntity => reeadingHistoryEntity.UserIdentifier.Equals(userIndentifier))
+			.Select(selector: reeadingHistoryEntity => new ReadingHistoryEntity
+			{
+				LastReadingTime = reeadingHistoryEntity.LastReadingTime,
+				ChapterEntity = new ChapterEntity()
+				{
+					ChapterNumber = reeadingHistoryEntity.ChapterEntity.ChapterNumber,
+					ComicEntity = new ComicEntity()
+					{
+						ComicName = reeadingHistoryEntity.ChapterEntity.ComicEntity.ComicName
+					}
+				}
+			}).ToListAsync();
+
+	/// <summary>
+	///
+	/// </summary>
+	/// <returns></returns>
+	public async Task<IDictionary<Guid, int>> GetReadingHistoryCountOfComicsAsync()
 	{
 		var queryResult = from readingHistoryEntity in _dbSet
 						  group readingHistoryEntity by readingHistoryEntity.ChapterEntity.ComicIdentifier
@@ -90,5 +85,4 @@ public class ReadingHistoryRepository : GenericRepository<ReadingHistoryEntity>,
 			keySelector: res => res.ComicIdentifier,
 			elementSelector: res => res.ComicIdentifierCount);
 	}
->>>>>>> Stashed changes
 }

@@ -1,13 +1,12 @@
+using DataAccessLayer.Repositories.Contracts.Base;
+using Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Entity;
 
-namespace DataAccessLayer.Repositories.Contracts.Base
+namespace DataAccessLayer.Repositories.Contracts;
+
+public interface IComicLikeRepository : IGenericRepository<ComicLikeEntity>
 {
-    public interface IComicLikeRepository : IGenericRepository<ComicLikeEntity>
-    {
-        Task<IList<ComicLikeEntity>> GetComicLikesOfAUserByUserId(Guid userId);
-    }
+	Task<IList<ComicLikeEntity>> GetComicLikesByUserIdAsync(Guid userId);
 }

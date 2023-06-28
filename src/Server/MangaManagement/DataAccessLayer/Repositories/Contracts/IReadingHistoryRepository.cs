@@ -8,16 +8,8 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IReadingHistoryRepository : IGenericRepository<ReadingHistoryEntity>
 {
-<<<<<<< Updated upstream
-    Task<IList<ReadingHistoryEntity>> GetAllReadingHistoriesWith_ChapterIdentifierAsync();
-    Task<int> GetReadingHistoryCountWith_ChapterIdentifierByComicIdentiferAsync(Guid comicIdentifier);
-<<<<<<< HEAD
-=======
-    Task<IList<ReadingHistoryEntity>> GetAllReadingHistoresOfAUserByUserId(Guid userIndentifier);
->>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
-=======
-	Task<IList<ReadingHistoryEntity>> GetAllReadingHistoriesWith_ChapterIdentifierAsync();
-	Task<int> GetReadingHistoryCountByComicIdentiferAsync(Guid comicIdentifier);
-	Task<IDictionary<Guid, int>> GetReadingHistoryCountOfAllComicsAsync();
->>>>>>> Stashed changes
+	Task<IList<ReadingHistoryEntity>> GetReadingHistoriesWith_ComicIdAsync();
+	Task<int> GetReadingHistoryCountByComicIdAsync(Guid comicIdentifier);
+	Task<IList<ReadingHistoryEntity>> GetReadingHistoresWith_LastReadingTime_ChapterNumber_ComicNameByUserIdAsync(Guid userIndentifier);
+	Task<IDictionary<Guid, int>> GetReadingHistoryCountOfComicsAsync();
 }

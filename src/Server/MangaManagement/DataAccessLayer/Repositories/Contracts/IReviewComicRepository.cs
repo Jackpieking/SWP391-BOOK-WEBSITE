@@ -8,17 +8,9 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface IReviewComicRepository : IGenericRepository<ReviewComicEntity>
 {
-<<<<<<< Updated upstream
-    Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync();
-    Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(Guid comicIdentifier);
-<<<<<<< HEAD
-=======
-    Task<IList<ReviewComicEntity>> GetComicReviewsOfAUserByUserId(Guid userId);
->>>>>>> c86f98a6ee0d041c58490069b911605912b072b6
-=======
-	Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicIdentifier_ReviewTimeAsync();
-	Task<IList<ReviewComicEntity>> GetAllReviewComicsWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdentifierAsync(Guid comicIdentifier);
-	Task<IDictionary<Guid, int>> GetReviewComicCountOfAllComicsAsync();
-	Task<IDictionary<Guid, DateTime>> GetLastestComicReviewDateOfAllComicsAsync();
->>>>>>> Stashed changes
+	Task<IList<ReviewComicEntity>> GetReviewComicsWith_ComicId_ReviewTimeSortByComicId__Descending_ReviewTime__AscendingAsync();
+	Task<IList<ReviewComicEntity>> GetReviewComicsWith_ComicRatingStar_ComicComment_ReviewTime_Username_UserAvatarByComicIdAsync(Guid comicIdentifier);
+	Task<IList<ReviewComicEntity>> GetComicReviewsByUserId(Guid userId);
+	Task<IDictionary<Guid, int>> GetReviewComicCountOfComicsAsync();
+	Task<IDictionary<Guid, DateTime>> GetLastestComicReviewDateOfComicsAsync();
 }
