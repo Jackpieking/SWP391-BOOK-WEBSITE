@@ -5,12 +5,10 @@ using BusinessLogicLayer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Model;
 using AutoMapper;
 using DTO.Outgoing;
 using Npgsql;
 using Microsoft.AspNetCore.Http;
-using System.Net.Http;
 
 namespace MangaManagementAPI.Views.Pages
 {
