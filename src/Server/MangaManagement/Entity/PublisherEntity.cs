@@ -13,5 +13,5 @@ public class PublisherEntity
 
     public UserEntity UserEntity { get; set; }
 
-    public IEnumerable<ComicEntity> ComicEntities { get; set; } = new List<ComicEntity>();
+    public ICollection<ComicEntity> ComicEntities { get; set; } = new List<ComicEntity>();
 }

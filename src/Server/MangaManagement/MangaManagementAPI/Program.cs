@@ -35,6 +35,7 @@ services
     .AddScoped<IUnitOfWork, UnitOfWork>()
     .AddScoped<EntityManagementService>()
     .AddScoped<UserManagementService>()
+    .AddScoped<PublisherManagementService>()
     .AddScoped<TruyenQQPageHandlerService>()
     .AddScoped<ApiCallingService>()
     .ConfigureOptions<DatabaseOptionUpdates>();
@@ -43,6 +44,7 @@ services
 services
     .AddAutoMapper(
                    typeof(UserInfoEntityAndUserInfoModelProfile),
+                   typeof(ComicModelToPublisherComicOutDto),
                    typeof(TransactionHistoryEntityAndTransactionHistoryModelProfile),
                    typeof(ReviewComicEntityAndReviewComicModelProfile),
                    typeof(ReviewChapterEntityAndReviewChapterModelProfile),

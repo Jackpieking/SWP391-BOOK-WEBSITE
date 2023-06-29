@@ -12,7 +12,12 @@ namespace Mapper.ModelAndDto
     {
         public PublisherModelToGetPublisherDto()
         {
-            CreateMap<PublisherModel, GetPublisherAction_Out_Dto>();
+            CreateMap<PublisherModel, GetPublisherAction_Out_Dto>()
+                .ForMember(destinationMember: destination => destination.ComicDto, 
+                options =>
+                {
+                    options.MapFrom(mapExpression: source => source.ComicModels);
+                });
         }
     }
 }

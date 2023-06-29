@@ -15,6 +15,10 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
     {
     }
 
+    /// <summary>
+    /// Get basic infos of a user
+    /// </summary>
+    /// <returns>Task<IList<UserEntity>></returns>
     public async Task<IList<UserEntity>> GetAllUserAsync()
     {
         return await _dbSet
@@ -33,6 +37,11 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Get Basic infos of a user by userId
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns>Task<UserEntity></returns>
     public async Task<UserEntity> GetUserDetailsById(Guid userId)
     {
         return await _dbSet
@@ -52,6 +61,10 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
             .FirstOrDefaultAsync();
     }
 
+    /// <summary>
+    /// Delete user by userId
+    /// </summary>
+    /// <param name="userId"></param>
     public async Task DeleteUserByIdAsync(Guid userId)
     {
         UserEntity userNeedToDelete = await GetUserDetailsById(userId);
@@ -61,6 +74,12 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
         }
     }
 
+
+    /// <summary>
+    /// Admin Update basic infos of a user by take an Enity as arg
+    /// </summary>
+    /// <param name="user"></param>
+    /// <exception cref="Exception"></exception>
     public async Task UpdateUserAsync(UserEntity user)
     {
         var existingUser = await _dbSet.FindAsync(user.UserIdentifier);
@@ -77,5 +96,5 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
             throw new Exception("User not found."); // Or handle the error appropriately
         }
     }
-    //make func dedicate for update user -> service to save to db
+
 }

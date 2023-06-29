@@ -242,6 +242,6 @@ namespace BusinessLogicLayer.Services
             _logger.LogWarning(message: "[{DateTime.Now}]: Start Update User", args: DateTime.Now);
         }
 
-
+    
     }
 }

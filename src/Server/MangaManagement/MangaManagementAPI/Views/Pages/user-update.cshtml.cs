@@ -25,7 +25,7 @@ namespace MangaManagementAPI.Views.Pages
             _logger = logger;
         }
 
-        public GetAllUserAction_Out_Dto User { get; set; }
+        public new GetAllUserAction_Out_Dto User { get; set; }
 
         public async Task<IActionResult> OnGetGetInfo([FromRoute] Guid userId)
         {
@@ -35,7 +35,7 @@ namespace MangaManagementAPI.Views.Pages
                 _userManagementService
                 .GetUserDetailsByIdAsync(userId);
 
-            User = _mapper.Map<GetAllUserAction_Out_Dto>(userNeedToUpdate);
+            User = _mapper.Map<GetAllUserAction_Out_Dto>(source: userNeedToUpdate);
 
             _logger.LogCritical(message: "Start Transaction To Show User Prepare For Update !!");
 
@@ -64,16 +64,14 @@ namespace MangaManagementAPI.Views.Pages
                     UserBirthday = userBirthday
                 };
 
-
-
                 // Update the user in the database
                 await _userManagementService.UpdateUserAsync(_mapper.Map<UserModel>(updatedUser));
 
                 _logger.LogCritical(message: "Finish Transaction To Update User !!");
 
-                return RedirectToPage("user-details");
+                return RedirectToPage(pageName: "user-details");
             }
-            return RedirectToPage("user-details");
+            return RedirectToPage(pageName: "404");
 
         }
     }

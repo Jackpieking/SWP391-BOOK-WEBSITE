@@ -28,9 +28,15 @@
                         }
                     }
                     <p><strong>Gender:</strong> @result</p>
-
-                    <a asp-page="user-details" asp-route-userId="@user.UserBasicInfo.UserIdentifier" asp-page-handler="deleteuser" class="btn btn-danger">Delete User</a>
-                    <a asp-page="user-update" asp-route-userId="@user.UserBasicInfo.UserIdentifier" asp-page-handler="getinfo" class="btn btn-primary">Update User</a>
+                    @if (@user.UserBasicInfo.PublisherDto != null)
+                    {
+                        <a asp-page="publisher-all-comic" asp-route-publisherId="@user.UserBasicInfo.PublisherDto.PublisherIdentifier"
+                            asp-page-handler="getpublishercomic" class="btn btn-secondary">Publisher's All Comic</a>
+                    }
+                    <a asp-page="user-details" asp-route-userId="@user.UserBasicInfo.UserIdentifier"
+                        asp-page-handler="deleteuser" class="btn btn-danger">Delete User</a>
+                    <a asp-page="user-update" asp-route-userId="@user.UserBasicInfo.UserIdentifier"
+                        asp-page-handler="getinfo" class="btn btn-primary">Update User</a>
                 </div>
                 <div class="col-md-6">
                     <p><strong>Email:</strong> @user.UserBasicInfo.UserEmail</p>
@@ -39,6 +45,35 @@
                 </div>
             </div>
             <hr>
+
+            @* {
+            <h6 class="m-2 font-weight-bold text-secondary"><strong>Publisher's Identity: </strong>
+            @user.UserBasicInfo.PublisherDto.PublisherIdentifier</h6>
+            <h6 class="m-2 font-weight-bold text-secondary"><strong>Publisher's Description: </strong>
+            @user.UserBasicInfo.PublisherDto.PublisherDescription</h6>
+            <h5 class="m-2 font-weight-bold text-primary">Publisher's Comic</h5>
+            <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+            <th>Comic Name</th>
+            <th>Comic Description</th>
+            <th>Comic Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var comic in @user.UserBasicInfo.PublisherDto.ComicDto)
+            {
+            <tr>
+            <td>@comic.ComicName</td>
+            <td>@comic.ComicDescription</td>
+            <td>@comic.ComicStatus</td>
+            </tr>
+            }
+            </tbody>
+            </table>
+            </div> *@
+
 
             <h5 class="m-2 font-weight-bold text-primary">Buying Histories</h5>
             @if (@user.BuyingHistorieOutDto.Count == 0)

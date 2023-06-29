@@ -14,6 +14,32 @@ public class PublisherRepository : GenericRepository<PublisherEntity>, IPublishe
     {
     }
 
+    /// <summary>
+    /// Find all publisher basic infos and "comic" that published by publisher id
+    /// </summary>
+    /// <param name="publisherId"></param>
+    /// <returns>Task<IList<PublisherEntity>></returns>
+    public async Task<PublisherEntity> GetAllPublisherComicsByPublisherId(Guid publisherId)
+    {
+        return await _dbSet
+            .Where(predicate: publisher
+                => publisher.PublisherIdentifier.Equals(publisherId))
+            .Select(publisher => new PublisherEntity
+            {
+                PublisherIdentifier = publisher.PublisherIdentifier,
+                PublisherDescription = publisher.PublisherDescription,
+                ComicEntities = publisher
+                    .ComicEntities
+                    .Select(comic => new ComicEntity
+                    {
+                        ComicName = comic.ComicName,
+                        ComicDescription = comic.ComicDescription,
+                        ComicStatus = comic.ComicStatus
+                    })
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
+    }
 
     /// <summary>
     /// Get Publisher Id and Publisher descrition of a specific user
@@ -23,7 +49,7 @@ public class PublisherRepository : GenericRepository<PublisherEntity>, IPublishe
     public async Task<PublisherEntity> GetPublisherInfoByUserIdAsync(Guid userId)
     {
         return await _dbSet
-            .Where(predicate: publisherEntity 
+            .Where(predicate: publisherEntity
                 => publisherEntity.UserIdentifier.Equals(userId))
             .Select(selector: publisherEntity => new PublisherEntity
             {
@@ -32,7 +58,6 @@ public class PublisherRepository : GenericRepository<PublisherEntity>, IPublishe
             })
             .FirstOrDefaultAsync();
     }
-
 
     /// <summary>
     /// Select from "publisher" table with these fields:

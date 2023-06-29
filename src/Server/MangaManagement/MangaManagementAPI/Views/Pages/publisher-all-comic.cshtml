@@ -1,0 +1,33 @@
+@page "/admin/users-management/publisher/{publisherId:guid?}/all-comic/"
+@model MangaManagementAPI.Views.Pages.PublisherAllComicModel
+@{
+    var publisher = @Model.PublisherDto;
+    ViewData["Title"] = $"{publisher.PublisherIdentifier}'s All Comic";
+}
+<div class="container-fluid">
+
+    <h5 class="m-2 font-weight-bold text-primary"><strong>Publisher's Description: </strong>
+        @publisher.PublisherDescription</h5>
+    <h6 class="m-2 font-weight-bold text-secondary">Publisher's Comic</h6>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Comic Name</th>
+                    <th>Comic Description</th>
+                    <th>Comic Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comic in @publisher.ComicDto)
+                {
+                    <tr>
+                        <td>@comic.ComicName</td>
+                        <td>@comic.ComicDescription</td>
+                        <td>@comic.ComicStatus</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
