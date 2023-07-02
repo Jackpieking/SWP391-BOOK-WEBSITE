@@ -1,5 +1,4 @@
 using System;
-using Helper;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Services;
 using DTO.Outgoing;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Helper.DefinedEnums;
 using AutoMapper;
-using Entity;
 using Model;
 
 namespace MangaManagementAPI.Views.Pages
@@ -34,6 +32,11 @@ namespace MangaManagementAPI.Views.Pages
             var userNeedToUpdate = await
                 _userManagementService
                 .GetUserDetailsByIdAsync(userId);
+
+            if (userNeedToUpdate == null)
+            {
+                return RedirectToPage(pageName: "404");
+            }
 
             User = _mapper.Map<GetAllUserAction_Out_Dto>(source: userNeedToUpdate);
 

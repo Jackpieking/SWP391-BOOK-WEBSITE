@@ -38,6 +38,11 @@ namespace MangaManagementAPI.Views.Pages
                              _publisherManagementService
                             .GetPublisherComicByPublisherId(publisherId);
 
+                if (publisher == null)
+                {
+                    return RedirectToPage(pageName: "404");
+                }
+
                 GetPublisherAction_Out_Dto publisherDto = new()
                 {
                     ComicDto = _mapper.Map<ICollection<PublisherComicOutDto>>(publisher.ComicModels),

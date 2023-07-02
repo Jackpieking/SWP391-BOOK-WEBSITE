@@ -37,6 +37,11 @@ namespace MangaManagementAPI.Views.Pages
                 var userModel = await _userManagementService
                 .GetUserDetailsByIdAsync(userId);
 
+                if (userModel == null)
+                {
+                    return RedirectToPage(pageName: "404");
+                }
+
                 var readingHistoryModels = await _userManagementService
                 .GetAllReadingHistoryOfAUserByUserIdAsync(userId);
 
