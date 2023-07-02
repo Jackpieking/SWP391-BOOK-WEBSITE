@@ -67,7 +67,7 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
     /// <param name="userId"></param>
     public async Task DeleteUserByIdAsync(Guid userId)
     {
-        UserEntity userNeedToDelete = await GetUserDetailsById(userId);
+        var userNeedToDelete = await _dbSet.FindAsync(userId);
         if (userNeedToDelete != null)
         {
             _dbSet.Remove(userNeedToDelete);
@@ -96,5 +96,4 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
             throw new Exception("User not found."); // Or handle the error appropriately
         }
     }
-
 }

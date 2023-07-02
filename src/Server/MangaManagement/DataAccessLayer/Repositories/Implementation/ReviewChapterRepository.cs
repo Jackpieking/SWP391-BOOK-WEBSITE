@@ -15,6 +15,12 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 	{
 	}
 
+	public async Task DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(Guid userId, Guid chapterId)
+	{
+		var chapterReviewNeedToDelete = await _dbSet.FindAsync(userId, chapterId);
+		_dbSet.Remove(chapterReviewNeedToDelete);
+	}
+
 	public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier)
 	{
 		return await _dbSet
@@ -46,15 +52,15 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
 					ChapterNumber = reviewChapter.ChapterEntity.ChapterNumber,
 					ComicEntity = new ComicEntity()
 					{
-						ComicName = reviewChapter.ChapterEntity.ComicEntity.ComicName
+						ComicName = reviewChapter.ChapterEntity.ComicEntity.ComicName,
 					}
 				},
 				ChapterComment = reviewChapter.ChapterComment,
 				ChapterRatingStar = reviewChapter.ChapterRatingStar,
-				ReviewTime = reviewChapter.ReviewTime
+				ReviewTime = reviewChapter.ReviewTime,
+				ChapterIdentifier = reviewChapter.ChapterIdentifier
 			})
 			.OrderBy(reviewChaper => reviewChaper.ReviewTime)
 			.ToListAsync();
 	}
-
 }

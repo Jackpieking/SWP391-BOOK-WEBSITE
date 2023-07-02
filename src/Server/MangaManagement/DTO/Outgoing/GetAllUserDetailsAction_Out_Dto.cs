@@ -8,7 +8,7 @@ namespace DTO.Outgoing
 {
     public class GetAllUserDetailsAction_Out_Dto
     {
-        public GetAllUserAction_Out_Dto UserBasicInfo {get; set;}
+        public GetAllUserAction_Out_Dto UserBasicInfo { get; set; }
 
         public ICollection<TransactionsHistoryDto> TransactionHistoryOutDto { get; set; } = new List<TransactionsHistoryDto>();
 
@@ -62,6 +62,7 @@ namespace DTO.Outgoing
 
         public class ReviewChapterDtoForUser
         {
+            public Guid ChapterIdentifier { get; set; }
             public string ComicName { get; set; }
             public string ChapterNumber { get; set; }
             public short ChapterRatingStar { get; set; }
@@ -71,6 +72,7 @@ namespace DTO.Outgoing
 
         public class ReviewComicDtoForUser
         {
+            public Guid ComicIdentifier { get; set; }
             public short ComicRatingStar { get; set; }
             public string ComicComment { get; set; }
             public DateTime ReviewTime { get; set; }

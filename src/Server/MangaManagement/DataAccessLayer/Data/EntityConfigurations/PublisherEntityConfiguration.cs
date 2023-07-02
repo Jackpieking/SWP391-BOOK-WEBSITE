@@ -47,6 +47,6 @@ public class PublisherEntityConfiguration : IEntityTypeConfiguration<PublisherEn
             .HasMany(navigationExpression: publisher => publisher.ComicEntities)
             .WithOne(navigationExpression: comic => comic.PublisherEntity)
             .HasForeignKey(foreignKeyExpression: comic => comic.PublisherIdentifier)
-            .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
+            .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
     }
 }

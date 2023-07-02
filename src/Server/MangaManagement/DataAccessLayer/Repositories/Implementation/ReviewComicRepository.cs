@@ -59,9 +59,16 @@ public class ReviewComicRepository : GenericRepository<ReviewComicEntity>, IRevi
                 },
                 ComicComment = reviewComic.ComicComment,
                 ComicRatingStar = reviewComic.ComicRatingStar,
-                ReviewTime = reviewComic.ReviewTime
+                ReviewTime = reviewComic.ReviewTime,
+                ComicIdentifier = reviewComic.ComicIdentifier
             })
             .ToListAsync();
+    }
+
+    public async Task DeleteReviewedOnComic_OfAUser_ByUserIdAsync(Guid userId, Guid comicId)
+    {
+        ReviewComicEntity comicReviewNeedToDelete = await _dbSet.FindAsync(userId, comicId);
+        _dbSet.Remove(comicReviewNeedToDelete);
     }
 
 }

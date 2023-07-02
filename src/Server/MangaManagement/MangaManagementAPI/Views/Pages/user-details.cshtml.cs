@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using static DTO.Outgoing.GetPublisherAction_Out_Dto;
 
 namespace MangaManagementAPI.Views.Pages
 {
@@ -18,17 +17,14 @@ namespace MangaManagementAPI.Views.Pages
     {
         private readonly ILogger<UserDetailsModel> _logger;
         private readonly UserManagementService _userManagementService;
-        private readonly PublisherManagementService _publisherManagementService;
         private readonly IMapper _mapper;
 
         public GetAllUserDetailsAction_Out_Dto UserDetails { get; set; }
-        public GetPublisherAction_Out_Dto PublisherDto { get; set; }
 
-        public UserDetailsModel(ILogger<UserDetailsModel> logger, UserManagementService userManagementService, PublisherManagementService publisherManagementService, IMapper mapper)
+        public UserDetailsModel(ILogger<UserDetailsModel> logger, UserManagementService userManagementService, IMapper mapper)
         {
             _logger = logger;
             _userManagementService = userManagementService;
-            _publisherManagementService = publisherManagementService;
             _mapper = mapper;
         }
 
@@ -122,5 +118,58 @@ namespace MangaManagementAPI.Views.Pages
             }
         }
 
+        public async Task<IActionResult> OnGetComicDelete([FromRoute] Guid userId, [FromQuery] Guid comicId)
+        {
+            _logger.LogCritical(message: "Start Transaction To Delete Reviewed On Comic Of A User !!");
+
+            try
+            {
+                await _userManagementService.DeleteUserReviewedComicByIdAsync(userId, comicId);
+                return RedirectToPage(pageName: "user-details", pageHandler: "UserDetails", routeValues: new { userId });
+            }
+            catch (TaskCanceledException TC_e)
+            {
+                _logger.LogError("[{DateTime.Now}] - Error: {TC_2.Message}", DateTime.Now, TC_e.Message);
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+            catch (HttpRequestException HR_e)
+            {
+                _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+            finally
+            {
+                _logger.LogCritical(message: "Finished Transaction To Delete Reviewed On Comic Of A User !!");
+            }
+        }
+
+        public async Task<IActionResult> OnGetChapterDelete([FromRoute] Guid userId, [FromQuery] Guid chapterId)
+        {
+            _logger.LogCritical(message: "Start Transaction To Delete Reviewed On Chapter Of A User !!");
+
+            try
+            {
+                await _userManagementService.DeleteUserReviewedChapterByIdAsync(userId, chapterId);
+                return RedirectToPage(pageName: "user-details", pageHandler: "UserDetails", routeValues: new { userId });
+            }
+            catch (TaskCanceledException TC_e)
+            {
+                _logger.LogError("[{DateTime.Now}] - Error: {TC_2.Message}", DateTime.Now, TC_e.Message);
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+            catch (HttpRequestException HR_e)
+            {
+                _logger.LogError("[{DateTime.Now}] - Error: {HR_e.Message}", DateTime.Now, HR_e.Message);
+
+                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+            }
+            finally
+            {
+                _logger.LogCritical(message: "Finished Transaction To Delete Reviewed On Chapter Of A User !!");
+            }
+        }
     }
 }

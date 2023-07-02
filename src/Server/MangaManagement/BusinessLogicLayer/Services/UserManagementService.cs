@@ -183,14 +183,14 @@ namespace BusinessLogicLayer.Services
         /// <returns>Task<ICollection<ReadingHistoryModel>></returns>
         public async Task<ICollection<ReadingHistoryModel>> GetAllReadingHistoryOfAUserByUserIdAsync(Guid userId)
         {
-            _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Saving Table", args: DateTime.Now);
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Reading History Table", args: DateTime.Now);
 
             var readingHistoryEntities = await
                 _unitOfWork
                 .ReadingHistoryRepository
                 .GetAllReadingHistoresOfAUserByUserId(userId);
 
-            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Saving Table", args: DateTime.Now);
+            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Reading History Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ReadingHistoryModel>>(readingHistoryEntities);
         }
 
@@ -213,6 +213,11 @@ namespace BusinessLogicLayer.Services
             return _mapper.Map<ICollection<ComicLikeModel>>(comicLikeEntities);
         }
 
+        /// <summary>
+        /// Delete user by userId and save changes into the database
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Task</returns>
         public async Task DeleteUserByIdAsync(Guid userId)
         {
             _logger.LogWarning(message: "[{DateTime.Now}]: Start Delete User", args: DateTime.Now);
@@ -227,7 +232,12 @@ namespace BusinessLogicLayer.Services
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Delete User", args: DateTime.Now);
         }
 
-        
+
+        /// <summary>
+        /// Udpate basic infos of a user by admin by user Id
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Task</returns>
         public async Task UpdateUserAsync(UserModel user)
         {
             _logger.LogWarning(message: "[{DateTime.Now}]: Start Update User", args: DateTime.Now);
@@ -242,6 +252,40 @@ namespace BusinessLogicLayer.Services
             _logger.LogWarning(message: "[{DateTime.Now}]: Start Update User", args: DateTime.Now);
         }
 
-    
+
+        /// <summary>
+        /// Delete Reviewed comic of a user by userId and comicId, and save changes into the database
+        /// (If the reviewed content is not approriate)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="comicId"></param>
+        /// <returns>Task</returns>
+        public async Task DeleteUserReviewedComicByIdAsync(Guid userId, Guid comicId)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Delete Reviewed On Comic Of A User", args: DateTime.Now);
+
+            await _unitOfWork
+                .ReviewComicRepository
+                .DeleteReviewedOnComic_OfAUser_ByUserIdAsync(userId, comicId);
+
+            await _unitOfWork
+                .SaveAsync();
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Delete Reviewed On Comic Of A User", args: DateTime.Now);
+        }
+
+        public async Task DeleteUserReviewedChapterByIdAsync(Guid userId, Guid chapterId)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Delete Reviewed On Chapter Of A User", args: DateTime.Now);
+
+            await _unitOfWork
+                .ReviewChapterRepository
+                .DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(userId, chapterId);
+            
+            await _unitOfWork
+                .SaveAsync();
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Delete Reviewed On Chapter Of A User", args: DateTime.Now);
+        }
     }
 }

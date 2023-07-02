@@ -25,7 +25,7 @@ public class ComicSavingRepository : GenericRepository<ComicSavingEntity>, IComi
                 {
                     ComicName = comicSaving.ComicEntity.ComicName
                 },
-                SavingTime = comicSaving.SavingTime
+                SavingTime = comicSaving.SavingTime,
             })
             .ToListAsync();
     }

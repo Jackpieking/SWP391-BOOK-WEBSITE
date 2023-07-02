@@ -30,7 +30,8 @@
                     <p><strong>Gender:</strong> @result</p>
                     @if (@user.UserBasicInfo.PublisherDto != null)
                     {
-                        <a asp-page="publisher-all-comic" asp-route-publisherId="@user.UserBasicInfo.PublisherDto.PublisherIdentifier"
+                        <a asp-page="publisher-all-comic"
+                            asp-route-publisherId="@user.UserBasicInfo.PublisherDto.PublisherIdentifier"
                             asp-page-handler="getpublishercomic" class="btn btn-secondary">Publisher's All Comic</a>
                     }
                     <a asp-page="user-details" asp-route-userId="@user.UserBasicInfo.UserIdentifier"
@@ -45,35 +46,6 @@
                 </div>
             </div>
             <hr>
-
-            @* {
-            <h6 class="m-2 font-weight-bold text-secondary"><strong>Publisher's Identity: </strong>
-            @user.UserBasicInfo.PublisherDto.PublisherIdentifier</h6>
-            <h6 class="m-2 font-weight-bold text-secondary"><strong>Publisher's Description: </strong>
-            @user.UserBasicInfo.PublisherDto.PublisherDescription</h6>
-            <h5 class="m-2 font-weight-bold text-primary">Publisher's Comic</h5>
-            <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-            <tr>
-            <th>Comic Name</th>
-            <th>Comic Description</th>
-            <th>Comic Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var comic in @user.UserBasicInfo.PublisherDto.ComicDto)
-            {
-            <tr>
-            <td>@comic.ComicName</td>
-            <td>@comic.ComicDescription</td>
-            <td>@comic.ComicStatus</td>
-            </tr>
-            }
-            </tbody>
-            </table>
-            </div> *@
-
 
             <h5 class="m-2 font-weight-bold text-primary">Buying Histories</h5>
             @if (@user.BuyingHistorieOutDto.Count == 0)
@@ -153,6 +125,7 @@
                                 <th>Comment</th>
                                 <th>Rating Star</th>
                                 <th>Review Time</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -163,6 +136,13 @@
                                     <td>@comic.ComicComment</td>
                                     <td>@comic.ComicRatingStar</td>
                                     <td>@comic.ReviewTime</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a style="color: red;" asp-page="user-details"
+                                            asp-route-userId="@user.UserBasicInfo.UserIdentifier"
+                                            asp-route-comicId="@comic.ComicIdentifier" asp-page-handler="ComicDelete">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -185,6 +165,7 @@
                                 <th>Chapter Comment</th>
                                 <th>Rating Star</th>
                                 <th>Reviewed Time</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,6 +177,13 @@
                                     <td>@chapter.ChapterComment</td>
                                     <td>@chapter.ChapterRatingStar</td>
                                     <td>@chapter.ReviewTime</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a style="color: red;" asp-page="user-details"
+                                            asp-route-userId="@user.UserBasicInfo.UserIdentifier"
+                                            asp-route-chapterId="@chapter.ChapterIdentifier" asp-page-handler="ChapterDelete">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
