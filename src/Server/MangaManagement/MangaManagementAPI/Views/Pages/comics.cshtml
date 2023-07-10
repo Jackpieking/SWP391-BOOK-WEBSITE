@@ -1,4 +1,4 @@
-@page "/comics"
+﻿@page "/comics"
 @using MangaManagementAPI.Views.Pages;
 @model ComicsModel;
 @{
@@ -9,11 +9,6 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-    <p class="mb-4">
-        DataTables is a third party plugin that is used to generate the demo table below.
-        For more information about DataTables, please visit the <a target="_blank"
-                                                                   href="https://datatables.net">official DataTables documentation</a>.
-    </p>
 
     <!-- Comics Table -->
     <div class="card shadow mb-4">
@@ -22,7 +17,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="comicTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -65,13 +60,15 @@
                                     <td>@comic.PublisherIdentifier</td>
                                     <td>@comic.ComicStatus</td>
                                     <td>
-                                        <a href="#" class="btn btn-info btn-circle">
+                                        <a asp-controller="Comics" asp-action="DetailsComic" asp-route-id="@comic.ComicIdentifier" class="btn btn-info btn-circle mx-2">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
-                                        <a href="#" class="btn btn-warning btn-circle">
+                                        <br>
+                                        <a asp-controller="Comics" asp-action="EditComic" asp-route-id="@comic.ComicIdentifier" class="btn btn-warning btn-circle mx-2">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn btn-danger btn-circle">
+                                        <br>
+                                        <a action="DeleteComic" data-id="@comic.ComicIdentifier" class="btn btn-danger btn-circle mx-2" data-toggle="modal" data-target="#deleteModal">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -92,7 +89,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="catTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -123,13 +120,15 @@
                                     <td>@category.CategoryName</td>
                                     <td>@category.CategoryDescription</td>
                                     <td>
-                                        <a href="#" class="btn btn-info btn-circle">
+                                        <a asp-controller="Category" asp-action="DetailsCat" asp-route-id="@category.CategoryIdentifier" class="btn btn-info btn-circle">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
-                                        <a href="#" class="btn btn-warning btn-circle">
+                                        <br>
+                                        <a asp-controller="Category" asp-action="EditCategory" asp-route-id="@category.CategoryIdentifier" class="btn btn-warning btn-circle">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn btn-danger btn-circle">
+                                        <br>
+                                        <a action="DeleteCat" data-id="@category.CategoryIdentifier" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#deleteModal">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -142,4 +141,8 @@
         </div>
     </div>
     <!-- Categories Table End -->
+
+    <!-- Delete Modal -->
+    @await Html.PartialAsync("_DeleteModal")
+
 </div>

@@ -10,7 +10,7 @@ public class BuyingHistoryEntity
 
     public DateTime BuyingDate { get; set; }
 
-    public UserEntity UserEntity { get; set; }
+    public virtual UserEntity UserEntity { get; set; }
 
-    public ChapterEntity ChapterEntity { get; set; }
+    public virtual ChapterEntity ChapterEntity { get; set; }
 }

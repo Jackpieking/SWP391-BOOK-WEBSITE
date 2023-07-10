@@ -14,5 +14,5 @@ public class TransactionsHistoryEntity
 
     public Guid UserIdentifier { get; set; }
 
-    public UserEntity UserEntity { get; set; }
+    public virtual UserEntity UserEntity { get; set; }
 }

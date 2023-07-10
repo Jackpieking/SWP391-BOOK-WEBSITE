@@ -11,5 +11,5 @@ public class CategoryEntity
 
     public string CategoryDescription { get; set; }
 
-    public IEnumerable<ComicCategoryEntity> ComicCategoryEntities { get; set; } = new List<ComicCategoryEntity>();
+    public virtual IEnumerable<ComicCategoryEntity> ComicCategoryEntities { get; set; } = new List<ComicCategoryEntity>();
 }

@@ -12,5 +12,5 @@ public class ChapterImageEntity
 
     public Guid ChapterIdentifier { get; set; }
 
-    public ChapterEntity ChapterEntity { get; set; }
+    public virtual ChapterEntity ChapterEntity { get; set; }
 }

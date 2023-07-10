@@ -1,0 +1,30 @@
+﻿<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Nhấn vào "Xóa" phía dưới nếu bạn đã sẵn sàng để xóa.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                <a class="btn btn-danger" id="modalDeleteButton">Xóa</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Đưa id model từ button đến modal delete
+    $("#deleteModal").on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button đã kích hoạt phương thức
+        var id = button.data('id'); // Trích xuất ID từ thuộc tính data-id
+        var aspActionValue = button.attr('action'); //button.attr('asp-action'); // Trích xuất action từ thuộc tính asp-action
+        var modal = $(this);
+        var url = '@Url.Action("aspActionValue", new { id = "" })'.replace('aspActionValue', aspActionValue) + "/" + id;
+        modal.find('#modalDeleteButton').attr('href', url);
+    });
+</script>

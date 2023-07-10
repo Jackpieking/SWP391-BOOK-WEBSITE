@@ -1,0 +1,101 @@
+﻿@using Model
+@{
+    this.ViewData["Title"] = "Admin - Comic Details";
+    ComicModel comic = ViewData["comic"] as ComicModel;
+    //ICollection<CategoryModel> categories = ViewData["categories"] as List<CategoryModel>;
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary">@comic.ComicName</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Avatar:</strong> @comic.ComicAvatar</p>
+                    <p><strong>Description:</strong> @comic.ComicDescription</p>
+                    <p><strong>Published Date:</strong> @comic.ComicPublishedDate</p>
+                </div>
+                <div class="col-md-6">
+                    <a><strong>Published:</strong> @comic.PublisherModel.UserModel.UserFullName</a>
+                    <p>
+                        @*<strong>Categories:</strong>
+                        @foreach (var category in categories)
+                        {
+                            <button type="button">@category.CategoryName</button>
+                        }*@
+                    </p>
+                    <p><strong>Status:</strong> @comic.ComicStatus</p>
+                </div>
+            </div>
+            <hr>
+
+            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+            <!-- Chapters Table -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Chapters Table</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="chapTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Number</th>
+                                    <th>Price</th>
+                                    <th>Date</th>
+                                    <th>Modified</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Number</th>
+                                    <th>Price</th>
+                                    <th>Date</th>
+                                    <th>Modified</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @if (comic.ChapterModels == null)
+                                {
+                                    <tr class="error">Error</tr>
+                                }
+                                else
+                                {
+                                    foreach (var chapter in comic.ChapterModels)
+                                    {
+                                        <tr>
+                                            <td>@chapter.ChapterIdentifier</td>
+                                            <td>@chapter.ChapterNumber</td>
+                                            <td>@chapter.ChapterUnlockPrice</td>
+                                            <td>@chapter.AddedDate</td>
+                                            <td>
+                                                <a asp-controller="Category" asp-action="DetailsCat" asp-route-id="@chapter.ChapterIdentifier" class="btn btn-info btn-circle">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                                <a asp-controller="Category" asp-action="EditCategory" asp-route-id="@chapter.ChapterIdentifier" class="btn btn-warning btn-circle">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a action="DeleteChap" data-id="@chapter.ChapterIdentifier" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#deleteModal">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Modal -->
+            @await Html.PartialAsync("_DeleteModal")
+
+        </div>
+    </div>
+</div>

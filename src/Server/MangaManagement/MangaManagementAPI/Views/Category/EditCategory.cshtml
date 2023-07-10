@@ -1,0 +1,68 @@
+﻿@using Model
+@model CategoryModel
+@{
+    this.ViewData["Title"] = "Admin - Category Edit";
+}
+
+<div class="container-fluid">
+
+    <!-- Edit Form -->
+    <div class="card shadow mb-4 row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="card-header py-3">
+                <h2>Category Form<small>    Edit</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse" id="collapseExample">
+                <br/>
+                <form class="form-check col-form-label" asp-controller="Category" asp-action="UpdateCategory" method="post">
+                    <!-- Id -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="catId">
+                            Id
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="@Model.CategoryIdentifier" name="catId" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="catName">
+                            Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="@Model.CategoryName" name="catName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="catDescription">
+                            Description
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <textarea asp-for="@Model.CategoryDescription" name="catDescription" class="resizable_textarea form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button class="btn btn-primary" type="button">Cancel</button>
+                            <button class="btn btn-primary" type="reset">Reset</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Edit Form -->
+
+</div>

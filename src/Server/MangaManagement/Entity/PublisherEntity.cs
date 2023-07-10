@@ -11,7 +11,7 @@ public class PublisherEntity
 
     public string PublisherDescription { get; set; }
 
-    public UserEntity UserEntity { get; set; }
+    public virtual UserEntity UserEntity { get; set; }
 
-    public IEnumerable<ComicEntity> ComicEntities { get; set; } = new List<ComicEntity>();
+    public virtual IEnumerable<ComicEntity> ComicEntities { get; set; } = new List<ComicEntity>();
 }

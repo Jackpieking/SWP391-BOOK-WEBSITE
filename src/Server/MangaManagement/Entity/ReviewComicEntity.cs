@@ -14,7 +14,7 @@ public class ReviewComicEntity
 
     public DateTime ReviewTime { get; set; }
 
-    public UserEntity UserEntity { get; set; }
+    public virtual UserEntity UserEntity { get; set; }
 
-    public ComicEntity ComicEntity { get; set; }
+    public virtual ComicEntity ComicEntity { get; set; }
 }

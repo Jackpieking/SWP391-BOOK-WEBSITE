@@ -121,4 +121,7 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
             .ThenByDescending(keySelector: chapterEntity => chapterEntity.ChapterNumber)
             .ToListAsync();
     }
+
+    public async Task<ChapterEntity> GetChapterByIdAsync(Guid id) =>
+        await _dbSet.FirstOrDefaultAsync(c => c.ChapterIdentifier == id);
 }

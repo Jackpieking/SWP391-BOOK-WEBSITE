@@ -8,7 +8,7 @@ public class ComicCategoryEntity
 
     public Guid ComicIdentifier { get; set; }
 
-    public CategoryEntity CategoryEntity { get; set; }
+    public virtual CategoryEntity CategoryEntity { get; set; }
 
-    public ComicEntity ComicEntity { get; set; }
+    public virtual ComicEntity ComicEntity { get; set; }
 }

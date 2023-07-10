@@ -87,7 +87,9 @@ services
             .EnableDetailedErrors(detailedErrorsEnabled: databaseOptions.EnableDetailedErrors)
             .EnableServiceProviderCaching(cacheServiceProvider: databaseOptions.EnableServiceProviderCaching)
             .EnableSensitiveDataLogging(sensitiveDataLoggingEnabled: databaseOptions.EnableSensitiveDataLogging)
-            .EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyCheck);
+            .EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyCheck)
+            //.UseLazyLoadingProxies() // Lazy load
+            ;
     });
 
 //Httpclient
@@ -102,6 +104,7 @@ services
 //controller
 services
     .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
+services.AddControllersWithViews();
 
 //RazerPage
 services
@@ -122,6 +125,11 @@ app
     .UseCors();
 
 app.MapControllers();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "comics/{controller}/{action}/{id?}"
+);
 
 app.MapRazorPages();
 

@@ -18,18 +18,26 @@ public class CategoryRepository : GenericRepository<CategoryEntity>, ICategoryRe
     /// <summary>
     ///
     /// </summary>
-    /// <param name="AllCategoryInfor"></param>
+    /// <param name="comicId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<CategoryEntity>> GetAllCategoryNoRelationAsync()
+    public Task<IEnumerable<CategoryEntity>> GetAllCategoryByComicId(Guid comicId)
     {
-        return await _dbSet.Select(category => new CategoryEntity
-        {
-            CategoryIdentifier = category.CategoryIdentifier,
-            CategoryName = category.CategoryName,
-            CategoryDescription = category.CategoryDescription,
-        })
-        .ToListAsync();
+        return null;
     }
+
+    /// <summary>
+    /// Get category entity by Id
+    /// </summary>
+    /// <returns>Task<CategoryEntity></returns>
+    public async Task<CategoryEntity> GetCategoryByIdAsync(Guid catId) =>
+        await _dbSet.FirstOrDefaultAsync(cat => cat.CategoryIdentifier == catId);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<CategoryEntity>> GetAllCategoryNoRelationAsync() => await _dbSet.ToListAsync();
 
     /// <summary>
     ///
@@ -85,5 +93,19 @@ public class CategoryRepository : GenericRepository<CategoryEntity>, ICategoryRe
                 await _dbSet.AddAsync(entity: crawlCategoryEntity);
             }
         }
+    }
+
+    public async Task<Guid> UpdateCategoryAsync(Guid catId, string catName, string catDescription)
+    {
+        var catFound = await _dbSet.FirstOrDefaultAsync(cat => cat.CategoryIdentifier == catId);
+
+        if (catFound == null)
+        {
+            return Guid.Empty;
+        }
+
+        catFound.CategoryName = catName;
+        catFound.CategoryDescription = catDescription ?? "";
+        return catFound.CategoryIdentifier;
     }
 }

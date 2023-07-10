@@ -19,15 +19,15 @@ public class ComicEntity
 
     public string ComicStatus { get; set; }
 
-    public PublisherEntity PublisherEntity { get; set; }
+    public virtual PublisherEntity PublisherEntity { get; set; }
 
-    public IEnumerable<ReviewComicEntity> ReviewComicEntities { get; set; } = new List<ReviewComicEntity>();
+    public virtual IEnumerable<ReviewComicEntity> ReviewComicEntities { get; set; } = new List<ReviewComicEntity>();
 
-    public IEnumerable<ComicSavingEntity> ComicSavingEntities { get; set; } = new List<ComicSavingEntity>();
+    public virtual IEnumerable<ComicSavingEntity> ComicSavingEntities { get; set; } = new List<ComicSavingEntity>();
 
-    public IEnumerable<ChapterEntity> ChapterEntities { get; set; } = new List<ChapterEntity>();
+    public virtual IEnumerable<ChapterEntity> ChapterEntities { get; set; } = new List<ChapterEntity>();
 
-    public IEnumerable<ComicCategoryEntity> ComicCategoryEntities { get; set; } = new List<ComicCategoryEntity>();
+    public virtual IEnumerable<ComicCategoryEntity> ComicCategoryEntities { get; set; } = new List<ComicCategoryEntity>();
 
-    public IEnumerable<ComicLikeEntity> ComicLikeEntities { get; set; } = new List<ComicLikeEntity>();
+    public virtual IEnumerable<ComicLikeEntity> ComicLikeEntities { get; set; } = new List<ComicLikeEntity>();
 }

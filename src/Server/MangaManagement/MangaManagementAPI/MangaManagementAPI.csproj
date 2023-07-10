@@ -30,6 +30,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
   </ItemGroup>
 
@@ -44,14 +45,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="D:\WorkSpace\C#\SWP391-BOOK-WEBSITE\src\Server\MangaManagement\MangaManagementAPI\Controllers\.editorconfig" />
     <None Include="Views\Pages\404.cshtml" />
     <None Include="Views\Pages\blank.cshtml" />
     <None Include="Views\Pages\buttons.cshtml" />
     <None Include="Views\Pages\cards.cshtml" />
     <None Include="Views\Pages\charts.cshtml" />
-    <None Include="Views\Pages\forgot-password.cshtml" />
     <None Include="Views\Pages\login.cshtml" />
-    <None Include="Views\Pages\register.cshtml" />
     <None Include="Views\Pages\tables.cshtml" />
     <None Include="Views\Pages\utilities-animation.cshtml" />
     <None Include="Views\Pages\utilities-border.cshtml" />
@@ -1882,6 +1882,10 @@
     <None Include="wwwroot\vendor\jquery\jquery.slim.js" />
     <None Include="wwwroot\vendor\jquery\jquery.slim.min.js" />
     <None Include="wwwroot\vendor\jquery\jquery.slim.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\WorkSpace\C#\SWP391-BOOK-WEBSITE\src\Server\MangaManagement\MangaManagementAPI\Controllers\.editorconfig" />
   </ItemGroup>
 
 </Project>

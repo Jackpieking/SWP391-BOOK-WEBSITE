@@ -19,21 +19,30 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     ///
     /// </summary>
     /// <returns></returns>
-    public async Task<IEnumerable<ComicEntity>> GetAllComicNoRelationAsync()
+    public async Task<ComicEntity> GetComicByIdAsync(Guid comicId)
     {
-        return await _dbSet
-            .Select(selector: comicEntity => new ComicEntity
-            {
-                ComicIdentifier = comicEntity.ComicIdentifier,
-                ComicName = comicEntity.ComicName,
-                ComicDescription = comicEntity.ComicDescription,
-                ComicAvatar = comicEntity.ComicAvatar,
-                ComicPublishedDate = comicEntity.ComicPublishedDate,
-                PublisherIdentifier = comicEntity.PublisherIdentifier,
-                ComicStatus = comicEntity.ComicStatus
-            })
-            .ToListAsync();
+        var comic = await _dbSet.FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
+        await _dbSet.Entry(comic).Collection(c => c.ChapterEntities).LoadAsync();
+        await _dbSet.Entry(comic).Reference(c => c.PublisherEntity).LoadAsync();
+        await _dbSet.Entry(comic).Collection(c => c.ReviewComicEntities).LoadAsync();
+        var chapter = _dbSet.Select(comic => comic.ChapterEntities);
+        //await _dbSet.
+        return comic;
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ComicEntity> GetComicByIdNoRelationAsync(Guid comicId) =>
+        await _dbSet.FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IEnumerable<ComicEntity>> GetAllComicNoRelationAsync() =>
+        await _dbSet.ToListAsync();
 
     /// <summary>
     ///
@@ -136,5 +145,31 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
         _dbSet.Update(entity: comicEntityIsFound);
 
         return comicEntityIsFound.ComicIdentifier;
+    }
+
+    public async Task<Guid> UpdateComicAsync(Guid comicId, string comicName, string comicDes, string comicPDate, string comicStatus)
+    {
+        var comicFound = await _dbSet
+            .FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
+
+        if (comicFound == null)
+        {
+            return Guid.Empty;
+        }
+
+        comicFound.ComicName = comicName;
+        comicFound.ComicDescription = comicDes;
+        comicFound.ComicPublishedDate = DateOnly.Parse(comicPDate);
+        comicFound.ComicStatus = comicStatus;
+
+        _dbSet.Update(entity: comicFound);
+
+        return comicFound.ComicIdentifier;
+    }
+
+    public Task<IEnumerable<CategoryEntity>> GetCategoriesByComicIdAsync(Guid comicId)
+    {
+        //var categories = _dbSet.
+        throw new NotImplementedException();
     }
 }

@@ -1,0 +1,139 @@
+﻿@using Model
+@model ComicModel
+@{
+    this.ViewData["Title"] = "Admin - Comic Edit";
+
+    List<SelectListItem> Status = new()
+    {
+        new SelectListItem { Value = "Đang Cập Nhật", Text = "Đang Cập Nhật" },
+        new SelectListItem { Value = "Đã Ngưng", Text = "Đã Ngưng" },
+        new SelectListItem { Value = "Đã Hoàn Thành", Text = "Đã Hoàn Thành" }
+    };
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    @*<p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table below.
+    For more information about DataTables, please visit the <a target="_blank"
+    href="https://datatables.net">official DataTables documentation</a>.
+    </p>*@
+
+    @*@Model.ChapterModels.FirstOrDefault().ChapterIdentifier*@
+
+    <!-- Edit Form -->
+    <div class="card shadow mb-4 row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="card-header py-3">
+                <h2>Comic Form<small>   Edit</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse" id="collapseExample">
+                <br />
+                <form class="form-check col-form-label" asp-controller="Comics" asp-action="UpdateComic" method="post">
+                    <!-- Id -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="comicId">
+                            Id
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="@Model.ComicIdentifier" name="comicId" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="comicName">
+                            Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input asp-for="@Model.ComicName" name="comicName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="comicDescription">
+                            Description
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <textarea asp-for="@Model.ComicDescription" name="comicDes" class="resizable_textarea form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Published Date -->
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="comicPublishedDate">
+                            Published Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6">
+                            <input asp-for="@Model.ComicPublishedDate" name="comicPDate" id="datepicker" class="form-control" placeholder="dd-mm-yyyy" required>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="form-group align-items-center">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align">Categories</label>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-primary active">
+                                <input type="checkbox" autocomplete="off" checked> Manga
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="checkbox" autocomplete="off"> Drama
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="checkbox" autocomplete="off" checked> Adventure
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="checkbox" autocomplete="off"> Fantasy
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Publisher -->
+                    <div class="form-group align-items-center">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align">Select Published</label>
+                        <div class="col-md-6 col-sm-6">
+                            <select class="form-control">
+                                <option>Choose option</option>
+                                <option>Mr one</option>
+                                <option>Mr two</option>
+                                <option>Mr three</option>
+                                <option>Mr four</option>
+                                <option>Mr five</option>
+                                <option>Mr six</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Comic Status -->
+                    <div class="form-group item">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align">Select Status</label>
+                        <div class="col-md-6 col-sm-6">
+                            <select class="form-control" name="comicStatus" asp-for="@Model.ComicStatus" asp-items="@Status">
+                                <option value="">Choose option</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6 offset-md-3">
+                            <button class="btn btn-primary" type="button">Cancel</button>
+                            <button class="btn btn-primary" type="reset">Reset</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Edit Form -->
+
+</div>

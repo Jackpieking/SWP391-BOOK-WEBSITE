@@ -3,9 +3,6 @@
     <!-- Sidebar - Brand -->
     <li>
         <a asp-page="/Index" class="sidebar-brand d-flex align-items-center justify-content-center">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i style="margin-right: 0.5em;" class="fas fa-laugh-wink"></i>
-            </div>
             <div class="sidebar-brand-text mx-3">Manganexus<sup>admin</sup></div>
         </a>
     </li>
@@ -21,7 +18,7 @@
         </a>
     </li>
 
-    <!-- Divider -->
+    @*<!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
@@ -62,7 +59,7 @@
                 <a class="collapse-item" asp-page="/Pages/utilities-other">Other</a>
             </div>
         </div>
-    </li>
+    </li>*@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -102,11 +99,22 @@
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item active">
-        <a class="nav-link" asp-page="/Pages/tables">
-            <i class="fas fa-fw fa-table"></i>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables"
+           aria-expanded="true" aria-controls="collapseTables">
+            <i class="fas fa-fw fa-folder"></i>
             <span>Tables</span>
         </a>
+        <div id="collapseTables" class="collapse" aria-labelledby="headingTables" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">User</h6>
+                <a class="collapse-item" asp-page="/Pages/login">Reader</a>
+                <a class="collapse-item" asp-page="/Pages/register">Publisher</a>
+                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">Comics</h6>
+                <a class="collapse-item" asp-page="/Pages/comics">Comics</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->

@@ -8,7 +8,7 @@ public class ComicLikeEntity
 
     public Guid ComicIdentifier { get; set; }
 
-    public UserEntity UserEntity { get; set; }
+    public virtual UserEntity UserEntity { get; set; }
 
-    public ComicEntity ComicEntity { get; set; }
+    public virtual ComicEntity ComicEntity { get; set; }
 }
