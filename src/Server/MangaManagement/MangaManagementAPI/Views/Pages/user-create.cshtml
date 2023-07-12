@@ -18,11 +18,12 @@
             </a>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data" id="createUserForm">
+            <form enctype="multipart/form-data" id="createUserForm" method="dialog">
                 <div class="form-group">
                     <label for="UserAvatar">Avatar</label>
                     <input type="file" class="form-control-file" id="UserAvatar" name="UserAvatar" accept="image/*">
                 </div>
+
                 <div class="form-group">
                     <label for="Username">Username</label>
                     <input
@@ -33,9 +34,8 @@
                         required
                         data-val="true"
                         data-val-required="Please enter the Username"
-                        data-val-length="Length must be between 4 to 8"
-                        data-val-length-max="8"
-                        data-val-length-min="4">
+                        data-val-length="Length must be at least 3 letters !!"
+                        data-val-length-min="3">
                     <span
                         class="text-danger"
                         data-valmsg-for="Username"
@@ -53,8 +53,8 @@
                         required
                         data-val="true"
                         data-val-required="Please enter the password"
-                        data-val-length="Length must be at least 5"
-                        data-val-length-min="5">
+                        data-val-regex="Please enter password with at least three characters, at least one uppercase letter, one lowercase letter and one number !!"
+                        data-val-regex-pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{3,}$">
                     <span
                         class="text-danger"
                         data-valmsg-for="Password"
@@ -68,7 +68,15 @@
                         type="text"
                         class="form-control"
                         id="UserFullName"
-                        name="UserFullName">
+                        name="UserFullName"
+                        data-val="true"
+                        data-val-regex="please enter user fullname with at least 2 letter !!"
+                        data-val-regex-pattern="^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\ ]{2,}$">
+                    <span
+                        class="text-danger"
+                        data-valmsg-for="UserFullName"
+                        data-valmsg-replace="true">
+                    </span>
                 </div>
 
                 <div class="form-group">
@@ -98,7 +106,15 @@
                         type="text"
                         class="form-control"
                         id="UserPhoneNumber"
-                        name="UserPhoneNumber">
+                        name="UserPhoneNumber"
+                        data-val="true"
+                        data-val-regex="Please enter phone number with at least 10 and start with 0 !!"
+                        data-val-regex-pattern="^[0][1-9][0-9][0-9]{7,7}$">
+                    <span
+                        class="text-danger"
+                        data-valmsg-for="UserPhoneNumber"
+                        data-valmsg-replace="true">
+                    </span>
                 </div>
 
                 <div>
@@ -125,6 +141,7 @@
                         id="UserAccountBalance"
                         name="UserAccountBalance"
                         required
+                        min="0"
                         data-val="true"
                         data-val-required="Please enter the user account balance">
                     <span

@@ -36,6 +36,8 @@ public class UserController : Controller
                 return UnprocessableEntity();
             }
 
+            Console.WriteLine(formcollection["UserBirthday"]);
+
             var getGenderFunc = (int value) => value switch
             {
                 (int)DefinedGender.MALE => DefinedGender.MALE,
@@ -49,11 +51,12 @@ public class UserController : Controller
                 UserIdentifier = Guid.NewGuid(),
                 Username = formcollection["Username"],
                 Password = formcollection["Password"],
-                UserFullName = formcollection["UserFullName"],
+                UserFullName = formcollection["UserFullName"].ToString().ToLowerInvariant(),
                 UserGender = getGenderFunc(arg: int.Parse(s: formcollection["UserGender"])),
                 UserBirthday = Equals(objA: formcollection["UserBirthday"], objB: null)
-                    ? DateOnly.Parse(s: formcollection["UserBirthday"])
-                    : DateOnly.MinValue,
+                            || string.IsNullOrEmpty(value: formcollection["UserBirthday"])
+                    ? DateOnly.MinValue
+                    : DateOnly.Parse(s: formcollection["UserBirthday"]),
                 UserPhoneNumber = formcollection["UserPhoneNumber"],
                 UserEmail = formcollection["UserEmail"],
                 UserAccountBalance = int.Parse(s: formcollection["UserAccountBalance"]),
