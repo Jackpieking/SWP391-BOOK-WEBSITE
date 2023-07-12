@@ -1,88 +1,74 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using AutoMapper;
-using BusinessLogicLayer.Services;
-using DTO.Outgoing;
+﻿using BusinessLogicLayer.Services;
+using Helper.DefinedEnums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Helper;
+using Model;
 using Npgsql;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
-namespace MangaManagementAPI.Controllers
+namespace MangaManagementAPI.Controllers;
+
+[Produces(contentType: MediaTypeNames.Application.Json)]
+[Route(template: "api/[controller]")]
+public class UserController : Controller
 {
- 
-    [Route(template: "admin/users/[action]/{id?}")]
-    public class UserController : Controller
+    private readonly UserManagementService _userManagementService;
+    private readonly ILogger<UserController> _logger;
+
+    public UserController(UserManagementService userManagementService, ILogger<UserController> logger)
     {
-        private readonly UserManagementService _userManagementService;
-        private readonly ILogger<UserController> _logger;
-        private readonly IMapper _mapper;
+        _userManagementService = userManagementService;
+        _logger = logger;
+    }
 
-        public UserController(UserManagementService userManagementService, ILogger<UserController> logger, IMapper mapper)
+    [HttpPost]
+    public async Task<IActionResult> CreatedAUserAsync(IFormCollection formcollection)
+    {
+        try
         {
-            _userManagementService = userManagementService;
-            _logger = logger;
-            _mapper = mapper;
-        }
+            //check for existing user by username
+            if (await _userManagementService
+                .CheckIfUserIsExistedByUsernameAsync(formcollection["Username"]))
+            {
+                return UnprocessableEntity();
+            }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllUserAsync()
+            var getGenderFunc = (int value) => value switch
+            {
+                (int)DefinedGender.MALE => DefinedGender.MALE,
+                (int)DefinedGender.FEMALE => DefinedGender.FEMALE,
+                _ => DefinedGender.OTHERS
+            };
+
+            //construct a new user
+            UserModel userModel = new()
+            {
+                UserIdentifier = Guid.NewGuid(),
+                Username = formcollection["Username"],
+                Password = formcollection["Password"],
+                UserFullName = formcollection["UserFullName"],
+                UserGender = getGenderFunc(arg: int.Parse(s: formcollection["UserGender"])),
+                UserBirthday = Equals(objA: formcollection["UserBirthday"], objB: null)
+                    ? DateOnly.Parse(s: formcollection["UserBirthday"])
+                    : DateOnly.MinValue,
+                UserPhoneNumber = formcollection["UserPhoneNumber"],
+                UserEmail = formcollection["UserEmail"],
+                UserAccountBalance = int.Parse(s: formcollection["UserAccountBalance"]),
+                UserAvatar = string.Empty,
+            };
+
+            await _userManagementService.AddOneUserToDatabaseAsync(userModel: userModel);
+
+            return Ok();
+        }
+        catch (NpgsqlException N_e)
         {
-            _logger.LogCritical(message: "Start Transaction Get All User !!");
+            _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
 
-            try
-
-            {
-                var userModels = await _userManagementService.GetAllUserAsync();
-                ICollection<GetAllUserAction_Out_Dto> getAllUserDtoList = new List<GetAllUserAction_Out_Dto>();
-
-                userModels.ForEach(action: userModel =>
-                {
-                    var getAllUserDto = _mapper.Map<GetAllUserAction_Out_Dto>(source: userModel);
-                    getAllUserDtoList.Add(item: getAllUserDto);
-                });
-
-                ViewBag.getAllUserDtoList = getAllUserDtoList;
-
-                return View(getAllUserDtoList);
-            }
-
-            catch (NpgsqlException N_e)
-
-            {
-                _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
-
-                return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-            }
-
-            finally
-
-            {
-                _logger.LogCritical(message: "End Transaction Get All User !!");
-            }
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
-
-        //  [HttpGet(template: "{userid:guid}")]
-        //  public async Task<IActionResult> GetUserDetailsByIdAsync([FromRoute] Guid id)
-        //  {
-        //     _logger.LogCritical(message: "Start Transaction Get A User Details!!");
-
-        //     try
-
-        //     {
-        //         var userModel = await _userManagementService.GetUserDetailsByIdAsync(userId: id);
-
-        //         GetAllUserDetailsAction_Out_Dto userDto = new GetAllUserDetailsAction_Out_Dto() 
-        //         {
-                        
-        //         };    
-        //     }
-        //  }
-
-
     }
 }

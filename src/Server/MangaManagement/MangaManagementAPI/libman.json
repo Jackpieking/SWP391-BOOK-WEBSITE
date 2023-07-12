@@ -2,11 +2,10 @@
   "version": "1.0",
   "defaultProvider": "cdnjs",
   "libraries": [
-        {
+    {
       "library": "font-awesome@5.15.3",
       "destination": "wwwroot/lib/font-awesome/"
-    }
-    ,
+    },
     {
       "library": "jquery-easing@1.4.1",
       "destination": "wwwroot/lib/jquery-easing/"
@@ -19,6 +18,21 @@
         "jquery.min.map"
       ],
       "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validate@1.19.5",
+      "files": [
+        "additional-methods.min.js",
+        "jquery.validate.min.js"
+      ],
+      "destination": "wwwroot/lib/jquery-validation/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@4.0.0",
+      "files": [
+        "jquery.validate.unobtrusive.min.js"
+      ],
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     }
   ]
 }

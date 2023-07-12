@@ -41,6 +41,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\lib\font-awesome\" />
     <Folder Include="wwwroot\lib\jquery-easing\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -42,5 +42,7 @@
 
     <!-- Logout Modal-->
     @await Html.PartialAsync("Pages/Shared/_Logout")
-
 </div>
+
+
+@await RenderSectionAsync(name: "ValidateScript", required: false)

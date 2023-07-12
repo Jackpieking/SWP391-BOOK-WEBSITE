@@ -1,0 +1,316 @@
+﻿@page "/admin/user-create"
+@model MangaManagementAPI.Views.Pages.user_createModel
+@{
+	ViewData["Title"] = "Admin | Users Create";
+}
+
+@section ValidateScript {
+    @await Html.PartialAsync("Pages/Shared/_ValidationScriptsPartial")
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">User Input</h6>
+            <a asp-page="/Pages/users"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block" style="font-size:20px">Return
+            </a>
+        </div>
+        <div class="card-body">
+            <form enctype="multipart/form-data" id="createUserForm">
+                <div class="form-group">
+                    <label for="UserAvatar">Avatar</label>
+                    <input type="file" class="form-control-file" id="UserAvatar" name="UserAvatar" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="Username"
+                        name="Username"
+                        required
+                        data-val="true"
+                        data-val-required="Please enter the Username"
+                        data-val-length="Length must be between 4 to 8"
+                        data-val-length-max="8"
+                        data-val-length-min="4">
+                    <span
+                        class="text-danger"
+                        data-valmsg-for="Username"
+                        data-valmsg-replace="true">
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="Password"
+                        name="Password"
+                        required
+                        data-val="true"
+                        data-val-required="Please enter the password"
+                        data-val-length="Length must be at least 5"
+                        data-val-length-min="5">
+                    <span
+                        class="text-danger"
+                        data-valmsg-for="Password"
+                        data-valmsg-replace="true">
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="UserFullName">Full Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="UserFullName"
+                        name="UserFullName">
+                </div>
+
+                <div class="form-group">
+                    <label for="UserGender">Gender</label>
+                    <select
+                        class="form-control"
+                        id="UserGender"
+                        name="UserGender">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="UserBirthday">Birthday</label>
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="UserBirthday"
+                        name="UserBirthday">
+                </div>
+
+                <div>
+                    <label for="UserPhoneNumber">Phone Number</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="UserPhoneNumber"
+                        name="UserPhoneNumber">
+                </div>
+
+                <div>
+                    <label for="UserEmail">Email</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="UserEmail"
+                        name="UserEmail"
+                        data-val="true"
+                        data-val-required="Please enter the email">
+                    <span
+                        class="text-danger"
+                        data-valmsg-for="UserEmail"
+                        data-valmsg-replace="true">
+                    </span>
+                </div>
+
+                <div>
+                    <label for="UserAccountBalance">Account Balance</label>
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="UserAccountBalance"
+                        name="UserAccountBalance"
+                        required
+                        data-val="true"
+                        data-val-required="Please enter the user account balance">
+                    <span
+                        class="text-danger"
+                        data-valmsg-for="UserAccountBalance"
+                        data-valmsg-replace="true">
+                    </span>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn btn-outline-danger mt-3 submitBtn w-25"
+                    data-toggle="modal"
+                    data-target="#confirmUserCreationModal">
+                    Create
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm User Creation Modal -->
+<div class="modal fade" id="confirmUserCreationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase text-danger">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-primary">Confirm User Creation?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary closeBtn" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-outline-danger confirmBtn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Validation Modal -->
+<div class="modal fade" id="validationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger text-uppercase">Error</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-primary">Fields are not input or input data is uncorrect !!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary turnOffModalBtn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Successfully Modal -->
+<div class="modal fade" id="createSucceessfullyModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success text-uppercase">Message</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-primary">Created User Successfully !!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary refreshPageBtn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User is existed Modal -->
+<div class="modal fade" id="userExistedModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger text-uppercase">Error</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-primary">User with this username is existed !!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button"
+        class="btn btn-outline-danger mt-3 submitBtn popupCreatedSuccessullyBtn w-25 d-none"
+        data-toggle="modal"
+        data-target="#createSucceessfullyModal">
+</button>
+
+<button type="button"
+        class="btn btn-outline-danger mt-3 submitBtn popupUserExistedBtn w-25 d-none"
+        data-toggle="modal"
+        data-target="#userExistedModal">
+</button>
+
+<script defer>
+        const dataTarget = "data-target";
+        let submitBtn = document.querySelector(".submitBtn");
+
+        submitBtn.addEventListener("click", function (event) {
+            let isAllRequired = true;
+
+            document
+                .querySelector("#createUserForm")
+                .querySelectorAll("[required]")
+                .forEach(function (element) {
+                    if (!element.value) {
+                        isAllRequired = false;
+                        return;
+                    }
+                });
+
+            if (!isAllRequired) {
+                submitBtn.removeAttribute(dataTarget);
+                submitBtn.setAttribute(dataTarget, "#validationModal");
+            }
+        });
+
+        $(".turnOffModalBtn").click(function () {
+            submitBtn.removeAttribute(dataTarget);
+            submitBtn.setAttribute(dataTarget, "#confirmUserCreationModal");
+        })
+        $(".confirmBtn").click(function () {
+            let formData = new FormData();
+
+            formData.append("Username", $('[Name=Username]').val());
+            formData.append("Password", $('[Name=Password]').val());
+            formData.append("UserFullName", $('[Name=UserFullName]').val());
+            formData.append("UserGender", $('[Name=UserGender]').val());
+            formData.append("UserBirthday", $('[Name=UserBirthday]').val());
+            formData.append("UserPhoneNumber", $('[Name=UserPhoneNumber]').val());
+            formData.append("UserEmail", $('[Name=UserEmail]').val());
+            formData.append("UserAccountBalance", $('[Name=UserAccountBalance]').val());
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreatedAUser", "User")',
+            contentType: false,
+            processData: false,
+            data: formData,
+            statusCode: {
+                200: function (response) {
+                    document
+                        .querySelector(".closeBtn")
+                        .click();
+                    document
+                        .querySelector(".popupCreatedSuccessullyBtn")
+                        .click();
+                },
+                422: function (jqXHR, textStatus) {
+                    document
+                        .querySelector(".closeBtn")
+                        .click();
+                    document
+
+                    document
+                        .querySelector(".popupUserExistedBtn")
+                        .click();
+                },
+                500: function (jqXHR, textStatus) {
+                    alert(textStatus + jqXHR.status);
+                }
+            }
+        });
+    });
+
+    $(".refreshPageBtn").click(function () {
+        location.reload();
+    })
+</script>

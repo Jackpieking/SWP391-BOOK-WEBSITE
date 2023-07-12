@@ -10,8 +10,11 @@
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">User DataTables</h6>
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Data</h6>
+            <a asp-page="/Pages/user-create"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block" style="font-size:20px">Create User
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -25,23 +28,9 @@
                             <th>Phone</th>
                             <th>Gender</th>
                             <th>Balance</th>
-                            <th>Publisher</th>
                             <th>Options</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Username</th>
-                            <th>Fullname</th>
-                            <th>Birthday</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Gender</th>
-                            <th>Balance</th>
-                            <th>Publisher</th>
-                            <th>Options</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @if (Model.UserList == null)
                         {
@@ -71,24 +60,15 @@
                                         @result
                                     </td>
                                     <td>@user.UserAccountBalance</td>
-                                    @{
-                                        if (@user.PublisherDto != null)
-                                        {
-                                            <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(25, 255, 25);"></i></td>
-                                        }
-                                        else
-                                        {
-                                            <td><i class="fa fa-times" aria-hidden="true" style="color: red"></i></td>
-                                        }
-                                    }
 
                                     <td class="d-flex justify-content-center">
-                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
-                                            asp-page-handler="userdetails" class="mx-2" style="color: blue;"><i
-                                                class="fa fa-info-circle" aria-hidden="true"></i></a>
-                                        <a asp-page="user-details" asp-route-userId="@user.UserIdentifier"
-                                            asp-page-handler="deleteuser" class="mx-2" style="color: red;"><i
-                                                class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a
+                                            asp-page="user-details"
+                                            asp-route-userId="@user.UserIdentifier"
+                                            asp-page-handler="userdetails"
+                                            class="btn btn-outline-primary">
+                                            Detail
+                                        </a>
                                     </td>
                                 </tr>
                             }

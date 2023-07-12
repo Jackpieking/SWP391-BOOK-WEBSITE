@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using Entity;
 using Microsoft.Extensions.Logging;
 using Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services
 {
@@ -281,11 +280,47 @@ namespace BusinessLogicLayer.Services
             await _unitOfWork
                 .ReviewChapterRepository
                 .DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(userId, chapterId);
-            
+
             await _unitOfWork
                 .SaveAsync();
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Delete Reviewed On Chapter Of A User", args: DateTime.Now);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
+        public async Task AddOneUserToDatabaseAsync(UserModel userModel)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Adding A User To Database", args: DateTime.Now);
+
+            await _unitOfWork
+                .UserInfoRepository
+                .AddAsync(entity: _mapper.Map<UserEntity>(source: userModel));
+
+            await _unitOfWork.SaveAsync();
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: End Adding A User To Database", args: DateTime.Now);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public async Task<bool> CheckIfUserIsExistedByUsernameAsync(string username)
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start querying user table", args: DateTime.Now);
+
+            var result = await _unitOfWork
+                .UserInfoRepository
+                .CheckUserIsExistedByUsernameAsync(username: username);
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: End querying user table", args: DateTime.Now);
+
+            return result;
         }
     }
 }

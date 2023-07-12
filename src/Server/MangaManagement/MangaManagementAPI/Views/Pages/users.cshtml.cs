@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using AutoMapper;
 using BusinessLogicLayer.Services;
+using DTO.Outgoing;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using AutoMapper;
-using DTO.Outgoing;
 using Npgsql;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MangaManagementAPI.Views.Pages
 {
@@ -40,7 +40,6 @@ namespace MangaManagementAPI.Views.Pages
             }
 
             catch (NpgsqlException N_e)
-
             {
                 _logger.LogError(message: $"[{DateTime.Now}]: Error: {N_e.Message}");
 
@@ -48,7 +47,6 @@ namespace MangaManagementAPI.Views.Pages
             }
 
             finally
-
             {
                 _logger.LogCritical(message: "End Transaction To Get All Users !!");
             }

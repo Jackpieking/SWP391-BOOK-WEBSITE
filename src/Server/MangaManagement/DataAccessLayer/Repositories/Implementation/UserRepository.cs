@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAccessLayer.Repositories.Contracts;
+﻿using DataAccessLayer.Repositories.Contracts;
 using DataAccessLayer.Repositories.Implementation.Base;
 using Entity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Implementation;
 
@@ -95,5 +95,23 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
         {
             throw new Exception("User not found."); // Or handle the error appropriately
         }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    public async Task<bool> CheckUserIsExistedByUsernameAsync(string username)
+    {
+        var result = await _dbSet
+            .FirstOrDefaultAsync(predicate: userEntity => userEntity.Username.Equals(username));
+
+        if (Equals(objA: result, objB: null))
+        {
+            return false;
+        }
+
+        return true;
     }
 }
