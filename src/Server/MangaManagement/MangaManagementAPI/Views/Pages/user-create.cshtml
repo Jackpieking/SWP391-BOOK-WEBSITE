@@ -1,5 +1,5 @@
 ﻿@page "/admin/user-create"
-@model MangaManagementAPI.Views.Pages.user_createModel
+@model DTO.Incoming.UserForCreationDto
 @{
 	ViewData["Title"] = "Admin | Users Create";
 }
@@ -18,73 +18,38 @@
             </a>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data" id="createUserForm" method="dialog">
+            <form
+                enctype="multipart/form-data"
+                id="createUserForm"
+                method="dialog">
                 <div class="form-group">
                     <label for="UserAvatar">Avatar</label>
                     <input type="file" class="form-control-file" id="UserAvatar" name="UserAvatar" accept="image/*">
                 </div>
 
+                <div asp-validation-summary="ModelOnly"></div>
+
                 <div class="form-group">
-                    <label for="Username">Username</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="Username"
-                        name="Username"
-                        required
-                        data-val="true"
-                        data-val-required="Please enter the Username"
-                        data-val-length="Length must be at least 3 letters !!"
-                        data-val-length-min="3">
-                    <span
-                        class="text-danger"
-                        data-valmsg-for="Username"
-                        data-valmsg-replace="true">
-                    </span>
+                    <label asp-for="Username">Username</label>
+                    <input asp-for="Username" class="form-control" required>
+                    <span class="text-danger" asp-validation-for="Username"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="Password">Password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="Password"
-                        name="Password"
-                        required
-                        data-val="true"
-                        data-val-required="Please enter the password"
-                        data-val-regex="Please enter password with at least three characters, at least one uppercase letter, one lowercase letter and one number !!"
-                        data-val-regex-pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{3,}$">
-                    <span
-                        class="text-danger"
-                        data-valmsg-for="Password"
-                        data-valmsg-replace="true">
-                    </span>
+                    <label asp-for="Password">Password</label>
+                    <input type="password" class="form-control" asp-for="Password" required>
+                    <span class="text-danger" asp-validation-for="Password"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="UserFullName">Full Name</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="UserFullName"
-                        name="UserFullName"
-                        data-val="true"
-                        data-val-regex="please enter user fullname with at least 2 letter !!"
-                        data-val-regex-pattern="^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\ ]{2,}$">
-                    <span
-                        class="text-danger"
-                        data-valmsg-for="UserFullName"
-                        data-valmsg-replace="true">
-                    </span>
+                    <label asp-for="UserFullName">Full Name</label>
+                    <input class="form-control" asp-for="UserFullName">
+                    <span class="text-danger" asp-validation-for="UserFullName"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="UserGender">Gender</label>
-                    <select
-                        class="form-control"
-                        id="UserGender"
-                        name="UserGender">
+                    <label asp-for="UserGender">Gender</label>
+                    <select class="form-control" asp-for="UserGender">
                         <option value="0">Male</option>
                         <option value="1">Female</option>
                         <option value="2">Other</option>
@@ -92,70 +57,36 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="UserBirthday">Birthday</label>
-                    <input
-                        type="date"
-                        class="form-control"
-                        id="UserBirthday"
-                        name="UserBirthday">
+                    <label asp-for="UserBirthday">Birthday</label>
+                    <input type="date" class="form-control" asp-for="UserBirthday">
                 </div>
 
                 <div>
-                    <label for="UserPhoneNumber">Phone Number</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="UserPhoneNumber"
-                        name="UserPhoneNumber"
-                        data-val="true"
-                        data-val-regex="Please enter phone number with at least 10 and start with 0 !!"
-                        data-val-regex-pattern="^[0][1-9][0-9][0-9]{7,7}$">
-                    <span
-                        class="text-danger"
-                        data-valmsg-for="UserPhoneNumber"
-                        data-valmsg-replace="true">
-                    </span>
+                    <label asp-for="UserPhoneNumber">Phone Number</label>
+                    <input class="form-control" asp-for="UserPhoneNumber">
+                    <span class="text-danger" asp-validation-for="UserPhoneNumber"></span>
                 </div>
 
                 <div>
-                    <label for="UserEmail">Email</label>
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="UserEmail"
-                        name="UserEmail"
-                        data-val="true"
-                        data-val-required="Please enter the email">
-                    <span
-                        class="text-danger"
-                        data-valmsg-for="UserEmail"
-                        data-valmsg-replace="true">
-                    </span>
+                    <label asp-for="UserEmail">Email</label>
+                    <input type="email" class="form-control" asp-for="UserEmail" required>
+                    <span class="text-danger" asp-validation-for="UserEmail"></span>
                 </div>
 
                 <div>
-                    <label for="UserAccountBalance">Account Balance</label>
-                    <input
-                        type="number"
-                        class="form-control"
-                        id="UserAccountBalance"
-                        name="UserAccountBalance"
-                        required
-                        min="0"
-                        data-val="true"
-                        data-val-required="Please enter the user account balance">
-                    <span
-                        class="text-danger"
-                        data-valmsg-for="UserAccountBalance"
-                        data-valmsg-replace="true">
-                    </span>
+                    <label asp-for="UserAccountBalance">Account Balance</label>
+                    <input class="form-control" min="0" asp-for="UserAccountBalance" required>
+                    <span class="text-danger" asp-validation-for="UserAccountBalance"></span>
                 </div>
 
                 <button
                     type="button"
-                    class="btn btn-outline-danger mt-3 submitBtn w-25"
-                    data-toggle="modal"
-                    data-target="#confirmUserCreationModal">
+                    class="btn btn-outline-danger mt-3 submitBtn w-25">
+                    Create
+                </button>
+
+                <button type="submit"
+                        class="d-none testValidateBtn">
                     Create
                 </button>
             </form>
@@ -179,26 +110,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary closeBtn" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-outline-danger confirmBtn">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Validation Modal -->
-<div class="modal fade" id="validationModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-danger text-uppercase">Error</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="text-primary">Fields are not input or input data is uncorrect !!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary turnOffModalBtn" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -257,43 +168,27 @@
 </button>
 
 <script defer>
-        const dataTarget = "data-target";
-        let submitBtn = document.querySelector(".submitBtn");
+    $(".submitBtn").click(function () {
+        $(".testValidateBtn").click();
 
-        submitBtn.addEventListener("click", function (event) {
-            let isAllRequired = true;
+        const classCheck = document.getElementsByClassName('field-validation-error').length > 0;
 
-            document
-                .querySelector("#createUserForm")
-                .querySelectorAll("[required]")
-                .forEach(function (element) {
-                    if (!element.value) {
-                        isAllRequired = false;
-                        return;
-                    }
-                });
+        if (!classCheck) {
+            $("#confirmUserCreationModal").modal({ show: true });
+        }
+    });
 
-            if (!isAllRequired) {
-                submitBtn.removeAttribute(dataTarget);
-                submitBtn.setAttribute(dataTarget, "#validationModal");
-            }
-        });
+    $(".confirmBtn").click(function () {
+        let formData = new FormData();
 
-        $(".turnOffModalBtn").click(function () {
-            submitBtn.removeAttribute(dataTarget);
-            submitBtn.setAttribute(dataTarget, "#confirmUserCreationModal");
-        })
-        $(".confirmBtn").click(function () {
-            let formData = new FormData();
-
-            formData.append("Username", $('[Name=Username]').val());
-            formData.append("Password", $('[Name=Password]').val());
-            formData.append("UserFullName", $('[Name=UserFullName]').val());
-            formData.append("UserGender", $('[Name=UserGender]').val());
-            formData.append("UserBirthday", $('[Name=UserBirthday]').val());
-            formData.append("UserPhoneNumber", $('[Name=UserPhoneNumber]').val());
-            formData.append("UserEmail", $('[Name=UserEmail]').val());
-            formData.append("UserAccountBalance", $('[Name=UserAccountBalance]').val());
+        formData.append("Username", $('[Name=Username]').val());
+        formData.append("Password", $('[Name=Password]').val());
+        formData.append("UserFullName", $('[Name=UserFullName]').val());
+        formData.append("UserGender", $('[Name=UserGender]').val());
+        formData.append("UserBirthday", $('[Name=UserBirthday]').val());
+        formData.append("UserPhoneNumber", $('[Name=UserPhoneNumber]').val());
+        formData.append("UserEmail", $('[Name=UserEmail]').val());
+        formData.append("UserAccountBalance", $('[Name=UserAccountBalance]').val());
 
         $.ajax({
             type: 'POST',
