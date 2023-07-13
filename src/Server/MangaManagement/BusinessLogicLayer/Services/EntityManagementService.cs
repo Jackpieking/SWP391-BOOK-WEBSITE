@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using Entity;
+using Helper;
 using Microsoft.Extensions.Logging;
 using Model;
 using System;
@@ -302,4 +303,30 @@ public class EntityManagementService
 
     //void ForAdminOperation()
     //_unitofwork.ChapterImageRepo
+
+    public async Task<IDictionary<Guid, IList<TransactionsHistoryModel>>> GetAllTransactionHistoryAsync()
+    {
+        var transactionHistories = await _unitOfWork
+            .TransactionRepository
+            .GetAllTransactionHistoryAsync();
+
+        IDictionary<Guid, IList<TransactionsHistoryModel>> userTrsactionHistories = new Dictionary<Guid, IList<TransactionsHistoryModel>>();
+
+        transactionHistories.ForEach(transactionHistory =>
+        {
+            if (!userTrsactionHistories.ContainsKey(transactionHistory.UserIdentifier))
+            {
+                userTrsactionHistories.Add(transactionHistory.UserIdentifier, new List<TransactionsHistoryModel>()
+                {
+                    _mapper.Map<TransactionsHistoryModel>(transactionHistory)
+                });
+            }
+            else
+            {
+                userTrsactionHistories[transactionHistory.UserIdentifier].Add(_mapper.Map<TransactionsHistoryModel>(transactionHistory));
+            }
+        });
+
+        return userTrsactionHistories;
+    }
 }

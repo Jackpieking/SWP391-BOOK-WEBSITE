@@ -1,13 +1,9 @@
-using System.Reflection.Emit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using Microsoft.Extensions.Logging;
 using Model;
-using Entity;
+using System;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services
 {
@@ -24,7 +20,7 @@ namespace BusinessLogicLayer.Services
             _logger = logger;
         }
         /// <summary>
-        /// Get publishser 
+        /// Get publishser
         /// </summary>
         /// <param name="publisherId"></param>
         /// <returns></returns>

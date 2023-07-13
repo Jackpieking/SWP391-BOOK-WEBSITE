@@ -1,0 +1,49 @@
+﻿@page "/admin/transaciton-history/{userId:guid?}/"
+@model MangaManagementAPI.Views.Pages.transaction_history_detailModel
+@{
+	ViewData["Title"] = $"Admin | Transaction Details";
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Detail</h6>
+            <a asp-page="/Pages/user-transaction-history"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block" style="font-size:20px">
+                Return
+            </a>
+        </div>
+        <div class="card-body">
+            <h5 class="m-2 font-weight-bold text-primary">Transaction Histories</h5>
+            @if (false)
+            {
+                <p class="m-2">Nothing to show</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Transaction Amount</th>
+                                <th>TransactionDate</th>
+                                <th>TransactionCoin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+@*                            @foreach (var transactionHistory in @user.TransactionHistoryOutDto)
+                            {
+                                <tr>
+                                    <td>@transactionHistory.TransactionAmount vnd</td>
+                                    <td>@transactionHistory.TransactionDate</td>
+                                    <td>@transactionHistory.TransactionCoin vnd</td>
+                                </tr>
+                            }*@
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
