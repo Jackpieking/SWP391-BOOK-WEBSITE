@@ -41,7 +41,7 @@ public class MangaContext : DbContext
     public DbSet<ComicLikeEntity> ComicLikeEntities { get; set; }
     #endregion
 
-    public MangaContext(DbContextOptions options) : base(options) { }
+    public MangaContext(DbContextOptions<MangaContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

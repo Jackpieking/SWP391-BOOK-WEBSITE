@@ -4,6 +4,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
+using Helper;
 using Helper.ObjectMappers.ModelToEntity;
 using Mapper.ModelAndDto;
 using Mapper.ModelAndEntity;
@@ -105,9 +106,13 @@ services
 
 //controller
 services
-    .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
+    .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true)
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    }); ;
 
-//RazerPage
+//RazorPage
 services
     .AddRazorPages()
     .AddRazorPagesOptions(options =>
