@@ -1,59 +1,193 @@
 @page "/admin/users-management/update/{userId:guid?}/"
 @model MangaManagementAPI.Views.Pages.UserUpdate
 @{
-    ViewData["Title"] = $"Update {@Model.User.Username}";
+    ViewData["Title"] = $"Update {@Model.UserUpdateDto.Username}";
 }
 
-<div class="container">
+@section ValidateScript {
+    @await Html.PartialAsync("Pages/Shared/_ValidationScriptsPartial")
+}
+
+<div class="container pb-5">
     <div class="row">
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="@Model.User.UserAvatar" alt="User Avatar" class="img-fluid rounded-circle mb-3"
+                    <img src="" alt="User Avatar" class="img-fluid rounded-circle mb-3"
                         width="128" height="128">
-                    <h5 class="card-title">@Model.User.Username</h5>
-                    <p class="card-text">@Model.User.UserFullName</p>
-                    <p class="card-text">@Model.User.UserEmail</p>
-                    <p class="card-text">@Model.User.UserPhoneNumber</p>
-
                 </div>
             </div>
+
+            <a
+                asp-page="/Pages/user-details"
+                asp-route-userId="@Model.UserUpdateDto.UserIdentifier"
+                asp-page-handler="userdetails"
+                class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block"
+                style="font-size:20px">
+                Return
+            </a>
         </div>
         <div class="col-lg-8">
-            <form method="post" enctype="multipart/form-data" asp-page-handler="updateuser" asp-route-userId="@Model.User.UserIdentifier">
+            <form
+                method="dialog"
+                enctype="multipart/form-data"
+                class="UpdateUserForm"
+                asp-page-handler="updateuser"
+                asp-route-userId="@Model.UserUpdateDto.UserIdentifier">
 
                 <div class="form-group">
                     <label for="userAvatar">Avatar</label>
                     <input type="file" class="form-control-file" id="userAvatar" name="UserAvatar" accept="image/*">
                 </div>
+
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="Username" required
-                        value="@Model.User.Username">
+                    <label asp-for="UserUpdateDto.Username">Username</label>
+                    <input
+                        asp-for="UserUpdateDto.Username"
+                        class="form-control"
+                        value="@Model.UserUpdateDto.Username">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.Username"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="userFullName">Full Name</label>
-                    <input type="text" class="form-control" id="userFullName" name="UserFullName" required
-                        value="@Model.User.UserFullName">
+                    <label asp-for="UserUpdateDto.Password">Password</label>
+                    <input
+                        class="form-control"
+                        type = "password"
+                        asp-for="UserUpdateDto.Password"
+                        value="@Model.UserUpdateDto.Password">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.Password"></span>
+                    <br />
+                    <button
+                        type="button"
+                        class="btn btn-outline-warning ml-auto mt-2"
+                        id="showPasswordBx">
+                        Show Password
+                    </button>
                 </div>
 
                 <div class="form-group">
-                    <label for="userGender">Gender</label>
-                    <select class="form-control" id="userGender" name="UserGender" required>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Others">Other</option>
+                    <label asp-for="UserUpdateDto.UserFullName">Full Name</label>
+                    <input
+                        class="form-control"
+                        asp-for="UserUpdateDto.UserFullName"
+                        value="@Model.UserUpdateDto.UserFullName">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.UserFullName"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserUpdateDto.UserGender">Gender</label>
+                    <select class="form-control" asp-for="UserUpdateDto.UserGender">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Other</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="userBirthday">Birthday</label>
-                    <input type="date" class="form-control" id="userBirthday" name="UserBirthday" required
-                        value="@Model.User.UserBirthday.ToString("yyyy-MM-dd")">
+                    <label asp-for="UserUpdateDto.UserBirthday">Birthday</label>
+                    <input
+                        type="date"
+                        class="form-control"
+                        asp-for="UserUpdateDto.UserBirthday"
+                        value="@Model.UserUpdateDto.UserBirthday.ToString("yyyy-MM-dd")">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.UserBirthday"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <div class="form-group">
+                    <label asp-for="UserUpdateDto.UserPhoneNumber">Phone Number</label>
+                    <input type="text"
+                           class="form-control"
+                           asp-for="UserUpdateDto.UserPhoneNumber"
+                           value="@Model.UserUpdateDto.UserPhoneNumber">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.UserPhoneNumber"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserUpdateDto.UserEmail">Email</label>
+                    <input type="email"
+                           class="form-control"
+                           asp-for="UserUpdateDto.UserEmail"
+                           value="@Model.UserUpdateDto.UserEmail">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.UserEmail"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserUpdateDto.UserAccountBalance">Account Balance</label>
+                    <input type="number"
+                           class="form-control"
+                           min="0"
+                           asp-for="UserUpdateDto.UserAccountBalance"
+                           value="@Model.UserUpdateDto.UserAccountBalance">
+                    <span class="text-danger" asp-validation-for="UserUpdateDto.UserAccountBalance"></span>
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary w-25 submitUpdateFormBtn">Submit</button>
+                <button type="submit" class="balidateFormBtn d-none"></button>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Confirm User Updation Modal -->
+<div class="modal fade" id="confirmUserUpdateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase text-danger">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-primary">Confirm User Updation?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary closeBtn" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-outline-danger confirmBtn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document
+        .querySelector("#showPasswordBx")
+        .addEventListener("click", function(e) {
+            var passwordInput = document.getElementById("UserUpdateDto_Password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+
+    const methodPost = "post";
+
+    let updateUserForm = document.querySelector(".UpdateUserForm");
+    let actionAttr = updateUserForm.getAttribute("action");
+
+    updateUserForm.removeAttribute("action");
+
+    document
+        .querySelector(".submitUpdateFormBtn")
+        .addEventListener("click", function(e) {
+            let classCheck = document.getElementsByClassName('field-validation-error').length > 0;
+
+            if (!classCheck) {
+                $("#confirmUserUpdateModal").modal({ show: true });
+            }
+        });
+
+    document
+        .querySelector(".confirmBtn")
+        .addEventListener("click", function(e) {
+            updateUserForm.setAttribute("action", actionAttr);
+            updateUserForm.removeAttribute("method");
+            updateUserForm.setAttribute("method", methodPost);
+
+            document
+                .querySelector(".UpdateUserForm")
+                .submit();
+        })
+</script>

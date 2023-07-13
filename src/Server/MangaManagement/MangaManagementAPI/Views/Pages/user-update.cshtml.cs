@@ -1,13 +1,12 @@
-using System;
-using System.Threading.Tasks;
+using AutoMapper;
 using BusinessLogicLayer.Services;
-using DTO.Outgoing;
+using DTO.Incoming;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Helper.DefinedEnums;
-using AutoMapper;
 using Model;
+using System;
+using System.Threading.Tasks;
 
 namespace MangaManagementAPI.Views.Pages
 {
@@ -23,7 +22,8 @@ namespace MangaManagementAPI.Views.Pages
             _logger = logger;
         }
 
-        public new GetAllUserAction_Out_Dto User { get; set; }
+        [BindProperty]
+        public UserUpdateDto UserUpdateDto { get; set; }
 
         public async Task<IActionResult> OnGetGetInfo([FromRoute] Guid userId)
         {
@@ -38,7 +38,7 @@ namespace MangaManagementAPI.Views.Pages
                 return RedirectToPage(pageName: "404");
             }
 
-            User = _mapper.Map<GetAllUserAction_Out_Dto>(source: userNeedToUpdate);
+            UserUpdateDto = _mapper.Map<UserUpdateDto>(source: userNeedToUpdate);
 
             _logger.LogCritical(message: "Start Transaction To Show User Prepare For Update !!");
 
@@ -48,27 +48,13 @@ namespace MangaManagementAPI.Views.Pages
         public async Task<IActionResult> OnPostUpdateUser([FromRoute] Guid userId)
         {
             _logger.LogCritical(message: "Start Transaction To Update User !!");
-            
 
             if (ModelState.IsValid)
             {
-                string username = Request.Form["Username"];
-                string userFullName = Request.Form["UserFullName"];
-                string userGender = Request.Form["UserGender"];
-                DateOnly userBirthday = DateOnly.Parse(Request.Form["UserBirthday"]);
-
-                // Create a new User object with the updated values
-                var updatedUser = new GetAllUserAction_Out_Dto
-                {
-                    UserIdentifier = userId, 
-                    UserFullName = userFullName,
-                    Username = username,
-                    UserGender = Enum.TryParse(userGender, ignoreCase: true, out DefinedGender result) ? result : DefinedGender.OTHERS,
-                    UserBirthday = userBirthday
-                };
+                UserUpdateDto.UserIdentifier = userId;
 
                 // Update the user in the database
-                await _userManagementService.UpdateUserAsync(_mapper.Map<UserModel>(updatedUser));
+                await _userManagementService.UpdateUserAsync(user: _mapper.Map<UserModel>(source: UserUpdateDto));
 
                 _logger.LogCritical(message: "Finish Transaction To Update User !!");
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTO.Incoming;
 
-public class UserForCreationDto
+public class UserDto
 {
     [Required(ErrorMessage = "Please enter the Username")]
     [MinLength(length: 3, ErrorMessage = "Length must be at least 3 letters !!")]
@@ -20,6 +20,7 @@ public class UserForCreationDto
 
     public DateOnly UserBirthday { get; set; }
 
+    [Required(ErrorMessage = "Please enter phone number")]
     [RegularExpression(pattern: "^[0][1-9][0-9][0-9]{7,7}$", ErrorMessage = "Please enter phone number with at least 10 and start with 0 !!")]
     public string UserPhoneNumber { get; set; }
 

@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Helper\Helper.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Incoming\" />
-  </ItemGroup>
-
 </Project>

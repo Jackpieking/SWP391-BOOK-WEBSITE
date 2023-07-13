@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Mail;
-using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.Services;
+using DTO.Incoming;
 using DTO.Outgoing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MangaManagementAPI.Views.Pages
 {
@@ -35,46 +34,38 @@ namespace MangaManagementAPI.Views.Pages
             try
             {
                 var userModel = await _userManagementService
-                .GetUserDetailsByIdAsync(userId);
+                    .GetUserDetailsByIdAsync(userId: userId);
 
                 if (userModel == null)
                 {
                     return RedirectToPage(pageName: "404");
                 }
 
-                var readingHistoryModels = await _userManagementService
-                .GetAllReadingHistoryOfAUserByUserIdAsync(userId);
+                //var readingHistoryModels = await _userManagementService
+                //.GetAllReadingHistoryOfAUserByUserIdAsync(userId);
 
-                var transactionsHistoryModel = await _userManagementService
-                .GetAllTransactionsOfAUserByUserIdAsync(userId);
+                //var transactionsHistoryModel = await _userManagementService
+                //.GetAllTransactionsOfAUserByUserIdAsync(userId);
 
-                var buyingHistoryModel = await _userManagementService
-                .GetAllBuyingHistoryOfAUserByUserIdAsync(userId);
+                //var buyingHistoryModel = await _userManagementService
+                //.GetAllBuyingHistoryOfAUserByUserIdAsync(userId);
 
-                var comicLikeModel = await _userManagementService
-                .GetAllComicLikeOfAUserByUserIdAsync(userId);
+                //var comicLikeModel = await _userManagementService
+                //.GetAllComicLikeOfAUserByUserIdAsync(userId);
 
-                var reviewComicModel = await _userManagementService
-                .GetAllReviewsOnComicOfAUserByUserIdAsync(userId);
+                //var reviewComicModel = await _userManagementService
+                //.GetAllReviewsOnComicOfAUserByUserIdAsync(userId);
 
-                var reviewChapterModel = await _userManagementService
-                .GetAllReviewOnChapterOfAUserByUserIdAsync(userId);
+                //var reviewChapterModel = await _userManagementService
+                //.GetAllReviewOnChapterOfAUserByUserIdAsync(userId);
 
-                var comicSavingModel = await _userManagementService
-                .GetAllComicSavingOfAUserByUserIdAsync(userId);
+                //var comicSavingModel = await _userManagementService
+                //.GetAllComicSavingOfAUserByUserIdAsync(userId);
 
-                GetAllUserDetailsAction_Out_Dto userDetailsDto = new()
+                UserDetails = new()
                 {
-                    UserBasicInfo = _mapper.Map<GetAllUserAction_Out_Dto>(userModel),
-                    ReadingHistoriesOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReadingHistoryDto>>(readingHistoryModels),
-                    BuyingHistorieOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.BuyingHistoryDto>>(buyingHistoryModel),
-                    ReviewChapterOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReviewChapterDtoForUser>>(reviewChapterModel),
-                    ReviewComicOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ReviewComicDtoForUser>>(reviewComicModel),
-                    ComicLikeOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ComicLikeDto>>(comicLikeModel),
-                    ComicSavingOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.ComicSavingDto>>(comicSavingModel),
-                    TransactionHistoryOutDto = _mapper.Map<ICollection<GetAllUserDetailsAction_Out_Dto.TransactionsHistoryDto>>(transactionsHistoryModel)
+                    UserBasicInfo = _mapper.Map<UserUpdateDto>(source: userModel),
                 };
-                UserDetails = userDetailsDto;
 
                 return Page();
             }

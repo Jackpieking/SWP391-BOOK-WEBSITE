@@ -20,6 +20,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <p><strong>Username:</strong> @user.UserBasicInfo.Username</p>
+                    <p><strong>Password:</strong> @user.UserBasicInfo.Password</p>
                     <p><strong>Fullname:</strong> @user.UserBasicInfo.UserFullName</p>
                     <p><strong>Birthday:</strong> @user.UserBasicInfo.UserBirthday</p>
                     @{
@@ -32,13 +33,6 @@
                             case 2: result = "Others"; break;
                         }
                     }
-                    <p><strong>Gender:</strong> @result</p>
-                    @if (@user.UserBasicInfo.PublisherDto != null)
-                    {
-                        <a asp-page="publisher-all-comic"
-                            asp-route-publisherId="@user.UserBasicInfo.PublisherDto.PublisherIdentifier"
-                            asp-page-handler="getpublishercomic" class="btn btn-outline-success">Publisher's All Comic</a>
-                    }
                     <a asp-page="user-details" asp-route-userId="@user.UserBasicInfo.UserIdentifier"
                         asp-page-handler="deleteuser" class="btn btn-outline-danger popupDeleteConfirmationModalBtn">Delete User</a>
                     <a asp-page="user-details" asp-route-userId="@user.UserBasicInfo.UserIdentifier"
@@ -47,6 +41,7 @@
                         asp-page-handler="getinfo" class="btn btn-outline-primary">Update User</a>
                 </div>
                 <div class="col-md-6">
+                    <p><strong>Gender:</strong> @result</p>
                     <p><strong>Email:</strong> @user.UserBasicInfo.UserEmail</p>
                     <p><strong>Phone:</strong> @user.UserBasicInfo.UserPhoneNumber</p>
                     <p><strong>Account Balance:</strong> @user.UserBasicInfo.UserAccountBalance</p>

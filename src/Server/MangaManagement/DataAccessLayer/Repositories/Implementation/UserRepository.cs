@@ -49,6 +49,7 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
             .Select(user => new UserEntity
             {
                 UserIdentifier = user.UserIdentifier,
+                Password = user.Password,
                 Username = user.Username,
                 UserFullName = user.UserFullName,
                 UserPhoneNumber = user.UserPhoneNumber,
@@ -83,13 +84,18 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
     public async Task UpdateUserAsync(UserEntity user)
     {
         var existingUser = await _dbSet.FindAsync(user.UserIdentifier);
+
         if (existingUser != null)
         {
             // Update the properties of the existing user with the values from the updated user
-            existingUser.UserFullName = user.UserFullName;
             existingUser.Username = user.Username;
+            existingUser.Password = user.Password;
+            existingUser.UserFullName = user.UserFullName ?? string.Empty;
             existingUser.UserGender = user.UserGender;
             existingUser.UserBirthday = user.UserBirthday;
+            existingUser.UserPhoneNumber = user.UserPhoneNumber;
+            existingUser.UserEmail = user.UserEmail;
+            existingUser.UserAccountBalance = user.UserAccountBalance;
         }
         else
         {
