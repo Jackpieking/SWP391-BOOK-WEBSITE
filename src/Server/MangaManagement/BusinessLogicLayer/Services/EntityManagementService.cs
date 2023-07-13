@@ -68,24 +68,6 @@ public class EntityManagementService
     }
 
     /// <summary>
-    /// Get all chapter images of a chapter without any reference from database
-    /// </summary>
-    /// <param name="chapterIdentifier"></param>
-    /// <returns>Task<IEnumerable<ChapterImageModel>></returns>
-    public async Task<IEnumerable<ChapterImageModel>> GetAllChapterImagesOfAChapterByChapterIdentifierAsync(Guid chapterIdentifer)
-    {
-        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On ChapterImage Table", args: DateTime.Now);
-
-        var chapterImageEntities = await _unitOfWork
-            .ChapterImageRepository
-            .GetChapterImagesByChapterIdentifierFromDatabaseAsync(chapterIdentifier: chapterIdentifer);
-
-        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On ChapterImage Table", args: DateTime.Now);
-
-        return _mapper.Map<IEnumerable<ChapterImageModel>>(source: chapterImageEntities);
-    }
-
-    /// <summary>
     /// Get all comic without any reference from database
     /// </summary>
     /// <returns>Task<IEnumerable<ComicModel></ComicModel>></returns>
@@ -328,5 +310,58 @@ public class EntityManagementService
         });
 
         return userTrsactionHistories;
+    }
+
+    /// <summary>
+    /// Get all chapter images of a chapter without any reference from database
+    /// </summary>
+    /// <param name="chapterIdentifier"></param>
+    /// <returns>Task<IEnumerable<ChapterImageModel>></returns>
+    public async Task<IEnumerable<ChapterImageModel>> GetChapterImagesWith_ImageUrlByChapterIdentifierAsync(Guid chapterIdentifer)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On ChapterImage Table", args: DateTime.Now);
+
+        var chapterImageEntities = await _unitOfWork
+            .ChapterImageRepository
+            .GetChapterImagesWith_ImageUrlByChapterIdAsync(chapterIdentifier: chapterIdentifer);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On ChapterImage Table", args: DateTime.Now);
+
+        return _mapper.Map<IEnumerable<ChapterImageModel>>(source: chapterImageEntities);
+    }
+
+    /// <summary>
+    /// Get a chapter with comic and chapter reviews reference by chapter identifier from database
+    /// </summary>
+    /// <param name="chapterIdentifier"></param>
+    /// <returns>Task<ChapterModel></returns>
+    public async Task<ChapterModel> GetChapterWith_ComicIdentifier_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdentifierAsync(Guid chapterIdentifier)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Chapter Table", args: DateTime.Now);
+
+        var chapterEntity = await _unitOfWork
+            .ChapterRepository
+            .GetChapterWith_ComicIdByChapterIdAsync(chapterIdentifier: chapterIdentifier);
+
+        chapterEntity.ReviewChapterEntities = await _unitOfWork
+            .ReviewChapterRepository
+            .GetChapterReviewsWith_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdAsync(chapterIdentifier: chapterIdentifier);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Chapter Table", args: DateTime.Now);
+
+        return _mapper.Map<ChapterModel>(source: chapterEntity);
+    }
+
+    public async Task<IList<ChapterEntity>> GetAllChapterWith_ChapterIdentifier_ChapterNumberByComicNameAsync(string comicName)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Chapter Table", args: DateTime.Now);
+
+        var readingHistoryCounts = await _unitOfWork
+            .ChapterRepository
+            .GetChaptersWith_ChapterId_ChapterNumberByComicNameAsync(comicName: comicName);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Chapter Table", args: DateTime.Now);
+
+        return readingHistoryCounts;
     }
 }

@@ -23,7 +23,7 @@ public class ComicService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IEnumerable<DisplayAllComicModel>> GetAllComicModelFromApiAsync()
+    public async Task<IEnumerable<DisplayAllComicModel>> GetAllComicFromApiAsync()
     {
         const string GetAllComicEndpointURL = "api/comic";
 
@@ -66,7 +66,7 @@ public class ComicService
         }
     }
 
-    public async Task<DisplayComicInformationModel> GetComicDetailFromApiAsync(Guid comicIdentifier)
+    public async Task<DisplayComicDetailModel> GetComicDetailFromApiAsync(Guid comicIdentifier)
     {
         var GetComicDetailEndpointURL = $"api/comic/{comicIdentifier}";
 
@@ -98,7 +98,7 @@ public class ComicService
 
             JsonSerializer jsonSerializer = new();
 
-            return jsonSerializer.Deserialize<DisplayComicInformationModel>(reader: jsonReader);
+            return jsonSerializer.Deserialize<DisplayComicDetailModel>(reader: jsonReader);
         }
         catch (TaskCanceledException)
         {

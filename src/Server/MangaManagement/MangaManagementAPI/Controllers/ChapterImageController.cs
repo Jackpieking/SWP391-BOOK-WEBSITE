@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -35,26 +36,79 @@ public class ChapterImageController : ControllerBase
     [HttpGet(template: "{chapterIdentifier:guid}")]
     public async Task<IActionResult> GetAllChapterImagesOfAChapterAsync([FromRoute] Guid chapterIdentifier)
     {
+        _logger.LogCritical(message: "Endpoint api/chapterImage/{chapterIdentifier} !!", chapterIdentifier);
+
         try
         {
             var chapterImageModels = await _entityManagementService
-                .GetAllChapterImagesOfAChapterByChapterIdentifierAsync(chapterIdentifer: chapterIdentifier);
+                .GetChapterImagesWith_ImageUrlByChapterIdentifierAsync(chapterIdentifer: chapterIdentifier);
 
             var chapterModel = await _entityManagementService
-                .GetAChapterWithComicAndChapterReviewListByChapterIdentifierAsync(chapterIdentifier: chapterIdentifier);
+                .GetChapterWith_ComicIdentifier_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdentifierAsync(chapterIdentifier: chapterIdentifier);
 
-            GetAllChapterImageOfAChapterAction_Out_Dto allChapterImageAndChapterInfoOfAChapterDto = new()
+            var chapterModels = await _entityManagementService
+                .GetAllChapterWith_ChapterIdentifier_ChapterNumberByComicNameAsync(comicName: chapterModel.ComicModel.ComicName);
+
+            //returning dto
+            var dto = _mapper.Map<GetAllChapterImageOfAChapterAction_Out_Dto>(source: chapterModel);
+
+            //set chapter images for dto
+            dto.ChapterImages = _mapper
+                    .Map<IEnumerable<GetAllChapterImageOfAChapterAction_Out_Dto.ChapterImageDto>>(source: chapterImageModels);
+
+            //set the first chapter identifier
+            dto.FirstChapterIdentifier = chapterModels[0].ChapterIdentifier;
+
+            //set the last chapter identifier
+            dto.LastChapterIdentifier = chapterModels[chapterModels.Count - 1].ChapterIdentifier;
+
+            if (chapterModels.Count == 1)
             {
-                ComicName = chapterModel.ComicModel.ComicName,
-                ChapterNumber = chapterModel.ChapterNumber,
-                ChapterIdentifier = chapterIdentifier,
-                ChapterImages = _mapper
-                    .Map<IEnumerable<GetAllChapterImageOfAChapterAction_Out_Dto.ChapterImageDto>>(source: chapterImageModels),
-                ChapterReviews = _mapper
-                    .Map<IEnumerable<GetAllChapterImageOfAChapterAction_Out_Dto.ReviewChapterDto>>(source: chapterModel.ReviewChapterModels)
-            };
+                dto.NextChapterIdentifier = Guid.Empty;
+                dto.PreviousChapterIdentifier = Guid.Empty;
 
-            return Ok(value: allChapterImageAndChapterInfoOfAChapterDto);
+                return Ok(value: dto);
+            }
+
+            //if current chap is the first chap
+            if (chapterModels[0].ChapterIdentifier.Equals(g: dto.ChapterIdentifier))
+            {
+                dto.NextChapterIdentifier = chapterModels[1].ChapterIdentifier;
+
+                dto.PreviousChapterIdentifier = Guid.Empty;
+
+                return Ok(value: dto);
+            }
+
+            //if current chap is the last chap
+            if (chapterModels[chapterModels.Count - 1].ChapterIdentifier.Equals(g: dto.ChapterIdentifier))
+            {
+                dto.PreviousChapterIdentifier = chapterModels
+                    .Skip(count: chapterModels.Count - 2)
+                    .Take(count: 1)
+                    .First()
+                    .ChapterIdentifier;
+
+                dto.NextChapterIdentifier = Guid.Empty;
+
+                return Ok(value: dto);
+            }
+
+            //if current chap is in range of available chap
+            for (int chapterOrder = 0; chapterOrder < chapterModels.Count; chapterOrder++)
+            {
+                var chapter = chapterModels[chapterOrder];
+
+                if (dto.ChapterIdentifier.Equals(g: chapter.ChapterIdentifier))
+                {
+                    dto.PreviousChapterIdentifier = chapterModels[chapterOrder - 1].ChapterIdentifier;
+                    dto.NextChapterIdentifier = chapterModels[chapterOrder + 1].ChapterIdentifier;
+
+                    break;
+                }
+            }
+
+            return Ok(value: dto);
         }
         catch (NpgsqlException N_e)
         {

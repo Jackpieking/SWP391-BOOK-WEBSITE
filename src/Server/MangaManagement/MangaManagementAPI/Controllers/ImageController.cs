@@ -19,8 +19,14 @@ public class ImageController : ControllerBase
             contentType: "image/jpeg");
     }
 
-    [HttpGet("ChapterImage")]
-    public IActionResult GetAChapterImage(string imgName, string comicName, string chapterNumber)
+    [HttpGet]
+    public IActionResult Test()
+    {
+        return Ok();
+    }
+
+    [HttpGet("ComicImages/{comicName}")]
+    public IActionResult GetAChapterImage([FromRoute] string comicName, [FromQuery] string chapterNumber, [FromQuery] string imageURL)
     {
         return PhysicalFile(
             physicalPath: Path.Combine(
@@ -29,7 +35,7 @@ public class ImageController : ControllerBase
                 "ComicImages",
                 FormatComicName(comicName),
                 $"Chap_{chapterNumber}",
-                imgName),
+                imageURL),
             contentType: "image/jpeg");
     }
 

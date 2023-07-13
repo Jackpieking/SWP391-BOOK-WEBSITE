@@ -121,4 +121,40 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
             .ThenByDescending(keySelector: chapterEntity => chapterEntity.ChapterNumber)
             .ToListAsync();
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="chapterIdentifier"></param>
+    /// <returns></returns>
+    public async Task<ChapterEntity> GetChapterWith_ComicIdByChapterIdAsync(Guid chapterIdentifier)
+    {
+        return await _dbSet
+            .Where(predicate: chapterEntity
+                => chapterEntity.ChapterIdentifier == chapterIdentifier)
+            .Select(selector: chapterEntity => new ChapterEntity
+            {
+                ChapterIdentifier = chapterEntity.ChapterIdentifier,
+                ChapterNumber = chapterEntity.ChapterNumber,
+                ComicEntity = new()
+                {
+                    ComicName = chapterEntity.ComicEntity.ComicName
+                }
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<IList<ChapterEntity>> GetChaptersWith_ChapterId_ChapterNumberByComicNameAsync(string comicName)
+    {
+        return await _dbSet
+            .Where(predicate: chapterEntity => chapterEntity.ComicEntity.ComicName.Equals(comicName))
+            .OrderBy(keySelector: chapterEntity => chapterEntity.ChapterNumber)
+            .Select(selector: chapterEntity => new ChapterEntity
+            {
+                ChapterNumber = chapterEntity.ChapterNumber,
+                ChapterIdentifier = chapterEntity.ChapterIdentifier
+            })
+            .ToListAsync();
+    }
+
 }

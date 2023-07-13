@@ -53,6 +53,17 @@ body {
     background: #0b0c2a;
 }
 
+.blur__large {
+    height: 550px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 30%, rgba(2,2,2,0.8856136204481793) 100%, rgba(255,255,255,1) 100%, rgba(255,255,255,1) 100%, rgba(101,98,98,1) 100%);
+}
+
+
 h1,
 h2,
 h3,
@@ -1995,26 +2006,30 @@ ol {
   margin-left: -25px;
 }
 
-.page-up a {
-  display: inline-block;
-  font-size: 36px;
-  color: #ffffff;
-  height: 50px;
-  width: 50px;
-  background: #e53637;
-  line-height: 50px;
-  text-align: center;
-  border-radius: 50%;
-}
-
-.page-up a:hover {
-    background-color: #ffffff;
-    color: #e53637;
-}
-
-    .page-up a span:hover i {
-        color: #e53637;
+    .page-up a {
+        position: fixed;
+        bottom: 75px;
+        right: 25px;
+        display: none;
+        font-size: 36px;
+        color: #ffffff;
+        height: 50px;
+        width: 50px;
+        z-index: 10;
+        background: #e53637;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 50%;
     }
+
+        .page-up a:hover {
+            background-color: #ffffff;
+            color: #e53637;
+        }
+
+        .page-up a span:hover i {
+            color: #e53637;
+        }
 
 .page-up a span {
   position: relative;
