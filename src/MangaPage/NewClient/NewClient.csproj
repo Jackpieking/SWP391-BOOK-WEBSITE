@@ -10,8 +10,6 @@
 
   <ItemGroup>
 	<Folder Include="wwwroot\css\" />
-	<Folder Include="wwwroot\image\comic\comic_avatar\" />
-	<Folder Include="wwwroot\image\user\" />
 	<Folder Include="wwwroot\js\" />
 	<Folder Include="wwwroot\font\" />
 	<Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />

@@ -1,4 +1,80 @@
-﻿@page
+﻿@page "/auth/login"
 @model NewClient.Pages.LoginModel
 @{
+    ViewData["Title"] = "Đăng Nhập";
 }
+
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg" data-setbg="/image/normal-breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="normal__breadcrumb__text">
+                    <h2>Đăng Nhập</h2>
+                    <p>Chào mừng đến với Manganexus</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Normal Breadcrumb End -->
+<!-- Login Section Begin -->
+<section class="login spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form">
+                    <h3>Đăng nhập</h3>
+                    <div data-bs-theme="dark">
+                        <form>
+                            <div class="mb-3">
+                                <label for="Username" class="form-label text-white">Tài khoản</label>
+                                <input type="text" class="form-control" id="Username" aria-describedby="UsernameHelp">
+                                <div id="UsernameHelp" class="form-text">Nhập tài khoản của bạn</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Password" class="form-label text-white">Mật khẩu</label>
+                                <input type="password" class="form-control" id="Password" aria-describedby="PasswordHelp">
+                                <div id="PasswordHelp" class="form-text">Nhập mật khẩu của bạn</div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label text-white" for="exampleCheck1">Nhớ mật khẩu</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+                        </form>
+                    </div>
+                    <a href="#" class="forget_pass">Quên mật khẩu?</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__register">
+                    <h3>Chưa có tài khoản?</h3>
+                    <a asp-page="Signup" class="btn btn-danger btn-lg">Tạo tài khoản</a>
+                </div>
+            </div>
+        </div>
+        <div class="login__social">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6">
+                    <div class="login__social__links">
+                        <span>Đăng nhập bằng</span>
+                        <ul>
+                            <li>
+                                <a href="#" class="btn btn-lg btn-primary w-75">
+                                    <i class="fa fa-facebook"></i> Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-lg btn-danger w-75">
+                                    <i class="fa fa-google"></i> Google
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Login Section End -->
