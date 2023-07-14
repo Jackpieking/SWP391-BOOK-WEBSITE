@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MangaManagementAPI.Controllers;
 
-public class CategoryController : Controller
+public class CategoriesController : Controller
 {
     private readonly ILogger<CategoryModel> _logger;
     private readonly ComicManagementService _entityManagementService;
 
-    public CategoryController(ILogger<CategoryModel> logger, ComicManagementService entityManagementService)
+    public CategoriesController(ILogger<CategoryModel> logger, ComicManagementService entityManagementService)
     {
         _logger = logger;
         _entityManagementService = entityManagementService;
@@ -46,6 +46,6 @@ public class CategoryController : Controller
     public async Task<IActionResult> Edit(Guid id, CategoryModel category)
     {
         await _entityManagementService.UpdateCategory(category);
-        return RedirectToPage("/Category/Edit/" + id);
+        return RedirectToPage("/Categories/Edit/" + id);
     }
 }

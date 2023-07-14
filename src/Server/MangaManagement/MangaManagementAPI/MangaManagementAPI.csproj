@@ -45,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Category\Edit.cshtml" />
-    <None Include="Views\Category\Index.cshtml" />
+    <None Include="Views\Categories\Edit.cshtml" />
+    <None Include="Views\Categories\Index.cshtml" />
     <None Include="Views\Comics\Details.cshtml" />
     <None Include="Views\Comics\Edit.cshtml" />
     <None Include="Views\Comics\Index.cshtml" />
