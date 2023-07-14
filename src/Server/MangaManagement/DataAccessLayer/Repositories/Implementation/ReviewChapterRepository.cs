@@ -21,6 +21,81 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
         _dbSet.Remove(chapterReviewNeedToDelete);
     }
 
+<<<<<<< HEAD
+	public async Task<IList<ReviewChapterEntity>> GetAllChapterReviewAsync()
+	{
+		return await _dbSet
+			.Select(chapterReview => new ReviewChapterEntity
+			{
+				UserIdentifier = chapterReview.UserIdentifier,
+				ChapterIdentifier = chapterReview.ChapterIdentifier,
+				ChapterComment = chapterReview.ChapterComment,
+				ChapterRatingStar = chapterReview.ChapterRatingStar,
+				ReviewTime = chapterReview.ReviewTime,
+				ChapterEntity = new ChapterEntity
+				{
+					ChapterNumber = chapterReview.ChapterEntity.ChapterNumber,
+					ComicEntity = new ComicEntity
+					{
+						ComicName = chapterReview.ChapterEntity.ComicEntity.ComicName
+					}
+				},
+				UserEntity = new UserEntity
+				{
+					Username = chapterReview.UserEntity.Username
+				},
+			})
+			.ToListAsync();
+	}
+
+public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier)
+	{
+		return await _dbSet
+			.Where(predicate: reviewChapterEntity
+				=> reviewChapterEntity.ChapterIdentifier == chapterIdentifier)
+			.Select(selector: reviewChapterEntity => new ReviewChapterEntity
+			{
+				UserEntity = new UserEntity()
+				{
+					Username = reviewChapterEntity.UserEntity.Username,
+					UserAvatar = reviewChapterEntity.UserEntity.UserAvatar
+				},
+				ChapterComment = reviewChapterEntity.ChapterComment,
+				ChapterRatingStar = reviewChapterEntity.ChapterRatingStar,
+				ReviewTime = reviewChapterEntity.ReviewTime
+			})
+			.OrderBy(reviewChapterEntity => reviewChapterEntity.ReviewTime)
+			.ToListAsync();
+	}
+
+	public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId)
+	{
+		return await _dbSet
+			.Where(reviewChapter => reviewChapter.UserIdentifier.Equals(userId))
+			.Select(selector: reviewChapter => new ReviewChapterEntity()
+			{
+				ChapterEntity = new ChapterEntity()
+				{
+					ChapterNumber = reviewChapter.ChapterEntity.ChapterNumber,
+					ComicEntity = new ComicEntity()
+					{
+						ComicName = reviewChapter.ChapterEntity.ComicEntity.ComicName,
+					}
+				},
+				ChapterComment = reviewChapter.ChapterComment,
+				ChapterRatingStar = reviewChapter.ChapterRatingStar,
+				ReviewTime = reviewChapter.ReviewTime,
+				ChapterIdentifier = reviewChapter.ChapterIdentifier,
+				UserIdentifier = reviewChapter.UserIdentifier,
+				UserEntity = new UserEntity
+				{
+					Username = reviewChapter.UserEntity.Username
+				}
+			})
+			.OrderBy(reviewChaper => reviewChaper.ReviewTime)
+			.ToListAsync();
+	}
+=======
     public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier)
     {
         return await _dbSet
@@ -88,4 +163,5 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
             .OrderBy(reviewChapterEntity => reviewChapterEntity.ReviewTime)
             .ToListAsync();
     }
+>>>>>>> 547eb7a20fa5116c7ad141c4071552b871808977
 }
