@@ -177,7 +177,8 @@ app
     .UseRouting()
     .UseCors()
     .UseAuthentication()
-    .UseAuthorization();
+    .UseAuthorization()
+    .UseCookiePolicy();
 
 app.MapControllers();
 

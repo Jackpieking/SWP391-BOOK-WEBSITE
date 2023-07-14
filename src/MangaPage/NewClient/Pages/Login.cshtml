@@ -4,6 +4,10 @@
     ViewData["Title"] = "Đăng Nhập";
 }
 
+@section ValidateScript {
+    @await Html.PartialAsync("Shared/_ValidationScriptsPartial")
+}
+
 <!-- Normal Breadcrumb Begin -->
 <section class="normal-breadcrumb set-bg" data-setbg="/image/normal-breadcrumb.jpg">
     <div class="container">
@@ -26,22 +30,24 @@
                 <div class="login__form">
                     <h3>Đăng nhập</h3>
                     <div data-bs-theme="dark">
-                        <form>
+                        <form method="post">
                             <div class="mb-3">
-                                <label for="Username" class="form-label text-white">Tài khoản</label>
-                                <input type="text" class="form-control" id="Username" aria-describedby="UsernameHelp">
+                                <label asp-for="UserLogin.Username" class="form-label text-white">Tài khoản</label>
+                                <input asp-for="UserLogin.Username" class="form-control" aria-describedby="UsernameHelp">
                                 <div id="UsernameHelp" class="form-text">Nhập tài khoản của bạn</div>
+                                <span asp-validation-for="UserLogin.Username" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="Password" class="form-label text-white">Mật khẩu</label>
-                                <input type="password" class="form-control" id="Password" aria-describedby="PasswordHelp">
+                                <label asp-for="UserLogin.Password" class="form-label text-white">Mật khẩu</label>
+                                <input asp-for="UserLogin.Password" class="form-control" aria-describedby="PasswordHelp">
                                 <div id="PasswordHelp" class="form-text">Nhập mật khẩu của bạn</div>
+                                <span asp-validation-for="UserLogin.Password" class="text-danger"></span>
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label text-white" for="exampleCheck1">Nhớ mật khẩu</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+@*                            <div class="mb-3 form-check">
+                                <input asp-for="UserLogin.RememberMe" class="form-check-input">
+                                <label asp-for="UserLogin.RememberMe" class="form-check-label text-white">Nhớ mật khẩu</label>
+                            </div>*@
+                            <button type="submit" class="btn btn-primary btn-lg rounded">Đăng nhập</button>
                         </form>
                     </div>
                     <a href="#" class="forget_pass">Quên mật khẩu?</a>
@@ -78,3 +84,18 @@
     </div>
 </section>
 <!-- Login Section End -->
+
+<script defer>
+    document
+        .querySelector(".showPasswordBtn")
+        .addEventListener("click", function(e) {
+            let passwordInput = document.querySelector(".inputPassword");
+
+            if (passwordInput.type === "password"){
+                passwordInput.type = "text";
+            }
+            else {
+                passwordInput.type = "password";
+            }
+        });
+</script>

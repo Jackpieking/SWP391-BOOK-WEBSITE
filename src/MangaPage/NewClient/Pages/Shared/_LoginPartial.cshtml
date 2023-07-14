@@ -1,0 +1,22 @@
+﻿@using NewClient.Services;
+@inject UserService UserService
+
+<div class="dropdown">
+	<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		Người dùng
+	</button>
+	@if (await UserService.IsUserLoginAsync())
+	{
+		<ul class="dropdown-menu">
+			<li><a class="btn btn-primary dropdown-item">Cài đặt</a></li>
+			<li><a class="btn btn-success dropdown-item" asp-page="Logout">Đăng xuất</a></li>
+		</ul>
+	}
+	else
+	{
+		<ul class="dropdown-menu">
+			<li><a class="btn btn-primary dropdown-item" asp-page="Login">Đăng nhập</a></li>
+			<li><a class="btn btn-success dropdown-item" asp-page="Signup">Đăng ký</a></li>
+		</ul>
+	}
+</div>

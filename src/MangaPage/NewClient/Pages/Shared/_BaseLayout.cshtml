@@ -50,21 +50,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2 d-flex flex-wrap justify-content-center align-content-center" data-bs-theme="dark">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Người dùng
-                                </button>
-                                     <ul class="dropdown-menu">
-@*                                        <li>
-                                            <a href="#" class="search-switch dropdown-item">
-                                                <span>Tìm kiếm&nbsp</span>
-                                                <span class="icon_search search__icon"></span>
-                                            </a>
-                                        </li>*@
-                                        <li><a class="btn btn-primary dropdown-item" asp-page="Login">Đăng nhập</a></li>
-                                        <li><a class="btn btn-success dropdown-item" asp-page="Signup">Đăng ký</a></li>
-                                    </ul>
-                            </div>
+                            @await Html.PartialAsync("Shared/_LoginPartial");
                         </div>
                     </div>
                     <div id="mobile-menu-wrap"></div>

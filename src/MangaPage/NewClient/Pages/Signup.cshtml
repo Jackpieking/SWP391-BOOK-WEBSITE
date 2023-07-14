@@ -4,6 +4,10 @@
     ViewData["Title"] = "Đăng ký";
 }
 
+@section ValidateScript {
+    @await Html.PartialAsync("Shared/_ValidationScriptsPartial")
+}
+
 <!-- Normal Breadcrumb Begin -->
 <section class="normal-breadcrumb set-bg" data-setbg="/image/normal-breadcrumb.jpg">
     <div class="container">
@@ -26,32 +30,35 @@
                 <div class="login__form">
                     <h3>Đăng ký</h3>
                     <div data-bs-theme="dark">
-                        <form>
+                        <form method="post">
                             <div class="mb-3">
-                                <label for="Username" class="form-label text-white">Tài khoản</label>
-                                <input type="email" class="form-control" id="Username" aria-describedby="UsernameHelp">
+                                <label asp-for="UserCreationModel.Username" class="form-label text-white">Tài khoản</label>
+                                <input asp-for="UserCreationModel.Username" class="form-control" aria-describedby="UsernameHelp">
                                 <div id="UsernameHelp" class="form-text">Nhập tài khoản của bạn</div>
+                                <span asp-validation-for="UserCreationModel.Username" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="Email" class="form-label text-white">Email</label>
-                                <input type="email" class="form-control" id="Email" aria-describedby="EmailHelp">
+                                <label asp-for="UserCreationModel.UserEmail" class="form-label text-white">Email</label>
+                                <input asp-for="UserCreationModel.UserEmail" class="form-control" aria-describedby="EmailHelp">
                                 <div id="EmailHelp" class="form-text">Nhập email của bạn</div>
+                                <span asp-validation-for="UserCreationModel.UserEmail" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="Password" class="form-label text-white">Mật khẩu</label>
-                                <input type="password" class="form-control" id="Password" aria-describedby="PasswordHelp">
+                                <label asp-for="UserCreationModel.Password" class="form-label text-white">Mật khẩu</label>
+                                <input asp-for="UserCreationModel.Password" class="form-control" aria-describedby="PasswordHelp">
                                 <div id="PasswordHelp" class="form-text">Nhập mật khẩu của bạn</div>
+                                <span asp-validation-for="UserCreationModel.Password" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="ConfirmPassword" class="form-label text-white">Xác nhận mật khẩu</label>
-                                <input type="password" class="form-control" id="ConfirmPassword" aria-describedby="ConfirmPasswordHelp">
+                                <label asp-for="UserCreationModel.ConfirmPassword" class="form-label text-white">Xác nhận mật khẩu</label>
+                                <input asp-for="UserCreationModel.ConfirmPassword" class="form-control" aria-describedby="ConfirmPasswordHelp">
                                 <div id="ConfirmPasswordHelp" class="form-text">Nhập lại mật khẩu của bạn</div>
+                                <span asp-validation-for="UserCreationModel.ConfirmPassword" class="text-danger"></span>
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label text-white" for="exampleCheck1">Nhớ mật khẩu</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg">Đăng ký</button>
+                            <button class="btn btn-outline-warning rounded showPasswordBtn" type="button">Hiện mật khẩu</button>
+                            <br />
+                            <br />
+                            <button type="submit" class="btn btn-primary btn-lg rounded w-100">Đăng ký</button>
                         </form>
                     </div>
                     <h5>Đã có tài khoản? <a asp-page="Login">Đăng nhập</a></h5>
@@ -78,3 +85,21 @@
     </div>
 </section>
 <!-- Signup Section End -->
+<script defer>
+    document
+        .querySelector(".showPasswordBtn")
+        .addEventListener("click", function (e) {
+            let passwordInput = document.querySelector("#UserCreationModel_Password");
+            let confirmPasswordInput = document.querySelector("#UserCreationModel_ConfirmPassword");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                confirmPasswordInput.type = "text";
+            }
+            else {
+                passwordInput.type = "password";
+                confirmPasswordInput.type = "password";
+            }
+        });
+</script>
+

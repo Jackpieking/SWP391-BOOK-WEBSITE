@@ -9,6 +9,8 @@ var services = builder.Services;
 
 services.AddScoped<ComicService>();
 services.AddScoped<ChapterImageService>();
+services.AddScoped<UserService>();
+services.AddHttpContextAccessor();
 
 services
     .AddHttpClient(
