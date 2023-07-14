@@ -396,6 +396,7 @@ public class EntityManagementService
 
         await _unitOfWork
             .SaveAsync();
+    }
     /// <summary>
     /// Get all chapter images of a chapter without any reference from database
     /// </summary>
