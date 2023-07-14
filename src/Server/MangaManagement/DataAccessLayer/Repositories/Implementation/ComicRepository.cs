@@ -46,6 +46,7 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     public async Task<ComicEntity> GetComicByIdAsync(Guid comicId)
     {
         var comic = await _dbSet.FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
+
         await _dbSet.Entry(comic).Collection(c => c.ChapterEntities).LoadAsync();
         await _dbSet.Entry(comic).Reference(c => c.PublisherEntity).LoadAsync();
         await _dbSet.Entry(comic).Collection(c => c.ReviewComicEntities).LoadAsync();

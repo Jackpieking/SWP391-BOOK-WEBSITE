@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.Services;
+﻿using BusinessLogicLayer.Services;
 using DTO.Incoming;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,32 +16,24 @@ public class AuthController : ControllerBase
 {
     private readonly EntityManagementService _entityManagementService;
     private readonly ILogger<AuthController> _logger;
-    private readonly IMapper _mapper;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly UserManager<IdentityUser> _userManager;
 
     public AuthController(
         EntityManagementService entityManagementService,
         ILogger<AuthController> logger,
-        IMapper mapper,
         SignInManager<IdentityUser> signInManager,
         UserManager<IdentityUser> userManager)
     {
         _entityManagementService = entityManagementService;
         _logger = logger;
-        _mapper = mapper;
         _signInManager = signInManager;
         _userManager = userManager;
     }
 
     [HttpGet("is-signin")]
-    public async Task<IActionResult> IsUserSignedInAsync()
+    public IActionResult IsUserSignedIn()
     {
-        //if (HttpContext.Request.Cookies[".AspNetCore.Identity.Application"] is null)
-        //{
-        //    await _signInManager.SignOutAsync();
-        //}
-
         if (_signInManager.IsSignedIn(User))
         {
             return Ok();
