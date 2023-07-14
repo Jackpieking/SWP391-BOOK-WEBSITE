@@ -1,0 +1,63 @@
+﻿@page "/admin/user-chapter-reviews/{userId:guid?}/details/"
+@model MangaManagementAPI.Views.Pages.chapter_review_detailsModel
+@{
+    ViewData["Title"] = "Admin | Chapter Review Details";
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Detail</h6>
+            <a asp-page="/Pages/user-chapter-reviews"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block" style="font-size:20px">
+                Return
+            </a>
+        </div>
+        <div class="card-body">
+            <h5 class="m-2 font-weight-bold text-primary">Chapter Reviews</h5>
+            @if (false)
+            {
+                <p class="m-2">Nothing to show</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Comic Name</th>
+                                <th>Chapter Number</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                                <th>Comment Time</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var review in Model.ChapterReviewDetail)
+                        {
+                        <tr>
+                            <td>@review.ComicName</td>
+                            <td>@review.ChapterNumber</td>
+                            <td>@review.ChapterRatingStar</td>
+                            <td>@review.ChapterComment</td>
+                            <td>@review.ReviewTime</td>
+                            <td class="d-flex justify-content-center">
+                                <a asp-page="comic-review-details"
+                                    asp-route-userId="@review.UserIdentifier"
+                                    asp-route-chapterId="@review.ChapterIdentifier"
+                                    asp-page-handler="deletechapterreview"
+                                    class="btn btn-outline-danger">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

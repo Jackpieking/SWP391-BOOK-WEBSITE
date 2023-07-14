@@ -5,8 +5,10 @@ using Helper;
 using Microsoft.Extensions.Logging;
 using Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services;
@@ -328,5 +330,92 @@ public class EntityManagementService
         });
 
         return userTrsactionHistories;
+    }
+
+    public async Task<IDictionary<Guid, IList<ReviewComicModel>>> GetAllComicReviewAsync()
+    {
+        var comicReviews = await _unitOfWork
+            .ReviewComicRepository
+            .GetAllComicReviewAsync();
+
+        IDictionary<Guid, IList<ReviewComicModel>> userReviewComics = new Dictionary<Guid, IList<ReviewComicModel>>();
+
+        comicReviews.ForEach(comicReview =>
+        {
+            if (!userReviewComics.ContainsKey(comicReview.UserIdentifier))
+            {
+                userReviewComics.Add(comicReview.UserIdentifier, new List<ReviewComicModel>()
+                {
+                    _mapper.Map<ReviewComicModel>(comicReview)
+                });
+            }
+            else
+            {
+                userReviewComics[comicReview.UserIdentifier].Add(_mapper.Map<ReviewComicModel>(comicReview));
+            }
+        });
+        return userReviewComics;
+    }
+
+    public async Task<IDictionary<Guid, IList<ReviewChapterModel>>> GetAllChapterReviewAsync()
+    {
+        var chapterReviews = await _unitOfWork
+            .ReviewChapterRepository
+            .GetAllChapterReviewAsync();
+
+        var userReviewChatpers = new Dictionary<Guid, IList<ReviewChapterModel>>();
+
+        chapterReviews.ForEach(chapterReview =>
+        {
+            if (!userReviewChatpers.ContainsKey(chapterReview.UserIdentifier))
+            {
+                userReviewChatpers.Add(chapterReview.UserIdentifier, new List<ReviewChapterModel>()
+                {
+                    _mapper.Map<ReviewChapterModel>(chapterReview)
+                });
+            }
+            else
+            {
+                userReviewChatpers[chapterReview.UserIdentifier].Add(_mapper.Map<ReviewChapterModel>(chapterReview));
+            }
+        });
+        return userReviewChatpers;
+    }
+
+    public async Task<IList<ReviewChapterModel>> GetAllChapterReview_OfAUser_ByUserId(Guid userId)
+    {
+        var chapterReviews = await _unitOfWork
+            .ReviewChapterRepository
+            .GetChapterReviewsOfAUserByUserId(userId);
+
+        return  _mapper.Map<IList<ReviewChapterModel>>(chapterReviews);
+    }
+
+    public async Task<IList<ReviewComicModel>> GetAllComicReview_OfAUser_ByUserId(Guid userId)
+    {
+        var comicReviews = await _unitOfWork
+            .ReviewComicRepository
+            .GetComicReviewsOfAUserByUserId(userId);
+        return _mapper.Map<IList<ReviewComicModel>>(comicReviews);
+    }
+
+    public async Task DeleteUserReviewedComicByIdAsync(Guid userId, Guid comicId)
+    {
+        await _unitOfWork
+            .ReviewComicRepository
+            .DeleteReviewedOnComic_OfAUser_ByUserIdAsync(userId, comicId);
+
+        await _unitOfWork
+        .SaveAsync();
+    }
+
+    public async Task DeleteUserReviewedChapterByIdAsync(Guid userId, Guid chapterId)
+    {
+        await _unitOfWork
+            .ReviewChapterRepository
+            .DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(userId, chapterId);
+
+        await _unitOfWork
+            .SaveAsync();
     }
 }

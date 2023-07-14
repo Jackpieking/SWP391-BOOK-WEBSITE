@@ -1,0 +1,52 @@
+﻿@page "/admin/chapter-reviews/"
+@model MangaManagementAPI.Views.Pages.user_chapter_reviewsModel
+@{
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Data</h6>
+            <a asp-page="/Pages/user-create"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-none" style="font-size:20px">
+                User Chapter Reviews
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Username</th>
+                            <th class="text-center">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ReviewChapter == null)
+                        {
+                            <tr class="error">Error</tr>
+                        }
+                        else
+                        {
+                            foreach (var review in Model.ReviewChapter)
+                            {
+                                <tr>
+                                    <td class="text-center">@review.Value.First().Username</td>
+
+                                    <td class="d-flex justify-content-center">
+                                        <a asp-page="chapter-review-details"
+                                           asp-route-userId="@review.Value.First().UserIdentifier"
+                                           class="btn btn-outline-primary">
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

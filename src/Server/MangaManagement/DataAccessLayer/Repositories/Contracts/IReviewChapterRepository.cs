@@ -11,4 +11,5 @@ public interface IReviewChapterRepository : IGenericRepository<ReviewChapterEnti
 	Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier);
 	Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId);
 	Task DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(Guid userId, Guid chapterId);
+	Task<IList<ReviewChapterEntity>> GetAllChapterReviewAsync();
 }

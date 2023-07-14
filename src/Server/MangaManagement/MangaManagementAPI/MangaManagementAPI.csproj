@@ -47,18 +47,9 @@
 
   <ItemGroup>
     <None Include="Views\Pages\404.cshtml" />
-    <None Include="Views\Pages\blank.cshtml" />
-    <None Include="Views\Pages\buttons.cshtml" />
-    <None Include="Views\Pages\cards.cshtml" />
-    <None Include="Views\Pages\charts.cshtml" />
     <None Include="Views\Pages\forgot-password.cshtml" />
     <None Include="Views\Pages\login.cshtml" />
     <None Include="Views\Pages\register.cshtml" />
-    <None Include="Views\Pages\tables.cshtml" />
-    <None Include="Views\Pages\utilities-animation.cshtml" />
-    <None Include="Views\Pages\utilities-border.cshtml" />
-    <None Include="Views\Pages\utilities-color.cshtml" />
-    <None Include="Views\Pages\utilities-other.cshtml" />
     <None Include="wwwroot\img\undraw_posting_photo.svg" />
     <None Include="wwwroot\img\undraw_profile.svg" />
     <None Include="wwwroot\img\undraw_profile_1.svg" />
