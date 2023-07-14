@@ -97,4 +97,11 @@ public class ComicCategoryRepository : GenericRepository<ComicCategoryEntity>, I
             _dbSet.RemoveRange(entities: foundComicCategoryEntities);
         }
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param></param>
+    public async Task<IEnumerable<ComicCategoryEntity>> GetAllComicCategoryNoRelationAsync() =>
+        await _dbSet.ToListAsync();
 }

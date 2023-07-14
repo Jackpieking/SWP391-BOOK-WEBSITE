@@ -157,4 +157,6 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
             .ToListAsync();
     }
 
+    public async Task<ChapterEntity> GetChapterByIdAsync(Guid id) =>
+        await _dbSet.FirstOrDefaultAsync(c => c.ChapterIdentifier == id);
 }

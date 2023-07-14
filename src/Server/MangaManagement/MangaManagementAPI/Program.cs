@@ -41,6 +41,7 @@ services
     .AddScoped<PublisherManagementService>()
     .AddScoped<TruyenQQPageHandlerService>()
     .AddScoped<ApiCallingService>()
+    .AddScoped<ComicManagementService>()
     .ConfigureOptions<DatabaseOptionUpdates>();
 
 //mapper profile
@@ -179,6 +180,11 @@ app
     .UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action=Index}/{id?}"
+);
 
 app.MapRazorPages();
 

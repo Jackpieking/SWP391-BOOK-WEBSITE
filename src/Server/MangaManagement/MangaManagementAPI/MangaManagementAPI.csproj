@@ -45,6 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Category\Edit.cshtml" />
+    <None Include="Views\Category\Index.cshtml" />
+    <None Include="Views\Comics\Details.cshtml" />
+    <None Include="Views\Comics\Edit.cshtml" />
+    <None Include="Views\Comics\Index.cshtml" />
     <None Include="Views\Pages\404.cshtml" />
     <None Include="Views\Pages\forgot-password.cshtml" />
     <None Include="Views\Pages\login.cshtml" />

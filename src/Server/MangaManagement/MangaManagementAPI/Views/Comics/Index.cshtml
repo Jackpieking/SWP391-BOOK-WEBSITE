@@ -1,0 +1,87 @@
+﻿@using Model;
+@model IEnumerable<ComicModel>
+@{
+    ViewData["Title"] = "Admin - Comic Tables";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+
+    <!-- Comics Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Comics Table</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Avatar</th>
+                            <th>Published Date</th>
+                            <th>Publisher Id</th>
+                            <th>Status</th>
+                            <th>Modified</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Avatar</th>
+                            <th>Published Date</th>
+                            <th>Publisher Id</th>
+                            <th>Status</th>
+                            <th>Modified</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model == null)
+                        {
+                            <tr class="error">Error</tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.ComicIdentifier)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ComicName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ComicDescription)</td>
+                                    <td class="text-truncate" style="max-width: 150px;">@Html.DisplayFor(modelItem => item.ComicAvatar)</td>
+                                    <td>@item.ComicPublishedDate</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PublisherIdentifier)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ComicStatus)</td>
+                                    <td>
+                                        <a asp-controller="Comics" asp-action="Details" asp-route-id="@item.ComicIdentifier" class="btn btn-info btn-circle mx-2">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <br>
+                                        <a asp-controller="Comics" asp-action="Edit" asp-route-id="@item.ComicIdentifier" class="btn btn-warning btn-circle mx-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <br>
+                                        <a controller="Comics" action="Delete" data-id="@item.ComicIdentifier" class="btn btn-danger btn-circle mx-2" data-toggle="modal" data-target="#deleteModal">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Comics Table End -->
+
+    <!-- Delete Modal -->
+    @await Html.PartialAsync("_DeleteModal")
+     
+</div>

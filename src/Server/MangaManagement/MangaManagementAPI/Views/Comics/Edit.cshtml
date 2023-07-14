@@ -1,0 +1,100 @@
+﻿@using Model
+@model ComicModel
+@{
+    this.ViewData["Title"] = "Admin - Comic Edit";
+
+    List<SelectListItem> Status = new()
+    {
+        new SelectListItem { Value = "Đang Cập Nhật", Text = "Đang Cập Nhật" },
+        new SelectListItem { Value = "Đã Ngưng", Text = "Đã Ngưng" },
+        new SelectListItem { Value = "Đã Hoàn Thành", Text = "Đã Hoàn Thành" }
+    };
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    @*<p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table below.
+    For more information about DataTables, please visit the <a target="_blank"
+    href="https://datatables.net">official DataTables documentation</a>.
+    </p>*@
+
+    <!-- Edit Form -->
+    <div class="card shadow mb-4 row">
+        <div class="card-header py-3">
+            <h2>Comic Form<small>   Edit</small></h2>
+        </div>
+        <div>
+            <br />
+            <form class="form-check col-form-label" asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Id -->
+                <div class="form-group">
+                    <label asp-for="ComicIdentifier" class="control-label"></label>
+                    <input asp-for="ComicIdentifier" class="form-control" readonly />
+                    <span asp-validation-for="ComicIdentifier" class="text-danger"></span>
+                </div>
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label asp-for="ComicName" class="control-label"></label> <span style="color:red"> *</span>
+                    <input asp-for="ComicName" class="form-control" required />
+                    <span asp-validation-for="ComicName" class="text-danger"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label asp-for="ComicDescription" class="control-label"></label>
+                    <textarea asp-for="ComicDescription" class="resizable_textarea form-control"></textarea>
+                    <span asp-validation-for="ComicDescription" class="text-danger"></span>
+                </div>
+
+                <!-- Published Date -->
+                <div class="form-group">
+                    <label asp-for="ComicPublishedDate" class="control-label"></label> <span style="color:red"> *</span>
+                    <input asp-for="ComicPublishedDate" class="form-control" type="date" required />
+                    <span asp-validation-for="ComicPublishedDate" class="text-danger"></span>
+                </div>
+
+                <!-- Categories -->
+                <div class="form-group">
+                    <label class="control-label">Categories</label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="checkbox" autocomplete="off" checked> Manga
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off"> Drama
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off" checked> Adventure
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off"> Fantasy
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Comic Status -->
+                <div class="form-group">
+                    <label asp-for="ComicStatus" class="control-label"></label>
+                    <select class="form-control" asp-for="ComicStatus" asp-items="@Status">
+                        <option value="">Choose option</option>
+                    </select>
+                    <span asp-validation-for="ComicStatus" class="text-danger"></span>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- End Edit Form -->
+
+</div>

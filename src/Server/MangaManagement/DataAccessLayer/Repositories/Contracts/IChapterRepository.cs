@@ -14,4 +14,5 @@ public interface IChapterRepository : IGenericRepository<ChapterEntity>
     Task<IEnumerable<ChapterEntity>> GetAllChapterWith_ChapterNumber_ComicIdentitiferAsync();
     Task<ChapterEntity> GetChapterWith_ComicIdByChapterIdAsync(Guid chapterIdentifier);
     Task<IList<ChapterEntity>> GetChaptersWith_ChapterId_ChapterNumberByComicNameAsync(string comicName);
+    Task<ChapterEntity> GetChapterByIdAsync(Guid id);
 }

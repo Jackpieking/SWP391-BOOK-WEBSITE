@@ -19,11 +19,8 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
     ///
     /// </summary>
     /// <returns></returns>
-    public async Task<IList<ComicEntity>> GetAllComicAsync()
-    {
-        return await _dbSet
-            .ToListAsync();
-    }
+    public async Task<IEnumerable<ComicEntity>> GetAllComicNoRelationAsync() =>
+        await _dbSet.ToListAsync();
 
     /// <summary>
     ///
@@ -41,6 +38,27 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
             })
             .ToListAsync();
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ComicEntity> GetComicByIdAsync(Guid comicId)
+    {
+        var comic = await _dbSet.FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
+        await _dbSet.Entry(comic).Collection(c => c.ChapterEntities).LoadAsync();
+        await _dbSet.Entry(comic).Reference(c => c.PublisherEntity).LoadAsync();
+        await _dbSet.Entry(comic).Collection(c => c.ReviewComicEntities).LoadAsync();
+        var chapter = _dbSet.Select(comic => comic.ChapterEntities);
+        return comic;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ComicEntity> GetComicByIdNoRelationAsync(Guid comicId) =>
+        await _dbSet.FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
 
     /// <summary>
     ///
@@ -80,6 +98,26 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
                 PublisherIdentifier = comicEntity.PublisherIdentifier
             })
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<Guid> UpdateComicAsync(Guid comicId, string comicName, string comicDes, string comicPDate, string comicStatus)
+    {
+        var comicFound = await _dbSet
+            .FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
+
+        if (comicFound == null)
+        {
+            return Guid.Empty;
+        }
+
+        comicFound.ComicName = comicName;
+        comicFound.ComicDescription = comicDes;
+        comicFound.ComicPublishedDate = DateOnly.Parse(comicPDate);
+        comicFound.ComicStatus = comicStatus;
+
+        _dbSet.Update(entity: comicFound);
+
+        return comicFound.ComicIdentifier;
     }
 
     /// <summary>

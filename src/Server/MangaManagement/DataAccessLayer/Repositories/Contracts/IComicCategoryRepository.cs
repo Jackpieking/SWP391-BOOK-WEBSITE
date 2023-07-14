@@ -11,4 +11,5 @@ public interface IComicCategoryRepository : IGenericRepository<ComicCategoryEnti
     Task<IList<ComicCategoryEntity>> GetComicCategoryNameByComicIdentifierFromDatabaseAsync(Guid comicIdentifier);
     void DeleteComicCategoriesByComicIdentifier(Guid comicIdentifier);
     Task UpdateCrawlDataAsync(Guid comicIdentifier, IList<Guid> categoryidentifiers);
+    Task<IEnumerable<ComicCategoryEntity>> GetAllComicCategoryNoRelationAsync();
 }

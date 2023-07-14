@@ -1,0 +1,56 @@
+﻿@using Model
+@model CategoryModel
+@{
+    this.ViewData["Title"] = "Admin - Category Edit";
+}
+
+<div class="container-fluid">
+
+    <!-- Edit Form -->
+    <div class="card shadow mb-4 row">
+        <div class="card-header py-3">
+            <h2>Category Form<small>    Edit</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <br />
+            <form class="form-check col-form-label" asp-controller="Category" asp-action="UpdateCategory" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Id -->
+                <div class="form-group">
+                    <label asp-for="CategoryIdentifier" class="control-label"></label>
+                    <input asp-for="CategoryIdentifier" class="form-control" readonly />
+                    <span asp-validation-for="CategoryIdentifier" class="text-danger"></span>
+                </div>
+                <!-- Name -->
+                <div class="form-group">
+                    <label asp-for="CategoryName" class="control-label"></label><span style="color:red"> *</span>
+                    <input asp-for="CategoryName" class="form-control" readonly />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                </div>
+                <!-- Description -->
+                <div class="form-group">
+                    <label asp-for="CategoryDescription" class="control-label"></label>
+                    <textarea asp-for="CategoryDescription" class="resizable_textarea form-control" readonly />
+                    <span asp-validation-for="CategoryDescription" class="text-danger"></span>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="item form-group">
+                    <div class="col-md-6 col-sm-6 offset-md-3">
+                        <button class="btn btn-primary" type="button">Cancel</button>
+                        <button class="btn btn-primary" type="reset">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- End Edit Form -->
+
+</div>
