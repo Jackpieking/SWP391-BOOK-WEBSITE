@@ -8,7 +8,7 @@ public class DisplayAllComicModel
 
     public string ComicName { get; set; }
 
-    public DateOnly ComicPublishDate { get; set; }
+    public DateOnly ComicPublishedDate { get; set; }
 
     public string ComicLatestChapter { get; set; }
 

@@ -25,6 +25,12 @@ public class ComicModelToGetComicDetailDtoProfile : Profile
                 memberOptions: option =>
                 {
                     option.MapFrom(mapExpression: source => source.ChapterModels);
+                })
+            .ForMember(
+                destinationMember: comicModel => comicModel.CategoryNames,
+                memberOptions: option =>
+                {
+                    option.MapFrom(mapExpression: source => new List<string>());
                 });
         #endregion
 

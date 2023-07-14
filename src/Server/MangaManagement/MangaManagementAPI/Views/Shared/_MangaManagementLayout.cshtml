@@ -1,6 +1,6 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    Layout = "Pages/Shared/_CssJsFontLayout";
+    Layout = "_CssJsFontLayout";
 }
 
 <div id="page-top">
@@ -9,7 +9,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @await Html.PartialAsync("Pages/Shared/_Sidebar")
+        @await Html.PartialAsync("_Sidebar")
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -17,7 +17,7 @@
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                @await Html.PartialAsync("Pages/Shared/_Topbar")
+                @await Html.PartialAsync("_Topbar")
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
                 @RenderBody()
@@ -27,7 +27,7 @@
             </div>
             <!-- End of Main Content -->
             <!-- Footer -->
-            @await Html.PartialAsync("Pages/Shared/_Footer")
+            @await Html.PartialAsync("_Footer")
             <!-- End of Footer -->
         </div>
 
@@ -41,7 +41,7 @@
     </a>
 
     <!-- Logout Modal-->
-    @await Html.PartialAsync("Pages/Shared/_Logout")
+    @await Html.PartialAsync("_Logout")
 </div>
 
 

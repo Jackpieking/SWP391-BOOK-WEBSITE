@@ -7,9 +7,17 @@ public class DisplayAllChapterImagesOfAChapterModel
 {
     public string ComicName { get; set; }
 
-    public double ChapterNumber { get; set; }
+    public string ChapterNumber { get; set; }
 
     public Guid ChapterIdentifier { get; set; }
+
+    public Guid FirstChapterIdentifier { get; set; }
+
+    public Guid LastChapterIdentifier { get; set; }
+
+    public Guid NextChapterIdentifier { get; set; }
+
+    public Guid PreviousChapterIdentifier { get; set; }
 
     public IEnumerable<ChapterImageDto> ChapterImages { get; set; }
 
@@ -31,6 +39,5 @@ public class DisplayAllChapterImagesOfAChapterModel
         public short ChapterRatingStar { get; set; }
 
         public DateTime ReviewTime { get; set; }
-
     }
 }

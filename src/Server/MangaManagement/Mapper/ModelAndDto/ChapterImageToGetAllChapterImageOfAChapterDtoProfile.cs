@@ -11,6 +11,23 @@ public class ChapterImageToGetAllChapterImageOfAChapterDtoProfile : Profile
     /// </summary>
     public ChapterImageToGetAllChapterImageOfAChapterDtoProfile()
     {
+        CreateMap<ChapterModel, GetAllChapterImageOfAChapterAction_Out_Dto>()
+            //ComicName
+            .ForMember(
+                destinationMember: reviewComicModel => reviewComicModel.ComicName,
+                memberOptions: option =>
+                {
+                    option.MapFrom(mapExpression: source => source.ComicModel.ComicName);
+                })
+            //ChapterReviews
+            .ForMember(
+                destinationMember: reviewComicModel => reviewComicModel.ChapterReviews,
+                memberOptions: option =>
+                {
+                    option.MapFrom(mapExpression: source => source.ReviewChapterModels);
+                });
+
+
         CreateMap<ChapterImageModel, GetAllChapterImageOfAChapterAction_Out_Dto.ChapterImageDto>();
 
         CreateMap<ReviewChapterModel, GetAllChapterImageOfAChapterAction_Out_Dto.ReviewChapterDto>()

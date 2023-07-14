@@ -19,7 +19,7 @@ public class MangaDetailModel : PageModel
     private readonly ILogger<MangaDetailModel> _logger;
     private readonly ComicService _comicService;
 
-    public DisplayComicInformationModel DisplayComicInformationModel { get; set; }
+    public DisplayComicDetailModel DisplayComicInformationModel { get; set; }
 
     public IEnumerable<DisplayAllComicModel> HotComicModels { get; set; }
 
@@ -42,7 +42,7 @@ public class MangaDetailModel : PageModel
                 = $"https://localhost:7174/api/Image/ComicAvatar/{DisplayComicInformationModel.ComicAvatar}";
 
             HotComicModels = (await _comicService
-                .GetAllComicModelFromApiAsync())
+                .GetAllComicFromApiAsync())
                 .OrderByDescending(keySelector: comicModel => comicModel.ReadersCounts);
 
             HotComicModels.ForEach(action: comicModel =>

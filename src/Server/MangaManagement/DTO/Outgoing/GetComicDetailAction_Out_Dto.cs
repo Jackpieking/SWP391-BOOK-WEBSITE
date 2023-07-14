@@ -15,7 +15,7 @@ public class GetComicDetailAction_Out_Dto
 
     public DateOnly ComicPublishedDate { get; set; }
 
-    public int ReaderCounts { get; set; } //
+    public int ReaderCounts { get; set; }
 
     public ICollection<ReviewComicDto> ReviewComics { get; set; }
 

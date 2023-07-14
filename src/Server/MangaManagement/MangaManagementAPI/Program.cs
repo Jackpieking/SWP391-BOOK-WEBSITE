@@ -4,12 +4,15 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
+using Helper;
 using Helper.ObjectMappers.ModelToEntity;
 using Mapper.ModelAndDto;
 using Mapper.ModelAndEntity;
 using Mapper.ModelToEntity;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -92,7 +95,51 @@ services
             .EnableServiceProviderCaching(cacheServiceProvider: databaseOptions.EnableServiceProviderCaching)
             .EnableSensitiveDataLogging(sensitiveDataLoggingEnabled: databaseOptions.EnableSensitiveDataLogging)
             .EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyCheck);
+    })
+    .AddDbContextPool<UserIdentityContext>((service, config) =>
+    {
+        var databaseOptions = service.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+
+        config
+            .UseNpgsql(connectionString: builder.Configuration.GetConnectionString("UserIdentityDbConnectionString"), npgsqlOptionsAction: config =>
+            {
+                config
+                    .MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().FullName)
+                    .EnableRetryOnFailure(maxRetryCount: databaseOptions.MaxRetryCount)
+                    .CommandTimeout(commandTimeout: databaseOptions.CommandTimeOut);
+            })
+            .EnableDetailedErrors(detailedErrorsEnabled: databaseOptions.EnableDetailedErrors)
+            .EnableServiceProviderCaching(cacheServiceProvider: databaseOptions.EnableServiceProviderCaching)
+            .EnableSensitiveDataLogging(sensitiveDataLoggingEnabled: databaseOptions.EnableSensitiveDataLogging)
+            .EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyCheck);
     });
+
+//asp net core identity
+services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    // Thiết lập về Password
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 3;
+    options.Password.RequiredUniqueChars = 0;
+
+    // Cấu hình Lockout - khóa user
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(value: 1);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // Cấu hình về User.
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+
+    // Cấu hình đăng nhập.
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+})
+.AddEntityFrameworkStores<UserIdentityContext>()
+.AddDefaultTokenProviders();
 
 //Httpclient
 services
@@ -105,9 +152,13 @@ services
 
 //controller
 services
-    .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true);
+    .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true)
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    }); ;
 
-//RazerPage
+//RazorPage
 services
     .AddRazorPages()
     .AddRazorPagesOptions(options =>
@@ -123,7 +174,9 @@ app
     .UseHttpsRedirection()
     .UseStaticFiles()
     .UseRouting()
-    .UseCors();
+    .UseCors()
+    .UseAuthentication()
+    .UseAuthorization();
 
 app.MapControllers();
 

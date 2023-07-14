@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NewClient.Models;
 
-public class DisplayComicInformationModel
+public class DisplayComicDetailModel
 {
     public string ComicName { get; set; }
 
@@ -15,7 +15,7 @@ public class DisplayComicInformationModel
 
     public DateOnly ComicPublishedDate { get; set; }
 
-    public int ReaderCounts { get; set; } //
+    public int ReaderCounts { get; set; }
 
     public ICollection<ReviewComicDto> ReviewComics { get; set; }
 

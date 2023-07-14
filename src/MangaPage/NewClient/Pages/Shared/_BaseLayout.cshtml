@@ -43,16 +43,27 @@
                                 <nav class="header__menu mobile-menu">
                                     <ul>
                                         <li class="active"><a asp-page="Index">Trang chủ</a></li>
-                                        <li><a href="./categories.html">Hạng mục</a></li>
-                                        <li><a href="./blog.html">Bài viết</a></li>
+                                        <li><a asp-page="MangaDetail">Hạng mục</a></li>
+                                        @*<li><a href="./blog.html">Bài viết</a></li>*@
                                     </ul>
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="header__right">
-                                <a href="#" class="search-switch"><span class="icon_search search__icon"></span></a>
-                                <a href="./login.html"><span class="icon_profile profile__icon"></span></a>
+                        <div class="col-lg-2 d-flex flex-wrap justify-content-center align-content-center" data-bs-theme="dark">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Người dùng
+                                </button>
+                                     <ul class="dropdown-menu">
+@*                                        <li>
+                                            <a href="#" class="search-switch dropdown-item">
+                                                <span>Tìm kiếm&nbsp</span>
+                                                <span class="icon_search search__icon"></span>
+                                            </a>
+                                        </li>*@
+                                        <li><a class="btn btn-primary dropdown-item" asp-page="Login">Đăng nhập</a></li>
+                                        <li><a class="btn btn-success dropdown-item" asp-page="Signup">Đăng ký</a></li>
+                                    </ul>
                             </div>
                         </div>
                     </div>
@@ -76,12 +87,12 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 mb-5">
                             <div class="footer__logo">
                                 <a asp-page="Index"><img src="/image/Logo.png" alt=""></a>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-9">
                             <div class="footer__nav">
                             </div>
                         </div>
