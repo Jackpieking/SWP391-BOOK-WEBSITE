@@ -9,5 +9,7 @@ namespace DataAccessLayer.Repositories.Contracts.Base
     public interface IComicLikeRepository : IGenericRepository<ComicLikeEntity>
     {
         Task<IList<ComicLikeEntity>> GetComicLikesOfAUserByUserId(Guid userId);
+
+        Task<IList<ComicLikeEntity>> GetAllComicLikesAsync();
     }
 }

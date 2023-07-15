@@ -1,0 +1,53 @@
+﻿@page "/admin/user-comic-like/"
+@model MangaManagementAPI.Views.Pages.user_comic_likeModel
+@{
+    ViewData["Title"] = "Admin | Comic Like";
+}
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Data</h6>
+            <a asp-page="/Pages/user-create"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-none" style="font-size:20px">
+                Users Comic Like
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Username</th>
+                            <th class="text-center">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ComicLike == null)
+                        {
+                            <tr class="error">Error</tr>
+                        }
+                        else
+                        {
+                            foreach (var like in Model.ComicLike)
+                            {
+                                <tr>
+                                    <td class="text-center">@like.Value.First().Username</td>
+
+                                    <td class="d-flex justify-content-center">
+                                        <a asp-page="user-comic-like-details"
+                                           asp-route-userId="@like.Value.First().UserIdentifier"
+                                           class="btn btn-outline-primary">
+                                            Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -431,4 +431,66 @@ public class EntityManagementService
 
         return readingHistoryCounts;
     }
+    public async Task<IDictionary<Guid,IList<ComicLikeModel>>> GetAllComicLikeAsync()
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Like Table", args: DateTime.Now);
+
+        var comicLikes = await _unitOfWork
+            .ComicLikeRepository
+            .GetAllComicLikesAsync();
+        var userComicLike = new Dictionary<Guid, IList<ComicLikeModel>>();
+
+        comicLikes.ForEach(comicLikes =>
+        {
+            if (!userComicLike.ContainsKey(comicLikes.UserIdentifier))
+            {
+                userComicLike.Add(comicLikes.UserIdentifier, new List<ComicLikeModel>()
+                {
+                    _mapper.Map<ComicLikeModel>(comicLikes)
+                });
+            }
+            else
+            {
+                userComicLike[comicLikes.UserIdentifier].Add(_mapper.Map<ComicLikeModel>(comicLikes));
+            }
+        });
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: End Querying On Comic Like Table", args: DateTime.Now);
+
+        return userComicLike;
+    }
+    public async Task<IList<ComicLikeModel>> GetComicLikesOfAUserByUserId(Guid userId)
+    {
+        var comicLikes = await _unitOfWork
+            .ReviewChapterRepository
+            .GetChapterReviewsOfAUserByUserId(userId);
+
+        return _mapper.Map<IList<ComicLikeModel>>(comicLikes);
+    }
 }
+/*
+     public async Task<IDictionary<Guid, IList<ReviewChapterModel>>> GetAllChapterReviewAsync()
+    {
+        var chapterReviews = await _unitOfWork
+            .ReviewChapterRepository
+            .GetAllChapterReviewAsync();
+
+        var userReviewChatpers = new Dictionary<Guid, IList<ReviewChapterModel>>();
+
+        chapterReviews.ForEach(chapterReview =>
+        {
+            if (!userReviewChatpers.ContainsKey(chapterReview.UserIdentifier))
+            {
+                userReviewChatpers.Add(chapterReview.UserIdentifier, new List<ReviewChapterModel>()
+                {
+                    _mapper.Map<ReviewChapterModel>(chapterReview)
+                });
+            }
+            else
+            {
+                userReviewChatpers[chapterReview.UserIdentifier].Add(_mapper.Map<ReviewChapterModel>(chapterReview));
+            }
+        });
+        return userReviewChatpers;
+    }
+ */
