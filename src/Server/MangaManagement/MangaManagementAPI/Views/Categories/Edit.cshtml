@@ -18,7 +18,7 @@
         </div>
         <div class="collapse" id="collapseExample">
             <br />
-            <form class="form-check col-form-label" asp-controller="Category" asp-action="UpdateCategory" method="post">
+            <form class="form-check col-form-label" asp-controller="Categories" asp-action="Edit" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <!-- Id -->
                 <div class="form-group">
@@ -29,13 +29,13 @@
                 <!-- Name -->
                 <div class="form-group">
                     <label asp-for="CategoryName" class="control-label"></label><span style="color:red"> *</span>
-                    <input asp-for="CategoryName" class="form-control" readonly />
+                    <input asp-for="CategoryName" class="form-control" />
                     <span asp-validation-for="CategoryName" class="text-danger"></span>
                 </div>
                 <!-- Description -->
                 <div class="form-group">
                     <label asp-for="CategoryDescription" class="control-label"></label>
-                    <textarea asp-for="CategoryDescription" class="resizable_textarea form-control" readonly />
+                    <textarea asp-for="CategoryDescription" class="resizable_textarea form-control"></textarea>
                     <span asp-validation-for="CategoryDescription" class="text-danger"></span>
                 </div>
 

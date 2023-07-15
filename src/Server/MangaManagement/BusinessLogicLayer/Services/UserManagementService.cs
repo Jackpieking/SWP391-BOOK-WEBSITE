@@ -22,7 +22,6 @@ namespace BusinessLogicLayer.Services
             _logger = logger;
         }
 
-
         /// <summary>
         /// Get all users without any reference from database
         /// </summary>
@@ -59,20 +58,19 @@ namespace BusinessLogicLayer.Services
             return _mapper.Map<UserModel>(userEntity);
         }
 
-
         /// <summary>
         /// Get all user's transactions history by userIndetifier reference from database
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>Task<ICollection<TransactionsHistoryModel>></returns>
-        public async Task<ICollection<TransactionsHistoryModel>> GetAllTransactionsOfAUserByUserIdAsync(Guid userId)
+        public async Task<ICollection<TransactionsHistoryModel>> GetTransactionsByUserIdAsync(Guid userId)
         {
             _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Transaction History Table", args: DateTime.Now);
 
             var transactionHistoryEntities = await
                 _unitOfWork
                 .TransactionRepository
-                .GetTransactionHistoriesOfAUserByUserId(userId);
+                .GetTransactionsByUserId(userId);
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Transaction History Table", args: DateTime.Now);
             return _mapper.Map<ICollection<TransactionsHistoryModel>>(transactionHistoryEntities);
