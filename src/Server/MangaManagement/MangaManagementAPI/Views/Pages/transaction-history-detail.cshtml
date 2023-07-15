@@ -1,7 +1,7 @@
 ﻿@page "/admin/transaction-history/{userId:guid?}/details/"
 @model MangaManagementAPI.Views.Pages.transaction_history_detailModel
 @{
-	ViewData["Title"] = $"Admin | Transaction Details";
+    ViewData["Title"] = $"Admin | Transaction Details";
 }
 
 <div class="container-fluid">
@@ -26,20 +26,22 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Transaction Id</th>
                                 <th>Transaction Amount</th>
                                 <th>TransactionDate</th>
                                 <th>TransactionCoin</th>
                             </tr>
                         </thead>
                         <tbody>
-@*                            @foreach (var transactionHistory in @user.TransactionHistoryOutDto)
+                            @foreach (var item in Model.transactions)
                             {
                                 <tr>
-                                    <td>@transactionHistory.TransactionAmount vnd</td>
-                                    <td>@transactionHistory.TransactionDate</td>
-                                    <td>@transactionHistory.TransactionCoin vnd</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionIdentifier)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionAmount)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionCoin) vnd</td>
                                 </tr>
-                            }*@
+                            }
                         </tbody>
                     </table>
                 </div>

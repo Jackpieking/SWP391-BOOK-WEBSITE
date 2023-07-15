@@ -1,7 +1,7 @@
 ﻿@using Model
 @model IEnumerable<CategoryModel>
 @{
-    ViewData["Title"] = "Admin - Comic Tables";
+    ViewData["Title"] = "Admin - Categories Data";
 }
 
 <div class="container-fluid">
@@ -47,12 +47,11 @@
                                     <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CategoryDescription)</td>
                                     <td>
-                                        <br>
-                                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryIdentifier" class="btn btn-warning btn-circle">
+                                        <a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.CategoryIdentifier" class="btn btn-warning btn-circle">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <br>
-                                        <a asp-controller="Category" asp-action="Delete" data-id="@item.CategoryIdentifier" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#deleteModal">
+                                        <a asp-controller="Categories" asp-action="Delete" data-id="@item.CategoryIdentifier" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#deleteModal">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
