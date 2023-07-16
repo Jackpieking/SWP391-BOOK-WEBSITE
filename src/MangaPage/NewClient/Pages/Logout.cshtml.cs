@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -14,9 +15,19 @@ public class LogoutModel : PageModel
 			.FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
 			.Value;
 
-		if (Equals(authCookie, null) && Equals(TempData["token"], null))
+		var token = TempData["token"];
+		string authSession = null;
+
+		if (!Equals(token, null))
 		{
-			return RedirectToPagePermanent("/Index");
+			authSession = HttpContext
+				.Session
+				.GetString(token.ToString());
+		}
+
+		if (Equals(authCookie, null) && Equals(authSession, null))
+		{
+			return RedirectToPage("/Index");
 		}
 
 		HttpContext.Response.Headers.Add("REFRESH", $"{5};URL={"/"}");

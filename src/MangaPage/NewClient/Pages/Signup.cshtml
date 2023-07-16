@@ -30,7 +30,7 @@
                 <div class="login__form">
                     <h3>Đăng ký</h3>
                     <div data-bs-theme="dark">
-                        <form method="post">
+                        <form id="createUserForm" method="dialog">
                             <div class="mb-3">
                                 <label asp-for="UserCreationModel.Username" class="form-label text-white">Tài khoản</label>
                                 <input asp-for="UserCreationModel.Username" class="form-control" aria-describedby="UsernameHelp">
@@ -58,7 +58,8 @@
                             <button class="btn btn-outline-warning rounded showPasswordBtn" type="button">Hiện mật khẩu</button>
                             <br />
                             <br />
-                            <button type="submit" class="btn btn-primary btn-lg rounded w-100">Đăng ký</button>
+                            <button type="button" class="btn btn-primary btn-lg rounded w-100 createUserBtn">Đăng ký</button>
+                            <button type="submit" class="hiddenBtn d-none"></button>
                         </form>
                     </div>
                     <h5>Đã có tài khoản? <a asp-page="Login">Đăng nhập</a></h5>
@@ -83,7 +84,28 @@
             </div>
         </div>
     </div>
+    <button type="button" class="d-none popupFormBtn" data-bs-toggle="modal" data-bs-target="#emailIsExistModel"></button>
+
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="emailIsExistModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel text-uppercase text-danger">Thông báo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-primary">Email đã tồn tại !!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Signup Section End -->
 <script defer>
     document
@@ -99,6 +121,42 @@
             else {
                 passwordInput.type = "password";
                 confirmPasswordInput.type = "password";
+            }
+        });
+
+    document
+        .querySelector('.createUserBtn')
+        .addEventListener("click", function (e) {
+            $(".hiddenBtn").click();
+
+            let classCheck = document.getElementsByClassName('field-validation-error').length > 0;
+
+            if (!classCheck) {
+                let email = document.querySelector('[name="UserCreationModel.UserEmail"]').value;
+
+                fetch('https://localhost:7174/api/auth/validate-email', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(email)
+                })
+                .then(function(data) {
+                    if (data.status == 400) {
+                        $(".popupFormBtn").click();
+                    }
+                    else {
+                        let createUserForm = document.querySelector("#createUserForm");
+
+                        createUserForm.removeAttribute("method");
+                        createUserForm.setAttribute("method", "post");
+
+                        $(".hiddenBtn").click();
+                    }
+                })
+                .catch(function(error) {
+                    alert('Request failed');
+                });
             }
         });
 </script>

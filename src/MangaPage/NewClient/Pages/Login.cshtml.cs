@@ -1,4 +1,3 @@
-using Helper;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewClient.Models;
 using NewClient.Services;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NewClient.Pages;
@@ -26,16 +26,27 @@ public class LoginModel : PageModel
 		_JWTService = jWTService;
 	}
 
-	public IActionResult OnDeleteCurrentUserLoginInToken()
-	{
-		CacheCollection.Dictionary.Remove("jwt");
-
-		return StatusCode(200, "Remove user auth token successfully");
-	}
-
 	public IActionResult OnGet()
 	{
-		if (CacheCollection.Dictionary.TryGetValue("jwt", out _))
+		var authCookie = HttpContext
+			.Request
+			.Cookies
+			.FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
+			.Value;
+
+		var token = TempData["token"];
+		TempData.Keep("token");
+
+		string authSession = null;
+
+		if (!Equals(token, null))
+		{
+			authSession = HttpContext
+				.Session
+				.GetString(token.ToString());
+		}
+
+		if (!Equals(authCookie, null) || !Equals(authSession, null))
 		{
 			return RedirectToPage("/Index");
 		}

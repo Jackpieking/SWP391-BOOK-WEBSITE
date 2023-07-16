@@ -137,7 +137,7 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
     // Cấu hình về User.
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = false;
+    options.User.RequireUniqueEmail = true;
 
     // Cấu hình đăng nhập.
     options.SignIn.RequireConfirmedEmail = false;

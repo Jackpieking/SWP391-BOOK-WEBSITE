@@ -112,12 +112,47 @@ public class AuthController : ControllerBase
             });
         }
 
+        if (await _userManager.IsEmailConfirmedAsync(foundUser))
+        {
+            return BadRequest(new AuthResult()
+            {
+                Result = false,
+                Errors = new List<string>()
+                {
+                    "Email is not confirm"
+                }
+            });
+        }
+
         var jwt = GenerateJwtToken(foundUser, requestDto.RememberMe);
 
         return Ok(new AuthResult()
         {
             Result = true,
             Token = jwt
+        });
+    }
+
+    [HttpPost("validate-email")]
+    public async Task<IActionResult> CheckIfEmailIsExisted([FromBody] string email)
+    {
+        var foundUser = await _userManager.FindByEmailAsync(email: email);
+
+        if (!Equals(foundUser, null))
+        {
+            return BadRequest(new AuthResult()
+            {
+                Result = false,
+                Errors = new List<string>()
+                {
+                    "Email is existed"
+                }
+            });
+        }
+
+        return Ok(new AuthResult()
+        {
+            Result = true
         });
     }
 
