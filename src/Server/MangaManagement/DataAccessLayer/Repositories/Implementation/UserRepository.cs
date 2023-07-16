@@ -120,4 +120,7 @@ public class UserRepository : GenericRepository<UserEntity>, IUserRepository
 
         return true;
     }
+
+    public async Task<IEnumerable<UserEntity>> GetAllUserHaveLikeAsync() =>
+        await _dbSet.Where(e => e.ComicLikeEntities.Count() != 0).ToListAsync();
 }

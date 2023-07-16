@@ -26,6 +26,23 @@ namespace BusinessLogicLayer.Services
         /// Get all users without any reference from database
         /// </summary>
         /// <returns>Task<IEnumerable<UserModel></UserModel>></returns>
+        public async Task<IEnumerable<UserModel>> GetAllUserHaveLikeAsync()
+        {
+            _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On User Table", args: DateTime.Now);
+
+            var userEntities = await
+                _unitOfWork
+                .UserInfoRepository
+                .GetAllUserHaveLikeAsync();
+
+            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On User Table", args: DateTime.Now);
+            return _mapper.Map<IEnumerable<UserModel>>(userEntities);
+        }
+
+        /// <summary>
+        /// Get all users without any reference from database
+        /// </summary>
+        /// <returns>Task<IEnumerable<UserModel></UserModel>></returns>
         public async Task<IEnumerable<UserModel>> GetAllUserAsync()
         {
             _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On User Table", args: DateTime.Now);
@@ -189,25 +206,6 @@ namespace BusinessLogicLayer.Services
 
             _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Reading History Table", args: DateTime.Now);
             return _mapper.Map<ICollection<ReadingHistoryModel>>(readingHistoryEntities);
-        }
-
-
-        /// <summary>
-        /// Get all user's comic likes by userIndetifier reference from database
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns>Task<ICollection<ComicLikeModel>></returns>
-        public async Task<ICollection<ComicLikeModel>> GetAllComicLikeOfAUserByUserIdAsync(Guid userId)
-        {
-            _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Like Table", args: DateTime.Now);
-
-            var comicLikeEntities = await
-                _unitOfWork
-                .ComicLikeRepository
-                .GetComicLikesOfAUserByUserId(userId);
-
-            _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Like Table", args: DateTime.Now);
-            return _mapper.Map<ICollection<ComicLikeModel>>(comicLikeEntities);
         }
 
         /// <summary>

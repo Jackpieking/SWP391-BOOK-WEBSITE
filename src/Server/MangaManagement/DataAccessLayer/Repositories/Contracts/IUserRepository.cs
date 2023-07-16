@@ -14,4 +14,5 @@ public interface IUserRepository : IGenericRepository<UserEntity>
     Task DeleteUserByIdAsync(Guid id);
     Task UpdateUserAsync(UserEntity user);
     Task<bool> CheckUserIsExistedByUsernameAsync(string username);
+    Task<IEnumerable<UserEntity>> GetAllUserHaveLikeAsync();
 }

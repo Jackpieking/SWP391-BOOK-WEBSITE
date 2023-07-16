@@ -23,20 +23,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.ComicLike == null)
+                        @if (Model.userModels == null)
                         {
                             <tr class="error">Error</tr>
                         }
                         else
                         {
-                            foreach (var like in Model.ComicLike)
+                            foreach (var item in Model.userModels)
                             {
                                 <tr>
-                                    <td class="text-center">@like.Value.First().Username</td>
+                                    <td class="text-center">@item.Username</td>
 
                                     <td class="d-flex justify-content-center">
                                         <a asp-page="user-comic-like-details"
-                                           asp-route-userId="@like.Value.First().UserIdentifier"
+                                           asp-route-userId="@item.UserIdentifier"
                                            class="btn btn-outline-primary">
                                             Detail
                                         </a>

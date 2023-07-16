@@ -67,7 +67,7 @@ public class ReviewChapterRepository : GenericRepository<ReviewChapterEntity>, I
             .ToListAsync();
     }
 
-    public async Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId)
+    public async Task<IEnumerable<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId)
     {
         return await _dbSet
             .Where(reviewChapter => reviewChapter.UserIdentifier.Equals(userId))
