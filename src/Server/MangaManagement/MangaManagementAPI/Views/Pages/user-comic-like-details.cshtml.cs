@@ -26,7 +26,7 @@ namespace MangaManagementAPI.Views.Pages
         public IEnumerable<ComicLikeModel> ComicLikeDetails { get; set; }
         public async Task<IActionResult> OnGetAsync([FromRoute] Guid userId)
         {
-            ComicLikeDetails = await _service.GetComicLikesAndComicByUserIdAsync(userId);
+            //ComicLikeDetails = await _service.GetComicLikesAndComicByUserIdAsync(userId);
             return Page();
         }
     }

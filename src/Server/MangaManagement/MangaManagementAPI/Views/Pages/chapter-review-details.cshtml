@@ -1,4 +1,4 @@
-﻿@page "/admin/user-chapter-reviews/{userId:guid?}/details/"
+﻿@page "/admin/user-chapter-reviews/{userId}/details/"
 @model MangaManagementAPI.Views.Pages.chapter_review_detailsModel
 @{
     ViewData["Title"] = "Admin | Chapter Review Details";
@@ -16,9 +16,10 @@
         </div>
         <div class="card-body">
             <h5 class="m-2 font-weight-bold text-primary">Chapter Reviews</h5>
-            @if (false)
+            @if (Model.ChapterReviewDetails == null || Model.ChapterReviewDetails.Count == 0)
             {
-                <p class="m-2">Nothing to show</p>
+                Response.Redirect("/admin/404");
+                return;
             }
             else
             {
@@ -35,25 +36,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var review in Model.ChapterReviewDetail)
-                        {
-                        <tr>
-                            <td>@review.ComicName</td>
-                            <td>@review.ChapterNumber</td>
-                            <td>@review.ChapterRatingStar</td>
-                            <td>@review.ChapterComment</td>
-                            <td>@review.ReviewTime</td>
-                            <td class="d-flex justify-content-center">
-                                <a asp-page="comic-review-details"
-                                    asp-route-userId="@review.UserIdentifier"
-                                    asp-route-chapterId="@review.ChapterIdentifier"
-                                    asp-page-handler="deletechapterreview"
-                                    class="btn btn-outline-danger">
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                        }
+                            @foreach (var review in Model.ChapterReviewDetails)
+                            {
+                                <tr>
+                                    <td>@review.ComicName</td>
+                                    <td>@review.ChapterNumber</td>
+                                    <td>@review.ChapterRatingStar</td>
+                                    <td>@review.ChapterComment</td>
+                                    <td>@review.ReviewTime</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a asp-page="comic-review-details"
+                                           asp-route-userId="@review.UserIdentifier"
+                                           asp-route-chapterId="@review.ChapterIdentifier"
+                                           asp-page-handler="deletechapterreview"
+                                           class="btn btn-outline-danger">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

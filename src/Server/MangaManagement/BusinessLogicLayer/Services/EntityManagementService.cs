@@ -64,7 +64,6 @@ public class EntityManagementService
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
         return _mapper.Map<IEnumerable<ComicModel>>(source: comicJoinReviewComicEntities);
-
     }
 
     /// <summary>
@@ -87,7 +86,6 @@ public class EntityManagementService
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
 
         return _mapper.Map<ComicModel>(source: comicEntity);
-
     }
 
     /// <summary>
@@ -179,7 +177,7 @@ public class EntityManagementService
     }
 
     /// <summary>
-    /// Get all comic category with category reference by comic identifier fromm database
+    /// Get all comic category with category reference by comic identifier from database
     /// </summary>
     /// <param name="comicIdentifier"></param>
     /// <returns>Task<IEnumerable<ComicCategoryModel></ComicCategoryModel>></returns>
@@ -208,6 +206,8 @@ public class EntityManagementService
         IList<CategoryModel> crawlCategoryModels,
         IList<ChapterModel> crawlChapterModels)
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Upload Craw Data To Database", args: DateTime.Now);
+
         //add new category to db
         await _unitOfWork
             .CategoryRepository
@@ -250,8 +250,14 @@ public class EntityManagementService
                 categoryidentifiers: categoryIdentifiers);
 
         await _unitOfWork.SaveAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Upload Craw Data To Database", args: DateTime.Now);
     }
 
+    /// <summary>
+    /// Get all chapter with chapter numbers
+    /// </summary>
+    /// <returns>Task<IEnumerable<ChapterModel>></returns>
     public async Task<IEnumerable<ChapterModel>> GetAllChaptersWith_ChapterNumberAsync()
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Chapter Table", args: DateTime.Now);
@@ -265,11 +271,14 @@ public class EntityManagementService
         return _mapper.Map<IEnumerable<ChapterModel>>(source: comicCategory);
     }
 
-    //void ForAdminOperation()
-    //_unitofwork.ChapterImageRepo
-
+    /// <summary>
+    /// Get all transaction history in the database
+    /// </summary>
+    /// <returns>Task<IDictionary<Guid, IList<TransactionsHistoryModel>>></returns>
     public async Task<IDictionary<Guid, IList<TransactionsHistoryModel>>> GetAllTransactionHistoryAsync()
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Transaction History Table", args: DateTime.Now);
+
         var transactionHistories = await _unitOfWork
             .TransactionRepository
             .GetAllTransactionHistoryAsync();
@@ -291,10 +300,19 @@ public class EntityManagementService
             }
         });
 
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Comic Transaction History Table", args: DateTime.Now);
+
         return userTrsactionHistories;
     }
+
+    /// <summary>
+    /// Get all user with review on comic in the database
+    /// </summary>
+    /// <returns>Task<IDictionary<Guid, IList<ReviewComicModel>>></returns>
     public async Task<IDictionary<Guid, IList<ReviewComicModel>>> GetAllComicReviewAsync()
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Review Table", args: DateTime.Now);
+
         var comicReviews = await _unitOfWork
             .ReviewComicRepository
             .GetAllComicReviewAsync();
@@ -315,11 +333,20 @@ public class EntityManagementService
                 userReviewComics[comicReview.UserIdentifier].Add(_mapper.Map<ReviewComicModel>(comicReview));
             }
         });
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Comic Review Table", args: DateTime.Now);
+
         return userReviewComics;
     }
 
+    /// <summary>
+    /// Get all user with review on chapter in the database
+    /// </summary>
+    /// <returns></returns>
     public async Task<IDictionary<Guid, IList<ReviewChapterModel>>> GetAllChapterReviewAsync()
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Chapter Review Table", args: DateTime.Now);
+
         var chapterReviews = await _unitOfWork
             .ReviewChapterRepository
             .GetAllChapterReviewAsync();
@@ -340,45 +367,88 @@ public class EntityManagementService
                 userReviewChatpers[chapterReview.UserIdentifier].Add(_mapper.Map<ReviewChapterModel>(chapterReview));
             }
         });
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Chapter Review Table", args: DateTime.Now);
+
         return userReviewChatpers;
     }
 
+    /// <summary>
+    /// Get all chapter reviews of a user by the user id in the database
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns>Task<IList<ReviewChapterModel>></returns>
     public async Task<IList<ReviewChapterModel>> GetAllChapterReview_OfAUser_ByUserId(Guid userId)
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Chapter Review Table", args: DateTime.Now);
+
         var chapterReviews = await _unitOfWork
             .ReviewChapterRepository
             .GetChapterReviewsOfAUserByUserId(userId);
 
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Chapter Review Table", args: DateTime.Now);
+
         return _mapper.Map<IList<ReviewChapterModel>>(chapterReviews);
     }
 
+    /// <summary>
+    /// Get all comic reviews of a user by user id in the database
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns>Task<IList<ReviewComicModel>></returns>
     public async Task<IList<ReviewComicModel>> GetAllComicReview_OfAUser_ByUserId(Guid userId)
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Review Table", args: DateTime.Now);
+
         var comicReviews = await _unitOfWork
             .ReviewComicRepository
             .GetComicReviewsOfAUserByUserId(userId);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Comic Review Table", args: DateTime.Now);
+
         return _mapper.Map<IList<ReviewComicModel>>(comicReviews);
     }
 
+    /// <summary>
+    /// Delete a specific review on comic of a user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="comicId"></param>
+    /// <returns>Task</returns>
     public async Task DeleteUserReviewedComicByIdAsync(Guid userId, Guid comicId)
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Review Table", args: DateTime.Now);
+
         await _unitOfWork
             .ReviewComicRepository
             .DeleteReviewedOnComic_OfAUser_ByUserIdAsync(userId, comicId);
 
         await _unitOfWork
         .SaveAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Comic Review Table", args: DateTime.Now);
     }
 
+    /// <summary>
+    /// Delete a specific review on chapter of a user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="chapterId"></param>
+    /// <returns></returns>
     public async Task DeleteUserReviewedChapterByIdAsync(Guid userId, Guid chapterId)
     {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Chapter Review Table", args: DateTime.Now);
+
         await _unitOfWork
             .ReviewChapterRepository
             .DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(userId, chapterId);
 
         await _unitOfWork
             .SaveAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Chapter Review Table", args: DateTime.Now);
     }
+
     /// <summary>
     /// Get all chapter images of a chapter without any reference from database
     /// </summary>
@@ -432,30 +502,55 @@ public class EntityManagementService
         return readingHistoryCounts;
     }
 
-}
-/*
-     public async Task<IDictionary<Guid, IList<ReviewChapterModel>>> GetAllChapterReviewAsync()
+    /// <summary>
+    /// Get user with comic like in the database
+    /// </summary>
+    /// <returns>ask<IDictionary<Guid, IList<ComicLikeModel>>></returns>
+    public async Task<IDictionary<Guid, IList<ComicLikeModel>>> GetAllComicLikeAsync()
     {
-        var chapterReviews = await _unitOfWork
-            .ReviewChapterRepository
-            .GetAllChapterReviewAsync();
+        //_logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Like Table", args: DateTime.Now);
 
-        var userReviewChatpers = new Dictionary<Guid, IList<ReviewChapterModel>>();
+        //var comicLikes = await _unitOfWork
+        //    .ComicLikeRepository
+        //    .GetAllComicLikesAsync();
+        //var userComicLike = new Dictionary<Guid, IList<ComicLikeModel>>();
 
-        chapterReviews.ForEach(chapterReview =>
-        {
-            if (!userReviewChatpers.ContainsKey(chapterReview.UserIdentifier))
-            {
-                userReviewChatpers.Add(chapterReview.UserIdentifier, new List<ReviewChapterModel>()
-                {
-                    _mapper.Map<ReviewChapterModel>(chapterReview)
-                });
-            }
-            else
-            {
-                userReviewChatpers[chapterReview.UserIdentifier].Add(_mapper.Map<ReviewChapterModel>(chapterReview));
-            }
-        });
-        return userReviewChatpers;
+        //comicLikes.ForEach(comicLikes =>
+        //{
+        //    if (!userComicLike.ContainsKey(comicLikes.UserIdentifier))
+        //    {
+        //        userComicLike.Add(comicLikes.UserIdentifier, new List<ComicLikeModel>()
+        //        {
+        //            _mapper.Map<ComicLikeModel>(comicLikes)
+        //        });
+        //    }
+        //    else
+        //    {
+        //        userComicLike[comicLikes.UserIdentifier].Add(_mapper.Map<ComicLikeModel>(comicLikes));
+        //    }
+        //});
+
+        //_logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Comic Like Table", args: DateTime.Now);
+
+        //return userComicLike;
+        return null;
     }
- */
+
+    /// <summary>
+    /// Get all comic like of a user by user id
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public async Task<IList<ComicLikeModel>> GetComicLikesOfAUserByUserId(Guid userId)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Like Table", args: DateTime.Now);
+
+        var comicLikes = await _unitOfWork
+            .ReviewChapterRepository
+            .GetChapterReviewsOfAUserByUserId(userId);
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finished Querying On Comic Like Table", args: DateTime.Now);
+
+        return _mapper.Map<IList<ComicLikeModel>>(comicLikes);
+    }
+}
