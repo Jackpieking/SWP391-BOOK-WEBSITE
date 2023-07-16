@@ -1,5 +1,33 @@
 ﻿@page "/user/logout"
+@using Helper;
 @model NewClient.Pages.LogoutModel
 @{
+	ViewData["Title"] = "Đăng xuất";
 }
+
+<div class="container-fluid">
+	<br />
+	<br />
+	<br />
+
+	<div class="alert alert-danger" role="alert">
+		Đăng xuất thành công
+	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<div class="alert alert-info">
+		Quay về trang chủ sau 5 giây hoặc nhấn vào <a class="btn btn-danger rounded" asp-page="/Index">đây</a>
+	</div>
+	<br />
+	<br />
+	<br />
+</div>
+
+<script>
+	document.cookie = `authSession=; Max-Age=0; path=/; domain=localhost`;
+	document.cookie = `authCookie=; Max-Age=0; path=/; domain=localhost`;
+</script>
 

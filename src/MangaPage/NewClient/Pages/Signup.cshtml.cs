@@ -1,3 +1,6 @@
+using Helper;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewClient.Models;
@@ -8,37 +11,54 @@ namespace NewClient.Pages;
 
 public class SignupModel : PageModel
 {
-    [BindProperty]
-    public UserCreationModel UserCreationModel { get; set; }
+	[BindProperty]
+	public UserCreationModel UserCreationModel { get; set; }
 
-    private readonly UserService _userService;
+	private readonly IDataProtectionProvider _dataProtectionProvider;
 
-    public SignupModel(UserService userService)
-    {
-        _userService = userService;
-    }
+	private readonly UserService _userService;
 
-    public async Task<IActionResult> OnGetAsync()
-    {
-        if (await _userService.IsUserLoginAsync())
-        {
-            return RedirectToPage("/Index");
-        }
+	public SignupModel(UserService userService, IDataProtectionProvider dataProtectionProvider)
+	{
+		_userService = userService;
+		_dataProtectionProvider = dataProtectionProvider;
+	}
 
-        return Page();
-    }
+	public IActionResult OnGet()
+	{
+		if (CacheCollection.Dictionary.TryGetValue("jwt", out _))
+		{
+			return RedirectToPage("/Index");
+		}
 
-    public async Task<IActionResult> OnPost()
-    {
-        var creatingUserResult = await _userService.PostNewUserAccountAsync(user: UserCreationModel);
+		return Page();
+	}
 
-        if (creatingUserResult == 200)
-        {
-            return RedirectToPage("/Index");
-        }
+	public async Task<IActionResult> OnPost()
+	{
+		UserRegistrationRequestDto dto = new()
+		{
+			Name = UserCreationModel.Username,
+			Email = UserCreationModel.UserEmail,
+			Password = UserCreationModel.Password
+		};
 
-        ModelState.AddModelError("CreatingError", "Cannot create user");
+		var creatingUserResult = await _userService.RegisterAsync(user: dto);
+		var dataProtector = _dataProtectionProvider.CreateProtector("authCookie");
 
-        return Page();
-    }
+		if (creatingUserResult.Result == true)
+		{
+			TempData["token"] = creatingUserResult.Token;
+
+			HttpContext.Session.SetString(
+				creatingUserResult.Token,
+				dataProtector.Protect(creatingUserResult.Token));
+
+			return RedirectToPage("/Index");
+		}
+
+		ModelState.AddModelError("CreatingError", "Cannot create user");
+
+		return Page();
+	}
 }

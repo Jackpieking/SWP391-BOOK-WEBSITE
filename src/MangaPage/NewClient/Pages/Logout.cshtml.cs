@@ -1,28 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NewClient.Services;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace NewClient.Pages;
 
 public class LogoutModel : PageModel
 {
-    private readonly UserService _userService;
+	public IActionResult OnGet()
+	{
+		var authCookie = HttpContext
+			.Request
+			.Cookies
+			.FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
+			.Value;
 
-    public LogoutModel(UserService userService)
-    {
-        _userService = userService;
-    }
+		if (Equals(authCookie, null) && Equals(TempData["token"], null))
+		{
+			return RedirectToPagePermanent("/Index");
+		}
 
-    public async Task<IActionResult> OnGet()
-    {
-        if (!await _userService.IsUserLoginAsync())
-        {
-            return RedirectToPage("/Index");
-        }
+		HttpContext.Response.Headers.Add("REFRESH", $"{5};URL={"/"}");
 
-        await _userService.SignOutAsync();
-
-        return RedirectToPage("/Login");
-    }
+		return Page();
+	}
 }

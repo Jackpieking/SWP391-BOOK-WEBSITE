@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Logging;
 using NewClient.Models;
 using System;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -12,93 +10,72 @@ namespace NewClient.Services;
 
 public class UserService
 {
-    private const string BaseUrl = "MangaAPI";
-    private readonly ILogger<UserService> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+	private const string BaseUrl = "MangaAPI";
+	private readonly ILogger<UserService> _logger;
+	private readonly IHttpClientFactory _httpClientFactory;
+	private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UserService(
-        ILogger<UserService> logger,
-        IHttpClientFactory httpClientFactory,
-        IHttpContextAccessor httpContextAccessor)
-    {
-        _logger = logger;
-        _httpClientFactory = httpClientFactory;
-        _httpContextAccessor = httpContextAccessor;
-    }
+	public UserService(
+		ILogger<UserService> logger,
+		IHttpClientFactory httpClientFactory,
+		IHttpContextAccessor httpContextAccessor)
+	{
+		_logger = logger;
+		_httpClientFactory = httpClientFactory;
+		_httpContextAccessor = httpContextAccessor;
+	}
 
-    public async Task<short> PostNewUserAccountAsync(UserCreationModel user)
-    {
-        const string GetAllComicEndpointURL = "api/auth/signup";
+	public async Task<AuthResult> RegisterAsync(UserRegistrationRequestDto user)
+	{
+		const string GetAllComicEndpointURL = "api/auth/register";
 
-        _logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-                                DateTime.Now,
-                                GetAllComicEndpointURL);
+		_logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
+								DateTime.Now,
+								GetAllComicEndpointURL);
 
-        var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
+		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
 
-        using var response = await httpClient.PostAsJsonAsync(GetAllComicEndpointURL, user);
-        _httpContextAccessor.HttpContext.Response.Headers.Add(
-            "Set-Cookie",
-            response.Headers.GetValues("Set-Cookie").FirstOrDefault());
+		using var response = await httpClient.PostAsJsonAsync(GetAllComicEndpointURL, user);
 
-        return (short)response.StatusCode;
-    }
+		var result = await response.Content.ReadFromJsonAsync<AuthResult>();
 
-    public async Task<short> LoginAsync(UserLoginModel user)
-    {
-        const string GetAllComicEndpointURL = "api/auth/login";
+		return result;
+	}
 
-        _logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-                                DateTime.Now,
-                                GetAllComicEndpointURL);
+	public async Task<AuthResult> LoginAsync(UserLoginModel user)
+	{
+		const string GetAllComicEndpointURL = "api/auth/login";
 
-        var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
+		_logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
+								DateTime.Now,
+								GetAllComicEndpointURL);
 
-        using var response = await httpClient.PostAsJsonAsync(GetAllComicEndpointURL, user);
+		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
 
-        var setCookieHeader = response.Headers.GetValues("Set-Cookie").FirstOrDefault();
+		using var response = await httpClient.PostAsJsonAsync(GetAllComicEndpointURL, user);
 
-        if (!Equals(setCookieHeader, null))
-        {
-            _httpContextAccessor.HttpContext.Response.Headers.Add(
-                "Set-Cookie",
-                response.Headers.GetValues("Set-Cookie").FirstOrDefault());
-        }
+		var result = await response.Content.ReadFromJsonAsync<AuthResult>();
 
-        return (short)response.StatusCode;
-    }
+		return result;
+	}
 
-    public async Task<bool> IsUserLoginAsync()
-    {
-        const string GetAllComicEndpointURL = "api/auth/is-signin";
+	public async Task<short> ValidateTokenAsync(string authorization)
+	{
+		const string GetAllComicEndpointURL = "api/auth/validate";
 
-        _logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-                                DateTime.Now,
-                                GetAllComicEndpointURL);
+		_logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
+								DateTime.Now,
+								GetAllComicEndpointURL);
 
-        var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
+		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
 
-        using var response = await httpClient.GetAsync(GetAllComicEndpointURL);
+		HttpRequestMessage requestMessage = new();
 
-        if (response.StatusCode.Equals(HttpStatusCode.OK))
-        {
-            return true;
-        }
+		requestMessage.RequestUri = new($"{httpClient.BaseAddress}{GetAllComicEndpointURL}");
+		requestMessage.Headers.Add("Authorization", $"Bearer {authorization}");
 
-        return false;
-    }
+		using var response = await httpClient.SendAsync(requestMessage);
 
-    public async Task SignOutAsync()
-    {
-        const string GetAllComicEndpointURL = "api/auth/signout";
-
-        _logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-                                DateTime.Now,
-                                GetAllComicEndpointURL);
-
-        var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
-
-        await httpClient.GetAsync(GetAllComicEndpointURL);
-    }
+		return (short)response.StatusCode;
+	}
 }

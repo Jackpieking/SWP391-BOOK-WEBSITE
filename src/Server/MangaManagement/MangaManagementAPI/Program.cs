@@ -4,11 +4,12 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Options;
 using DataAccessLayer.UnitOfWorks.Contracts;
 using DataAccessLayer.UnitOfWorks.Implementation;
-using Helper;
 using Helper.ObjectMappers.ModelToEntity;
+using MangaManagementAPI.Options;
 using Mapper.ModelAndDto;
 using Mapper.ModelAndEntity;
 using Mapper.ModelToEntity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net;
 using System.Reflection;
+using System.Text;
 
 ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+Console.OutputEncoding = Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
@@ -42,7 +45,8 @@ services
     .AddScoped<TruyenQQPageHandlerService>()
     .AddScoped<ApiCallingService>()
     .AddScoped<ComicManagementService>()
-    .ConfigureOptions<DatabaseOptionUpdates>();
+    .ConfigureOptions<DatabaseOptionUpdates>()
+    .ConfigureOptions<JwtConfigUdate>();
 
 //mapper profile
 services
@@ -142,6 +146,35 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<UserIdentityContext>()
 .AddDefaultTokenProviders();
 
+//jwt configuration
+services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(jwt =>
+    {
+        jwt.SaveToken = true;
+
+        jwt.TokenValidationParameters = new()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            RequireExpirationTime = false,
+            ValidIssuer = builder.Configuration.GetRequiredSection("JwtConfig:Issuer").Value,
+            ValidAudience = builder.Configuration.GetRequiredSection("JwtConfig:Audience").Value,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(
+                    builder.Configuration.GetRequiredSection("JwtConfig:PrivateKey").Value
+                    )
+                )
+        };
+    });
+
 //Httpclient
 services
     .AddHttpClient(name: "truyenqqne", configureClient: configure =>
@@ -150,14 +183,6 @@ services
         configure.BaseAddress = new(uriString: "https://truyenqqne.com/");
         configure.Timeout = TimeSpan.FromSeconds(value: 30);
     });
-
-//controller
-services
-    .AddControllers(configure: option => option.SuppressAsyncSuffixInActionNames = true)
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
-    }); ;
 
 //RazorPage
 services
@@ -177,8 +202,7 @@ app
     .UseRouting()
     .UseCors()
     .UseAuthentication()
-    .UseAuthorization()
-    .UseCookiePolicy();
+    .UseAuthorization();
 
 app.MapControllers();
 

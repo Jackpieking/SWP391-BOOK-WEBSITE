@@ -1,22 +1,118 @@
-﻿@using NewClient.Services;
-@inject UserService UserService
+﻿@using Microsoft.AspNetCore.DataProtection;
+@using Microsoft.AspNetCore.Http;
+@using NewClient.Services;
+@inject IHttpContextAccessor _httpContextAccessor
+@inject IDataProtectionProvider _dataProtectionProvider
+@inject UserService _userService
 
-<div class="dropdown">
-	<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-		Người dùng
-	</button>
-	@if (await UserService.IsUserLoginAsync())
+<div class="user__dropdown">
+
+</div>
+
+@{
+	var authToken = _httpContextAccessor
+			.HttpContext
+			.Request
+			.Cookies
+			.FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
+			.Value;
+
+	if (Equals(authToken, null))
 	{
-		<ul class="dropdown-menu">
-			<li><a class="btn btn-primary dropdown-item">Cài đặt</a></li>
-			<li><a class="btn btn-success dropdown-item" asp-page="Logout">Đăng xuất</a></li>
-		</ul>
+		var token = TempData["token"];
+		TempData.Keep("token");
+
+		if (!Equals(token, null))
+		{
+			authToken = _httpContextAccessor
+				.HttpContext
+				.Session
+				.GetString(token.ToString());
+		}
+		else
+		{
+			authToken = string.Empty;
+		}
+	}
+
+	if (!string.IsNullOrEmpty(authToken))
+	{
+		var dataProtector = _dataProtectionProvider.CreateProtector("authCookie");
+		authToken = dataProtector.Unprotect(authToken);
+	}
+
+	if (string.IsNullOrEmpty(authToken))
+	{
+		<script defer>
+			let failUser = `
+				<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Người dùng
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="btn btn-primary dropdown-item" href="/auth/login">Đăng nhập</a></li>
+					<li><a class="btn btn-success dropdown-item" href="/auth/register">Đăng ký</a></li>
+				</ul>
+			`;
+
+			let userDropDown = document.querySelector(".user__dropdown");
+			let dropDown = document.createElement("div");
+
+			dropDown.classList.add("dropdown")
+
+			dropDown.innerHTML = failUser;
+
+			userDropDown.appendChild(dropDown);
+		</script>
 	}
 	else
 	{
-		<ul class="dropdown-menu">
-			<li><a class="btn btn-primary dropdown-item" asp-page="Login">Đăng nhập</a></li>
-			<li><a class="btn btn-success dropdown-item" asp-page="Signup">Đăng ký</a></li>
-		</ul>
+		var statusCode = await _userService.ValidateTokenAsync(authToken);
+
+		if (statusCode == 401)
+		{
+			<script defer>
+				let failUser = `
+					<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Người dùng
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="btn btn-primary dropdown-item" href="/auth/login">Đăng nhập</a></li>
+						<li><a class="btn btn-success dropdown-item" href="/auth/register">Đăng ký</a></li>
+					</ul>
+				`;
+
+				let userDropDown = document.querySelector(".user__dropdown");
+				let dropDown = document.createElement("div");
+
+				dropDown.classList.add("dropdown")
+
+				dropDown.innerHTML = failUser;
+
+				userDropDown.appendChild(dropDown);
+			</script>
+		}
+		else
+		{
+			<script defer>
+				let successUser = `
+					<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Người dùng
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="btn btn-primary dropdown-item">Cài đặt</a></li>
+						<li><a class="btn btn-success dropdown-item" href="/user/logout">Đăng xuất</a></li>
+					</ul>
+				`;
+
+				let userDropDown = document.querySelector(".user__dropdown");
+				let dropDown = document.createElement("div");
+
+				dropDown.classList.add("dropdown")
+
+				dropDown.innerHTML = successUser;
+
+				userDropDown.appendChild(dropDown);
+			</script>
+		}
 	}
-</div>
+}

@@ -9,12 +9,12 @@ public class UserCreationModel
     public string Username { get; set; }
 
     [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
-    [RegularExpression(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{3,}$", ErrorMessage = "Vui lòng nhập mật khẩu với its nhất 3 ký tự, ít nhất 1 chữ cái in hoa, 1 chữ cái in thường !!")]
+    [RegularExpression(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{3,}$", ErrorMessage = "Vui lòng nhập mật khẩu với ít nhất 3 ký tự, ít nhất 1 chữ cái in hoa, 1 chữ cái in thường !!")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
 
     [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
-    [RegularExpression(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{3,}$", ErrorMessage = "Vui lòng nhập mật khẩu với its nhất 3 ký tự, ít nhất 1 chữ cái in hoa, 1 chữ cái in thường !!")]
+    [RegularExpression(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{3,}$", ErrorMessage = "Vui lòng nhập mật khẩu với ít nhất 3 ký tự, ít nhất 1 chữ cái in hoa, 1 chữ cái in thường !!")]
     [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage = "Mật khẩu không giống !!")]
     public string ConfirmPassword { get; set; }
