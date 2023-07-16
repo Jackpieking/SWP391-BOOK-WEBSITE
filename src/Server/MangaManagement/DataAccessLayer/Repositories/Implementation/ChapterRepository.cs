@@ -157,6 +157,11 @@ public class ChapterRepository : GenericRepository<ChapterEntity>, IChapterRepos
             .ToListAsync();
     }
 
-    public async Task<ChapterEntity> GetChapterByIdAsync(Guid id) =>
-        await _dbSet.FirstOrDefaultAsync(c => c.ChapterIdentifier == id);
+    public async Task<ChapterEntity> GetChapterByIdAsync(Guid id)
+    {
+        var chapter = _dbSet.FirstOrDefaultAsync(c => c.ChapterIdentifier == id).Result;
+        await _dbSet.Entry(chapter).Reference(e => e.ComicEntity).LoadAsync();
+        await _dbSet.Entry(chapter).Collection(e => e.ChapterImageEntities).LoadAsync();
+        return chapter;
+    }
 }

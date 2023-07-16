@@ -31,6 +31,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,7 @@
   <ItemGroup>
     <None Include="Views\Categories\Edit.cshtml" />
     <None Include="Views\Categories\Index.cshtml" />
+    <None Include="Views\Chapter\Details.cshtml" />
     <None Include="Views\Comics\Details.cshtml" />
     <None Include="Views\Comics\Edit.cshtml" />
     <None Include="Views\Comics\Index.cshtml" />

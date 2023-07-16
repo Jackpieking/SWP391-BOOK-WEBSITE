@@ -205,4 +205,18 @@ public class ComicManagementService
 
         return _mapper.Map<IEnumerable<ComicLikeModel>>(comicLikes);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Task</returns>
+    public async Task UpdateChapter(ChapterModel chapter)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+
+        _unitOfWork.ChapterRepository.Update(_mapper.Map<ChapterEntity>(chapter));
+        await _unitOfWork.SaveAsync();
+
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+    }
 }

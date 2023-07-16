@@ -2,6 +2,7 @@
 using Helper.DefinedEnums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Model;
 using System;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace MangaManagementAPI.Controllers
     {
         private readonly ComicManagementService _entityManagementService;
 
-        private ChapterController(ComicManagementService entityManagementService) =>
+        public ChapterController(ComicManagementService entityManagementService) =>
             _entityManagementService = entityManagementService;
 
         // GET: ChapterController
@@ -21,9 +22,10 @@ namespace MangaManagementAPI.Controllers
         }
 
         // GET: ChapterController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(Guid id)
         {
-            return View();
+            var chapter = await _entityManagementService.GetChapterByIdAsync(id);
+            return View(chapter);
         }
 
         // GET: ChapterController/Create
@@ -48,22 +50,33 @@ namespace MangaManagementAPI.Controllers
         }
 
         // GET: ChapterController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(Guid id)
         {
-            return View();
+            var chapter = await _entityManagementService.GetChapterByIdAsync(id);
+            return View(chapter);
         }
 
         // POST: ChapterController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Guid id, ChapterModel chapter)
         {
             try
             {
+                if (id != chapter.ChapterIdentifier)
+                {
+                    return NotFound();
+                }
+                if (ModelState.IsValid)
+                {
+                    await _entityManagementService.UpdateChapter(chapter);
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Message = ex.Message;
+                Console.WriteLine(ex.Message);
                 return View();
             }
         }
