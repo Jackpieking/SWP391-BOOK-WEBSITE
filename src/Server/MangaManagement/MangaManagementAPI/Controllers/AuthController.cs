@@ -24,216 +24,217 @@ namespace MangaManagementAPI.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly JwtConfig _jwtConfig;
+	private readonly UserManager<IdentityUser> _userManager;
+	private readonly JwtConfig _jwtConfig;
 
-    public AuthController(
-        UserManager<IdentityUser> userManager,
-        IOptions<JwtConfig> jwtConfig)
-    {
-        _userManager = userManager;
-        _jwtConfig = jwtConfig.Value;
-    }
+	public AuthController(
+		UserManager<IdentityUser> userManager,
+		IOptions<JwtConfig> jwtConfig)
+	{
+		_userManager = userManager;
+		_jwtConfig = jwtConfig.Value;
+	}
 
-    [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationRequestDto requestDto)
-    {
-        var foundUser = await _userManager.FindByEmailAsync(requestDto.Email);
+	[HttpPost("register")]
+	public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationRequestDto requestDto)
+	{
+		var foundUser = await _userManager.FindByEmailAsync(requestDto.Email);
 
-        if (!Equals(foundUser, null))
-        {
-            return BadRequest(new AuthResult()
-            {
-                Result = false,
-                Errors = new List<string>()
-                {
-                    "Email already exist"
-                }
-            });
-        }
+		if (!Equals(foundUser, null))
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Email already exist"
+				}
+			});
+		}
 
-        IdentityUser new_user = new()
-        {
-            Email = requestDto.Email,
-            UserName = requestDto.Name,
-        };
+		IdentityUser new_user = new()
+		{
+			Email = requestDto.Email,
+			UserName = requestDto.Name,
+		};
 
-        var result = await _userManager.CreateAsync(user: new_user, password: requestDto.Password);
+		var result = await _userManager.CreateAsync(user: new_user, password: requestDto.Password);
 
-        if (!result.Succeeded)
-        {
-            return BadRequest(new AuthResult()
-            {
-                Result = false,
-                Errors = new List<string>()
-                {
-                    "Server error: cannot create user"
-                }
-            });
-        }
+		if (!result.Succeeded)
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Server error: cannot create user"
+				}
+			});
+		}
 
-        var jwt = GenerateJwtToken(new_user, false);
+		var jwt = GenerateJwtToken(new_user, false);
 
-        return Ok(new AuthResult()
-        {
-            Result = true,
-            Token = jwt
-        });
-    }
+		return Ok(new AuthResult()
+		{
+			Result = true,
+			Token = jwt
+		});
+	}
 
-    [HttpPost("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] UserLoginDto requestDto)
-    {
-        var foundUser = await _userManager.FindByNameAsync(requestDto.Username);
+	[HttpPost("login")]
+	public async Task<IActionResult> LoginAsync([FromBody] UserLoginDto requestDto)
+	{
+		var foundUser = await _userManager.FindByNameAsync(requestDto.Username);
 
-        if (Equals(foundUser, null))
-        {
-            return BadRequest(new AuthResult()
-            {
-                Result = false,
-                Errors = new List<string>()
-                {
-                    "Invalid payload"
-                }
-            });
-        }
+		if (Equals(foundUser, null))
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Invalid payload"
+				}
+			});
+		}
 
-        var result = await _userManager.CheckPasswordAsync(user: foundUser, password: requestDto.Password);
+		var result = await _userManager.CheckPasswordAsync(user: foundUser, password: requestDto.Password);
 
-        if (!result)
-        {
-            return BadRequest(new AuthResult()
-            {
-                Result = false,
-                Errors = new List<string>()
-                {
-                    "Invalid credentials"
-                }
-            });
-        }
+		if (!result)
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Invalid credentials"
+				}
+			});
+		}
 
-        if (await _userManager.IsEmailConfirmedAsync(foundUser))
-        {
-            return BadRequest(new AuthResult()
-            {
-                Result = false,
-                Errors = new List<string>()
-                {
-                    "Email is not confirm"
-                }
-            });
-        }
+		if (await _userManager.IsEmailConfirmedAsync(foundUser))
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Email is not confirm"
+				}
+			});
+		}
 
-        var jwt = GenerateJwtToken(foundUser, requestDto.RememberMe);
+		var jwt = GenerateJwtToken(foundUser, requestDto.RememberMe);
 
-        return Ok(new AuthResult()
-        {
-            Result = true,
-            Token = jwt
-        });
-    }
+		return Ok(new AuthResult()
+		{
+			Result = true,
+			Token = jwt
+		});
+	}
 
-    [HttpPost("validate-email")]
-    public async Task<IActionResult> CheckIfEmailIsExisted([FromBody] string email)
-    {
-        var foundUser = await _userManager.FindByEmailAsync(email: email);
+	[HttpPost("validate-email")]
+	public async Task<IActionResult> CheckIfEmailIsExisted([FromBody] string email)
+	{
+		var foundUser = await _userManager.FindByEmailAsync(email: email);
 
-        if (!Equals(foundUser, null))
-        {
-            return BadRequest(new AuthResult()
-            {
-                Result = false,
-                Errors = new List<string>()
-                {
-                    "Email is existed"
-                }
-            });
-        }
+		if (!Equals(foundUser, null))
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Email is existed"
+				}
+			});
+		}
 
-        return Ok(new AuthResult()
-        {
-            Result = true
-        });
-    }
+		return Ok(new AuthResult()
+		{
+			Result = true
+		});
+	}
 
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [HttpGet("validate")]
-    public IActionResult ValidateTokenAsync([FromHeader] string authorization)
-    {
-        var jwt = authorization.Split(" ")[1];
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[HttpGet("validate")]
+	public IActionResult ValidateTokenAsync([FromHeader] string authorization)
+	{
+		var jwt = authorization.Split(" ")[1];
 
-        if (!CheckTokenIsValid(token: jwt))
-        {
-            return Forbid();
-        }
+		if (!CheckTokenIsValid(token: jwt))
+		{
+			return Forbid();
+		}
 
-        return Accepted(new AuthResult()
-        {
-            Result = true,
-            Errors = new List<string>()
-                {
-                    "User credentials are still valid and not expired"
-                }
-        });
-    }
+		return Accepted(new AuthResult()
+		{
+			Result = true,
+			Errors = new List<string>()
+				{
+					"User credentials are still valid and not expired"
+				}
+		});
+	}
 
-    private string GenerateJwtToken(IdentityUser user, bool isPersistance)
-    {
-        SecurityTokenDescriptor tokenDescriptor = new()
-        {
-            Audience = _jwtConfig.Audience,
-            Issuer = _jwtConfig.Issuer,
-            Subject = new(new List<Claim>()
-            {
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                new(JwtRegisteredClaimNames.Sub, user.Id),
-                new(JwtRegisteredClaimNames.Email, user.Email),
-            }),
-            SigningCredentials = new(
-        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.PrivateKey)),
-        SecurityAlgorithms.HmacSha256)
-        };
+	private string GenerateJwtToken(IdentityUser user, bool isPersistance)
+	{
+		SecurityTokenDescriptor tokenDescriptor = new()
+		{
+			Audience = _jwtConfig.Audience,
+			Issuer = _jwtConfig.Issuer,
+			Subject = new(new List<Claim>()
+			{
+				new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+				new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+				new(JwtRegisteredClaimNames.Sub, user.Id),
+				new(JwtRegisteredClaimNames.Name, user.UserName),
+				new(JwtRegisteredClaimNames.Email, user.Email),
+			}),
+			SigningCredentials = new(
+		new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.PrivateKey)),
+		SecurityAlgorithms.HmacSha256)
+		};
 
-        if (isPersistance)
-        {
-            tokenDescriptor.Expires = DateTime.UtcNow.AddDays(7);
-        }
-        else
-        {
-            tokenDescriptor.Expires = DateTime.UtcNow.AddDays(1);
-        }
+		if (isPersistance)
+		{
+			tokenDescriptor.Expires = DateTime.UtcNow.AddDays(7);
+		}
+		else
+		{
+			tokenDescriptor.Expires = DateTime.UtcNow.AddDays(1);
+		}
 
-        JwtSecurityTokenHandler jwtTokenHandler = new();
+		JwtSecurityTokenHandler jwtTokenHandler = new();
 
-        var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+		var token = jwtTokenHandler.CreateToken(tokenDescriptor);
 
-        return jwtTokenHandler.WriteToken(token);
-    }
+		return jwtTokenHandler.WriteToken(token);
+	}
 
-    private long GetTokenExpirationTime(string token)
-    {
-        JwtSecurityTokenHandler handler = new();
+	private long GetTokenExpirationTime(string token)
+	{
+		JwtSecurityTokenHandler handler = new();
 
-        var jwtSecurityToken = handler.ReadJwtToken(token);
+		var jwtSecurityToken = handler.ReadJwtToken(token);
 
-        var tokenExp = jwtSecurityToken.Claims.First(claim => claim.Type.Equals(JwtRegisteredClaimNames.Exp)).Value;
+		var tokenExp = jwtSecurityToken.Claims.First(claim => claim.Type.Equals(JwtRegisteredClaimNames.Exp)).Value;
 
-        var ticks = long.Parse(tokenExp);
+		var ticks = long.Parse(tokenExp);
 
-        return ticks;
-    }
+		return ticks;
+	}
 
-    private bool CheckTokenIsValid(string token)
-    {
-        var tokenTicks = GetTokenExpirationTime(token);
+	private bool CheckTokenIsValid(string token)
+	{
+		var tokenTicks = GetTokenExpirationTime(token);
 
-        var tokenDate = DateTimeOffset.FromUnixTimeSeconds(tokenTicks).UtcDateTime;
+		var tokenDate = DateTimeOffset.FromUnixTimeSeconds(tokenTicks).UtcDateTime;
 
-        var now = DateTime.UtcNow.ToUniversalTime();
+		var now = DateTime.UtcNow.ToUniversalTime();
 
-        var valid = tokenDate >= now;
+		var valid = tokenDate >= now;
 
-        return valid;
-    }
+		return valid;
+	}
 }
