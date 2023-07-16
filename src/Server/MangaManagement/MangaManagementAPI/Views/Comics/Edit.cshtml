@@ -3,7 +3,7 @@
 @{
     this.ViewData["Title"] = "Admin - Comic Edit";
 
-    List<SelectListItem> Status = new()
+    List<SelectListItem> Status = new List<SelectListItem>()
     {
         new SelectListItem { Value = "Đang Cập Nhật", Text = "Đang Cập Nhật" },
         new SelectListItem { Value = "Đã Ngưng", Text = "Đã Ngưng" },

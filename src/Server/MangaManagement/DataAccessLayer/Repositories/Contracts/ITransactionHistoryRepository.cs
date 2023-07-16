@@ -8,7 +8,6 @@ namespace DataAccessLayer.Repositories.Contracts;
 
 public interface ITransactionRepository : IGenericRepository<TransactionsHistoryEntity>
 {
-    Task<IList<TransactionsHistoryEntity>> GetTransactionHistoriesOfAUserByUserId(Guid userId);
+    Task<IEnumerable<TransactionsHistoryEntity>> GetTransactionsByUserId(Guid userId);
     Task<IList<TransactionsHistoryEntity>> GetAllTransactionHistoryAsync();
-
 }

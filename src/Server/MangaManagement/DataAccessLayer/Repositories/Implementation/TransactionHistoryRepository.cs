@@ -33,17 +33,8 @@ public class TransactionHistoryRepository : GenericRepository<TransactionsHistor
 
     }
 
-    public async Task<IList<TransactionsHistoryEntity>> GetTransactionHistoriesOfAUserByUserId(Guid userId)
-    {
-        return await _dbSet
-            .Where(transactionHistory => transactionHistory.TransactionIdentifier.Equals(userId))
-            .Select(transactionHistory => new TransactionsHistoryEntity
-            {
-                TransactionAmount = transactionHistory.TransactionAmount,
-                TransactionDate = transactionHistory.TransactionDate,
-                TransactionCoin = transactionHistory.TransactionCoin
-            })
+    public async Task<IEnumerable<TransactionsHistoryEntity>> GetTransactionsByUserId(Guid userId) =>
+        await _dbSet.Where(e => e.UserIdentifier == userId)
+            .OrderBy(e => e.TransactionDate)
             .ToListAsync();
-    }
-
 }

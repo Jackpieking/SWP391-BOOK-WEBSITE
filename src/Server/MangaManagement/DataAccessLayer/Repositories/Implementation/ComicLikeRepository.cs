@@ -7,27 +7,52 @@ using DataAccessLayer.Repositories.Implementation.Base;
 using Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Repositories.Implementation
-{
-    public class ComicLikeRepository : GenericRepository<ComicLikeEntity>, IComicLikeRepository
-    {
-        public ComicLikeRepository(DbSet<ComicLikeEntity> dbSet) : base(dbSet)
-        {
-        }
+namespace DataAccessLayer.Repositories.Implementation;
 
-        public async Task<IList<ComicLikeEntity>> GetComicLikesOfAUserByUserId(Guid userId)
-        {
-            return await _dbSet
-                .Where(comicLike => comicLike.UserIdentifier.Equals(userId))
-                .Select(comicLike => new ComicLikeEntity 
+public class ComicLikeRepository : GenericRepository<ComicLikeEntity>, IComicLikeRepository
+{
+    public ComicLikeRepository(DbSet<ComicLikeEntity> dbSet) : base(dbSet)
+    {
+    }
+
+    public async Task<IList<ComicLikeEntity>> GetAllComicLikesAsync()
+    {
+        return await _dbSet
+            .Select(comicLike => new ComicLikeEntity
+            {
+                ComicEntity = new ComicEntity
                 {
-                    ComicEntity = new ComicEntity
-                    {
-                        ComicAvatar = comicLike.ComicEntity.ComicAvatar,
-                        ComicName = comicLike.ComicEntity.ComicName
-                    }
-                })
-                .ToListAsync();
-        }
+
+                    ComicName = comicLike.ComicEntity.ComicName,
+
+                },
+                UserEntity = new UserEntity
+                {
+                    Username = comicLike.UserEntity.Username,
+                }
+            })
+        .ToListAsync();
+    }
+
+    public async Task<IList<ComicLikeEntity>> GetComicLikesOfAUserByUserId(Guid userId)
+    {
+        return await _dbSet
+            .Where(comicLike => comicLike.UserIdentifier.Equals(userId))
+            .Select(comicLike => new ComicLikeEntity
+            {
+                ComicEntity = new ComicEntity
+                {
+                     
+                    ComicName = comicLike.ComicEntity.ComicName
+                },
+                UserEntity = new UserEntity
+                {
+
+                    Username = comicLike.UserEntity.Username
+                },
+                UserIdentifier = comicLike.UserIdentifier,
+                ComicIdentifier = comicLike.ComicIdentifier
+            })
+            .ToListAsync();
     }
 }
