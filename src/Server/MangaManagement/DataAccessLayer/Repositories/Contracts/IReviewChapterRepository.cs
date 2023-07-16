@@ -9,7 +9,7 @@ namespace DataAccessLayer.Repositories.Contracts;
 public interface IReviewChapterRepository : IGenericRepository<ReviewChapterEntity>
 {
     Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAChapterAsync(Guid chapterIdentifier);
-    Task<IList<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId);
+    Task<IEnumerable<ReviewChapterEntity>> GetChapterReviewsOfAUserByUserId(Guid userId);
     Task DeleteReviewedOnChapter_OfAUser_ByUserIdAsync(Guid userId, Guid chapterId);
     Task<IList<ReviewChapterEntity>> GetAllChapterReviewAsync();
     Task<IEnumerable<ReviewChapterEntity>> GetChapterReviewsWith_Username_UserAvatar_ChapterComment_ChapterRatingStars_ReviewTimeByChapterIdAsync(Guid chapterIdentifier);

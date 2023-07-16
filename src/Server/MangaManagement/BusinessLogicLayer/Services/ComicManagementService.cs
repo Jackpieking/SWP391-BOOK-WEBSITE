@@ -192,4 +192,17 @@ public class ComicManagementService
 
         return _mapper.Map<IEnumerable<CategoryModel>>(source: comicEntities);
     }
+
+    /// <summary>
+    /// Get all category without any reference from database
+    /// </summary>
+    /// <returns>Task<IEnumerable<ComicModel>></returns>
+    public async Task<IEnumerable<ComicLikeModel>> GetComicLikesAndComicByUserIdAsync(Guid userId)
+    {
+        var comicLikes = await _unitOfWork
+            .ComicLikeRepository
+            .GetComicLikesAndComicByUserIdAsync(userId);
+
+        return _mapper.Map<IEnumerable<ComicLikeModel>>(comicLikes);
+    }
 }

@@ -30,17 +30,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var like in Model.ComicLikeDetails)
+                            @foreach (var item in Model.ComicLikeDetails)
                             {
                                 <tr>
-                                    <td>@like.ComicName</td>
+                                    <td>@item.ComicModel.ComicName</td>
                                     <td class="d-flex justify-content-center">
-                                        <a asp-page="comic-like-details"
-                                           asp-route-userId="@like.UserIdentifier"
-                                           asp-route-comicId="@like.ComicIdentifier"
-                                           asp-page-handler="deletecomiclike"
-                                           class="btn btn-outline-danger">
-                                            Delete
+                                        <a asp-controller="Comics"
+                                           asp-action="Details"
+                                           asp-route-id="@item.ComicIdentifier"
+                                           class="btn btn-outline-primary">
+                                            Detail
                                         </a>
                                     </td>
                                 </tr>
