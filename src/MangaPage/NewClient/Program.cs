@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NewClient.Options;
 using NewClient.Services;
 
 var builder = WebApplication.CreateBuilder(args: args);
@@ -11,6 +12,7 @@ services.AddScoped<ComicService>();
 services.AddScoped<ChapterImageService>();
 services.AddScoped<UserService>();
 services.AddScoped<JWTService>();
+services.ConfigureOptions<MailSettingsUpdate>();
 services.AddHttpContextAccessor();
 
 services
