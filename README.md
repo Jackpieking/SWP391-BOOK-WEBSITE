@@ -1,7 +1,7 @@
 ﻿# SWP391-BOOK-WEBSITE
-SWP391 assignment, a book website
+Trang web đọc truyện tranh miễn phí, trả phí
 
-## Members
+# Thành viên
 
 * Lê Đình Đăng Khoa
 * Võ Đại lâm
@@ -9,10 +9,10 @@ SWP391 assignment, a book website
 * Trương Tuấn Thành
 * Lê Trung Nghĩa
 
-## Project's Description
+# Mô tả dự án
 
 
-# Mô tả chức năng chính của Admin
+## Mô tả chức năng chính của Admin
 * /admin/users-management : Hiển thị toàn bộ tài khoản của Reader
 * /comics : Hiển thị toàn bộ Comic
 * /admin/user-chapter-reviews/{userId:guid?}/details/ : Quản lý review chapter(chương truyện) của 1 Reader cụ thể
@@ -28,16 +28,8 @@ SWP391 assignment, a book website
 * /admin/users-management/update/{userId:guid?}/ : Cập nhật thông tin Reader
 * /hang-muc : Xem Category của mọi Comic
 
-# Mô tả chức năng chính của Reader
+## Mô tả chức năng chính của Reader
 * /auth/signup : Đăng ký trở thành Reader
 * /truyen-tranh/{ComicIdentifier:guid} : Xem chi tiết của 1 Comic
 * /user/logout : Đăng xuất khỏi tài khoản
 * /auth/login : Đăng Nhập vào tài khoản
-  
-  
-
-# References
-
-Tham khảo các nguồn ngoài
-
-
