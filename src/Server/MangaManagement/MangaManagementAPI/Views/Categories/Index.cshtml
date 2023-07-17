@@ -1,7 +1,7 @@
 ﻿@using Model
 @model IEnumerable<CategoryModel>
 @{
-    ViewData["Title"] = "Admin - Categories Data";
+    ViewData["Title"] = "Admin | Categories Data";
 }
 
 <div class="container-fluid">
@@ -11,8 +11,13 @@
 
     <!-- Categories Table -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Categories Table</h6>
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Categories</h6>
+            <a asp-action="Create"
+               asp-controller="Categories"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block" style="font-size:20px">
+                Create Category
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -64,7 +69,6 @@
         </div>
     </div>
     <!-- Categories Table End -->
-
     <!-- Delete Modal -->
     @await Html.PartialAsync("_DeleteModal")
 

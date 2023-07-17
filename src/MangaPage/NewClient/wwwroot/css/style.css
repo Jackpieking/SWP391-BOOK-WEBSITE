@@ -35,6 +35,10 @@
     height: 130px;
 }
 
+.loginError ul li {
+    list-style: none;
+}
+
 .blur {
     height: 190px;
     width: 100%;

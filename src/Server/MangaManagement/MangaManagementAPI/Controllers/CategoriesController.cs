@@ -45,7 +45,37 @@ public class CategoriesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, CategoryModel category)
     {
+        if (category.CategoryDescription == null) category.CategoryDescription = "";
         await _entityManagementService.UpdateCategory(category);
-        return RedirectToPage("/Categories/Edit/" + id);
+        return RedirectToRoute(new
+        {
+            controller = "Categories",
+            action = "Index"
+        });
+    }
+
+    // GET: CategoryController/Create
+    public ActionResult Create() => View();
+
+    // POST: CategoryController/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> Create(CategoryModel category)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                category.CategoryIdentifier = Guid.NewGuid();
+                await _entityManagementService.CreateCategory(category);
+                await Console.Out.WriteLineAsync("Create Finish");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            await Console.Out.WriteLineAsync(ex.Message);
+            return View();
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BusinessLogicLayer.Services;
 using Helper.DefinedEnums;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
@@ -29,19 +28,31 @@ namespace MangaManagementAPI.Controllers
         }
 
         // GET: ChapterController/Create
-        public ActionResult Create()
+        public ActionResult Create(Guid id)
         {
+            ViewData["comicId"] = id;
             return View();
         }
 
         // POST: ChapterController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(ChapterModel chapter)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    chapter.ChapterIdentifier = Guid.NewGuid();
+                    chapter.AddedDate = DateOnly.FromDateTime(DateTime.Now);
+                    await _entityManagementService.CreateChapter(chapter);
+                }
+                return RedirectToRoute(new
+                {
+                    controller = "Comics",
+                    action = "Details",
+                    id = chapter.ComicIdentifier
+                });
             }
             catch
             {
@@ -50,9 +61,10 @@ namespace MangaManagementAPI.Controllers
         }
 
         // GET: ChapterController/Edit/5
-        public async Task<ActionResult> EditAsync(Guid id)
+        public async Task<ActionResult> Edit(Guid id)
         {
             var chapter = await _entityManagementService.GetChapterByIdAsync(id);
+            if (chapter == null) return NotFound();
             return View(chapter);
         }
 
@@ -71,7 +83,12 @@ namespace MangaManagementAPI.Controllers
                 {
                     await _entityManagementService.UpdateChapter(chapter);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToRoute(new
+                {
+                    controller = "Comics",
+                    action = "Details",
+                    id = chapter.ComicIdentifier
+                });
             }
             catch (Exception ex)
             {

@@ -113,11 +113,11 @@ public class ComicManagementService
     /// 
     /// </summary>
     /// <returns>Task</returns>
-    public async Task UpdateComicAsync(Guid comicId, string comicName, string comicDes, string comicPDate, string comicStatus)
+    public async Task UpdateComic(ComicModel comic)
     {
         _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
 
-        await _unitOfWork.ComicRepository.UpdateComicAsync(comicId, comicName, comicDes, comicPDate, comicStatus);
+        _unitOfWork.ComicRepository.Update(_mapper.Map<ComicEntity>(comic));
         await _unitOfWork.SaveAsync();
 
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
@@ -218,5 +218,29 @@ public class ComicManagementService
         await _unitOfWork.SaveAsync();
 
         _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+    }
+
+    public async Task CreateComic(ComicModel comic)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Comic Table", args: DateTime.Now);
+        await _unitOfWork.ComicRepository.AddAsync(_mapper.Map<ComicEntity>(comic));
+        await _unitOfWork.SaveAsync();
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Comic Table", args: DateTime.Now);
+    }
+
+    public async Task CreateCategory(CategoryModel category)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Category Table", args: DateTime.Now);
+        await _unitOfWork.CategoryRepository.AddAsync(_mapper.Map<CategoryEntity>(category));
+        await _unitOfWork.SaveAsync();
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Category Table", args: DateTime.Now);
+    }
+
+    public async Task CreateChapter(ChapterModel chapter)
+    {
+        _logger.LogWarning(message: "[{DateTime.Now}]: Start Querying On Category Table", args: DateTime.Now);
+        await _unitOfWork.ChapterRepository.AddAsync(_mapper.Map<ChapterEntity>(chapter));
+        await _unitOfWork.SaveAsync();
+        _logger.LogWarning(message: "[{DateTime.Now}]: Finish Querying On Category Table", args: DateTime.Now);
     }
 }

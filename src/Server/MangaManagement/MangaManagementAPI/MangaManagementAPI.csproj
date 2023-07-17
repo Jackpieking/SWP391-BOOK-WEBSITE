@@ -51,7 +51,7 @@
     <None Include="Views\Categories\Index.cshtml" />
     <None Include="Views\Chapter\Details.cshtml" />
     <None Include="Views\Comics\Details.cshtml" />
-    <None Include="Views\Comics\Edit.cshtml" />
+    <None Include="Views\Pages\Edit.cshtml" />
     <None Include="Views\Comics\Index.cshtml" />
     <None Include="Views\Pages\404.cshtml" />
     <None Include="Views\Pages\forgot-password.cshtml" />

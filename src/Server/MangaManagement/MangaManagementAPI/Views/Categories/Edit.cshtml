@@ -1,24 +1,27 @@
 ﻿@using Model
 @model CategoryModel
 @{
-    this.ViewData["Title"] = "Admin - Category Edit";
+    this.ViewData["Title"] = "Admin | Category Edit";
+}
+@section ValidateScript {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
 
-<div class="container-fluid">
+<div class="container pb-5">
 
     <!-- Edit Form -->
-    <div class="card shadow mb-4 row">
-        <div class="card-header py-3">
+    <div class="row">
+        <div class="col-lg-4">
             <h2>Category Form<small>    Edit</small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-chevron-up"></i></a>
-                </li>
-            </ul>
+            <a asp-controller="Categories"
+               asp-action="Index"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block"
+               style="font-size:20px">
+                Return
+            </a>
         </div>
-        <div class="collapse" id="collapseExample">
-            <br />
-            <form class="form-check col-form-label" asp-controller="Categories" asp-action="Edit" method="post">
+        <div class="col-lg-8">
+            <form class="form-check col-form-label" asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <!-- Id -->
                 <div class="form-group">
@@ -42,12 +45,10 @@
                 <div class="ln_solid"></div>
                 <div class="item form-group">
                     <div class="col-md-6 col-sm-6 offset-md-3">
-                        <button class="btn btn-primary" type="button">Cancel</button>
                         <button class="btn btn-primary" type="reset">Reset</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <input type="submit" class="btn btn-success" value="Save"/>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

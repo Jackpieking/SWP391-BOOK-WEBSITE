@@ -5,14 +5,14 @@ namespace NewClient.Services;
 
 public class JWTService
 {
-	public string GetSubcriber(string token)
-	{
-		JwtSecurityTokenHandler handler = new();
+    public string GetNameClaim(string token)
+    {
+        JwtSecurityTokenHandler handler = new();
 
-		var jwtSecurityToken = handler.ReadJwtToken(token);
+        var jwtSecurityToken = handler.ReadJwtToken(token);
 
-		var tokenSub = jwtSecurityToken.Claims.First(claim => claim.Type.Equals(JwtRegisteredClaimNames.Sub)).Value;
+        var tokenName = jwtSecurityToken.Claims.First(claim => claim.Type.Equals(JwtRegisteredClaimNames.Name)).Value;
 
-		return tokenSub;
-	}
+        return tokenName;
+    }
 }

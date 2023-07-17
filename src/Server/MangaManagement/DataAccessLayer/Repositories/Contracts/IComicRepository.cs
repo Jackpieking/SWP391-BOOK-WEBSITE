@@ -15,5 +15,4 @@ public interface IComicRepository : IGenericRepository<ComicEntity>
     Task<Guid> GetComicIdentifierByComicNameAsync(string comicName);
     Task<ComicEntity> GetComicByIdNoRelationAsync(Guid id);
     Task<IEnumerable<ComicEntity>> GetAllComicNoRelationAsync();
-    Task<Guid> UpdateComicAsync(Guid comicId, string comicName, string comicDes, string comicPDate, string comicStatus);
 }

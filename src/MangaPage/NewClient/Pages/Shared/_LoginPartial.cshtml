@@ -4,6 +4,7 @@
 @inject IHttpContextAccessor _httpContextAccessor
 @inject IDataProtectionProvider _dataProtectionProvider
 @inject UserService _userService
+@inject JWTService _JWTService
 
 <div class="user__dropdown">
 
@@ -50,6 +51,7 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li><a class="btn btn-primary dropdown-item" href="/auth/login">Đăng nhập</a></li>
+					<li><hr class="dropdown-divider"></li>
 					<li><a class="btn btn-success dropdown-item" href="/auth/register">Đăng ký</a></li>
 				</ul>
 			`;
@@ -77,6 +79,7 @@
 					</button>
 					<ul class="dropdown-menu">
 						<li><a class="btn btn-primary dropdown-item" href="/auth/login">Đăng nhập</a></li>
+						<li><hr class="dropdown-divider"></li>
 						<li><a class="btn btn-success dropdown-item" href="/auth/register">Đăng ký</a></li>
 					</ul>
 				`;
@@ -96,10 +99,11 @@
 			<script defer>
 				let successUser = `
 					<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Người dùng
+						@_JWTService.GetNameClaim(authToken)
 					</button>
 					<ul class="dropdown-menu">
-						<li><a class="btn btn-primary dropdown-item">Cài đặt</a></li>
+						<li><a href="#" class="btn btn-primary dropdown-item">Cài đặt</a></li>
+						<li><hr class="dropdown-divider"></li>
 						<li><a class="btn btn-success dropdown-item" href="/logout">Đăng xuất</a></li>
 					</ul>
 				`;

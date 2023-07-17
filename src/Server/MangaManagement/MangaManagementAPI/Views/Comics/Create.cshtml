@@ -1,7 +1,7 @@
 ﻿@model Model.ComicModel
 
 @{
-    this.ViewData["Title"] = "Admin | Comic Edit";
+    ViewData["Title"] = "Create";
 
     List<SelectListItem> Status = new List<SelectListItem>()
     {
@@ -10,32 +10,17 @@
         new SelectListItem { Value = "Đã Hoàn Thành", Text = "Đã Hoàn Thành" }
     };
 }
-<div class="container pb-5">
-    <div class="row">
-        <div class="col-lg-4">
-            <h1>Edit</h1>
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h1>Create</h1>
 
             <h4>ComicModel</h4>
         </div>
-        <hr />
-        <div class="col-md-8">
-            <form asp-action="Edit">
+        <div class="card-body">
+            <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="ComicIdentifier" class="control-label"></label>
-                    <input asp-for="ComicIdentifier" class="form-control" />
-                    <span asp-validation-for="ComicIdentifier" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="PublisherIdentifier" class="control-label"></label>
-                    <input asp-for="PublisherIdentifier" class="form-control" />
-                    <span asp-validation-for="PublisherIdentifier" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="ComicAvatar" class="control-label"></label>
-                    <input asp-for="ComicAvatar" class="form-control" />
-                    <span asp-validation-for="ComicAvatar" class="text-danger"></span>
-                </div>
                 <div class="form-group">
                     <label asp-for="ComicName" class="control-label"></label>
                     <input asp-for="ComicName" class="form-control" />
@@ -46,6 +31,11 @@
                     <input asp-for="ComicDescription" class="form-control" />
                     <span asp-validation-for="ComicDescription" class="text-danger"></span>
                 </div>
+                <div class="form-group" hidden>
+                    <label asp-for="ComicAvatar" class="control-label"></label>
+                    <input asp-for="ComicAvatar" value="avatar.jpg" class="form-control" />
+                    <span asp-validation-for="ComicAvatar" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="ComicStatus" class="control-label"></label>
                     <select class="form-control" asp-for="ComicStatus" asp-items="@Status">
@@ -54,9 +44,7 @@
                     <span asp-validation-for="ComicStatus" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary" type="button">Cancel</button>
-                    <button class="btn btn-primary" type="reset">Reset</button>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>
         </div>
@@ -64,7 +52,5 @@
 </div>
 
 @section ValidateScript {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

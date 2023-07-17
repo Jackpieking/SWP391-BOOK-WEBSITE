@@ -101,26 +101,6 @@ public class ComicRepository : GenericRepository<ComicEntity>, IComicRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Guid> UpdateComicAsync(Guid comicId, string comicName, string comicDes, string comicPDate, string comicStatus)
-    {
-        var comicFound = await _dbSet
-            .FirstOrDefaultAsync(comic => comic.ComicIdentifier == comicId);
-
-        if (comicFound == null)
-        {
-            return Guid.Empty;
-        }
-
-        comicFound.ComicName = comicName;
-        comicFound.ComicDescription = comicDes;
-        comicFound.ComicPublishedDate = DateOnly.Parse(comicPDate);
-        comicFound.ComicStatus = comicStatus;
-
-        _dbSet.Update(entity: comicFound);
-
-        return comicFound.ComicIdentifier;
-    }
-
     /// <summary>
     ///
     /// </summary>

@@ -1,18 +1,20 @@
 ﻿@using Model;
 @model IEnumerable<ComicModel>
 @{
-    ViewData["Title"] = "Admin - Comics Data";
+    ViewData["Title"] = "Admin | Comics Data";
 }
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-
     <!-- Comics Table -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Comics Table</h6>
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary h1">Comics Data</h6>
+            <a asp-action="Create"
+               asp-controller="Comics"
+               class="mx-2 my-2 text-decoration-none btn btn-outline-danger d-block" style="font-size:20px">
+                Create Comic
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

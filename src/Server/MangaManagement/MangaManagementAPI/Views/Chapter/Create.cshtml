@@ -1,0 +1,41 @@
+﻿@model Model.ChapterModel
+
+@{
+    ViewData["Title"] = "Create";
+    var comicId = ViewData["comicId"] as Guid?;
+}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h1>Create</h1>
+
+            <h4>ChapterModel</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ChapterNumber" class="control-label"></label>
+                    <input asp-for="ChapterNumber" class="form-control" />
+                    <span asp-validation-for="ChapterNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ChapterUnlockPrice" class="control-label"></label>
+                    <input asp-for="ChapterUnlockPrice" class="form-control" />
+                    <span asp-validation-for="ChapterUnlockPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ComicIdentifier" class="control-label"></label>
+                    <input asp-for="ComicIdentifier" value="@comicId" class="form-control" />
+                    <span asp-validation-for="ComicIdentifier" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section ValidateScript {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

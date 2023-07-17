@@ -1,0 +1,37 @@
+﻿@model Model.CategoryModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h1>Create</h1>
+
+            <h4>CategoryModel</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CategoryName" class="control-label"></label>
+                    <input asp-for="CategoryName" class="form-control" />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryDescription" class="control-label"></label>
+                    <textarea asp-for="CategoryDescription" class="form-control" ></textarea>
+                    <span asp-validation-for="CategoryDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section ValidateScript {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

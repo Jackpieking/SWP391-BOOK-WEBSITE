@@ -38,24 +38,36 @@ public class ComicsController : Controller
 
     public async Task<IActionResult> Edit(Guid id)
     {
-        var comic = await _entityManagementService.GetComicByIdNoRelationAsync(Guid.Parse((string)Request.RouteValues["id"]));
+        var comic = await _entityManagementService.GetComicByIdNoRelationAsync(id);
         if (comic == null) return NotFound();
         return View(comic);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Guid comicId, string comicName, string comicDes, string comicPDate, string comicStatus)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(Guid id, ComicModel comic)
     {
-        await _entityManagementService.UpdateComicAsync(comicId, comicName, comicDes, comicPDate, comicStatus);
-        return RedirectToPage("/Comics/Edit/" + comicId);
+        if (id != comic.ComicIdentifier) return Content(comic.ComicIdentifier + "");
+        await _entityManagementService.UpdateComic(comic);
+        return RedirectToRoute(new
+        {
+            controller = "Comics",
+            action = "Details",
+            id = id
+        });
     }
 
-    public async Task<IActionResult> Create(Guid id)
+    public ActionResult Create() => View();
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ComicModel comic)
     {
-        var comic = await _entityManagementService.GetComicByIdAsync(Guid.Parse((string)Request.RouteValues["id"]));
         if (comic == null) return NotFound();
-        this.ViewData["comic"] = comic;
-        return View();
+        comic.PublisherIdentifier = Guid.Parse("51b02aef-2b58-4433-adea-e73c37b9f224");
+        comic.ComicIdentifier = Guid.NewGuid();
+        await _entityManagementService.CreateComic(comic);
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Details(Guid id)
