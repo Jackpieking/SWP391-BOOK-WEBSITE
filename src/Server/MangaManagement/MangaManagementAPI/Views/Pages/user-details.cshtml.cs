@@ -41,27 +41,6 @@ namespace MangaManagementAPI.Views.Pages
                     return RedirectToPage(pageName: "404");
                 }
 
-                //var readingHistoryModels = await _userManagementService
-                //.GetAllReadingHistoryOfAUserByUserIdAsync(userId);
-
-                //var transactionsHistoryModel = await _userManagementService
-                //.GetAllTransactionsOfAUserByUserIdAsync(userId);
-
-                //var buyingHistoryModel = await _userManagementService
-                //.GetAllBuyingHistoryOfAUserByUserIdAsync(userId);
-
-                //var comicLikeModel = await _userManagementService
-                //.GetAllComicLikeOfAUserByUserIdAsync(userId);
-
-                //var reviewComicModel = await _userManagementService
-                //.GetAllReviewsOnComicOfAUserByUserIdAsync(userId);
-
-                //var reviewChapterModel = await _userManagementService
-                //.GetAllReviewOnChapterOfAUserByUserIdAsync(userId);
-
-                //var comicSavingModel = await _userManagementService
-                //.GetAllComicSavingOfAUserByUserIdAsync(userId);
-
                 UserDetails = new()
                 {
                     UserBasicInfo = _mapper.Map<UserUpdateDto>(source: userModel),

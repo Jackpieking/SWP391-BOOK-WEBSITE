@@ -27,10 +27,9 @@ namespace MangaManagementAPI.Views.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
+            _logger.LogCritical(message: "Start Transaction Get Comic Reviews !!");
             var reviewComicModels = await _service.GetAllComicReviewAsync();
-
             ReviewComic = new Dictionary<Guid, IList<ReviewComicDto>>();
-
             foreach (var reivewComicModel in reviewComicModels)
             {
                 ReviewComic.Add(reivewComicModel.Key, _mapper.Map<IList<ReviewComicDto>>(reivewComicModel.Value));
@@ -43,6 +42,7 @@ namespace MangaManagementAPI.Views.Pages
                     review.Username = anotherReview.UserModel.Username;
                 }
             }
+            _logger.LogCritical(message: "Finished Transaction Get Comic Reviews !!");
             return Page();
         }
     }

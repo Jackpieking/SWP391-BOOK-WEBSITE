@@ -1,4 +1,4 @@
-﻿@page "/admin/user-comic-reviews/{userId:guid?}/details/"
+﻿@page "/admin/user-comic-reviews/{userId}/details/"
 @model MangaManagementAPI.Views.Pages.comic_review_detailsModel
 @{
     ViewData["Title"] = "Admin | Comic Review Details";
@@ -16,9 +16,10 @@
         </div>
         <div class="card-body">
             <h5 class="m-2 font-weight-bold text-primary">Comic Reviews</h5>
-            @if (false)
+            @if (Model.ComicReviewDetails == null || Model.ComicReviewDetails.Count == 0)
             {
-                <p class="m-2">Nothing to show</p>
+                Response.Redirect("/admin/404");
+                return;
             }
             else
             {

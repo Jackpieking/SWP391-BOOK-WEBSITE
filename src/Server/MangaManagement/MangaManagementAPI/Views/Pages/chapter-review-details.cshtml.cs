@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,19 +23,27 @@ namespace MangaManagementAPI.Views.Pages
             _logger = logger;
         }
 
-        public IList<ReviewChapterDto> ChapterReviewDetail { get; set; }
+        public IList<ReviewChapterDto> ChapterReviewDetails { get; set; }
 
         public async Task<IActionResult> OnGetAsync([FromRoute] Guid userId)
         {
-            ChapterReviewDetail = new List<ReviewChapterDto>();
+            _logger.LogCritical(message: "Start Transaction Get Chapter Reviews Of A User !!");
 
-            ChapterReviewDetail = _mapper.Map<List<ReviewChapterDto>>(await _service.GetAllChapterReview_OfAUser_ByUserId(userId));
+            var reviewChapterDtos = await _service.GetAllChapterReview_OfAUser_ByUserId(userId);
+            ChapterReviewDetails = new List<ReviewChapterDto>();
+            ChapterReviewDetails = _mapper.Map<List<ReviewChapterDto>>(reviewChapterDtos);
+            _logger.LogCritical(message: "Finished Transaction Get Chapter Reviews Of A User !!");
             return Page();
         }
 
         public async Task<IActionResult> OnGetDeleteChapterReview([FromRoute] Guid userId, [FromQuery] Guid chapterId)
         {
+            _logger.LogCritical(message: "Start Transaction Delete Chapter Reviews Of A User !!");
+
             await _service.DeleteUserReviewedChapterByIdAsync(userId, chapterId);
+
+            _logger.LogCritical(message: "Finished Transaction Delete Chapter Reviews Of A User !!");
+
             return RedirectToPage(pageName: "chapter-review-details", pageHandler: "OnGetAsync", routeValues: new { userId });
         }
     }
