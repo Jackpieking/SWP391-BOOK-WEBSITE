@@ -79,7 +79,7 @@ public class ComicManagementService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns>Task</returns>
     public async Task<CategoryModel> GetCategoryByIdAsync(Guid id)
@@ -96,7 +96,7 @@ public class ComicManagementService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns>Task</returns>
     public async Task UpdateCategory(CategoryModel category)
@@ -110,7 +110,7 @@ public class ComicManagementService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns>Task</returns>
     public async Task UpdateComic(ComicModel comic)
@@ -124,7 +124,7 @@ public class ComicManagementService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns>Task</returns>
     public async Task<Guid> Delete(DefinedEntity entity, Guid id)

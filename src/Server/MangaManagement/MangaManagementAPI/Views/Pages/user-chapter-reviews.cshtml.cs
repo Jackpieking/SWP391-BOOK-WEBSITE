@@ -27,10 +27,9 @@ namespace MangaManagementAPI.Views.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
+            _logger.LogCritical(message: "Start Transaction Get Chapter Reviews !!");
             var reviewChapterModels = await _service.GetAllChapterReviewAsync();
-
             ReviewChapter = new Dictionary<Guid, IList<ReviewChapterDto>>();
-
             foreach (var reviewChapterModel in reviewChapterModels)
             {
                 ReviewChapter.Add(reviewChapterModel.Key, _mapper.Map<IList<ReviewChapterDto>>(reviewChapterModel.Value));
@@ -43,6 +42,7 @@ namespace MangaManagementAPI.Views.Pages
                     review.ChapterNumber = anotherReview.ChapterModel.ChapterNumber;
                 }
             }
+            _logger.LogCritical(message: "Finished Transaction Get Chapter Reviews !!");
             return Page();
         }
     }

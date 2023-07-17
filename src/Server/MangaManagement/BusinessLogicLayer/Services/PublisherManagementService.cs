@@ -19,8 +19,9 @@ namespace BusinessLogicLayer.Services
             _mapper = mapper;
             _logger = logger;
         }
+
         /// <summary>
-        /// Get publishser
+        /// Get publisher
         /// </summary>
         /// <param name="publisherId"></param>
         /// <returns></returns>
