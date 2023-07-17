@@ -74,7 +74,8 @@ public class MangaDetailModel : PageModel
 
     public IActionResult OnPost([FromForm] string reviewComic)
     {
-        return RedirectToAction(actionName: nameof(OnGetAsync),
-                                routeValues: ViewData["comicIdentifier"]);
+
+
+        return Page();
     }
 }

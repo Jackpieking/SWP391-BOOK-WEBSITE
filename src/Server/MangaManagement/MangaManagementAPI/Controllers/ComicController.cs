@@ -34,8 +34,6 @@ public class ComicController : ControllerBase
         _mapper = mapper;
     }
 
-
-
     /// <summary>
     /// Return some general information about all comic
     /// </summary>

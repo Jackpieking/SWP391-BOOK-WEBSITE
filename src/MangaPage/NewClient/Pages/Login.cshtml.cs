@@ -12,88 +12,96 @@ namespace NewClient.Pages;
 
 public class LoginModel : PageModel
 {
-    private readonly UserService _userService;
-    private readonly IDataProtectionProvider _dataProtectionProvider;
+	private readonly UserService _userService;
+	private readonly IDataProtectionProvider _dataProtectionProvider;
 
-    [BindProperty]
-    public UserLoginModel UserLogin { get; set; }
+	[BindProperty]
+	public UserLoginModel UserLogin { get; set; }
 
-    public LoginModel(UserService userService, IDataProtectionProvider dataProtectionProvider)
-    {
-        _userService = userService;
-        _dataProtectionProvider = dataProtectionProvider;
-    }
+	public LoginModel(UserService userService, IDataProtectionProvider dataProtectionProvider)
+	{
+		_userService = userService;
+		_dataProtectionProvider = dataProtectionProvider;
+	}
 
-    public IActionResult OnGet()
-    {
-        var authCookie = HttpContext
-            .Request
-            .Cookies
-            .FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
-            .Value;
+	public IActionResult OnGet()
+	{
+		var authCookie = HttpContext
+			.Request
+			.Cookies
+			.FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
+			.Value;
 
-        var token = TempData["token"];
-        TempData.Keep("token");
+		var token = TempData["token"];
+		TempData.Keep("token");
 
-        string authSession = null;
+		string authSession = null;
 
-        if (!Equals(token, null))
-        {
-            authSession = HttpContext
-                .Session
-                .GetString(token.ToString());
-        }
+		if (!Equals(token, null))
+		{
+			authSession = HttpContext
+				.Session
+				.GetString(token.ToString());
+		}
 
-        if (!Equals(authCookie, null) || !Equals(authSession, null))
-        {
-            return RedirectToPage("/Index");
-        }
+		if (!Equals(authCookie, null) || !Equals(authSession, null))
+		{
+			return RedirectToPage("/Index");
+		}
 
-        return Page();
-    }
+		return Page();
+	}
 
-    public async Task<IActionResult> OnPostAsync()
-    {
-        var loginResult = await _userService.LoginAsync(UserLogin);
+	public async Task<IActionResult> OnPostAsync()
+	{
+		var loginResult = await _userService.LoginAsync(UserLogin);
 
-        var dataProtector = _dataProtectionProvider.CreateProtector("authCookie");
+		if (loginResult.Errors is not null &&
+			loginResult.Errors.FirstOrDefault(error => error.Equals("Email is not confirm")) is not null)
+		{
+			ModelState.AddModelError("Login fail", "Tài khoản chưa xác thực email !!");
 
-        if (loginResult.Result == true)
-        {
-            TempData["jwt"] = loginResult.Token;
+			return Page();
+		}
 
-            if (UserLogin.RememberMe)
-            {
-                CookieBuilder cookieBuilder = new()
-                {
-                    HttpOnly = false,
-                    Expiration = TimeSpan.FromDays(7),
-                    Path = "/"
-                };
+		if (loginResult.Result == true)
+		{
+			var dataProtector = _dataProtectionProvider.CreateProtector("authCookie");
 
-                var cookieOptions = cookieBuilder.Build(HttpContext);
+			TempData["jwt"] = loginResult.Token;
 
-                cookieOptions.SameSite = SameSiteMode.None;
+			if (UserLogin.RememberMe)
+			{
+				CookieBuilder cookieBuilder = new()
+				{
+					HttpOnly = false,
+					Expiration = TimeSpan.FromDays(7),
+					Path = "/"
+				};
 
-                Response.Cookies.Append(
-                    key: "authCookie",
-                    value: $"{dataProtector.Protect(loginResult.Token)}",
-                    options: cookieOptions);
-            }
-            else
-            {
-                TempData["token"] = loginResult.Token;
+				var cookieOptions = cookieBuilder.Build(HttpContext);
 
-                HttpContext.Session.SetString(
-                    loginResult.Token,
-                    dataProtector.Protect(loginResult.Token));
-            }
+				cookieOptions.SameSite = SameSiteMode.None;
 
-            return RedirectToPage("/Index");
-        }
+				Response.Cookies.Append(
+					key: "authCookie",
+					value: $"{dataProtector.Protect(loginResult.Token)}",
+					options: cookieOptions);
+			}
+			else
+			{
+				TempData["token"] = loginResult.Token;
 
-        ModelState.AddModelError("Login fail", "Tài khoản hoặc mật khẩu không chính xác !!");
+				HttpContext.Session.SetString(
+					loginResult.Token,
+					dataProtector.Protect(loginResult.Token));
+			}
 
-        return Page();
-    }
+			return RedirectToPage("/Index");
+		}
+
+		ModelState.AddModelError("Login fail", "Tài khoản hoặc mật khẩu không chính xác !!");
+
+		return Page();
+	}
 }

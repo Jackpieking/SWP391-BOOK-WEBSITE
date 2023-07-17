@@ -66,6 +66,28 @@ public class ComicService
         }
     }
 
+    public async Task<short> SubmitCommentToApiAsync(
+        string authToken,
+        string comicIdentifier,
+        string comment)
+    {
+        var postComicEndpointUrl = $"api/comic/{comicIdentifier}";
+
+        var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
+
+        HttpRequestMessage requestMessage = new()
+        {
+            RequestUri = new($"{httpClient.BaseAddress}{postComicEndpointUrl}")
+        };
+
+        requestMessage.Headers.Add("Authorization", $"Bearer {authToken}");
+        requestMessage.Content = new StringContent(comment);
+
+        using var response = await httpClient.SendAsync(requestMessage);
+
+        return (short)response.StatusCode;
+    }
+
     public async Task<DisplayComicDetailModel> GetComicDetailFromApiAsync(Guid comicIdentifier)
     {
         var GetComicDetailEndpointURL = $"api/comic/{comicIdentifier}";

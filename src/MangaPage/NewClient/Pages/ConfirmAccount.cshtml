@@ -1,0 +1,24 @@
+﻿@page "/xac-nhan-tai-khoan"
+@model NewClient.Pages.ConfirmAccountModel
+@{
+	Layout = "_LogoutLayout";
+	ViewData["Title"] = "Xác nhận tài khoản";
+}
+
+<div class="container-fluid">
+	<br />
+	<br />
+	<br />
+
+	<div class="alert alert-danger" role="alert">
+		Vui lòng làm theo email vừa gửi đến trong hòm thư để xác nhận tài khoản
+	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<div class="alert alert-info">
+		Quay về đăng nhập sau 5 giây hoặc nhấn vào <a class="btn btn-danger rounded" asp-page="/auth/logout">đây</a>
+	</div>
+</div>

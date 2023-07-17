@@ -140,7 +140,7 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
 
     // Cấu hình đăng nhập.
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
     options.SignIn.RequireConfirmedPhoneNumber = false;
 })
 .AddEntityFrameworkStores<UserIdentityContext>()
@@ -190,6 +190,7 @@ services
     .AddRazorPagesOptions(options =>
     {
         options.RootDirectory = "/Views";
+        options.Conventions.AddPageRoute("/Index", "/");
     });
 
 var app = builder.Build();

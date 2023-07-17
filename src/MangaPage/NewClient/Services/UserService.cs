@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NewClient.Models;
-using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -27,15 +26,11 @@ public class UserService
 
 	public async Task<AuthResult> RegisterAsync(UserRegistrationRequestDto user)
 	{
-		const string GetAllComicEndpointURL = "api/auth/register";
-
-		_logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-								DateTime.Now,
-								GetAllComicEndpointURL);
+		const string registerEndpointUrl = "api/auth/register";
 
 		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
 
-		using var response = await httpClient.PostAsJsonAsync(GetAllComicEndpointURL, user);
+		using var response = await httpClient.PostAsJsonAsync(registerEndpointUrl, user);
 
 		var result = await response.Content.ReadFromJsonAsync<AuthResult>();
 
@@ -44,15 +39,11 @@ public class UserService
 
 	public async Task<AuthResult> LoginAsync(UserLoginModel user)
 	{
-		const string GetAllComicEndpointURL = "api/auth/login";
-
-		_logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-								DateTime.Now,
-								GetAllComicEndpointURL);
+		const string loginEndpointUrl = "api/auth/login";
 
 		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
 
-		using var response = await httpClient.PostAsJsonAsync(GetAllComicEndpointURL, user);
+		using var response = await httpClient.PostAsJsonAsync(loginEndpointUrl, user);
 
 		var result = await response.Content.ReadFromJsonAsync<AuthResult>();
 
@@ -61,20 +52,28 @@ public class UserService
 
 	public async Task<short> ValidateTokenAsync(string authorization)
 	{
-		const string GetAllComicEndpointURL = "api/auth/validate";
-
-		_logger.LogWarning("[{DateTime.Now}]: Start Calling Api [{GetAllComicEndpointURL}]",
-								DateTime.Now,
-								GetAllComicEndpointURL);
+		const string validateTokenEndpointUrl = "api/auth/validate";
 
 		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
 
-		HttpRequestMessage requestMessage = new();
-
-		requestMessage.RequestUri = new($"{httpClient.BaseAddress}{GetAllComicEndpointURL}");
+		HttpRequestMessage requestMessage = new()
+		{
+			RequestUri = new($"{httpClient.BaseAddress}{validateTokenEndpointUrl}")
+		};
 		requestMessage.Headers.Add("Authorization", $"Bearer {authorization}");
 
 		using var response = await httpClient.SendAsync(requestMessage);
+
+		return (short)response.StatusCode;
+	}
+
+	public async Task<short> ConfirmEmailAsync(string userId, string encodedEmailConfirmToken)
+	{
+		var emailConfirmEndpointUrl = $"api/auth/confirm-email/{userId}/{encodedEmailConfirmToken}";
+
+		var httpClient = _httpClientFactory.CreateClient(name: BaseUrl);
+
+		using var response = await httpClient.GetAsync(emailConfirmEndpointUrl);
 
 		return (short)response.StatusCode;
 	}
