@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Model;
@@ -40,18 +41,6 @@ public class AuthController : ControllerBase
 	{
 		var foundUser = await _userManager.FindByEmailAsync(requestDto.Email);
 
-		if (!Equals(foundUser, null))
-		{
-			return BadRequest(new AuthResult()
-			{
-				Result = false,
-				Errors = new List<string>()
-				{
-					"Email already exist"
-				}
-			});
-		}
-
 		IdentityUser new_user = new()
 		{
 			Email = requestDto.Email,
@@ -72,7 +61,10 @@ public class AuthController : ControllerBase
 			});
 		}
 
-		var jwt = GenerateJwtToken(new_user, false);
+		var emailConfirmToken = await _userManager.GenerateEmailConfirmationTokenAsync(new_user);
+		var encodedEmailConfirmToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(emailConfirmToken));
+
+		var jwt = GenerateJwtToken(new_user, false, false, encodedEmailConfirmToken);
 
 		return Ok(new AuthResult()
 		{
@@ -112,9 +104,9 @@ public class AuthController : ControllerBase
 			});
 		}
 
-		if (await _userManager.IsEmailConfirmedAsync(foundUser))
+		if (!await _userManager.IsEmailConfirmedAsync(foundUser))
 		{
-			return BadRequest(new AuthResult()
+			return UnprocessableEntity(new AuthResult()
 			{
 				Result = false,
 				Errors = new List<string>()
@@ -124,7 +116,7 @@ public class AuthController : ControllerBase
 			});
 		}
 
-		var jwt = GenerateJwtToken(foundUser, requestDto.RememberMe);
+		var jwt = GenerateJwtToken(foundUser, requestDto.RememberMe, true);
 
 		return Ok(new AuthResult()
 		{
@@ -167,17 +159,64 @@ public class AuthController : ControllerBase
 			return Forbid();
 		}
 
-		return Accepted(new AuthResult()
-		{
-			Result = true,
-			Errors = new List<string>()
-				{
-					"User credentials are still valid and not expired"
-				}
-		});
+		return Accepted("User credentials are still valid and not expired");
 	}
 
-	private string GenerateJwtToken(IdentityUser user, bool isPersistance)
+	[HttpGet("confirm-email/{userId}/{encodedEmailConfirmToken}")]
+	public async Task<IActionResult> ConfirmEmail(
+		[FromRoute] string userId,
+		[FromRoute] string encodedEmailConfirmToken)
+	{
+		var emailConfirmationToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(encodedEmailConfirmToken));
+
+		if (Equals(userId, null) || Equals(emailConfirmationToken, null))
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Server cannot process this information"
+				}
+			});
+		}
+
+		var foundUser = await _userManager.FindByIdAsync(userId);
+
+		if (Equals(foundUser, null))
+		{
+			return BadRequest(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+					{
+						"Invalid payload"
+					}
+			});
+		}
+
+		if (await _userManager.IsEmailConfirmedAsync(foundUser))
+		{
+			return UnprocessableEntity(new AuthResult()
+			{
+				Result = false,
+				Errors = new List<string>()
+				{
+					"Email is already confirmed"
+				}
+			});
+		}
+
+		await _userManager.ConfirmEmailAsync(foundUser, emailConfirmationToken);
+
+		return Ok();
+	}
+
+
+	private string GenerateJwtToken(
+		IdentityUser user,
+		bool isPersistance,
+		bool isEmailConfirmed)
 	{
 		SecurityTokenDescriptor tokenDescriptor = new()
 		{
@@ -190,6 +229,48 @@ public class AuthController : ControllerBase
 				new(JwtRegisteredClaimNames.Sub, user.Id),
 				new(JwtRegisteredClaimNames.Name, user.UserName),
 				new(JwtRegisteredClaimNames.Email, user.Email),
+				new("email-cfr", isEmailConfirmed.ToString())
+			}),
+			SigningCredentials = new(
+		new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.PrivateKey)),
+		SecurityAlgorithms.HmacSha256)
+		};
+
+		if (isPersistance)
+		{
+			tokenDescriptor.Expires = DateTime.UtcNow.AddDays(7);
+		}
+		else
+		{
+			tokenDescriptor.Expires = DateTime.UtcNow.AddDays(1);
+		}
+
+		JwtSecurityTokenHandler jwtTokenHandler = new();
+
+		var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+
+		return jwtTokenHandler.WriteToken(token);
+	}
+
+	private string GenerateJwtToken(
+		IdentityUser user,
+		bool isPersistance,
+		bool isEmailConfirmed,
+		string emailConfirmToken)
+	{
+		SecurityTokenDescriptor tokenDescriptor = new()
+		{
+			Audience = _jwtConfig.Audience,
+			Issuer = _jwtConfig.Issuer,
+			Subject = new(new List<Claim>()
+			{
+				new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+				new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+				new(JwtRegisteredClaimNames.Sub, user.Id),
+				new(JwtRegisteredClaimNames.Name, user.UserName),
+				new(JwtRegisteredClaimNames.Email, user.Email),
+				new("email-cfr", isEmailConfirmed.ToString()),
+				new("email-cfr-tk", emailConfirmToken)
 			}),
 			SigningCredentials = new(
 		new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.PrivateKey)),
@@ -236,5 +317,16 @@ public class AuthController : ControllerBase
 		var valid = tokenDate >= now;
 
 		return valid;
+	}
+
+	private string GetNameClaim(string token)
+	{
+		JwtSecurityTokenHandler handler = new();
+
+		var jwtSecurityToken = handler.ReadJwtToken(token);
+
+		var nameClaim = jwtSecurityToken.Claims.First(claim => claim.Type.Equals(JwtRegisteredClaimNames.Name)).Value;
+
+		return nameClaim;
 	}
 }

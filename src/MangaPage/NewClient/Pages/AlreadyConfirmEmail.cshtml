@@ -1,9 +1,8 @@
-﻿@page "/logout"
-@using Helper;
-@model NewClient.Pages.LogoutModel
+﻿@page "/da-xac-nhan-tai-khoan"
+@model NewClient.Pages.AlreadyConfirmEmailModel
 @{
 	Layout = "_LogoutLayout";
-	ViewData["Title"] = "Đăng xuất";
+	ViewData["Title"] = "đã xác nhận";
 }
 
 <div class="container-fluid">
@@ -12,7 +11,7 @@
 	<br />
 
 	<div class="alert alert-danger" role="alert">
-		Đăng xuất thành công
+		Bạn đã xác nhận email này
 	</div>
 
 	<br />
@@ -23,9 +22,3 @@
 		Quay về trang chủ sau 5 giây hoặc nhấn vào <a class="btn btn-danger rounded" asp-page="/Index">đây</a>
 	</div>
 </div>
-
-<script>
-	document.cookie = `authSession=; Max-Age=0; path=/; domain=localhost`;
-	document.cookie = `authCookie=; Max-Age=0; path=/; domain=localhost`;
-</script>
-

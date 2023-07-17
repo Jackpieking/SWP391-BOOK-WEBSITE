@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewClient.Models;
 using NewClient.Services;
+using NewClient.Services.Mail;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,13 +16,20 @@ public class SignupModel : PageModel
 	public UserCreationModel UserCreationModel { get; set; }
 
 	private readonly IDataProtectionProvider _dataProtectionProvider;
-
+	private readonly ISendMailService _sendMailService;
 	private readonly UserService _userService;
+	private readonly JWTService _jwtService;
 
-	public SignupModel(UserService userService, IDataProtectionProvider dataProtectionProvider)
+	public SignupModel(
+		UserService userService,
+		IDataProtectionProvider dataProtectionProvider,
+		ISendMailService sendMailService,
+		JWTService jwtService)
 	{
 		_userService = userService;
 		_dataProtectionProvider = dataProtectionProvider;
+		_sendMailService = sendMailService;
+		_jwtService = jwtService;
 	}
 
 	public IActionResult OnGet()
@@ -62,21 +70,34 @@ public class SignupModel : PageModel
 		};
 
 		var creatingUserResult = await _userService.RegisterAsync(user: dto);
-		var dataProtector = _dataProtectionProvider.CreateProtector("authCookie");
 
-		if (creatingUserResult.Result == true)
+		var callbackUrl = Url.Page(
+			"/ConfirmEmail",
+			pageHandler: "XacNhanEmail",
+			values: new
+			{
+				userId = _jwtService.GetUserIdClaim(creatingUserResult.Token),
+				encodedEmailConfirmationToken = _jwtService.GetEncodedEmailConfirmClaimToken(creatingUserResult.Token)
+			},
+			protocol: Request.Scheme);
+
+		MailContent content = new()
 		{
-			TempData["token"] = creatingUserResult.Token;
+			To = _jwtService.GetEmailClaim(creatingUserResult.Token),
+			Subject = "Xác nhận tài khoản !!",
+			Body = $"<p>Vui lòng nhấn vào link sau để xác nhận tài khoản: </p><br /><a href=\"{callbackUrl}\">link</a>"
+		};
 
-			HttpContext.Session.SetString(
-				creatingUserResult.Token,
-				dataProtector.Protect(creatingUserResult.Token));
+		await _sendMailService.SendMail(content);
 
-			return RedirectToPage("/Index");
-		}
+		TempData["jwt"] = creatingUserResult.Token;
 
-		ModelState.AddModelError("CreatingError", "Cannot create user");
+		callbackUrl = Url.Page(
+			"/ConfirmAccount",
+			pageHandler: "XacNhanTaiKhoan",
+			values: null,
+			protocol: Request.Scheme);
 
-		return Page();
+		return Redirect(callbackUrl);
 	}
 }

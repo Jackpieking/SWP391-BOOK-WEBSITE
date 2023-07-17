@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewClient.Options;
 using NewClient.Services;
+using NewClient.Services.Mail;
 
 var builder = WebApplication.CreateBuilder(args: args);
 
@@ -12,6 +13,7 @@ services.AddScoped<ComicService>();
 services.AddScoped<ChapterImageService>();
 services.AddScoped<UserService>();
 services.AddScoped<JWTService>();
+services.AddScoped<ISendMailService, SendMailService>();
 services.ConfigureOptions<MailSettingsUpdate>();
 services.AddHttpContextAccessor();
 

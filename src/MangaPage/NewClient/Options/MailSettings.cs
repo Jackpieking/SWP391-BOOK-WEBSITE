@@ -1,4 +1,4 @@
-﻿namespace NewClient.Services;
+﻿namespace NewClient.Options;
 
 public class MailSettings
 {

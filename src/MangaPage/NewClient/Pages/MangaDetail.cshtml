@@ -1,5 +1,12 @@
 ﻿@page "/truyen-tranh/{ComicIdentifier:guid}"
 @model NewClient.Pages.MangaDetailModel
+@using Microsoft.AspNetCore.DataProtection;
+@using Microsoft.AspNetCore.Http;
+@using NewClient.Services;
+@inject IHttpContextAccessor _httpContextAccessor
+@inject IDataProtectionProvider _dataProtectionProvider
+@inject UserService _userService
+@inject JWTService _JWTService
 @{
     ViewData["Title"] = $"{Model.DisplayComicInformationModel.ComicName} [Tới Chapter {Model.DisplayComicInformationModel.ComicChapters.First().ChapterNumber}] Tiếng Việt | Manganexus.Com";
 }
@@ -88,7 +95,6 @@
                             </div>
                         </div>
                         <div class="anime__details__btn">
-                            <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Yêu thích</a>
                             <a
                                 asp-page="ComicReading"
                                 asp-route-ChapterIdentifier="@Model.DisplayComicInformationModel.ComicChapters.Last().ChapterIdentifier"
@@ -151,7 +157,7 @@
                     </div>
                     @if (Model.DisplayComicInformationModel.ReviewComics.Count == 0)
                     {
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-danger fs-3" role="alert">
                             Chưa có bình luận
                         </div>
                     }
@@ -178,13 +184,49 @@
                     }
                 </div>
                 <div class="anime__details__form">
-                    <form method="post" class="form-floating">
-                        <div class="section-title form">
-                            <h5>Đánh giá của bạn</h5>
-                        </div>
-                        <textarea name="reviewComic" placeholder="Đánh giá vào đây"></textarea>
-                        <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Đánh giá</button>
-                    </form>
+                    @{
+                        var authToken = _httpContextAccessor
+                        .HttpContext
+                        .Request
+                        .Cookies
+                        .FirstOrDefault(cookie => cookie.Key.StartsWith("authCookie"))
+                        .Value;
+
+                        if (Equals(authToken, null))
+                        {
+                            var token = TempData["token"];
+                            TempData.Keep("token");
+
+                            if (!Equals(token, null))
+                            {
+                                authToken = _httpContextAccessor
+                                .HttpContext
+                                .Session
+                                .GetString(token.ToString());
+                            }
+                            else
+                            {
+                                authToken = string.Empty;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(authToken))
+                        {
+                            <form method="post" class="form-floating" asp-page-handler="SubmitComment">
+                                <div class="section-title form">
+                                    <h5>Đánh giá của bạn</h5>
+                                </div>
+                                <textarea name="reviewComic" placeholder="Đánh giá vào đây"></textarea>
+                                <button type="submit" class="review__submit-button"><i class="fa fa-location-arrow"></i> Đánh giá</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger fs-3" role="alert">
+                                Đăng nhập để bình luận
+                            </div>
+                        }
+                    }
                 </div>
             </div>
             <div class="col-lg-4 col-md-4">
